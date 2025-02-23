@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ApplicationCommonProvider } from "./utils/ApplicationCommon";  
+import Main from "./pages/Main";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApplicationCommonProvider> {/* ✅ Provider로 감싸기 */}
+      <Router>
+          <Routes>
+            <Route path="/" element={<Main />} />
+          </Routes>
+      </Router>
+    </ApplicationCommonProvider>
   );
 }
 
