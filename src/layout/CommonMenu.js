@@ -8,12 +8,14 @@ const CommonMenu = ({ isOpen, onClose }) => {
       URI: "/com",
       LINK_TARGET: "_self",
       SUB_MENUS: [
-        {
-          CODE: "MobileAuth",
-          NAME: "휴대폰본인인증",
-          URI: "/com/MobileAuth",
-          LINK_TARGET: "_self",
-        },
+        { CODE: "MobileAuth", NAME: "휴대폰본인인증", URI: "/com/MobileAuth", LINK_TARGET: "_self" },
+        { CODE: "TermsPage", NAME: "약관화면", URI: "/com/TermsPage", LINK_TARGET: "_self" },
+        { CODE: "AcnoAuth",  NAME: "타행본인계좌인증", URI: "/com/AcnoAuth", LINK_TARGET: "_self" },
+        { CODE: "FsbAcnoAuth", NAME: "타행본인계좌인증(중앙회)", URI: "/com/FsbAcnoAuth", LINK_TARGET: "_self" },
+        { CODE: "AcnoList", NAME: "계좌리스트", URI: "/com/AcnoList", LINK_TARGET: "_self" },
+        { CODE: "BankList", NAME: "은행리스트", URI: "/com/BankList", LINK_TARGET: "_self" },
+        { CODE: "SecuCard", NAME: "보안카드", URI: "/com/SecuCard", LINK_TARGET: "_self" },
+        { CODE: "OtpAuth", NAME: "otp인증", URI: "/com/OtpAuth", LINK_TARGET: "_self" },
       ],
     },
     {
@@ -47,6 +49,7 @@ const CommonMenu = ({ isOpen, onClose }) => {
           LINK_TARGET: "_self",
           SUB_MENUS: [
             { CODE: "AutoTransfer", NAME: "자동이체", URI: "/trf/AutoTransfer", LINK_TARGET: "_self" },
+            { CODE: "AutoTransfer", NAME: "자동이체관리", URI: "/trf/AutoTransferMng", LINK_TARGET: "_self" },
             { CODE: "AutoTransferResultInquiry", NAME: "자동이체결과조회", URI: "/trf/AutoTransferResultInquiry", LINK_TARGET: "_self" },
           ],
         },
@@ -60,7 +63,18 @@ const CommonMenu = ({ isOpen, onClose }) => {
       SUB_MENUS: [
         { CODE: "DepInformationApplication", NAME: "상품안내/신청", URI: "/dep/DepInformationApplication", LINK_TARGET: "_self" },
         { CODE: "AccountApplication", NAME: "입출금계좌신청", URI: "/dep/AccountApplication", LINK_TARGET: "_self" },
-        { CODE: "DepTermination", NAME: "예적금해지", URI: "/dep/DepTermination", LINK_TARGET: "_self" },
+        
+        {
+          CODE: "DepManagement",
+          NAME: "예적금관리",
+          LINK_TARGET: "_self",
+          SUB_MENUS: [
+            { CODE: "DepTermination", NAME: "예적금해지", URI: "/dep/DepTermination", LINK_TARGET: "_self" },
+            { CODE: "DepCancelSrch", NAME: "예적금해지예상조회", URI: "/dep/DepCancelSrch", LINK_TARGET: "_self" },
+            { CODE: "DepExpRenew", NAME: "만기자동재예치/만기해지송금", URI: "/dep/DepExpRenew", LINK_TARGET: "_self" },
+            { CODE: "SavingDtChange", NAME: "적금납입일변경", URI: "/dep/SavingDtChange", LINK_TARGET: "_self" },
+          ],
+        },
       ],
     },
     {
@@ -98,7 +112,9 @@ const CommonMenu = ({ isOpen, onClose }) => {
         { CODE: "ClosedAccountInquiry", NAME: "해지계좌조회", URI: "/efc/ClosedAccountInquiry", LINK_TARGET: "_self" },
         { CODE: "SuspendedAccount", NAME: "거래중지좌", URI: "/efc/SuspendedAccount", LINK_TARGET: "_self" },
         { CODE: "TaxFreeSavingsLimit", NAME: "비과세종합저축한도", URI: "/efc/TaxFreeSavingsLimit", LINK_TARGET: "_self" },
+        { CODE: "TaxFreeSavingsLimitCert", NAME: "비과세종합저축증빙자료제출", URI: "/efc/TaxFreeSavingsLimitCert", LINK_TARGET: "_self" },
         { CODE: "ElectronicFinancialTermination", NAME: "전자금융해지", URI: "/efc/ElectronicFinancialTermination", LINK_TARGET: "_self" },
+        { CODE: "UsrIdReg", NAME: "전자금융가입", URI: "/efc/UsrIdReg", LINK_TARGET: "_self" },
       ],
     },
   ];
