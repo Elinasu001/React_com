@@ -79,6 +79,40 @@ export const ApplicationCommonProvider = ({ children }) => {
     }
   }, []);
 
+  // ✅ 화면 이동이 필요한 요청 처리 함수 (doActionFrm)
+  const doActionFrm = useCallback(async (serviceCd, requestData, targetUrl, navigate) => {
+    try {
+      LOG.debug(`[doActionFrm] 요청: ${serviceCd}`, requestData);
+      const response = await axios.post(`${API_BASE_URL}/${serviceCd}.act`, requestData, {
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
+        withCredentials: true,
+      });
+
+      LOG.debug("[doActionFrm] 성공 응답:", response.data);
+
+      if (!response.data || !response.data.APP_HEADER) {
+        LOG.error("[doActionFrm] 응답 데이터가 유효하지 않음:", response.data);
+        alert("유효하지 않은 응답 데이터입니다.");
+        return;
+      }
+
+      const { respCd, respMsg } = response.data.APP_HEADER;
+
+      if (respCd === "N00001") {
+        // ✅ 화면 이동 (menuId와 frameId를 포함하여 이동)
+        LOG.info(`[doActionFrm] 화면 이동: ${targetUrl}`);
+        //window.location.href = targetUrl;
+        navigate(targetUrl, { state: { responseData: response.data, requestData } });
+      } else {
+        LOG.error(`[doActionFrm] 실패 응답: ${respMsg}`);
+        alert(respMsg || "화면 이동 요청 실패");
+      }
+    } catch (error) {
+      LOG.error("처리 중 오류 발생:", error);
+      alert("처리 중 오류가 발생하였습니다.");
+    }
+  }, []);
+  
   return (
     <ApplicationCommonContext.Provider
       value={{
