@@ -13,7 +13,9 @@ import {
   FormGroup,
   RadioGroup,
   FormLabel,
-  FormControl
+  FormControl,
+  Box,
+  Typography
 } from '@mui/material';
 
 // ✅ 일반 텍스트 박스
@@ -103,6 +105,42 @@ export const RadioBox = ({
     </RadioGroup>
   </FormControl>
 );
+
+// ✅ 이체 한도 입력 컴포넌트
+export const LimitInput = ({ 
+    label
+  , placeholder
+  , value
+  , onChange 
+}: {
+    label: string; 
+    placeholder: string; 
+    value?: number; 
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
+  return (
+    <Box sx={{ mb: 3 }}>
+      <Typography variant="body1" sx={{ color: "gray" }}>{label}</Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <TextField
+          variant="standard"
+          type="number"
+          placeholder={placeholder}
+          sx={{
+            width: "100%",
+            "& .MuiInputBase-input::placeholder": {
+              color: "lightgray"
+            },
+          }}
+          inputProps={{ style: { textAlign: "left", fontWeight: "bold", color: "black" } }}
+          value={value}
+          onChange={onChange}
+        />
+        <Typography sx={{ fontWeight: "bold" }}>원</Typography>
+      </Box>
+    </Box>
+  );
+};
 
 // ✅ 기본 export
 export default {
