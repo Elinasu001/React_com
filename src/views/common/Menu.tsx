@@ -20,8 +20,14 @@ const Menu = ({ open, onClose }: {
   //메뉴 정의
   const menuItems = [
     { text: "홈", icon: <HomeIcon />, path: "/" },
-    { text: "테스트", icon: <CodeIcon />, path: "/test.view" },
-    { text: "네이티브테스트", icon: <CodeIcon />, path: "/nativeTest.view" },
+    { text: "테스트", icon: <CodeIcon />, path: "/Test.view"},
+    { text: "네이티브", icon: <CodeIcon />, path: "/nativeTest.view"},
+    { text: "공통(COM)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=com" },
+    { text: "조회(INQ)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=inq" },
+    { text: "이체(TNF)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=tnf" },
+    { text: "예적금(DEP)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=dep" },
+    { text: "대출(LON)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=lon" },
+    { text: "뱅킹관리(EFC)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=efc" },
   ];
 
   return (
