@@ -1,40 +1,8 @@
-import { Button, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { TextBox01 } from "@src/components/text";
-import { GLog, Common } from '@assets/js/common';
+import { Common } from '@assets/js/common';
 import { Button01 } from "@src/components/button";
-
-/**
- * 테스트 버튼
- */
-const TestButton = ({ btnName, clickFunc }: {
-  btnName: string;
-  clickFunc: () => void;
-}) => {
-  return (
-    <Button 
-      variant="contained" 
-      onClick={clickFunc}
-      sx={{
-        width: "40%",
-        fontFamily: "SCDream",
-        fontWeight: 800,
-        mb: 3,
-        px: 2, 
-        py: 0.75, 
-        fontSize: '14px',
-        borderRadius: '8px',
-        boxShadow: 3,
-        backgroundColor: 'primary.main',
-        ':hover': {
-          backgroundColor: 'primary.dark'
-        }
-      }}
-    >
-      {btnName}
-    </Button>
-  );
-};
 
 /**
  * 메뉴별 버튼 목록 정의
@@ -120,13 +88,15 @@ const BankingTest = () => {
       <TextBox01 text="업무 테스트"/>
 
       {/* 버튼 컨테이너 */}
-        {buttons.map((item) => (
-          <Button01 
-            btnName={item.text}
-            width="40%"
-            clickFunc={() => doActionURL(item.path)}
-          />
-        ))}
+      {buttons.map((item,index) => (
+        <Button01 
+          key={index}  // 고유한 ID 값 사용
+          btnName={item.text}
+          fontSize="14px"
+          width="80%"
+          clickFunc={() => doActionURL(item.path)}
+        />
+      ))}
     </Box>
   );
 };
