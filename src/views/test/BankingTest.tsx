@@ -94,11 +94,17 @@ const BankingTest = () => {
 
   return (
     <> 
-    <Box sx={{textAlign: 'center'}}>
+    <Box sx={{
+          display: 'flex',
+          flexWrap: 'wrap', // 자동 줄바꿈
+          justifyContent: 'space-between', // 좌우 정렬
+          gap: 1, // 버튼 간의 간격
+        }}>
 
       <TextBox01 text="업무 테스트"/>
 
       {/* 버튼 컨테이너 */}
+
       {buttons.map((item, index) => {
         // "휴대폰본인인증" 버튼이면 handleOpenAuth, 아니면 기본 doActionURL 사용
         const clickHandler =
@@ -110,12 +116,13 @@ const BankingTest = () => {
           <Button01
             key={index}
             btnName={item.text}
-            fontSize="14px"
-            width="80%"
+            fontSize="15px"
+            width="43%"
             clickFunc={clickHandler}
           />
         );
       })}
+
     </Box>
 
 <MobileAuth isOpen={isAuthOpen} onClose={handleCloseAuth} />

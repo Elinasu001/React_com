@@ -7,6 +7,7 @@ import { Button01 } from "@src/components/button";
 import { GLog, Common } from '@assets/js/common';
 import { toast } from "@src/components/toast";
 import NativeUtil from '@assets/js/common_native';
+import { openPopup , openBottomPopup , openFullPopup } from "@src/components/popup";
 
 
 /**
@@ -27,15 +28,6 @@ const Test = () => {
       {/* 
         네이티브 테스트 버튼 모음
       */}
-      <Button01
-        btnName="로딩 테스트"
-        clickFunc={async () => {
-          progressBar(true, "로딩중");
-          setTimeout(() => {
-            progressBar(false);
-          }, 3000);
-        }}
-      />
 
       <Button01 
         btnName="로딩 테스트"
@@ -131,6 +123,34 @@ const Test = () => {
             '확인',
             () => GLog.d('확인 클릭')
           )
+        }}
+      />
+
+      <Button01 
+        btnName="일반 팝업 테스트"
+        clickFunc={() => {
+          openPopup({url:'/popup/popup001.view',nFunc:()=>{
+            GLog.d('일반 팝업 닫힘');
+          }});
+        }}
+      />
+
+      <Button01 
+        btnName="바텀 팝업 테스트"
+        clickFunc={() => {
+          openBottomPopup({url:'/popup/popup001.view',nFunc:()=>{
+            GLog.d('바텀 팝업 닫힘');
+          }});
+        }}
+      />
+
+
+      <Button01 
+        btnName="풀 팝업 테스트"
+        clickFunc={() => {
+          openFullPopup({url:'/popup/popup001.view',nFunc:()=>{
+            GLog.d('풀 팝업 닫힘');
+          }});
         }}
       />
     </Box>
