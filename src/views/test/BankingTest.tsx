@@ -3,8 +3,7 @@ import { useLocation } from "react-router-dom";
 import { TextBox01 } from "@src/components/text";
 import { Common } from '@assets/js/common';
 import { Button01 } from "@src/components/button";
-import { useState } from "react";
-import MobileAuth from "../com/Com001"  /**휴대폰본인인증팝업 */
+import { openPopup , openBottomPopup , openFullPopup } from "@src/components/popup";
 
 /**
  * 메뉴별 버튼 목록 정의
@@ -84,13 +83,12 @@ const BankingTest = () => {
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
 
-  const [isAuthOpen, setAuthOpen] = useState(false);
   const handleOpenAuth = () => {
-    setAuthOpen(true);
+     openFullPopup({url:'/com/com001.view',nFunc:()=>{
+                
+     }});
   };
-  const handleCloseAuth = () => {
-    setAuthOpen(false);
-  };
+ 
 
   return (
     <> 
@@ -117,7 +115,7 @@ const BankingTest = () => {
             key={index}
             btnName={item.text}
             fontSize="15px"
-            width="43%"
+            width="100%"
             clickFunc={clickHandler}
           />
         );
@@ -125,7 +123,6 @@ const BankingTest = () => {
 
     </Box>
 
-<MobileAuth isOpen={isAuthOpen} onClose={handleCloseAuth} />
 </>
   );
 };
