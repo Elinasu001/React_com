@@ -1,28 +1,30 @@
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
+
+import { GLog } from '@assets/js/common';
+
 import { TextBox01 } from "@src/components/text";
 import { Common } from '@assets/js/common';
 import { Button01 } from "@src/components/button";
-import { useState } from "react";
-import MobileAuth from "../com/Com001"  /**휴대폰본인인증팝업 */
+import { openFullPopup } from "@src/components/popup";
 
 /**
  * 메뉴별 버튼 목록 정의
  */
 const menuItems: Record<string, { text: string; path: string }[]> = {
   com: [
-    { text: "휴대폰본인인증", path: "/COM001.view" },
-    { text: "약관화면", path: "/COM002.view" },
-    { text: "타행본인계좌인증(이기종)", path: "/COM003.view" },
-    { text: "타행본인계좌인증(중앙회)", path: "/COM004.view" },
-    { text: "계좌리스트", path: "/COM005.view" },
-    { text: "은행리스트", path: "/COM006.view" },
-    { text: "주소검색", path: "/COM007.view" },
-    { text: "OCR인증", path: "/COM008.view" },
-    { text: "직종선택", path: "/COM009.view" },
-    { text: "CDD/EDD", path: "/COM010.view" },
-    { text: "보안카드", path: "/COM011.view" },
-    { text: "OTP인증", path: "/COM012.view" }
+    { text: "휴대폰본인인증", path: "/com/COM001.view" },
+    { text: "약관화면", path: "/com/COM002.view" },
+    { text: "타행본인계좌인증(이기종)", path: "/com/COM003.view" },
+    { text: "타행본인계좌인증(중앙회)", path: "/com/COM004.view" },
+    { text: "계좌리스트", path: "/com/COM005.view" },
+    { text: "은행리스트", path: "/com/COM006.view" },
+    { text: "주소검색", path: "/com/COM007.view" },
+    { text: "OCR인증", path: "/com/COM008.view" },
+    { text: "직종선택", path: "/com/COM009.view" },
+    { text: "CDD/EDD", path: "/com/COM010.view" },
+    { text: "보안카드", path: "/com/COM011.view" },
+    { text: "OTP인증", path: "/com/COM012.view" }
   ],
   inq: [
     { text: "전계좌조회", path: "/INQ001.view" },
@@ -84,16 +86,7 @@ const BankingTest = () => {
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
 
-  const [isAuthOpen, setAuthOpen] = useState(false);
-  const handleOpenAuth = () => {
-    setAuthOpen(true);
-  };
-  const handleCloseAuth = () => {
-    setAuthOpen(false);
-  };
-
   return (
-    <> 
     <Box sx={{
           display: 'flex',
           flexWrap: 'wrap', // 자동 줄바꿈
@@ -107,26 +100,30 @@ const BankingTest = () => {
 
       {buttons.map((item, index) => {
         // "휴대폰본인인증" 버튼이면 handleOpenAuth, 아니면 기본 doActionURL 사용
-        const clickHandler =
-          item.text === "휴대폰본인인증"
-            ? handleOpenAuth
-            : () => doActionURL(item.path);
-
         return (
           <Button01
             key={index}
             btnName={item.text}
             fontSize="15px"
             width="43%"
-            clickFunc={clickHandler}
+            clickFunc={() => {
+              if (txGbnCd === 'com') {
+                // "com" 그룹의 경우 팝업 호출
+                openFullPopup({
+                  url: item.path,
+                  nFunc: () => {
+                    GLog.d('풀 팝업 닫힘');
+                  }
+                });
+              } else {
+                // 그 외는 일반 페이지 이동
+                doActionURL(item.path);
+              }
+            }}
           />
         );
       })}
-
     </Box>
-
-<MobileAuth isOpen={isAuthOpen} onClose={handleCloseAuth} />
-</>
   );
 };
 
