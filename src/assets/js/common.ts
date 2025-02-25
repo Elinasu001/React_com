@@ -1,0 +1,132 @@
+import { useNavigate } from "react-router-dom";
+import { progressBar } from "@src/components/loading";
+import axios from 'axios';
+
+//앱 실행 환경
+export enum AppEnvType {
+  PRODUCTION = 'production',
+  DEVELOPMENT = 'development',
+  LOCAL = 'local'
+}
+export const APP_ENV = (import.meta.env.VITE_APP_ENV as AppEnvType) || AppEnvType.LOCAL;
+
+//상단 헤더 높이
+export const headerHeight = 50;
+//하단 헤더 높이
+export const bottomNavHeight = 60;
+
+//Data Type : 데이터 폼
+export type DataSet = Record<string,string|number|boolean|JSON>;
+
+//Data Type : 데이터 전송 요청 폼
+export type ApiReq  = {
+  uri: string;
+  param: DataSet;
+}
+
+//Data Type : 데이터 전송 응답 폼
+export type ApiRes  = {
+  header: {
+    respCd: string;
+    respMsg: string;
+  };
+  data: DataSet | null;
+}
+
+export const GLog = (() => {
+  const _debug = (logMessage: string): void => {
+    if (APP_ENV != AppEnvType.PRODUCTION)console.log("[DEBUG]:" + logMessage);
+  };
+
+  const _info = (logMessage: string): void => {
+    if (APP_ENV != AppEnvType.PRODUCTION)console.info("[INFO]:" + logMessage);
+  };
+  
+  const _warn = (logMessage: string): void => {
+    if (APP_ENV != AppEnvType.PRODUCTION)console.warn("[WARN]:" + logMessage);
+  };
+
+  // 에러 익셉션 객체(error)를 선택적 매개변수로 추가
+  const _error = (msg: string, error?: unknown): void => {
+    if (APP_ENV != AppEnvType.PRODUCTION) {
+      if (error == null) {
+        console.error("[ERROR]:" + msg);
+      } else {
+        console.error("[ERROR]:" + msg, error);
+      }
+    }
+  };
+
+  return {
+    d: _debug,
+    i: _info,
+    w: _warn,
+    e: _error
+  };
+})();
+
+
+/**
+ * 공통 함수 모음
+ */
+export const Common = () => {
+  const navigate = useNavigate();
+
+  const makeForm = (uri:string): ApiReq => ({
+    uri,
+    param: {}
+  });
+
+  const addFormData = (form: ApiReq, name: string, value: string): void => {
+    form.param[name] = value;
+  };
+
+  /**
+   * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
+   * @param uri 이동할 페이지의 경로
+   */
+  const doAction = async (form: ApiReq): Promise<ApiRes> => {
+    try {
+      const response = await axios.post(form.uri, form.param, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+  
+      return {
+        header: {
+          respCd: "N00000", // 성공 코드
+          respMsg: "성공적으로 처리되었습니다."
+        },
+        data: response.data // 성공 시 반환 데이터
+      };
+    } catch (error: any) {
+      // 에러 발생 시 처리
+      const errorMsg = error.response?.data?.message || "처리 중 오류가 발생하였습니다.";
+  
+      return {
+        header: {
+          respCd: "E00000", // 에러 코드
+          respMsg: errorMsg
+        },
+        data: null // 실패 시 데이터는 null
+      };
+    }
+  };
+
+
+  /**
+   * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
+   * @param uri 이동할 페이지의 경로
+   */
+  const doActionURL = (uri: string) => {
+    progressBar(true);
+    setTimeout(() => {
+      navigate(uri);
+      progressBar(false);
+    }, 500);
+  };
+
+  return { doAction , doActionURL, makeForm, addFormData };
+};
+
+
+export default { GLog , bottomNavHeight , Common }
