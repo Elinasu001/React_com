@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import { TextBox01 } from "@src/components/text";
 import { Common } from '@assets/js/common';
 import { Button01 } from "@src/components/button";
+import { useState } from "react";
+import MobileAuth from "../com/Com001"  /**휴대폰본인인증팝업 */
 
 /**
  * 메뉴별 버튼 목록 정의
@@ -82,30 +84,49 @@ const BankingTest = () => {
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
 
+  const [isAuthOpen, setAuthOpen] = useState(false);
+  const handleOpenAuth = () => {
+    setAuthOpen(true);
+  };
+  const handleCloseAuth = () => {
+    setAuthOpen(false);
+  };
+
   return (
-    <Box sx={{textAlign: 'center'}}>
-
-      <TextBox01 text="업무 테스트"/>
-
-      {/* 버튼 컨테이너 */}
-      <Box
-        sx={{
+    <> 
+    <Box sx={{
           display: 'flex',
           flexWrap: 'wrap', // 자동 줄바꿈
           justifyContent: 'space-between', // 좌우 정렬
           gap: 1, // 버튼 간의 간격
-        }}
-      >
-      {buttons.map((item,index) => (
-        <Button01 
-          key={index}  // 고유한 ID 값 사용
-          btnName={item.text}
-          fontSize="15px"
-          width="43%"
-          clickFunc={() => doActionURL(item.path)}
-        />
-      ))}</Box>
+        }}>
+
+      <TextBox01 text="업무 테스트"/>
+
+      {/* 버튼 컨테이너 */}
+
+      {buttons.map((item, index) => {
+        // "휴대폰본인인증" 버튼이면 handleOpenAuth, 아니면 기본 doActionURL 사용
+        const clickHandler =
+          item.text === "휴대폰본인인증"
+            ? handleOpenAuth
+            : () => doActionURL(item.path);
+
+        return (
+          <Button01
+            key={index}
+            btnName={item.text}
+            fontSize="15px"
+            width="43%"
+            clickFunc={clickHandler}
+          />
+        );
+      })}
+
     </Box>
+
+<MobileAuth isOpen={isAuthOpen} onClose={handleCloseAuth} />
+</>
   );
 };
 
