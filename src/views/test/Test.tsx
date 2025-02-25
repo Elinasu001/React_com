@@ -1,6 +1,6 @@
 import { Button, Box } from "@mui/material";
 import { messageView } from '@src/components/alert';
-import { GButtonTest } from '@src/components/button';
+import { TextBox01, TextBox02 } from "@src/components/text";
 import { progressBar } from "@src/components/loading";
 
 import { GLog, Common } from '@assets/js/common';
@@ -46,7 +46,6 @@ const TestButton = ({btnName,clickFunc}: {
  */
 const Test = () => {
   const { doAction, makeForm, addFormData } = Common();
-  const { title_01,title_02 } = GButtonTest();
   const isApp = NativeUtil.isApp() ? "앱" : "웹"
   return (
     <Box
@@ -57,15 +56,9 @@ const Test = () => {
       {/* 
         타이틀
       */}
-      {title_01("내부 기능 테스트")}
+      <TextBox01 text="내부 기능 테스트"/>
 
-
-      {/* 
-        네이티브 테스트 버튼 모음
-      */}
-      
-      {title_02('앱 환경 : ' + isApp)}
-
+      <TextBox02 text={`앱 환경 : ${isApp}`}/>
 
       {/* 
         네이티브 테스트 버튼 모음
@@ -98,7 +91,6 @@ const Test = () => {
         btnName="Toast 테스트"
         clickFunc={async () => {
           toast('테스트', () => {
-            
           });
         }}
       />
