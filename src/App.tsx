@@ -1,6 +1,7 @@
 // src/App.tsx
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "@views/common/Layout";
+import PopupLayout from "@views/common/PopupLayout";
 import Main from "@views/Main";
 import NativeTest from "@src/views/test/NativeTest";
 import Test from "@src/views/test/Test";
@@ -24,7 +25,7 @@ const App = () => {
         </Route>
 
 
-        <Route path="/com">
+        <Route path="/com" element={<PopupLayout />}>
           <Route path="com001.view" element={<Com001 />} />
         </Route>
 
