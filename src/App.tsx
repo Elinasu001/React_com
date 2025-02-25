@@ -5,6 +5,7 @@ import Main from "@views/Main";
 import NativeTest from "@src/views/test/NativeTest";
 import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
+import Inq002 from "@src/views/inq/Inq002";
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="nativeTest.view" element={<NativeTest />} />
           <Route path="test.view" element={<Test />} />
           <Route path="bankingtest.view" element={<BankingTest />} />
+          <Route path="Inq002.view" element={<Inq002 />} />
         </Route>
       </Routes>
     </Router>
