@@ -1,8 +1,7 @@
 import { Button, Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { GButtonTest } from '@src/components/button';
 import { TextBox01 } from "@src/components/text";
-import { GLog, Common } from '@assets/js/common';
+import { Common } from '@assets/js/common';
 
 /**
  * 테스트 버튼
