@@ -3,7 +3,7 @@ import NativeUtil from '@assets/js/common_native'
 import MobileAuth from "./com/Com001"
 import { useState } from "react";
 import { Button, Box } from "@mui/material";
-
+  
 const Main = () => {
 
   const [isAuthOpen, setAuthOpen] = useState(false);

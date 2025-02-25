@@ -16,11 +16,11 @@ const MobileAuth: React.FC<MobileAuthProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null; // 팝업이 닫혀 있으면 렌더링하지 않음
 
-  const fetchTest = async () => {
+  const fetchTest = async () => { 
 
     //폼생성,데이터 주입
     const form = makeForm('https://jsonplaceholder.typicode.com/posts');
-    addFormData(form,'txCd','moAuth');
+    addFormData(form,'txGbnCd','S01');
     addFormData(form,'telNo','01041778316');
 
     //로딩 ON
@@ -98,6 +98,18 @@ const MobileAuth: React.FC<MobileAuthProps> = ({ isOpen, onClose }) => {
             <TextField 
               fullWidth
               id="A_CUST_NM"
+              name="A_CUST_NM"
+              placeholder="이름 입력"
+              variant="outlined"
+              required
+            />
+          </Box>
+
+          <Box mt={3}>
+            <Typography variant="body2">통신사</Typography>
+            <TextField 
+              fullWidth
+              id="A_CUST_"
               name="A_CUST_NM"
               placeholder="이름 입력"
               variant="outlined"
