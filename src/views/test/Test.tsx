@@ -28,15 +28,6 @@ const Test = () => {
       {/* 
         네이티브 테스트 버튼 모음
       */}
-      <Button01
-        btnName="로딩 테스트"
-        clickFunc={async () => {
-          progressBar(true, "로딩중");
-          setTimeout(() => {
-            progressBar(false);
-          }, 3000);
-        }}
-      />
 
       <Button01 
         btnName="로딩 테스트"
