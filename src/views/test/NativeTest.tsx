@@ -1,47 +1,13 @@
-import { Button, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { messageView } from '@src/components/alert';
-import { TextBox01, TextBox02 } from "@src/components/text";
+import { TextBox01 } from "@src/components/text";
+import { Button01 } from "@src/components/button";
 import { progressBar } from "@src/components/loading";
 import { NativeUtil } from '@assets/js/common_native';
 
-/**
- * 테스트 버튼
- */
-const TestButton = ({btnName,clickFunc}: {
-  btnName: string;
-  clickFunc: () => void;
-}) => {
-  return (
-    <Button 
-      variant="contained" 
-      onClick={clickFunc}
-      sx={{
-        width: "80%",
-        fontFamily: "SCDream",
-        fontWeight: 800,
-        mb: 2,
-        px: 4,
-        py: 1.5,
-        fontSize: '20px',
-        borderRadius: '8px',
-        boxShadow: 3,
-        backgroundColor: 'primary.main',
-        ':hover': {
-          backgroundColor: 'primary.dark'
-        }
-      }}
-    >
-      {btnName}
-    </Button>
-  );
-};
-
 const NativeTest = () => {
   return (
-    <Box
-    sx={{
-      textAlign: 'center'}}
-    >
+    <Box sx={{textAlign: 'center'}}>
       
       {/* 
         타이틀
@@ -52,7 +18,7 @@ const NativeTest = () => {
       {/* 
         네이티브 테스트 버튼 모음
       */}
-      <TestButton 
+      <Button01 
         btnName="디바이스 정보 조회"
         clickFunc={async () => {
           progressBar(true);
@@ -62,9 +28,7 @@ const NativeTest = () => {
         }}
       />
 
-
-      
-      <TestButton 
+      <Button01 
         btnName="앱 종료"
         clickFunc={async () => {
           NativeUtil.appClose();

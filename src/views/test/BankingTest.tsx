@@ -2,6 +2,7 @@ import { Button, Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { TextBox01 } from "@src/components/text";
 import { GLog, Common } from '@assets/js/common';
+import { Button01 } from "@src/components/button";
 
 /**
  * 테스트 버튼
@@ -114,36 +115,18 @@ const BankingTest = () => {
   const buttons = menuItems[txGbnCd] || [];
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-        gap: 2,
-      }}
-    >
+    <Box sx={{textAlign: 'center'}}>
+
       <TextBox01 text="업무 테스트"/>
 
       {/* 버튼 컨테이너 */}
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          gap: 2,
-          width: "100%",
-          maxWidth: "400px",
-        }}
-      >
-        {buttons.map((item, index) => (
-          <TestButton 
-            key={index}
+        {buttons.map((item) => (
+          <Button01 
             btnName={item.text}
+            width="40%"
             clickFunc={() => doActionURL(item.path)}
           />
         ))}
-      </Box>
     </Box>
   );
 };

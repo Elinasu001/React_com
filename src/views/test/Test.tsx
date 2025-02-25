@@ -1,44 +1,12 @@
-import { Button, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import { messageView } from '@src/components/alert';
 import { TextBox01, TextBox02 } from "@src/components/text";
 import { progressBar } from "@src/components/loading";
+import { Button01 } from "@src/components/button";
 
 import { GLog, Common } from '@assets/js/common';
 import { toast } from "@src/components/toast";
 import NativeUtil from '@assets/js/common_native';
-
-/**
- * 테스트 버튼
- */
-const TestButton = ({btnName,clickFunc}: {
-  btnName: string;
-  clickFunc: () => void;
-}) => {
-  return (
-    <Button 
-      variant="contained" 
-      onClick={clickFunc}
-      sx={{
-        width: "80%",
-        fontFamily: "SCDream",
-        fontWeight: 800,
-        mb: 2,
-        px: 4,
-        py: 1.5,
-        fontSize: '20px',
-        borderRadius: '8px',
-        boxShadow: 3,
-        backgroundColor: 'primary.main',
-        ':hover': {
-          backgroundColor: 'primary.dark'
-        }
-      }}
-    >
-      {btnName}
-    </Button>
-  );
-};
-
 
 
 /**
@@ -48,11 +16,7 @@ const Test = () => {
   const { doAction, makeForm, addFormData } = Common();
   const isApp = NativeUtil.isApp() ? "앱" : "웹"
   return (
-    <Box
-    sx={{
-      textAlign: 'center'}}
-    >
-      
+    <Box sx={{textAlign: 'center'}}>
       {/* 
         타이틀
       */}
@@ -63,7 +27,17 @@ const Test = () => {
       {/* 
         네이티브 테스트 버튼 모음
       */}
-      <TestButton 
+      <Button01
+        btnName="로딩 테스트"
+        clickFunc={async () => {
+          progressBar(true, "로딩중");
+          setTimeout(() => {
+            progressBar(false);
+          }, 3000);
+        }}
+      />
+
+      <Button01 
         btnName="로딩 테스트"
         clickFunc={async () => {
           progressBar(true, "로딩중");
@@ -73,7 +47,7 @@ const Test = () => {
         }}
       />
 
-      <TestButton 
+      <Button01 
         btnName="로그 테스트"
         clickFunc={async () => {
           GLog.d('로그테스트1  debug');
@@ -87,7 +61,7 @@ const Test = () => {
       />
 
       
-      <TestButton 
+      <Button01 
         btnName="Toast 테스트"
         clickFunc={async () => {
           toast('테스트', () => {
@@ -96,7 +70,7 @@ const Test = () => {
       />
 
       
-    <TestButton 
+      <Button01 
         btnName="Alert 테스트"
         clickFunc={async () => {
           messageView(
@@ -108,7 +82,7 @@ const Test = () => {
       />
 
 
-      <TestButton 
+      <Button01 
         btnName="Confirm 테스트"
         clickFunc={async () => {
           messageView(
@@ -122,7 +96,7 @@ const Test = () => {
       />
 
 
-      <TestButton 
+      <Button01 
         btnName="doAction 테스트"
         clickFunc={async () => {
 
