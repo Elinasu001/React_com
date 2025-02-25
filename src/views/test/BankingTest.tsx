@@ -128,9 +128,6 @@ const BankingTest = () => {
       })}
     </Box>
 
-
-</>
-
   );
 };
 
