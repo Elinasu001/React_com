@@ -1,8 +1,6 @@
 import { Button, Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { messageView } from '@src/components/alert';
 import { GButtonTest } from '@src/components/button';
-import { progressBar } from "@src/components/loading";
 import { GLog, Common } from '@assets/js/common';
 
 /**
