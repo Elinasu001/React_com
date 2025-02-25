@@ -1,8 +1,6 @@
 import { Button, Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { messageView } from '@src/components/alert';
-import { GButtonTest } from '@src/components/button';
-import { progressBar } from "@src/components/loading";
+import { TextBox01 } from "@src/components/text";
 import { GLog, Common } from '@assets/js/common';
 
 /**
@@ -108,7 +106,6 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
  */
 const BankingTest = () => {
   const { doActionURL } = Common();
-  const { title_01 } = GButtonTest();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const txGbnCd = queryParams.get("txGbnCd") || "com"; // 기본값: "com"
@@ -126,7 +123,7 @@ const BankingTest = () => {
         gap: 2,
       }}
     >
-      {title_01("업무 테스트")}
+      <TextBox01 text="업무 테스트"/>
 
       {/* 버튼 컨테이너 */}
       <Box
