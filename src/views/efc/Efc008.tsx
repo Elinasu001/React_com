@@ -1,7 +1,7 @@
 import { Box, Typography, TextField, List, ListItem, ListItemText, Divider } from "@mui/material";
 
 
-const Efc008 = () => {
+const EFC008 = () => {
   return (
 
     <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "center", p: 3}}> {/* 타이틀 위치 조정 */}
@@ -150,4 +150,4 @@ const Efc008 = () => {
   );
 };
 
-export default Efc008;
+export default EFC008;
