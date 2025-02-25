@@ -4,7 +4,7 @@ import { TextBox01, TextBox02 } from "@src/components/text";
 import { progressBar } from "@src/components/loading";
 import { Button01 } from "@src/components/button";
 
-import { GLog, Common } from '@assets/js/common';
+import { GLog, Common, API_URL, APP_ENV } from '@assets/js/common';
 import { toast } from "@src/components/toast";
 import NativeUtil from '@assets/js/common_native';
 import { openPopup , openBottomPopup , openFullPopup } from "@src/components/popup";
@@ -47,8 +47,8 @@ const Test = () => {
           GLog.w('로그테스트3  wran');
           GLog.e('로그테스트4  error');
           GLog.d('==환경변수==');
-          GLog.d('VITE_APP_API_BASE_URL : ' + import.meta.env.VITE_APP_API_BASE_URL);
-          GLog.d('VITE_APP_ENV : ' + import.meta.env.VITE_APP_ENV);
+          GLog.d('VITE_APP_API_BASE_URL : ' + API_URL);
+          GLog.d('VITE_APP_ENV : ' + APP_ENV);
         }}
       />
 

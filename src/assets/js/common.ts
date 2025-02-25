@@ -9,6 +9,7 @@ export enum AppEnvType {
   LOCAL = 'local'
 }
 export const APP_ENV = (import.meta.env.VITE_APP_ENV as AppEnvType) || AppEnvType.LOCAL;
+export const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
 
 //상단 헤더 높이
 export const headerHeight = 50;
