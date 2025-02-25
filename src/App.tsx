@@ -24,6 +24,7 @@ const App = () => {
           <Route path="test.view" element={<Test />} />
           <Route path="bankingTest.view" element={<BankingTest />} />
           <Route path="inputTest.view" element={<InputTest />} />
+          <Route path="EFC002.view" element={<EFC002 />} />
         </Route>
 
 
