@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { TextBox01 } from "@src/components/text";
 import { Common } from '@assets/js/common';
 import { Button01 } from "@src/components/button";
+import { Button, Grid } from '@mui/material';
 
 /**
  * 메뉴별 버튼 목록 정의
@@ -88,15 +89,23 @@ const BankingTest = () => {
       <TextBox01 text="업무 테스트"/>
 
       {/* 버튼 컨테이너 */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap', // 자동 줄바꿈
+          justifyContent: 'space-between', // 좌우 정렬
+          gap: 1, // 버튼 간의 간격
+        }}
+      >
       {buttons.map((item,index) => (
         <Button01 
           key={index}  // 고유한 ID 값 사용
           btnName={item.text}
-          fontSize="14px"
-          width="80%"
+          fontSize="15px"
+          width="43%"
           clickFunc={() => doActionURL(item.path)}
         />
-      ))}
+      ))}</Box>
     </Box>
   );
 };
