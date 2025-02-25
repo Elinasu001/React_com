@@ -1,6 +1,6 @@
 import { Button, Box } from "@mui/material";
 import { messageView } from '@src/components/alert';
-import { GButtonTest } from '@src/components/button';
+import { TextBox01, TextBox02 } from "@src/components/text";
 import { progressBar } from "@src/components/loading";
 import { NativeUtil } from '@assets/js/common_native';
 
@@ -37,9 +37,6 @@ const TestButton = ({btnName,clickFunc}: {
 };
 
 const NativeTest = () => {
-
-  const { title_01 } = GButtonTest();
-
   return (
     <Box
     sx={{
@@ -49,7 +46,7 @@ const NativeTest = () => {
       {/* 
         타이틀
       */}
-      {title_01("네이티브 기능 테스트")}
+      <TextBox01 text="네이티브 기능 테스트"/>
 
 
       {/* 
