@@ -7,7 +7,7 @@ import { Button01 } from "@src/components/button";
 import { GLog, Common } from '@assets/js/common';
 import { toast } from "@src/components/toast";
 import NativeUtil from '@assets/js/common_native';
-import { openBottomPopup , openFullPopup } from "@src/components/popup";
+import { openPopup , openBottomPopup , openFullPopup } from "@src/components/popup";
 
 
 /**
@@ -123,6 +123,15 @@ const Test = () => {
             '확인',
             () => GLog.d('확인 클릭')
           )
+        }}
+      />
+
+      <Button01 
+        btnName="일반 팝업 테스트"
+        clickFunc={() => {
+          openPopup({url:'/popup/popup001.view',nFunc:()=>{
+            GLog.d('일반 팝업 닫힘');
+          }});
         }}
       />
 
