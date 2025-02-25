@@ -13,7 +13,7 @@ export default tseslint.config(
     files: ['**/*.{ts,tsx}'], // TypeScript 파일 검사
     languageOptions: {
       ecmaVersion: 2020, // 최신 ECMAScript 문법 지원
-      parser: '@typescript-eslint/parser', // ✅ TypeScript 파서 설정
+      parser: '@typescript-eslint/parser', // TypeScript 파서 설정
       parserOptions: {
         project: './tsconfig.json', // TypeScript 설정 파일 연결
         sourceType: 'module', // ES 모듈 사용

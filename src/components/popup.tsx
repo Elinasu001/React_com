@@ -2,11 +2,11 @@
  * @fileoverview 팝업 UI
  *
  * 사용 예시:
- * import { Popup01 } from "@src/components/popup";
+ * import { openPopup } from "@src/components/popup";
  */
-import { useState, useEffect, lazy, Suspense} from 'react';
+import { useState, useEffect} from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { Button, Box, Slide, Typography, Modal, CircularProgress } from '@mui/material';
+import { Button, Box, Slide, Modal } from '@mui/material';
 
 let root: Root | null = null;
 
@@ -32,27 +32,15 @@ export const openPopup = (prop: PopupProps) => {
   }
 
   /**
-   * ✅ 팝업 컴포넌트 (자동 열림, 닫기 버튼 포함)
+   * 팝업 컴포넌트 (자동 열림, 닫기 버튼 포함)
    */
   const Popup01 = () => {
     const [open, setOpen] = useState(false);
-    const [ContentComponent, setContentComponent] = useState<React.LazyExoticComponent<React.ComponentType<any>> | null>(null);
 
     // 컴포넌트 마운트 시 자동으로 팝업 열기
     useEffect(() => {
       setOpen(true);
-      loadComponent();
     }, []);
-
-    // Vite의 dynamic import 사용
-    const loadComponent = async () => {
-      try {
-        const componentModule = lazy(() => import(`${prop.url}`)); // 동적 경로 기반 로딩
-        setContentComponent(componentModule);
-      } catch (error) {
-        console.error('컴포넌트 로드 실패:', error);
-      }
-    };
 
     // 팝업 닫기 및 클린업 처리
     const handleClose = () => {
