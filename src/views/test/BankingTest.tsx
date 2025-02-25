@@ -105,7 +105,9 @@ const BankingTest = () => {
             key={index}
             btnName={item.text}
             fontSize="15px"
-            width="43%"
+
+            width="100%"
+
             clickFunc={() => {
               if (txGbnCd === 'com') {
                 // "com" 그룹의 경우 팝업 호출
@@ -120,10 +122,15 @@ const BankingTest = () => {
                 doActionURL(item.path);
               }
             }}
+
           />
         );
       })}
     </Box>
+
+
+</>
+
   );
 };
 
