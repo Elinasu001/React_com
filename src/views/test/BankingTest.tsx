@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import { TextBox01 } from "@src/components/text";
 import { Common } from '@assets/js/common';
 import { Button01 } from "@src/components/button";
-import { Button, Grid } from '@mui/material';
 
 /**
  * 메뉴별 버튼 목록 정의
