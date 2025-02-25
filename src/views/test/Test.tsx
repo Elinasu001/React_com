@@ -4,9 +4,10 @@ import { TextBox01, TextBox02 } from "@src/components/text";
 import { progressBar } from "@src/components/loading";
 import { Button01 } from "@src/components/button";
 
-import { GLog, Common } from '@assets/js/common';
+import { GLog, Common, API_URL, APP_ENV } from '@assets/js/common';
 import { toast } from "@src/components/toast";
 import NativeUtil from '@assets/js/common_native';
+import { openPopup , openBottomPopup , openFullPopup } from "@src/components/popup";
 
 
 /**
@@ -27,15 +28,6 @@ const Test = () => {
       {/* 
         네이티브 테스트 버튼 모음
       */}
-      <Button01
-        btnName="로딩 테스트"
-        clickFunc={async () => {
-          progressBar(true, "로딩중");
-          setTimeout(() => {
-            progressBar(false);
-          }, 3000);
-        }}
-      />
 
       <Button01 
         btnName="로딩 테스트"
@@ -55,8 +47,8 @@ const Test = () => {
           GLog.w('로그테스트3  wran');
           GLog.e('로그테스트4  error');
           GLog.d('==환경변수==');
-          GLog.d('VITE_APP_API_BASE_URL : ' + import.meta.env.VITE_APP_API_BASE_URL);
-          GLog.d('VITE_APP_ENV : ' + import.meta.env.VITE_APP_ENV);
+          GLog.d('VITE_APP_API_BASE_URL : ' + API_URL);
+          GLog.d('VITE_APP_ENV : ' + APP_ENV);
         }}
       />
 
@@ -131,6 +123,44 @@ const Test = () => {
             '확인',
             () => GLog.d('확인 클릭')
           )
+        }}
+      />
+
+      <Button01 
+        btnName="일반 팝업 테스트"
+        clickFunc={() => {
+          openPopup({url:'/popup/popup001.view',nFunc:()=>{
+            GLog.d('일반 팝업 닫힘');
+          }});
+        }}
+      />
+
+      <Button01 
+        btnName="바텀 팝업 테스트"
+        clickFunc={() => {
+          openBottomPopup({url:'/popup/popup001.view',nFunc:()=>{
+            GLog.d('바텀 팝업 닫힘');
+          }});
+        }}
+      />
+
+
+      <Button01 
+        btnName="풀 팝업 테스트"
+        clickFunc={() => {
+          openFullPopup({url:'/popup/popup001.view',nFunc:()=>{
+            GLog.d('풀 팝업 닫힘');
+          }});
+        }}
+      />
+
+
+      <Button01 
+        btnName="휴대폰 본인인증 테스트"
+        clickFunc={() => {
+          openFullPopup({url:'/com/com001.view',nFunc:()=>{
+            GLog.d('풀 팝업 닫힘');
+          }});
         }}
       />
     </Box>

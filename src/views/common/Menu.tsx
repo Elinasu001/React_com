@@ -20,8 +20,10 @@ const Menu = ({ open, onClose }: {
   //메뉴 정의
   const menuItems = [
     { text: "홈", icon: <HomeIcon />, path: "/" },
-    { text: "테스트", icon: <CodeIcon />, path: "/Test.view"},
+    { text: "기능 테스트", icon: <CodeIcon />, path: "/test.view"},
+    { text: "폼 테스트", icon: <CodeIcon />, path: "/inputTest.view"},
     { text: "네이티브", icon: <CodeIcon />, path: "/nativeTest.view"},
+    { text: "공통 테스트", icon: <CodeIcon />, path: "/nativeTest.view"},
     { text: "공통(COM)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=com" },
     { text: "조회(INQ)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=inq" },
     { text: "이체(TNF)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=tnf" },

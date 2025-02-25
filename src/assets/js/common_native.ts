@@ -1,5 +1,6 @@
 import { GLog, DataSet, APP_ENV, AppEnvType } from '@assets/js/common';
 import { messageView } from '@src/components/alert';
+import { progressBar } from '@src/components/loading';
 
 //Data Type : 네이티브 데이터 전송 폼
 export type MessageSet = {
@@ -80,6 +81,16 @@ export const NativeUtil = (() => {
   };
 
 
+  /**[공통] 디바이스 물리 뒤로가기 버튼  */
+	const _fnBackBtn = function(){
+		GLog.d('뒤로가기');
+    progressBar(true);
+    setTimeout(() => {
+      window.history.back(); // 브라우저의 이전 페이지로 이동
+      progressBar(false);
+    }, 300);
+	};
+
   /** [1] 디바이스 정보 조회  */
   const _getDeviceInfo = async (): Promise<DataSet> => {
     if (_isApp()) {
@@ -107,17 +118,52 @@ export const NativeUtil = (() => {
     }
   };
 
+  /**[공통] 앱이 포어그라운드로 전환후 호출하는 웹 함수  */
+  const _fnForeGround = (): void => {
+    GLog.d("앱 포어그라운드로 올라옴");
+  }
+
+	/**[공통] 앱이 백그라운드로 내려가기전 호출하는 웹 함수  */
+  const _fnBackGround = (): void => {
+    GLog.d("앱 백그라운드로 내려감");
+  }
+
+  /**[공통] 앱이 포어그라운드 상태일때 푸쉬알림 수신시 호출하는 웹함수  */
+	var _fnPushLink = (): void => {
+    GLog.d("앱 백그라운드로 내려감");
+  }
   // 필요한 다른 함수나 변수들도 여기에 추가할 수 있습니다.
 
   return {
     bridgeCallBack: _bridgeCallBack			//[공통]네이티브 처리후 콜백함수 저장소 
     , isApp: _isApp					//[공통]네이티브 앱인지 판단
-
-    , appClose: _appClose 					//[공통]앱종료
-
-
-    , getDeviceInfo: _getDeviceInfo 			//[1]디바이스 정보 얻어오기(버전정보,휴대폰번호,푸쉬키)
+    
+		,appClose 						: _appClose 					//[공통]앱종료
+		,fnBackGround 				: _fnBackGround 			//[공통]앱이 백그라운드로 내려가기전 호출하는 웹 함수
+		,fnForeGround 				: _fnForeGround 			//[공통]앱이 포어그라운드로 전환후 호출하는 웹 함수
+		,fnPushLink 					: _fnPushLink 				//[공통]앱이 포어그라운드 상태일때 푸쉬알림 수신시 호출하는 웹함수
+		,fnBackBtn 					  : _fnBackBtn 				  //[공통]디바이스 물리 뒤로가기 버튼
+		
+		,getDeviceInfo 				: _getDeviceInfo 			//[1]디바이스 정보 얻어오기(버전정보,휴대폰번호,푸쉬키)
+		// ,loading 						  : _loading 						//[2]로딩
+		// ,setAppdata 					: _setAppdata 				//[3]내부저장소 등록
+		// ,getAppdata 					: _getAppdata 				//[4]내부저장소 조회
+		// ,getGalleryImage 			: _getGalleryImage 		//[5]갤러리 이미지 조회
+		// ,getCameraImage 		  : _getCameraImage 		//[6]카메라 촬영후 이미지 조회
+		// ,urlFileDownload 			: _urlFileDownload 		//[7]파일 다운로드 (URL)
+		// ,base64FileDownload 	: _base64FileDownload //[8]파일 다운로드 (Base64)
+		// ,permissionSelect 		: _permissionSelect 	//[9]퍼미션 상태체크
+		// ,permissionCheck 			: _permissionCheck 		//[10]퍼미션 체크
+		// ,showToast 					  : _showToast 				  //[11]커스텀토스트 메세지 출력
+		// ,showNotification 		: _showNotification		//[12]알림 메세지 출력
+		// ,pushList 						: _pushList					  //[13]푸쉬 리스트 조회
+		// ,pushDelete 					: _pushDelete				  //[14]푸쉬 리스트 제거
+		// ,pushTopicUpdate 			: _pushTopicUpdate		//[15]푸쉬 그룹 변경		
+		// ,capture 						  : _capture						//[16]캡처하기
   };
 })();
 
 export default NativeUtil;
+
+
+NativeUtil.fnBackGround

@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import Logo from "@images/logo.svg";
+import Logo from "@assets/images/logo.svg";
 
 const Header = () => {
   return (
