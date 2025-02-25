@@ -27,50 +27,50 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
     { text: "OTP인증", path: "/com/COM012.view" }
   ],
   inq: [
-    { text: "전계좌조회", path: "/INQ001.view" },
-    { text: "거래내역조회", path: "/INQ002.view" }
+    { text: "전계좌조회", path: "/inq/INQ001.view" },
+    { text: "거래내역조회", path: "/inq/INQ002.view" }
   ],
   tnf: [
-    { text: "이체", path: "/TNF001.view" },
-    { text: "이체결과조회", path: "/TNF002.view" },
-    { text: "자동이체", path: "/TNF003.view" },
-    { text: "자동이체관리", path: "/TNF004.view" },
-    { text: "자동이체결과조회", path: "/TNF005.view" }
+    { text: "이체", path: "/tnf/TNF001.view" },
+    { text: "이체결과조회", path: "/tnf/TNF002.view" },
+    { text: "자동이체", path: "/tnf/TNF003.view" },
+    { text: "자동이체관리", path: "/tnf/TNF004.view" },
+    { text: "자동이체결과조회", path: "/tnf/TNF005.view" }
   ],
   dep: [
-    { text: "상품안내/신청", path: "/DEP001.view" },
-    { text: "입출금계좌신청", path: "/DEP002.view" },
-    { text: "예적금해지", path: "/DEP003.view" },
-    { text: "예적금해지예상조회", path: "/DEP004.view" },
-    { text: "만기자동재예치/만기해지송금", path: "/DEP005.view" },
-    { text: "적금납입일변경", path: "/DEP006.view" },
+    { text: "상품안내/신청", path: "/dep/DEP001.view" },
+    { text: "입출금계좌신청", path: "/dep/DEP002.view" },
+    { text: "예적금해지", path: "/dep/DEP003.view" },
+    { text: "예적금해지예상조회", path: "/dep/DEP004.view" },
+    { text: "만기자동재예치/만기해지송금", path: "/dep/DEP005.view" },
+    { text: "적금납입일변경", path: "/dep/DEP006.view" },
   ],
   lon: [
-    { text: "상품안내/신청", path: "/LON001.view" },
-    { text: "간편한도조회", path: "/LON002.view" },
-    { text: "전자약정", path: "/LON003.view" },
-    { text: "신용조회동의", path: "/LON004.view" },
-    { text: "온라인서류제출", path: "/LON005.view" },
-    { text: "대출상환신청", path: "/LON006.view" },
-    { text: "대출연장신청", path: "/LON007.view" },
-    { text: "대출철회신청", path: "/LON008.view" },
-    { text: "대출진행상태조회", path: "/LON009.view" }
+    { text: "상품안내/신청", path: "/lon/LON001.view" },
+    { text: "간편한도조회", path: "/lon/LON002.view" },
+    { text: "전자약정", path: "/lon/LON003.view" },
+    { text: "신용조회동의", path: "/lon/LON004.view" },
+    { text: "온라인서류제출", path: "/lon/LON005.view" },
+    { text: "대출상환신청", path: "/lon/LON006.view" },
+    { text: "대출연장신청", path: "/lon/LON007.view" },
+    { text: "대출철회신청", path: "/lon/LON008.view" },
+    { text: "대출진행상태조회", path: "/lon/LON009.view" }
   ],
   efc: [
-    { text: "고객정보변경", path: "/EFC001.view" },
-    { text: "계좌비밀번호변경", path: "/EFC002.view" },
-    { text: "계좌비밀번호오류해제", path: "/EFC003.view" },
-    { text: "자주쓰는계좌관리", path: "/EFC004.view" },
-    { text: "지연이체관리", path: "/EFC005.view" },
-    { text: "출금지정계좌관리", path: "/EFC006.view" },
-    { text: "입금지정계좌관리", path: "/EFC007.view" },
-    { text: "이체한도관리", path: "/EFC008.view" },
-    { text: "한도제한해제", path: "/EFC009.view" },
-    { text: "해지계좌조회", path: "/EFC010.view" },
-    { text: "거래중지좌", path: "/EFC011.view" },
-    { text: "비과세종합저축한도", path: "/EFC012.view" },
-    { text: "비과세종합저축증빙자료제출", path: "/EFC013.view" },
-    { text: "전자금융가입", path: "/EFC014.view" }
+    { text: "고객정보변경", path: "/efc/EFC001.view" },
+    { text: "계좌비밀번호변경", path: "/efc/EFC002.view" },
+    { text: "계좌비밀번호오류해제", path: "/efc/EFC003.view" },
+    { text: "자주쓰는계좌관리", path: "/efc/EFC004.view" },
+    { text: "지연이체관리", path: "/efc/EFC005.view" },
+    { text: "출금지정계좌관리", path: "/efc/EFC006.view" },
+    { text: "입금지정계좌관리", path: "/efc/EFC007.view" },
+    { text: "이체한도관리", path: "/efc/EFC008.view" },
+    { text: "한도제한해제", path: "/efc/EFC009.view" },
+    { text: "해지계좌조회", path: "/efc/EFC010.view" },
+    { text: "거래중지좌", path: "/efc/EFC011.view" },
+    { text: "비과세종합저축한도", path: "/efc/EFC012.view" },
+    { text: "비과세종합저축증빙자료제출", path: "/efc/EFC013.view" },
+    { text: "전자금융가입", path: "/efc/EFC014.view" }
   ]
 };
 
