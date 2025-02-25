@@ -7,6 +7,7 @@ import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
 import InputTest from "@src/views/test/InputTest";
 import Popup001 from "@src/views/popup/Popup001";
+import Com001 from "@src/views/com/Com001";
 
 
 const App = () => {
@@ -22,6 +23,10 @@ const App = () => {
           <Route path="inputTest.view" element={<InputTest />} />
         </Route>
 
+
+        <Route path="/com">
+          <Route path="com001.view" element={<Com001 />} />
+        </Route>
 
         <Route path="/popup">
           <Route path="popup001.view" element={<Popup001 />} />
