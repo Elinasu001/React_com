@@ -9,6 +9,9 @@ import BankingTest from "@src/views/test/BankingTest";
 import InputTest from "@src/views/test/InputTest";
 import Popup001 from "@src/views/popup/Popup001";
 import Com001 from "@src/views/com/Com001";
+import COM011 from "@src/views/com/COM011";
+import COM012 from "@src/views/com/COM012";
+import EFC002 from "@src/views/efc/Efc001";
 
 
 const App = () => {
@@ -22,11 +25,19 @@ const App = () => {
           <Route path="test.view" element={<Test />} />
           <Route path="bankingTest.view" element={<BankingTest />} />
           <Route path="inputTest.view" element={<InputTest />} />
+
+
+          <Route path="/efc">
+            <Route path="EFC002.view" element={<EFC002 />} />
+          </Route>
+
         </Route>
 
 
         <Route path="/com" element={<PopupLayout />}>
           <Route path="com001.view" element={<Com001 />} />
+          <Route path="com011.view" element={<COM011 />} />
+          <Route path="com012.view" element={<COM012 />} />
         </Route>
 
         <Route path="/popup">
