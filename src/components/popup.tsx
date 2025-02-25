@@ -87,7 +87,6 @@ export const openBottomPopup = (prop: PopupProps) => {
                 height: '100%',
                 mt:2,
                 border: 'none',
-                border: 'none',
                 overflowX: 'hidden',  // 가로 스크롤 제거
                 overflowY: 'auto',    // 세로 스크롤은 자동 활성화
               }}
