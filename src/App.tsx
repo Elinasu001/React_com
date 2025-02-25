@@ -13,6 +13,8 @@ import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
 import EFC002 from "@src/views/efc/Efc001";
 
+import EFC008 from "@src/views/efc/EFC008";
+
 
 const App = () => {
   return (
@@ -29,6 +31,7 @@ const App = () => {
 
           <Route path="/efc">
             <Route path="EFC002.view" element={<EFC002 />} />
+            <Route path="EFC008.view" element={<EFC008 />} />
           </Route>
 
         </Route>
