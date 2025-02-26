@@ -10,17 +10,27 @@ interface CustomTabPanelProps {
   index: number;
 }
 
-function CustomTabPanel({ children, value, index, ...other }: CustomTabPanelProps): JSX.Element {
-  return (
-    <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`} aria-labelledby={`tab-${index}`} {...other}>
-    {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-  </div>
-  );
-};
+function CustomTabPanel(props: CustomTabPanelProps) {
+  const { children, value, index, ...other } = props;
 
-interface COM006Props {
-  onSelectBank: (bankCode: string) => void;  // 부모로 은행 코드 전달하는 함수
-  onClose: () => void; // 팝업 닫기 함수
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `tab-${index}`,
+    "aria-controls": `tabpanel-${index}`,
+  };
 }
 
 const COM006 = () => {
@@ -92,11 +102,6 @@ const COM006 = () => {
     setSelectedBank("");
   };
 
-  const a11yProps = (index: number) => ({
-    id: `tab-${index}`,
-    "aria-controls": `tabpanel-${index}`,
-  });
-
   const handleBankSelect = (bankCode: string) => {
 
     if (window.nFunc) { 
@@ -107,7 +112,7 @@ const COM006 = () => {
     }
 
     console.log("은행코드::::"+bankCode);
-    onClose(); // 팝업 닫기
+    //onClose(); // 팝업 닫기
 
   };
 
