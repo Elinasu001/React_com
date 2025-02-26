@@ -1,3 +1,5 @@
+import React, { Suspense } from 'react';
+
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
@@ -13,18 +15,18 @@ import { openFullPopup, openBottomPopup } from "@src/components/Popup";
  */
 const menuItems: Record<string, { text: string; path: string }[]> = {
   com: [
-    { text: "휴대폰본인인증", path: "/com/COM001.view" },
-    { text: "약관화면", path: "/com/COM002.view" },
-    { text: "타행본인계좌인증(이기종)", path: "/com/COM003.view" },
-    { text: "타행본인계좌인증(중앙회)", path: "/com/COM004.view" },
-    { text: "계좌리스트", path: "/com/COM005.view" },
-    { text: "은행리스트", path: "/com/COM006.view" },
-    { text: "주소검색", path: "/com/COM007.view" },
-    { text: "OCR인증", path: "/com/COM008.view" },
-    { text: "직종선택", path: "/com/COM009.view" },
-    { text: "CDD/EDD", path: "/com/COM010.view" },
-    { text: "보안카드", path: "/com/COM011.view" },
-    { text: "OTP인증", path: "/com/COM012.view" }
+    { text: "휴대폰본인인증", path: "@src/views/tnf/COM001" },
+    { text: "약관화면", path: "@src/views/tnf/COM002" },
+    { text: "타행본인계좌인증(이기종)", path: "@src/views/tnf/COM003" },
+    { text: "타행본인계좌인증(중앙회)", path: "@src/views/tnf/COM004" },
+    { text: "계좌리스트", path: "@src/views/tnf/COM005" },
+    { text: "은행리스트", path: "@src/views/tnf/COM006" },
+    { text: "주소검색", path: "@src/views/tnf/COM007" },
+    { text: "OCR인증", path: "@src/views/tnf/COM008" },
+    { text: "직종선택", path: "@src/views/tnf/COM009" },
+    { text: "CDD/EDD", path: "@src/views/tnf/COM010" },
+    { text: "보안카드", path: "@src/views/tnf/COM011" },
+    { text: "OTP인증", path: "@src/views/tnf/COM012" },
   ],
   inq: [
     { text: "전계좌조회", path: "/inq/INQ001.view" },
@@ -85,7 +87,7 @@ const BankingTest = () => {
 
   console.log("전체 URL:", window.location);
 
-
+  const modules = import.meta.glob('../views/**/*.tsx');
 
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
@@ -101,6 +103,7 @@ const BankingTest = () => {
       <TextBox01 text="업무 테스트"/>
 
       {/* 버튼 컨테이너 */}
+      
 
       {buttons.map((item, index) => {
         // "휴대폰본인인증" 버튼이면 handleOpenAuth, 아니면 기본 doActionURL 사용
@@ -113,26 +116,28 @@ const BankingTest = () => {
             width="100%"
 
             clickFunc={() => {
+              // "com" 그룹의 경우 팝업 호출
               if (txGbnCd === 'com') {
 
-                if(item.path.split('/')[2] === 'COM005.view' || item.path.split('/')[2] === 'COM006.view'){
-                   // "com" 그룹의 경우 팝업 호출
-                   openBottomPopup({
-                    url: item.path,
-                    nFunc: () => {
-                      GLog.d('팝업 닫힘');
-                    }
-                  });
-                }else {
-
-                  // "com" 그룹의 경우 팝업 호출
-                  openFullPopup({
-                    url: item.path,
-                    nFunc: () => {
-                      GLog.d('풀 팝업 닫힘');
-                    }
-                  });
-                }
+                
+                // // 특정 바텀 팝업업
+                // if(item.path.split('/')[2] === 'COM005.view' || item.path.split('/')[2] === 'COM006.view'){
+                //    openBottomPopup({component:POP001,title:'풀 테스트',nFunc:(data?)=>{
+                //     if(data){
+                //       GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                //     }else{
+                //       GLog.d('팝업 취소 닫힘');
+                //     }
+                //   }});
+                // }else {
+                //   openFullPopup({component:POP001,title:'풀 테스트',nFunc:(data?)=>{
+                //     if(data){
+                //       GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                //     }else{
+                //       GLog.d('팝업 취소 닫힘');
+                //     }
+                //   }});
+                // }
               } else {
                 // 그 외는 일반 페이지 이동
                 doActionURL(item.path);

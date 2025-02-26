@@ -1,8 +1,8 @@
 /**
- * @fileoverview 팝업 UI
+ * @fileoverview 박스 UI
  *
  * 사용 예시:
- * import { openBottomPopup } from "@src/components/popup";
+ * import { MainBox } from "@src/components/Box";
  */
 import { Box } from "@mui/material";
 import { ReactNode } from "react";

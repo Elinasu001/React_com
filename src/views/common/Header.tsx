@@ -10,7 +10,7 @@ const Header = () => {
         <Box component="img" src={Logo} alt="Logo" sx={{ height: 20}} />
 
         {/* 오른쪽 로그인 + 돋보기 아이콘 */}
-        <Box sx={{ display: "flex", alignItems: "center", mt: 0 }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           {/* 로그인 버튼 (SCDream5 폰트 적용 & 패딩 축소) */}
           <Button
             color="inherit"

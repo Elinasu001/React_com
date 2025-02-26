@@ -4,7 +4,6 @@ import {LimitInput} from "@src/components/Input";
 import {TextList} from "@src/components/TextList";
 
 const EFC008 = () => {
-  
   return (
         <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "center", p: 3 }}>
         
