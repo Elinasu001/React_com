@@ -10,6 +10,7 @@ const DEP001 = () => {
   return (
     <Box sx={{textAlign: 'center'}}>
       샘플
+      
     </Box>
   );
 };

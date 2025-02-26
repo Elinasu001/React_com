@@ -3,10 +3,10 @@ import { useLocation } from "react-router-dom";
 
 import { GLog } from '@assets/js/common';
 
-import { TextBox01 } from "@src/components/text";
+import { TextBox01 } from "@src/components/Text";
 import { Common } from '@assets/js/common';
-import { Button01 } from "@src/components/button";
-import { openFullPopup, openBottomPopup } from "@src/components/popup";
+import { Button01 } from "@src/components/Button";
+import { openFullPopup, openBottomPopup } from "@src/components/Popup";
 
 /**
  * 메뉴별 버튼 목록 정의

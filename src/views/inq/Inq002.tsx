@@ -6,7 +6,7 @@
  */
 import { Box } from "@mui/material";
 
-const INQ001 = () => {
+const INQ002 = () => {
   return (
     <Box sx={{textAlign: 'center'}}>
       샘플
@@ -14,4 +14,4 @@ const INQ001 = () => {
   );
 };
 
-export default INQ001;
+export default INQ002;

@@ -17,6 +17,7 @@ const EFC002 = () => {
       setPassword(value.slice(0, 4));
     }
   };
+  
 
   return (
     <div className="p-4 flex flex-col justify-center items-center h-screen">

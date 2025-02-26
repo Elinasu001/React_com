@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 import { MainBox } from "@src/components/box";
-import { Button01 } from "@src/components/button";
+import { Button01 } from "@src/components/Button";
 
 const COM011 = () => {
   return (

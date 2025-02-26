@@ -11,4 +11,5 @@ export const MainBox = ({ children }: {children ?: ReactNode}) => {
   return <Box sx={{ textAlign: "center" }}>{children}</Box>;
 };
 
+
 export default MainBox;

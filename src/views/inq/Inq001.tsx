@@ -8,9 +8,6 @@ import { useState } from "react";
 import { Box, Typography, Button, Divider, IconButton, Chip, ListItemButton   } from "@mui/material";
 import { Card01 } from "@src/components/Card";
 
-import ReceiptIcon from "@mui/icons-material/Receipt";
-import SendIcon from "@mui/icons-material/Send";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 
 const INQ001 = () => {
 

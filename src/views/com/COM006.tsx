@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
 import {  Common } from '@assets/js/common';
-import { progressBar } from "@src/components/loading";
-import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
+import { progressBar } from "@src/components/Loading";
+import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
 
 interface CustomTabPanelProps {
   children?: React.ReactNode;

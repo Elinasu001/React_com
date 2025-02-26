@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
-import { messageView } from '@src/components/alert';
-import { TextBox01, TextBox02 } from "@src/components/text";
-import { progressBar } from "@src/components/loading";
-import { Button01 } from "@src/components/button";
+import { messageView } from '@src/components/Alert';
+import { TextBox01, TextBox02 } from "@src/components/Text";
+import { progressBar } from "@src/components/Loading";
+import { Button01 } from "@src/components/Button";
 
 import { GLog, Common, API_URL, APP_ENV } from '@assets/js/common';
-import { toast } from "@src/components/toast";
+import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openFullPopup2, openBottomPopup2 } from "@src/components/popup";
+import { openPopup , openBottomPopup , openFullPopup, openFullPopup2, openBottomPopup2 } from "@src/components/Popup";
 import POP001 from "../pop/POP001";
 
 /**

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Box } from "@mui/material";
-import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
+import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
 
 /**
  * 일반 테스트 화면 드로잉

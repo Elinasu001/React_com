@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 import { MainBox } from "@src/components/Box";
-import { Button01 } from "@src/components/button";
+import { Button01 } from "@src/components/Button";
 
 const POP001: React.FC<{onClose: (data?: string) => void;}> = ({ onClose }) => {
   return (

@@ -24,7 +24,6 @@ import COM010 from "@src/views/com/COM010";
 import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
 
-
 // INQ[조회]
 import INQ001 from "@src/views/inq/INQ001";
 import INQ002 from "@src/views/inq/INQ002";
