@@ -3,9 +3,15 @@ import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/mater
 import { GLog, Common } from '@assets/js/common';
 import { progressBar } from "@src/components/loading";
 import { messageView } from '@src/components/alert';
+import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
 
-const COM001 = () => {
+const COM004 = () => {
   const { doAction, makeForm, addFormData } = Common();
+  const [number, setNumber] = useState('');
+
+
+
+
   const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
@@ -36,7 +42,7 @@ const COM001 = () => {
         setmblCtfcNo(event.target.value);
     }
 
-  // 입력값 초기화 함수
+  // 🔹 입력값 초기화 함수
   const resetForm = () => {
     setmblCtfcNo("");
     setSelectedCarrier("");
@@ -45,7 +51,7 @@ const COM001 = () => {
     setIsVerified(false);
   };
 
-  // 닫기 버튼 클릭 시 입력값 초기화 후 팝업 닫기
+  // 🔹 닫기 버튼 클릭 시 입력값 초기화 후 팝업 닫기
   const handleClose = () => {
     resetForm(); // 입력값 초기화
     
@@ -158,53 +164,21 @@ const COM001 = () => {
 
   return (
     
-      <Box
-        sx={{
-           
-        }}
-      >
+      <Box sx={{}}>
        
           <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="h6">휴대폰 본인인증</Typography>
+            <Typography variant="h6">타행본인계좌인증</Typography>
             
           </Box>
 
         
           <Box mt={3}>
-            <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
+            <Typography variant="body1"><strong>타행 본인 계좌 인증으로 본인 확인을 진행해요</strong></Typography>
           </Box>
 
      
           <Box mt={3}>
-            <Typography variant="body2">이름</Typography>
-            <TextField 
-              fullWidth
-              id="custNm"
-              name="custNm"
-              placeholder="이름 입력"
-              variant="outlined"
-              required
-              value={formData.custNm}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box mt={3}>
-            <Typography variant="body2">주민등록번호</Typography>
-            <TextField 
-              fullWidth
-              id="rsrNo"
-              name="rsrNo"
-              placeholder="주민등록번호 입력"
-              variant="outlined"
-              required
-              value={formData.rsrNo} // 상태 값 바인딩
-              onChange={handleChange} // 입력값 변경 감지
-            />
-          </Box>
-
-
-          <Box mt={3}>
-            <Typography variant="body2">통신사</Typography>
+            <Typography variant="body2">입금은행</Typography>
             <Select
                 fullWidth
                 value={selectedCarrier}
@@ -218,45 +192,22 @@ const COM001 = () => {
                 </MenuItem>
                 ))}
             </Select>
+           
+          </Box>
+          <Box mt={3}>
+            <Typography variant="body2">계좌번호</Typography>
+            <NumberBox label="숫자 입력" value={number} onChange={(e) => setNumber(e.target.value)} />
           </Box>
 
-          <Box mt={3}>
-            <Typography variant="body2">휴대폰번호</Typography>
-            <TextField 
-              fullWidth
-              id="telNo"
-              name="telNo"
-              placeholder="휴대폰번호 입력"
-              variant="outlined"
-              required
-              value={formData.telNo} // 상태 값 바인딩
-              onChange={handleChange} // 입력값 변경 감지
-            />
-          </Box>
-          {showVerificationInput && (       
-            <Box mt={3}>
-                <Typography variant="body2">인증번호</Typography>
-                <TextField 
-                fullWidth
-                id="telConNo"
-                name="telConNo"
-                placeholder="인증번호 입력"
-                variant="outlined"
-                required
-                value={mblCtfcNo ?? ""} // 상태 값 바인딩
-                onChange={mblCtfcNoChange} // 입력값 변경 감지
-                />
-            </Box>
-            )}
-          <Box mt="auto" display="flex" justifyContent="space-between"  sx={{ mt: 2 }}>
-            <Button variant="contained" color="primary"   onClick={isVerified ? userConfirmAuth : userAuth} >
-                {isVerified ? "인증확인" : "인증번호받기"} {/* 상태에 따라 버튼 변경 */}
+
+          <Box mt="auto" display="flex" justifyContent="space-between" >
+            <Button variant="contained" color="primary"   onClick={userAuth} >
+            계좌인증
             </Button>
-         
           </Box>
       </Box>
  
   );
 };
 
-export default COM001;
+export default COM004;
