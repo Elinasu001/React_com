@@ -5,7 +5,7 @@ import { progressBar } from "@src/components/loading";
 import { messageView } from '@src/components/alert';
 
 
-const Com001 = () => {
+const COM001 = () => {
   const { doAction, makeForm, addFormData } = Common();
   const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
@@ -260,4 +260,4 @@ const Com001 = () => {
   );
 };
 
-export default Com001;
+export default COM001;
