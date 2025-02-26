@@ -71,7 +71,7 @@ export const openBottomPopup = (prop: PopupProps) => {
             </div>
             <div className="pop-body">
               {/* 팝업 내용 */}
-              {/* <iframe src={prop.url} className="popup-iframe"></iframe> */}
+              <iframe src={prop.url} className="popup-iframe"></iframe>
               팝업 내용
             </div>
             
@@ -234,7 +234,7 @@ export const openPopup = (prop: PopupProps) => {
 
             <div className="pop-body">
               {/* 팝업 내용 */}
-              {/* <iframe src={prop.url} className="popup-iframe"></iframe> */}
+              <iframe src={prop.url} className="popup-iframe"></iframe>
               팝업 내용
             </div>
             
