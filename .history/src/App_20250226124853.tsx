@@ -19,7 +19,8 @@ import COM012 from "@src/views/com/COM012";
 
 // EFC
 import EFC001 from "@src/views/efc/EFC001";
-import EFC002 from "@src/views/efc/EFC002";
+import EFC002 from "@src/views/efc/TEMP_EFC002";
+
 import EFC008 from "@src/views/efc/EFC008";
 
 // INQ

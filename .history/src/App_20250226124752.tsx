@@ -8,7 +8,7 @@ import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
 
 import InputTest from "@src/views/test/InputTest";
-import POPUP001 from "@src/views/popup/POPUP001";
+import Popup001 from "@src/views/popup/POPUP001";
         
 // COM
 import COM001 from "@src/views/com/COM001";
@@ -18,8 +18,9 @@ import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
 
 // EFC
-import EFC001 from "@src/views/efc/EFC001";
-import EFC002 from "@src/views/efc/EFC002";
+import EFC001 from "@src/views/efc/TEMP_EFC001";
+import EFC002 from "@src/views/efc/TEMP_EFC002";
+
 import EFC008 from "@src/views/efc/EFC008";
 
 // INQ
@@ -54,11 +55,11 @@ const App = () => {
         </Route>
         
         <Route path="/com" element={<PopupLayout />}>
-          <Route path="COM001.view" element={<COM001 />} />
-          <Route path="COM004.view" element={<COM004 />} />
-          <Route path="COM006.view" element={<COM006 />} />
-          <Route path="COM011.view" element={<COM011 />} />
-          <Route path="COM012.view" element={<COM012 />} />
+          <Route path="com001.view" element={<COM001 />} />
+          <Route path="com004.view" element={<COM004 />} />
+          <Route path="com006.view" element={<COM006 />} />
+          <Route path="com011.view" element={<COM011 />} />
+          <Route path="com012.view" element={<COM012 />} />
         </Route>
 
         <Route path="/lon">
@@ -66,7 +67,7 @@ const App = () => {
         </Route>
 
         <Route path="/popup">
-          <Route path="POPUP001.view" element={<POPUP001 />} />
+          <Route path="popup001.view" element={<Popup001 />} />
         </Route>
 
       </Routes>
