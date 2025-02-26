@@ -14,7 +14,7 @@ const Inq = () => {
     <Box
     sx={{
       textAlign: 'center'}}
-    >
+    > 
       <TextBox01 text="거래내역조회"/>
 
       <AccountInfo />
