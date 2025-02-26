@@ -4,14 +4,22 @@ import { GLog, Common } from '@assets/js/common';
 import { progressBar } from "@src/components/loading";
 import { messageView } from '@src/components/alert';
 import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
+import { Button01 } from "@src/components/button";
+import { openBottomPopup } from "@src/components/popup";
+ 
 
 const COM004 = () => {
   const { doAction, makeForm, addFormData } = Common();
   const [number, setNumber] = useState('');
 
+  const [selectedBankCode, setSelectedBankCode] = useState("");
 
-
-
+  const handleBankSelect = (bankCode: string) => {
+    console.log("선택된 은행 코드:", bankCode);
+    setSelectedBankCode(bankCode);
+  };
+  
+  
   const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
@@ -77,51 +85,7 @@ const COM004 = () => {
    
   };
   
-  // 인증번호받기 이벤트 
-  const userAuth = async () => { 
-
-    //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
-    addFormData(form,'txGbnCd','A01');
-    addFormData(form,'CUSTNM', formData.custNm);
-    addFormData(form,'TELNO', formData.telNo);
-    addFormData(form,'RSR_RG_NO', formData.rsrNo);
-    addFormData(form,'TELCD', selectedCarrier);
-
-    //로딩 ON
-    progressBar(true, "통신중");
-
-    //통신
-    const test01 = await doAction(form);
-
-    //로딩 OFF
-    progressBar(false);
-    
-    //결과실패
-    if(test01.header.respCd != 'N00000'){
-    GLog.e('에러발생 !!!');
-    messageView(
-        '통신 실패 : '+test01.header.respMsg,
-        '확인',
-        () => GLog.d('확인 클릭')
-    )
-    return;
-    }
-
-    //정상
-    messageView(
-    '통신완료 : '+JSON.stringify(test01.data.MBL_CTFC_NO),
-    '확인',
-    (() => {
-        setIsVerified(true);
-        // setmblCtfcNo(test01.data.MBL_CTFC_NO);
-        setShowVerificationInput(true); // 인증번호 입력 필드 표시
-    })
-    
-    )
-    
-
-  };
+  
 
   // 인증번호 확인 이벤트 TODO 인증번호체크인터페이스 필요
   const userConfirmAuth = async () => {
@@ -179,20 +143,18 @@ const COM004 = () => {
      
           <Box mt={3}>
             <Typography variant="body2">입금은행</Typography>
-            <Select
-                fullWidth
-                value={selectedCarrier}
-                onChange={(e) => setSelectedCarrier(e.target.value)}
-                displayEmpty
-            >
-                <MenuItem value="" disabled>통신사를 선택하세요</MenuItem>
-                {telCdData.map((carrier) => (
-                <MenuItem key={carrier.CD} value={carrier.CD}>
-                    {carrier.CD_NM}
-                </MenuItem>
-                ))}
-            </Select>
-           
+              <Button01 
+                fontSize="15px"
+                btnName="입금은행"
+                width="100%"
+                clickFunc={() => {
+                  openBottomPopup({url: '/com/COM006.view',
+                                  nFunc: () => {
+                                    GLog.d('팝업 닫힘');
+                                  }
+                                });
+                              }}
+              />
           </Box>
           <Box mt={3}>
             <Typography variant="body2">계좌번호</Typography>

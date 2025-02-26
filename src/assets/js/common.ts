@@ -21,7 +21,7 @@ export type DataSet = Record<string,string|number|boolean|JSON>;
 
 //Data Type : 데이터 전송 요청 폼
 export type ApiReq  = {
-  uri: string;
+  serviceCd: string;
   param: DataSet;
 }
 
@@ -73,8 +73,8 @@ export const GLog = (() => {
 export const Common = () => {
   const navigate = useNavigate();
 
-  const makeForm = (uri:string): ApiReq => ({
-    uri,
+  const makeForm = (serviceCd:string): ApiReq => ({
+    serviceCd,
     param: {}
   });
 
@@ -83,25 +83,29 @@ export const Common = () => {
   };
 
   /**
-   * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
-   * @param uri 이동할 페이지의 경로
+   * gp_backend 서비스랑 통신하는 함수 입니다.
+   * @param req 서비스명,파라미터
    */
-  const doAction = async (form: ApiReq): Promise<ApiRes> => {
+  const doAction = async (req: ApiReq): Promise<ApiRes> => {
     try {
-      const response = await axios.post(form.uri, form.param, {
+      const response = await axios.post(API_URL+'/'+req.serviceCd+'.act', req.param, {
         headers: { 'Content-Type': 'application/json' }
       });
-  
+
+      //응답 데이터
+      const { APP_HEADER: appHeader, ...data } = response.data;
+
+      //응답 리턴
       return {
         header: {
-          respCd: "N00000", // 성공 코드
-          respMsg: "성공적으로 처리되었습니다."
+          respCd: appHeader?.respCd || "N00000", // 성공 코드
+          respMsg: appHeader?.respMsg || "성공적으로 처리되었습니다."
         },
-        data: response.data // 성공 시 반환 데이터
+        data: data // 성공 시 반환 데이터
       };
     } catch (error: any) {
       // 에러 발생 시 처리
-      const errorMsg = error.response?.data?.message || "처리 중 오류가 발생하였습니다.";
+      const errorMsg = error.response?.data?.message|| error.message || "처리 중 오류가 발생하였습니다.";
   
       return {
         header: {

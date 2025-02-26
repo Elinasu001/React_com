@@ -7,7 +7,7 @@ import { Button01 } from "@src/components/button";
 import { GLog, Common, API_URL, APP_ENV } from '@assets/js/common';
 import { toast } from "@src/components/toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup } from "@src/components/popup";
+import { openPopup , openBottomPopup , openFullPopup, openFullPopup2, openBottomPopup2 } from "@src/components/popup";
 
 
 /**
@@ -93,9 +93,8 @@ const Test = () => {
         clickFunc={async () => {
 
           //폼생성,데이터 주입
-          const form = makeForm('https://jsonplaceholder.typicode.com/posts');
-          addFormData(form,'gid','test');
-          addFormData(form,'gpwd','1234');
+          const form = makeForm('COM0001SC');
+          addFormData(form,'txGbnCd','S01');
 
           //로딩 ON
           progressBar(true, "통신중");
@@ -119,7 +118,7 @@ const Test = () => {
 
           //정상
           messageView(
-            '통신완료 : '+JSON.stringify(test01.data),
+            '통신완료 : '+JSON.stringify(test01),
             '확인',
             () => GLog.d('확인 클릭')
           )
@@ -138,7 +137,7 @@ const Test = () => {
       <Button01 
         btnName="바텀 팝업 테스트"
         clickFunc={() => {
-          openBottomPopup({url:'/popup/popup001.view',nFunc:()=>{
+          openBottomPopup2({url:'/popup/popup001.view',nFunc:()=>{
             GLog.d('바텀 팝업 닫힘');
           }});
         }}
@@ -148,7 +147,7 @@ const Test = () => {
       <Button01 
         btnName="풀 팝업 테스트"
         clickFunc={() => {
-          openFullPopup({url:'/popup/popup001.view',nFunc:()=>{
+          openFullPopup2({url:'/popup/popup001.view',nFunc:()=>{
             GLog.d('풀 팝업 닫힘');
           }});
         }}
