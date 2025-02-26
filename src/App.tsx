@@ -11,7 +11,7 @@ import InputTest from "@src/views/test/InputTest";
 import Popup001 from "@src/views/popup/POPUP001";
         
 // COM
-import Com001 from "@src/views/com/COM001";
+import COM001 from "@src/views/com/COM001";
 import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
 
@@ -48,7 +48,7 @@ const App = () => {
         </Route>
         
         <Route path="/com" element={<PopupLayout />}>
-          <Route path="com001.view" element={<Com001 />} />
+          <Route path="com001.view" element={<COM001 />} />
           <Route path="com011.view" element={<COM011 />} />
           <Route path="com012.view" element={<COM012 />} />
         </Route>
