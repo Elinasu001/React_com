@@ -5,9 +5,8 @@
  * 사용 예시:
  * import { alert } from "@assets/ui/alert";
  */
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { Button, Box, Typography} from '@mui/material';
 
 let root: Root | null = null;
 
@@ -75,53 +74,33 @@ export function messageView(
     };
 
     return (
-      <Box
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          bgcolor: 'rgba(0,0,0,0.5)', // 배경 흐림
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'end',
-          zIndex: 9999,
-        }}
-      >
-        <Box
-          sx={{
-            width: '100%',
-            maxWidth: 400,
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
-            bgcolor: '#fff',
-            p: 3,
-          }}
-        >
-          <Typography sx={{ fontSize: '16px', mb: 2, textAlign: 'center' }}>
+      <div className="popup-container modal">
+        <div className="pop-body">
+          <p>
             {message}
-          </Typography>
+          </p>
 
           {/* 버튼 영역 */}
           {!fBtn ? (
             // fBtn이 없으면 단일 버튼만 표시
-            <Button variant="contained" fullWidth onClick={handleConfirm}>
-              {nBtn}
-            </Button>
+            <div className="popup-footer">
+              <button  className="btn btn-primary" onClick={handleConfirm}>
+                {nBtn}
+              </button>
+            </div>
           ) : (
             // fBtn, fFunc가 있으면 2개 버튼 (확인/취소)
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button variant="contained" fullWidth onClick={handleConfirm}>
+            <div className="popup-footer gap10">
+              <button className="btn btn-secondary" onClick={handleConfirm}>
                 {nBtn}
-              </Button>
-              <Button variant="outlined" fullWidth onClick={handleCancel}>
+              </button>
+              <button className="btn btn-primary" onClick={handleCancel}>
                 {fBtn}
-              </Button>
-            </Box>
+              </button>
+            </div>
           )}
-        </Box>
-      </Box>
+        </div>
+      </div>
     );
   };
 

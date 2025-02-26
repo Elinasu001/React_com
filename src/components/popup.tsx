@@ -124,7 +124,7 @@ export const openBottomPopup2 = (prop: PopupProps) => {
             </div>
             
             {/* 버튼 */}
-            <div className="popup-footer">
+            <div className="popup-footer gap10">
               <button className="btn btn-secondary" onClick={handleClose}>
                 버튼1
               </button>
@@ -274,8 +274,8 @@ export const openFullPopup2 = (prop: PopupProps) => {
               팝업 내용
             </div>
 
-            {/* 닫기 버튼 */}
-            <div className="popup-footer">
+            {/* 버튼 */}
+            <div className="popup-footer gap10">
               <button className="btn btn-secondary" onClick={handleClose}>
                 버튼1
               </button>
