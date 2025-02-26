@@ -104,12 +104,12 @@ const COM006 = () => {
 
   const handleBankSelect = (bankCode: string) => {
 
-    if (window.nFunc) { 
-      console.log("window.nFunc 존재함, 실행 시도");
-      window.nFunc(bankCode);
-    }else {
-      console.error("window.nFunc가 정의되지 않음!");
-    }
+    // if (window.nFunc) { 
+    //   console.log("window.nFunc 존재함, 실행 시도");
+    //   window.nFunc(bankCode);
+    // }else {
+    //   console.error("window.nFunc가 정의되지 않음!");
+    // }
 
     console.log("은행코드::::"+bankCode);
     //onClose(); // 팝업 닫기

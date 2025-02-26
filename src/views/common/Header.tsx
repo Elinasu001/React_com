@@ -4,7 +4,7 @@ import Logo from "@assets/images/logo.svg";
 
 const Header = () => {
   return (
-    <AppBar position="fixed" color="inherit" elevation={0}>
+    <AppBar position="fixed" color="inherit" elevation={0} >
       <Toolbar sx={{ justifyContent: "space-between", alignItems: "center" }}>
         {/* 왼쪽 로고 */}
         <Box component="img" src={Logo} alt="Logo" sx={{ height: 20}} />

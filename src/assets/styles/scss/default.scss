@@ -14,7 +14,7 @@ body, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, li, ol, li, table, caption, th, td
 ul,ol,li,dl,dt,dd { list-style: none; }
 form, fieldset, legend, input, button, textarea, label { color: var(--default-color); }
 div, img, form, fieldset, button, blockquote, p, hr, select, input { border:0; padding:0; margin:0; }
-img, table { width:100%; }
+table { width:100%; }
 /* legend, caption { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow: hidden;  border:0; clip:rect(0, 0, 0, 0); white-space: nowrap; } */
 legend, caption { visibility: hidden; }
 input, textarea, select, address { font-family: 'Pretendard', 'Spoqa Han Sans Neo', "Apple SD Gothic Neo", sans-serif; }

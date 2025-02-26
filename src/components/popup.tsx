@@ -4,7 +4,7 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-// import "@assets/styles/css/common.css";
+import { MemoryRouter } from 'react-router-dom';
 import { Modal, Slide } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { DataSet } from '@assets/js/common';
@@ -42,21 +42,23 @@ export const openBottomPopup = ({ component: Component, title, nFunc }: PopupPro
 
       //팝업 컴포넌트 생성
       return (
-        <Modal open={open} onClose={() => { popupClose(); }}>
-          <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-            <div className="popup-container btmSheet">
-              <div className="pop-header">
-                <h2 className="pop-tit">{title}</h2>
-                <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container btmSheet">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
+                <div className="pop-body">
+                  <Component onClose={popupClose} />
+                </div>
               </div>
-              <div className="pop-body">
-                <Component onClose={popupClose} />
-              </div>
-            </div>
-          </Slide>
-        </Modal>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
       );
     })
   );
@@ -84,37 +86,39 @@ export const openBottomPopup2 = ({ component: Component, title, nFunc }: PopupPr
 
       //팝업 컴포넌트 생성
       return (
-        <Modal open={open} onClose={() => { popupClose(); }}>
-          <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-            <div className="popup-container btmSheet">
-              <div className="pop-header">
-                <h2 className="pop-tit">{title}</h2>
-                {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
-              </div>
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container btmSheet">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
 
-              <div className="pop-body">
-                {/* 팝업 내용 */}
-                <Component onClose={popupClose} />
-              </div>
+                <div className="pop-body">
+                  {/* 팝업 내용 */}
+                  <Component onClose={popupClose} />
+                </div>
 
-              {/* 버튼 */}
-              <div className="popup-footer gap10">
-                <button className="btn btn-secondary" onClick={() => { popupClose(); }}>
-                  버튼1
-                </button>
-                <button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                  버튼2
-                </button>
-                <button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                  버튼3
-                </button>
+                {/* 버튼 */}
+                <div className="popup-footer gap10">
+                  <button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                    버튼1
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼2
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼3
+                  </button>
+                </div>
               </div>
-            </div>
-          </Slide>
-        </Modal>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
       );
     })
   );
@@ -142,20 +146,22 @@ export const openFullPopup = ({ component: Component, title, nFunc }: PopupProps
 
       //팝업 컴포넌트 생성
       return (
-        <Modal open={open} onClose={() => { popupClose(); }}>
-          <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-            <div className="popup-container full">
-              <div className="pop-header">
-                <h2 className="pop-tit">{title}</h2>
-                {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container full">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
+                <Component onClose={popupClose} />
               </div>
-              <Component onClose={popupClose} />
-            </div>
-          </Slide>
-        </Modal>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
       );
     })
   );
@@ -183,37 +189,39 @@ export const openFullPopup2 = ({ component: Component, title, nFunc }: PopupProp
 
       //팝업 컴포넌트 생성
       return (
-        <Modal open={open} onClose={() => { popupClose(); }}>
-          <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-            <div className="popup-container full">
-              <div className="pop-header">
-                <h2 className="pop-tit">{title}</h2>
-                {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
-              </div>
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container full">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
 
-              <div className="pop-body">
-                {/* 팝업 내용 */}
-                <Component onClose={popupClose} />
-              </div>
+                <div className="pop-body">
+                  {/* 팝업 내용 */}
+                  <Component onClose={popupClose} />
+                </div>
 
-              {/* 버튼 */}
-              <div className="popup-footer gap10">
-                <button className="btn btn-secondary" onClick={() => { popupClose(); }}>
-                  버튼1
-                </button>
-                <button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                  버튼2
-                </button>
-                <button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                  버튼3
-                </button>
+                {/* 버튼 */}
+                <div className="popup-footer gap10">
+                  <button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                    버튼1
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼2
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼3
+                  </button>
+                </div>
               </div>
-            </div>
-          </Slide>
-        </Modal>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
       );
     })
   );
@@ -241,25 +249,27 @@ export const openPopup = ({ component: Component, title, nFunc }: PopupProps) =>
 
       //팝업 컴포넌트 생성
       return (
-        <Modal open={open} onClose={() => { popupClose(); }}>
-          <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-            <div className="popup-container center">
-              <div className="pop-header">
-                <h2 className="pop-tit">{title}</h2>
-                {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
-              </div>
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container center">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
 
-              <div className="pop-body">
-                {/* 팝업 내용 */}
-                <Component onClose={popupClose} />
-              </div>
+                <div className="pop-body">
+                  {/* 팝업 내용 */}
+                  <Component onClose={popupClose} />
+                </div>
 
-            </div>
-          </Slide>
-        </Modal>
+              </div>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
       );
     })
   );
