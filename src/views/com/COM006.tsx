@@ -10,7 +10,7 @@ interface CustomTabPanelProps {
   index: number;
 }
 
-const CustomTabPanel: React.FC<CustomTabPanelProps> = ({ children, value, index, ...other }) => {
+function CustomTabPanel({ children, value, index, ...other }: CustomTabPanelProps): JSX.Element {
   return (
     <div role="tabpanel" hidden={value !== index} id={`tabpanel-${index}`} aria-labelledby={`tab-${index}`} {...other}>
     {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
@@ -41,7 +41,7 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
   const searchBank = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0006SC.act');
+    const form = makeForm('COM0006SC');
     addFormData(form,'txGbnCd','S02');
     addFormData(form,'CD_NM',text);
 
@@ -61,7 +61,7 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
   const fetchBankList = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0006SC.act');
+    const form = makeForm('COM0006SC');
     addFormData(form,'txGbnCd','S01');
     addFormData(form,'CD_DMN_ID','BNK_CD');
 
@@ -94,13 +94,17 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
     "aria-controls": `tabpanel-${index}`,
   });
 
-  // 은행 선택 시 처리
   const handleBankSelect = (bankCode: string) => {
-    setSelectedBank(bankCode);
-    onSelectBank(bankCode); // 부모로 은행 코드 전달
+    if (window.nFunc) { 
+      console.log("window.nFunc 존재함, 실행 시도");
+      window.nFunc(bankCode);
+    }else {
+      console.error("window.nFunc가 정의되지 않음!");
+    }
+
+    console.log("은행코드::::"+bankCode);
     onClose(); // 팝업 닫기
   };
-  
 
   return (
     
@@ -119,7 +123,13 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
 
           {/* 탭영역 */}
           <Box mt={3}>
-            <Tabs value={tabValue} onChange={handleTabChange} aria-label="은행사/증권사 선택">
+          <Tabs
+            value={tabValue}
+            onChange={handleTabChange}
+            textColor="secondary"
+            indicatorColor="secondary"
+            aria-label="은행사/증권사 선택"
+          >
               <Tab label="은행사" {...a11yProps(0)} />
               <Tab label="증권사" {...a11yProps(1)} />
             </Tabs>

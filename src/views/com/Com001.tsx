@@ -54,7 +54,7 @@ const COM001 = () => {
   const fetchTest = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
+    const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','S01');
     addFormData(form,'CD_DMN_ID','TEL_CD');
 
@@ -75,7 +75,7 @@ const COM001 = () => {
   const userAuth = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
+    const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','A01');
     addFormData(form,'CUSTNM', formData.custNm);
     addFormData(form,'TELNO', formData.telNo);
@@ -122,7 +122,7 @@ const COM001 = () => {
     console.log("인증 확인!");
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
+    const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','A02');
     addFormData(form,'MBL_CTFC_NO', mblCtfcNo);
     //로딩 ON

@@ -11,20 +11,11 @@ import { openBottomPopup } from "@src/components/popup";
 const COM004 = () => {
   const { doAction, makeForm, addFormData } = Common();
   const [number, setNumber] = useState('');
-
-  const [selectedBankCode, setSelectedBankCode] = useState("");
-
-  const handleBankSelect = (bankCode: string) => {
-    console.log("선택된 은행 코드:", bankCode);
-    setSelectedBankCode(bankCode);
-  };
+  const [selectedBank, setSelectedBank] = useState<string>("");
   
-  
-  const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
-  const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
+
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
-  const [showVerificationInput, setShowVerificationInput] = useState(false);        /** 인증번호입력필드 상태값 */
-  const [isVerified, setIsVerified] = useState(false);                              /** 인증번호받기 상태값 */
+
   // 1. 초기 상태 정의
   const initialFormData = {
     custNm: "",
@@ -52,11 +43,7 @@ const COM004 = () => {
 
   // 🔹 입력값 초기화 함수
   const resetForm = () => {
-    setmblCtfcNo("");
-    setSelectedCarrier("");
-    setFormData(initialFormData);
-    setShowVerificationInput(false);
-    setIsVerified(false);
+    
   };
 
   // 🔹 닫기 버튼 클릭 시 입력값 초기화 후 팝업 닫기
@@ -149,11 +136,11 @@ const COM004 = () => {
                 width="100%"
                 clickFunc={() => {
                   openBottomPopup({url: '/com/COM006.view',
-                                  nFunc: () => {
-                                    GLog.d('팝업 닫힘');
-                                  }
-                                });
-                              }}
+                    nFunc: (selectedBankCode: string) => { 
+                      console.log("선택된 은행 코드:", selectedBankCode); // 선택된 은행 코드 확인
+                      setSelectedBank(selectedBankCode);  }
+                    });
+                }}
               />
           </Box>
           <Box mt={3}>
@@ -163,8 +150,8 @@ const COM004 = () => {
 
 
           <Box mt="auto" display="flex" justifyContent="space-between" >
-            <Button variant="contained" color="primary"   onClick={userAuth} >
-            계좌인증
+            <Button variant="contained" color="primary" >
+              계좌인증
             </Button>
           </Box>
       </Box>
