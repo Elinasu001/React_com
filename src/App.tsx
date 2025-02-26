@@ -11,7 +11,7 @@ import BankingTest from "@src/views/test/BankingTest";
 import InputTest from "@src/views/test/InputTest";
         
 // COM[공통]
-import COM001 from "@src/views/com/temp_Com001";
+import COM001 from "@src/views/com/COM001";
 import COM002 from "@src/views/com/COM002";
 import COM003 from "@src/views/com/COM003";
 import COM004 from "@src/views/com/COM004";
