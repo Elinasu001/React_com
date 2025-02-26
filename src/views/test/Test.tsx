@@ -93,9 +93,8 @@ const Test = () => {
         clickFunc={async () => {
 
           //폼생성,데이터 주입
-          const form = makeForm('https://jsonplaceholder.typicode.com/posts');
-          addFormData(form,'gid','test');
-          addFormData(form,'gpwd','1234');
+          const form = makeForm('COM0001SC');
+          addFormData(form,'txGbnCd','S01');
 
           //로딩 ON
           progressBar(true, "통신중");
@@ -119,7 +118,7 @@ const Test = () => {
 
           //정상
           messageView(
-            '통신완료 : '+JSON.stringify(test01.data),
+            '통신완료 : '+JSON.stringify(test01),
             '확인',
             () => GLog.d('확인 클릭')
           )

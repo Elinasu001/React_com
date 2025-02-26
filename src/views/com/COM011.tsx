@@ -8,6 +8,8 @@
 import { Box } from "@mui/material";
 
 const COM011 = () => {
+
+  API_URL+'/com/COM000.api'
   return (
     <Box
     sx={{
