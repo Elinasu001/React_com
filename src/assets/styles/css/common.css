@@ -1,0 +1,68 @@
+
+/*팝업*/
+:root{
+    --ico-back:  url(/src/assets/images/com/svg/ico_back.svg);
+    --ico-menu:  url(/src/assets/images/com/svg/ico_menu.svg);
+    --ico-close: url(/src/assets/images/com/svg/ico_close.svg);
+    --ico-close-toggle: url(/src/assets/images/com/svg/ico_toggle_up.svg);
+    --ico-search: url(/src/assets/images/com/svg/ico_search.svg);
+    --ico-clear: url(/src/assets/images/com/svg/ico_clear.svg);
+    --ico-info: url(/src/assets/images/com/svg/ico_info.svg);
+    --ico-check: url(/src/assets/images/com/svg/ico_check.svg);
+    --ico-se-arrow: url(/src/assets/images/com/svg/ico_se_arrow.svg);
+    --ico-file: url(/src/assets/images/com/svg/ico_file.svg);
+    --ico-date: url(/src/assets/images/com/svg/ico_date.svg);
+}
+
+
+/* 팝업 내부 iframe */
+.popup-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  /* overflow-x: hidden; */
+  /* overflow-y: auto; */
+}
+
+/* 스크린 리더 */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow: hidden;  border:0; clip:rect(0, 0, 0, 0); white-space: nowrap; }
+
+/* 팝업 오버레이 */
+.popup-container { position:fixed; display:flex; flex-direction: column; top:0; bottom:0; left:0; right:0; width:100%; background-color: var(--white); overflow: hidden; }
+.pop-header { width:100%; height:70px; display:flex; display:flex; justify-content:center; align-items:center; overflow: hidden;  }
+.pop-header .left,
+.pop-header .right { position: absolute; }
+.pop-header .left { left:10px; }
+.pop-header .right { right:10px; }
+.pop-header .pop-tit { font-size:var( --font18); font-weight: var(--font-w-b); }
+.pop-header .btn.btn-close { width:40px; height:40px; }
+.pop-header .btn.btn-back { background: var(--ico-back) no-repeat 100%/40px auto; }
+.pop-header .btn.btn-close { background: var(--ico-close) no-repeat 100%/40px auto; }
+.pop-body { width:auto; height:100%; padding:0 20px; overflow-y: auto; }
+.popup-footer { display:flex; justify-content: center; align-items: center; background-color: var(--white); }
+.popup-footer .btn { height:56px; border-radius: initial; /*radius는 디자인에 따라 변경*/}
+/* 풀팝업 */
+.popup-container.full { height: 100dvh; }
+.popup-container.full .pop-body { height: 100dvh; flex:1 1 auto; }
+/* 바텀시트 */
+.popup-container.btmSheet { top:initial; height:70%; border-radius: 30px 30px 0 0;  }
+/* 가운데 팝업 */
+.popup-container.center {  margin: 24px; width: auto; border-radius: 8px; box-shadow: 0px 2px 15px var(--dim);}
+
+
+/* 버튼 */
+/* 버튼_3개일 경우 */
+.popup-footer:has(> button:nth-child(3):last-child),
+.btn-area:has(> button:nth-child(3):last-child) { display: flex; flex-wrap: wrap; }
+.popup-footer:has(> button:nth-child(3):last-child) button:nth-child(1),
+.popup-footer:has(> button:nth-child(3):last-child) button:nth-child(2),
+.btn-area:has(> button:nth-child(3):last-child) button:nth-child(1),
+.btn-area:has(> button:nth-child(3):last-child) button:nth-child(2) { flex: 1; }
+.popup-footer:has(> button:nth-child(3):last-child) button:last-child,
+.btn-area:has(> button:nth-child(3):last-child) button:last-child { width: 100%; }
+
+
+.btn { display:flex; align-items: center; justify-content: center; width:100%; border-radius: 5px; font-weight: var(--font-w-r); font-size:var(--font16); }
+.btn-primary { background-color: var(--btn-primary); color: var(--white); }
+.btn-primary:hover { background-color:var(--hover); }
+.btn-secondary { background-color: var(--btn-secondary); }

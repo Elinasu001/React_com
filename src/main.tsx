@@ -1,7 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import { store } from "@assets/js/common_store"; // store 불러오기
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import '@src/index.css';
 import App from '@src/App';
 

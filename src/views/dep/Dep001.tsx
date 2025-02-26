@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-const Dep = () => {
+const DEP001 = () => {
   return (
     <Box
     sx={{
@@ -11,4 +11,4 @@ const Dep = () => {
   );
 };
 
-export default Dep;
+export default DEP001;
