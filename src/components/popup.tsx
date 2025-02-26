@@ -32,6 +32,15 @@ export const openBottomPopup = (prop: PopupProps) => {
     root = createRoot(container);
   }
 
+  console.log("📌 openBottomPopup 실행됨", prop.nFunc);
+  if (prop.nFunc) {
+    window.nFunc = prop.nFunc;
+    console.log("✅ window.nFunc이 설정됨!");
+  } else {
+    console.error("❌ window.nFunc가 전달되지 않음");
+  }
+
+
   /**
    * 팝업 컴포넌트 (자동 열림, 닫기 버튼 포함)
    */
@@ -43,6 +52,7 @@ export const openBottomPopup = (prop: PopupProps) => {
       setOpen(true);
     }, []);
 
+
     // 팝업 닫기 및 클린업 처리
     const handleClose = () => {
       setOpen(false);
@@ -50,6 +60,8 @@ export const openBottomPopup = (prop: PopupProps) => {
         if (prop.nFunc) {
           prop.nFunc(); // 닫기 콜백 실행
         }
+        delete window.nFunc;
+
         if (root && container) {
           root.unmount(); // 컴포넌트 언마운트
           root = null; // 루트 초기화
