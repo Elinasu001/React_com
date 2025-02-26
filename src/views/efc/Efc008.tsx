@@ -2,13 +2,9 @@ import { Box, Typography, Divider } from "@mui/material";
 import {LimitDisplay} from "@src/components/Display";
 import {LimitInput} from "@src/components/input";
 import {TextList} from "@src/components/TextList";
-import Header from "@src/views/common/Header";
-import Footer from "@src/views/common/Footer";
 
 const EFC008 = () => {
   return (
-    <>
-        <Header/>
         <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "center", p: 3 }}>
         
           {/* 페이지 메인 제목 */}
@@ -53,8 +49,6 @@ const EFC008 = () => {
               pb={15}
           />
         </Box>
-        <Footer/>
-    </>
   );
 };
 
