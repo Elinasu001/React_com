@@ -11,9 +11,10 @@ import InputTest from "@src/views/test/InputTest";
 import POPUP001 from "@src/views/popup/POPUP001";
         
 // COM
-import COM001 from "@src/views/com/COM001";
+import COM001 from "@src/views/com/Com001";
 import COM004 from "@src/views/com/COM004";
 import COM006 from "@src/views/com/COM006";
+import COM008 from "@src/views/com/COM008";
 import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
 
@@ -57,6 +58,7 @@ const App = () => {
           <Route path="COM001.view" element={<COM001 />} />
           <Route path="COM004.view" element={<COM004 />} />
           <Route path="COM006.view" element={<COM006 />} />
+          <Route path="COM008.view" element={<COM008 />} />
           <Route path="COM011.view" element={<COM011 />} />
           <Route path="COM012.view" element={<COM012 />} />
         </Route>
