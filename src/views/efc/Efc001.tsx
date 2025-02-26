@@ -7,7 +7,7 @@ const Loan = () => {
       textAlign: 'center'}}
     >
       여신
-    </Box>
+    </Box> 
   );
 };
 

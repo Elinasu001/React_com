@@ -8,7 +8,7 @@ import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
 
 import InputTest from "@src/views/test/InputTest";
-import Popup001 from "@src/views/popup/Popup001";
+import Popup001 from "@src/views/popup/POPUP001";
         
 // COM
 import COM001 from "@src/views/com/COM001";
@@ -16,11 +16,11 @@ import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
 
 // EFC
-import EFC002 from "@src/views/efc/Efc001";
+import EFC002 from "@src/views/efc/EFC001";
 import EFC008 from "@src/views/efc/EFC008";
 
 // INQ
-import Inq002 from "@src/views/inq/Inq002";
+import Inq002 from "@src/views/inq/INQ002";
 
 
 const App = () => {
