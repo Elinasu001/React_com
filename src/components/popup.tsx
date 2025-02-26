@@ -71,13 +71,20 @@ export const openBottomPopup = (prop: PopupProps) => {
             </div>
             <div className="pop-body">
               {/* 팝업 내용 */}
-              <iframe src={prop.url} className="popup-iframe"></iframe>
+              {/* <iframe src={prop.url} className="popup-iframe"></iframe> */}
+              팝업 내용
             </div>
             
-            {/* 닫기 버튼 */}
+            {/* 버튼 */}
             <div className="popup-footer">
+              <button className="btn btn-secondary" onClick={handleClose}>
+                버튼1
+              </button>
               <button className="btn btn-primary" onClick={handleClose}>
-                닫기
+                버튼2
+              </button>
+              <button className="btn btn-primary" onClick={handleClose}>
+                버튼3
               </button>
             </div>
           </div>
@@ -145,14 +152,21 @@ export const openFullPopup = (prop: PopupProps) => {
 
             <div className="pop-body">
               {/* 팝업 내용 */}
-              <iframe src={prop.url} className="popup-iframe"></iframe>
+              {/* <iframe src={prop.url} className="popup-iframe"></iframe> */}
+              팝업 내용
             </div>
 
             {/* 닫기 버튼 */}
             <div className="popup-footer">
-                <button className="btn btn-primary" onClick={handleClose}>
-                  닫기
-                </button>
+              <button className="btn btn-secondary" onClick={handleClose}>
+                버튼1
+              </button>
+              <button className="btn btn-primary" onClick={handleClose}>
+                버튼2
+              </button>
+              <button className="btn btn-primary" onClick={handleClose}>
+                버튼3
+              </button>
             </div>
           </div>
         </Slide>
@@ -220,7 +234,8 @@ export const openPopup = (prop: PopupProps) => {
 
             <div className="pop-body">
               {/* 팝업 내용 */}
-              <iframe src={prop.url} className="popup-iframe"></iframe>
+              {/* <iframe src={prop.url} className="popup-iframe"></iframe> */}
+              팝업 내용
             </div>
             
           </div>

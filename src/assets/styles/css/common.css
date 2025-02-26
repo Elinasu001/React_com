@@ -51,6 +51,17 @@
 
 
 /* 버튼 */
+/* 버튼_3개일 경우 */
+.popup-footer:has(> button:nth-child(3):last-child),
+.btn-area:has(> button:nth-child(3):last-child) { display: flex; flex-wrap: wrap; }
+.popup-footer:has(> button:nth-child(3):last-child) button:nth-child(1),
+.popup-footer:has(> button:nth-child(3):last-child) button:nth-child(2),
+.btn-area:has(> button:nth-child(3):last-child) button:nth-child(1),
+.btn-area:has(> button:nth-child(3):last-child) button:nth-child(2) { flex: 1; }
+.popup-footer:has(> button:nth-child(3):last-child) button:last-child,
+.btn-area:has(> button:nth-child(3):last-child) button:last-child { width: 100%; }
+
+
 .btn { display:flex; align-items: center; justify-content: center; width:100%; border-radius: 5px; font-weight: var(--font-w-r); font-size:var(--font16); }
 .btn-primary { background-color: var(--btn-primary); color: var(--white); }
 .btn-primary:hover { background-color:var(--hover); }
