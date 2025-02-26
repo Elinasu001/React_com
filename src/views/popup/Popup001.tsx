@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-const Popup01 = () => {
+const POPUP001 = () => {
   return (
     <Box
     sx={{
@@ -11,5 +11,5 @@ const Popup01 = () => {
   );
 };
 
-export default Popup01;
+export default POPUP001;
  
