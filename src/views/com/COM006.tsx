@@ -23,7 +23,7 @@ interface COM006Props {
   onClose: () => void; // 팝업 닫기 함수
 }
 
-const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
+const COM006 = () => {
   const { doAction, makeForm, addFormData } = Common();
 
   const [text, setText] = useState("");  // 검색어
@@ -54,7 +54,8 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
     //로딩 OFF
     progressBar(false);
     
-    setBankList(resDs.data.list || []);
+    const list = (resDs.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+    setBankList(list);
    
   };
     
@@ -74,7 +75,9 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
     //로딩 OFF
     progressBar(false);
     
-    setBankList(resDs.data.list || []);
+    const list = (resDs.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+
+    setBankList(list);
    
   };
   
@@ -95,6 +98,7 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
   });
 
   const handleBankSelect = (bankCode: string) => {
+
     if (window.nFunc) { 
       console.log("window.nFunc 존재함, 실행 시도");
       window.nFunc(bankCode);
@@ -104,6 +108,7 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
 
     console.log("은행코드::::"+bankCode);
     onClose(); // 팝업 닫기
+
   };
 
   return (

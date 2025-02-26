@@ -1,12 +1,12 @@
 /**
- * @fileoverview [전자금융관리] 
+ * @fileoverview [이체] 
  *
  * @author 
  * @version 1.0.0
  */
 import { Box } from "@mui/material";
 
-const EFC001 = () => {
+const TNF003 = () => {
   return (
     <Box sx={{textAlign: 'center'}}>
       여신
@@ -14,4 +14,4 @@ const EFC001 = () => {
   );
 };
 
-export default EFC001;
+export default TNF003;
