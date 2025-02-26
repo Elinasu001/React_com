@@ -18,11 +18,12 @@ import { Box, Typography, List, ListItem } from "@mui/material"; //Typography íƒ
 interface InfoListProps {
   title: string;
   items: string[];
+  pb?: number;
 }
 
-export const TextList = ({ title, items }: InfoListProps) => {
+export const TextList = ({ title, items, pb=5 }: InfoListProps) => {
   return (
-    <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "start"}}>
+    <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "start", pb}}>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>{title}</Typography>
       <List sx={{ listStyleType: "disc", pl: 2 }}>
         {items.map((item, index) => (
