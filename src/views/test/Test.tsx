@@ -7,7 +7,7 @@ import { Button01 } from "@src/components/button";
 import { GLog, Common, API_URL, APP_ENV } from '@assets/js/common';
 import { toast } from "@src/components/toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup } from "@src/components/popup";
+import { openPopup , openBottomPopup , openFullPopup, openFullPopup2, openBottomPopup2 } from "@src/components/popup";
 
 
 /**
@@ -138,7 +138,7 @@ const Test = () => {
       <Button01 
         btnName="바텀 팝업 테스트"
         clickFunc={() => {
-          openBottomPopup({url:'/popup/popup001.view',nFunc:()=>{
+          openBottomPopup2({url:'/popup/popup001.view',nFunc:()=>{
             GLog.d('바텀 팝업 닫힘');
           }});
         }}
@@ -148,7 +148,7 @@ const Test = () => {
       <Button01 
         btnName="풀 팝업 테스트"
         clickFunc={() => {
-          openFullPopup({url:'/popup/popup001.view',nFunc:()=>{
+          openFullPopup2({url:'/popup/popup001.view',nFunc:()=>{
             GLog.d('풀 팝업 닫힘');
           }});
         }}
