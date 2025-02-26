@@ -1,0 +1,135 @@
+@import './mixin.scss';
+
+
+/*---------------------------------------------
+	#etc
+---------------------------------------------*/
+// 스크린 리더용 스타일 (숨김 처리)
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow: hidden;  border:0; clip:rect(0, 0, 0, 0); white-space: nowrap; }
+/* 팝업 내부 임시 iframe */
+.popup-iframe { width: 100%; height: 100%; border: none;}
+
+
+/*---------------------------------------------
+	#팝업
+---------------------------------------------*/
+.popup-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--white);
+    overflow: hidden;
+  
+    // 팝업 헤더
+    .pop-header {
+      width: 100%;
+      height: 70px;
+      @include flex-center;
+      overflow: hidden;
+  
+      .left {  position: absolute; left: 10px; }
+      .right {  position: absolute; right: 10px; }
+  
+      .pop-tit {
+        font-size: var(--font18);
+        font-weight: var(--font-w-b);
+      }
+  
+      .btn {
+        &.btn-back,
+        &.btn-close {
+          width: 40px;
+          height: 40px;
+        }
+  
+        &.btn-back {
+          background: var(--ico-back) no-repeat 100% / 40px auto;
+        }
+  
+        &.btn-close {
+          background: var(--ico-close) no-repeat 100% / 40px auto;
+        }
+      }
+    }
+
+    // 팝업 본문
+    .pop-body {
+      width: auto;
+      height: 100%;
+      padding: 0 20px;
+      overflow-y: auto;
+    }
+  
+    // 팝업 푸터
+    .popup-footer {
+      @include flex-center;
+      background-color: var(--white);
+  
+      .btn {
+        height: 56px;
+        border-radius: initial; // 디자인에 따라 변경 가능
+
+        &.btn-primary {
+            background-color: var(--btn-primary);
+            color: var(--white);
+    
+            &:hover {
+              background-color: var(--hover);
+            }
+          }
+    
+          &.btn-secondary {
+            background-color: var(--btn-secondary);
+          }
+
+          &:hover {
+            border-color: var(--hover);
+          }
+
+      }
+    }
+  
+    // 풀팝업
+    &.full {
+      height: 100dvh;
+  
+      .pop-body {
+        height: 100dvh;
+        flex: 1 1 auto;
+      }
+    }
+  
+    // 바텀시트
+    &.btmSheet {
+      top: initial;
+      height: 70%;
+      border-radius: 30px 30px 0 0;
+    }
+  
+    // 가운데 팝업
+    &.center {
+      margin: 24px;
+      width: auto;
+      border-radius: 8px;
+      box-shadow: 0px 2px 15px var(--dim);
+    }
+  }
+
+
+/*---------------------------------------------
+	#버튼
+---------------------------------------------*/
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 5px;
+    font-weight: var(--font-w-r);
+    font-size: var(--font16);
+}

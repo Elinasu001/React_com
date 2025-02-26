@@ -8,7 +8,7 @@ import  TransactionList  from "@src/components/TransactionList";
 import  AccountInfo  from "@src/components/AccountInfo";
 
 
-const Inq = () => {
+const INQ002 = () => {
    //const { doAction, makeForm, addFormData } = Common();
   return (
     <Box
@@ -28,4 +28,4 @@ const Inq = () => {
   );
 };
 
-export default Inq;
+export default INQ002;
