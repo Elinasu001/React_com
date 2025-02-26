@@ -66,7 +66,7 @@ const App = () => {
         </Route>
 
         <Route path="/popup">
-          <Route path="POPUP001.view" element={<POPUP001 />} />
+          <Route path="popup001.view" element={<POPUP001 />} />
         </Route>
 
       </Routes>
