@@ -6,7 +6,7 @@ import { GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/text";
 import { Common } from '@assets/js/common';
 import { Button01 } from "@src/components/button";
-import { openFullPopup } from "@src/components/popup";
+import { openFullPopup, openBottomPopup } from "@src/components/popup";
 
 /**
  * 메뉴별 버튼 목록 정의
@@ -83,6 +83,10 @@ const BankingTest = () => {
   const queryParams = new URLSearchParams(location.search);
   const txGbnCd = queryParams.get("txGbnCd") || "com"; // 기본값: "com"
 
+  console.log("전체 URL:", window.location);
+
+
+
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
 
@@ -110,13 +114,25 @@ const BankingTest = () => {
 
             clickFunc={() => {
               if (txGbnCd === 'com') {
-                // "com" 그룹의 경우 팝업 호출
-                openFullPopup({
-                  url: item.path,
-                  nFunc: () => {
-                    GLog.d('풀 팝업 닫힘');
-                  }
-                });
+
+                if(item.path.split('/')[2] === 'COM005.view' || item.path.split('/')[2] === 'COM006.view'){
+                   // "com" 그룹의 경우 팝업 호출
+                   openBottomPopup({
+                    url: item.path,
+                    nFunc: () => {
+                      GLog.d('팝업 닫힘');
+                    }
+                  });
+                }else {
+
+                  // "com" 그룹의 경우 팝업 호출
+                  openFullPopup({
+                    url: item.path,
+                    nFunc: () => {
+                      GLog.d('풀 팝업 닫힘');
+                    }
+                  });
+                }
               } else {
                 // 그 외는 일반 페이지 이동
                 doActionURL(item.path);

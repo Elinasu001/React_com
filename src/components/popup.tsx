@@ -4,15 +4,15 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { useState, useEffect} from 'react';
+// import "@assets/styles/css/common.css";
+import { Modal, Slide } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { createRoot, Root } from 'react-dom/client';
-import { Button, Box, Slide, Modal, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 
 let root: Root | null = null;
 
 interface PopupProps {
-    url: string;            // 팝업으로 열 페이지 
+    url: string;            // 팝업으로 열 페이지
     nFunc ?: () => void;    // 팝업 닫기 콜백
 }
 
@@ -61,61 +61,30 @@ export const openBottomPopup = (prop: PopupProps) => {
     return (
       <Modal open={open} onClose={handleClose}>
         <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <Box
-            sx={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: '70%',
-              bgcolor: 'background.paper',
-              boxShadow: 24,
-              borderTopLeftRadius: '20px',
-              borderTopRightRadius: '20px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            {/* 팝업 내용 */}
-            <Box
-              component="iframe"
-              src={prop.url}
-              sx={{
-                width: '100%',
-                height: '100%',
-                mt:2,
-                border: 'none',
-                overflowX: 'hidden',  // 가로 스크롤 제거
-                overflowY: 'auto',    // 세로 스크롤은 자동 활성화
-              }}
-            />
-
+          <div className="popup-container btmSheet">
+            <div className="pop-header">
+              <h2 className="pop-tit">바텀 팝업 타이틀</h2>
+                {/* X 닫기 버튼 */}
+                <button aria-label="close" onClick={handleClose} className="btn btn-close right">
+                <span className="sr-only">닫기</span>
+              </button>
+            </div>
+            <div className="pop-body">
+              {/* 팝업 내용 */}
+              <iframe src={prop.url} className="popup-iframe"></iframe>
+            </div>
+            
             {/* 닫기 버튼 */}
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <Button
-                variant="contained"
-                sx={{
-                  width: '100%',
-                  fontFamily: 'SCDream',
-                  fontWeight: 800,
-                  fontSize: '16px',
-                  backgroundColor: 'primary.main',
-                  ':hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                }}
-                onClick={handleClose}
-              >
+            <div className="popup-footer">
+              <button className="btn btn-primary" onClick={handleClose}>
                 닫기
-              </Button>
-            </Box>
-          </Box>
+              </button>
+            </div>
+          </div>
         </Slide>
       </Modal>
-    );
-  };
+      );
+    };
 
   root.render(<PopupView />);
 };
@@ -165,58 +134,31 @@ export const openFullPopup = (prop: PopupProps) => {
     return (
       <Modal open={open} onClose={handleClose}>
         <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <Box
-            sx={{
-              position: 'fixed',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: '100%',
-              bgcolor: 'background.paper',
-              boxShadow: 24,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            {/* 팝업 내용 */}
-            <Box
-              component="iframe"
-              src={prop.url}
-              sx={{
-                width: '100%',
-                height: '100%',
-                mt:2,
-                border: 'none',
-                overflowX: 'hidden',  // 가로 스크롤 제거
-                overflowY: 'auto',    // 세로 스크롤은 자동 활성화
-              }}
-            />
+          <div className="popup-container full">
+            <div className="pop-header">
+              <h2 className="pop-tit">풀팝업 타이틀</h2>
+               {/* X 닫기 버튼 */}
+               <button aria-label="close" onClick={handleClose} className="btn btn-close right">
+                  <span className="sr-only">닫기</span>
+                </button>
+            </div>
+
+            <div className="pop-body">
+              {/* 팝업 내용 */}
+              <iframe src={prop.url} className="popup-iframe"></iframe>
+            </div>
 
             {/* 닫기 버튼 */}
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <Button
-                variant="contained"
-                sx={{
-                  width: '100%',
-                  fontFamily: 'SCDream',
-                  fontWeight: 800,
-                  fontSize: '16px',
-                  backgroundColor: 'primary.main',
-                  ':hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                }}
-                onClick={handleClose}
-              >
-                닫기
-              </Button>
-            </Box>
-          </Box>
+            <div className="popup-footer">
+                <button className="btn btn-primary" onClick={handleClose}>
+                  닫기
+                </button>
+            </div>
+          </div>
         </Slide>
       </Modal>
     );
+    
   };
 
   root.render(<PopupView />);
@@ -267,56 +209,25 @@ export const openPopup = (prop: PopupProps) => {
     return (
       <Modal open={open} onClose={handleClose}>
         <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <Box
-            sx={{
-              borderRadius: 1,
-              position: 'fixed',
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              m:3,
-              bgcolor: 'background.paper',
-              boxShadow: 24,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
+          <div className="popup-container center">
+            <div className="pop-header">
+              <h2 className="pop-tit">일반 팝업 타이틀</h2>
+                {/* X 닫기 버튼 */}
+                <button aria-label="close" onClick={handleClose} className="btn btn-close right">
+                  <span className="sr-only">닫기</span>
+                </button>
+            </div>
 
-
-          {/* X 닫기 버튼 */}
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={{
-              position: 'absolute',
-              top: 8,
-              right: 8,
-              color: (theme) => theme.palette.grey[500],
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-
-            {/* 팝업 내용 */}
-            <Box
-              component="iframe"
-              src={prop.url}
-              sx={{
-                width: '100%',
-                height: '100%',
-                m:2,
-                border: 'none',
-                overflowX: 'hidden',  // 가로 스크롤 제거
-                overflowY: 'auto',    // 세로 스크롤은 자동 활성화
-              }}
-            />
-          </Box>
+            <div className="pop-body">
+              {/* 팝업 내용 */}
+              <iframe src={prop.url} className="popup-iframe"></iframe>
+            </div>
+            
+          </div>
         </Slide>
       </Modal>
     );
+    
   };
 
   root.render(<PopupView />);
