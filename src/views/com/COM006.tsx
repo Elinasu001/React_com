@@ -23,7 +23,7 @@ interface COM006Props {
   onClose: () => void; // 팝업 닫기 함수
 }
 
-const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
+const COM006 = () => {
   const { doAction, makeForm, addFormData } = Common();
 
   const [text, setText] = useState("");  // 검색어
@@ -54,14 +54,15 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
     //로딩 OFF
     progressBar(false);
     
-    setBankList(resDs.data.list || []);
+    const list = (resDs.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+    setBankList(list);
    
   };
     
   const fetchBankList = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0006SC.act');
+    const form = makeForm('COM0006SC');
     addFormData(form,'txGbnCd','S01');
     addFormData(form,'CD_DMN_ID','BNK_CD');
 
@@ -74,7 +75,9 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
     //로딩 OFF
     progressBar(false);
     
-    setBankList(resDs.data.list || []);
+    const list = (resDs.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+
+    setBankList(list);
    
   };
   
@@ -97,8 +100,8 @@ const COM006: React.FC<COM006Props> = ({ onSelectBank, onClose }) => {
   // 은행 선택 시 처리
   const handleBankSelect = (bankCode: string) => {
     setSelectedBank(bankCode);
-    onSelectBank(bankCode); // 부모로 은행 코드 전달
-    onClose(); // 팝업 닫기
+    // onSelectBank(bankCode); // 부모로 은행 코드 전달
+    // onClose(); // 팝업 닫기
   };
   
 

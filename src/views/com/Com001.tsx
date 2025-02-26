@@ -11,6 +11,7 @@ const COM001 = () => {
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
   const [showVerificationInput, setShowVerificationInput] = useState(false);        /** 인증번호입력필드 상태값 */
   const [isVerified, setIsVerified] = useState(false);                              /** 인증번호받기 상태값 */
+  
   // 1. 초기 상태 정의
   const initialFormData = {
     custNm: "",
@@ -48,13 +49,12 @@ const COM001 = () => {
   // 닫기 버튼 클릭 시 입력값 초기화 후 팝업 닫기
   const handleClose = () => {
     resetForm(); // 입력값 초기화
-    
   };
     
   const fetchTest = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
+    const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','S01');
     addFormData(form,'CD_DMN_ID','TEL_CD');
 
@@ -67,7 +67,9 @@ const COM001 = () => {
     //로딩 OFF
     progressBar(false);
     
-    settelCdData(test01.data.list || []);
+    const list = (test01.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+
+    settelCdData(list);
    
   };
   
@@ -75,7 +77,7 @@ const COM001 = () => {
   const userAuth = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
+    const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','A01');
     addFormData(form,'CUSTNM', formData.custNm);
     addFormData(form,'TELNO', formData.telNo);
@@ -104,7 +106,7 @@ const COM001 = () => {
 
     //정상
     messageView(
-    '통신완료 : '+JSON.stringify(test01.data.MBL_CTFC_NO),
+    '통신완료 : '+JSON.stringify(test01.data),
     '확인',
     (() => {
         setIsVerified(true);
@@ -122,7 +124,7 @@ const COM001 = () => {
     console.log("인증 확인!");
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
+    const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','A02');
     addFormData(form,'MBL_CTFC_NO', mblCtfcNo);
     //로딩 ON

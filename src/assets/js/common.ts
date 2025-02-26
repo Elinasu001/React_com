@@ -17,7 +17,7 @@ export const headerHeight = 50;
 export const bottomNavHeight = 60;
 
 //Data Type : 데이터 폼
-export type DataSet = Record<string,string|number|boolean|JSON>;
+export type DataSet = Record<string,string|number|boolean|JSON|unknown>;
 
 //Data Type : 데이터 전송 요청 폼
 export type ApiReq  = {
