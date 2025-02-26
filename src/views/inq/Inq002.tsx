@@ -29,55 +29,7 @@ const transactionData = [
     },
     NEXT_DATA_XN: "N",
     API_RS_MSG: "정상 처리되었습니다.",
-  },{
-    ACNO: "123-456-789012",
-    DEPR_NM: "홍길동",
-    NEXT_TRAN_YN: "Y",
-    DTA_NCNT: 1,
-    OUT_REC: {
-      TRN_DT: "2024-02-26",
-      TRN_TKTM: "14:30",
-      TRAN_AMT_SIGN: "-",
-      TRN_AMT: 50000,
-      TRNF_AF_BLNC_SIGN: "-",
-      ACNT_BLNC: 98700000,
-      OUTL: "스타벅스",
-    },
-    NEXT_DATA_XN: "N",
-    API_RS_MSG: "정상 처리되었습니다.",
-  },{
-    ACNO: "123-456-789012",
-    DEPR_NM: "홍길동",
-    NEXT_TRAN_YN: "Y",
-    DTA_NCNT: 1,
-    OUT_REC: {
-      TRN_DT: "2024-02-26",
-      TRN_TKTM: "14:30",
-      TRAN_AMT_SIGN: " ",
-      TRN_AMT: 50000,
-      TRNF_AF_BLNC_SIGN: "+",
-      ACNT_BLNC: 98700000,
-      OUTL: "스타벅스",
-    },
-    NEXT_DATA_XN: "N",
-    API_RS_MSG: "정상 처리되었습니다.",
-  },{
-    ACNO: "123-456-789012",
-    DEPR_NM: "홍길동",
-    NEXT_TRAN_YN: "Y",
-    DTA_NCNT: 1,
-    OUT_REC: {
-      TRN_DT: "2024-02-26",
-      TRN_TKTM: "14:30",
-      TRAN_AMT_SIGN: " ",
-      TRN_AMT: 50000,
-      TRNF_AF_BLNC_SIGN: "+",
-      ACNT_BLNC: 98700000,
-      OUTL: "스타벅스",
-    },
-    NEXT_DATA_XN: "N",
-    API_RS_MSG: "정상 처리되었습니다.",
-  },
+  }
 ]
 
 
