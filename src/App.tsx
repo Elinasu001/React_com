@@ -3,26 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // 메인
 import Layout from "@views/common/Layout";
-import PopupLayout from "@views/common/PopupLayout";
 import Main from "@views/Main";
 import NativeTest from "@src/views/test/NativeTest";
 import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
 import InputTest from "@src/views/test/InputTest";
-        
-// COM[공통]
-import COM001 from "@src/views/com/COM001";
-import COM002 from "@src/views/com/COM002";
-import COM003 from "@src/views/com/COM003";
-import COM004 from "@src/views/com/COM004";
-import COM005 from "@src/views/com/COM005";
-import COM006 from "@src/views/com/COM006";
-import COM007 from "@src/views/com/COM007";
-import COM008 from "@src/views/com/COM008";
-import COM009 from "@src/views/com/COM009";
-import COM010 from "@src/views/com/COM010";
-import COM011 from "@src/views/com/COM011";
-import COM012 from "@src/views/com/COM012";
 
 // INQ[조회]
 import INQ001 from "@src/views/inq/INQ001";
@@ -89,22 +74,6 @@ const App = () => {
           <Route path="inputTest.view" element={<InputTest />} />
         </Route>
 
-        {/* 공통 페이지 라우트 */}
-        <Route path="/com" element={<PopupLayout />}>
-          <Route path="COM001.view" element={<COM001 />} />
-          <Route path="COM002.view" element={<COM002 />} />
-          <Route path="COM003.view" element={<COM003 />} />
-          <Route path="COM004.view" element={<COM004 />} />
-          <Route path="COM005.view" element={<COM005 />} />
-          <Route path="COM006.view" element={<COM006 />} />
-          <Route path="COM007.view" element={<COM007 />} />
-          <Route path="COM008.view" element={<COM008 />} />
-          <Route path="COM009.view" element={<COM009 />} />
-          <Route path="COM010.view" element={<COM010 />} />
-          <Route path="COM011.view" element={<COM011 />} />
-          <Route path="COM012.view" element={<COM012 />} />
-        </Route>
-
         {/* 조회 페이지 라우트 */}
         <Route path="/inq" element={<Layout />}>
           <Route path="INQ001.view" element={<INQ001 />} />
@@ -159,11 +128,6 @@ const App = () => {
           <Route path="EFC012.view" element={<EFC012 />} />
           <Route path="EFC013.view" element={<EFC013 />} />
           <Route path="EFC014.view" element={<EFC014 />} />
-        </Route>
-
-        {/* 공통 페이지 라우트 */}
-        <Route path="/pop" element={<PopupLayout />}>
-          <Route path="POP001.view" element={<POP001 />} />
         </Route>
 
       </Routes>

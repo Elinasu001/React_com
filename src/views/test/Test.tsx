@@ -7,8 +7,8 @@ import { Button01 } from "@src/components/Button";
 import { GLog, Common, API_URL, APP_ENV } from '@assets/js/common';
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openFullPopup2, openBottomPopup2 } from "@src/components/Popup";
-import POP001 from "../pop/POP001";
+import { openPopup , openBottomPopup , openFullPopup} from "@src/components/Popup";
+import POP001 from "@src/views/pop/POP001";
 
 /**
  * 일반 테스트 화면 드로잉
@@ -128,8 +128,12 @@ const Test = () => {
       <Button01 
         btnName="일반 팝업 테스트"
         clickFunc={() => {
-          openPopup({component:POP001,nFunc:()=>{
-            GLog.d('일반 팝업 닫힘');
+          openPopup({component:POP001,title:'일반 테스트',nFunc:(data?)=>{
+            if(data){
+              GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+            }else{
+              GLog.d('팝업 취소 닫힘');
+            }
           }});
         }}
       />
@@ -137,8 +141,12 @@ const Test = () => {
       <Button01 
         btnName="바텀 팝업 테스트"
         clickFunc={() => {
-          openBottomPopup({component:POP001,nFunc:()=>{
-            GLog.d('바텀 팝업 닫힘');
+          openBottomPopup({component:POP001,title:'바텀 테스트',nFunc:(data?)=>{
+            if(data){
+              GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+            }else{
+              GLog.d('팝업 취소 닫힘');
+            }
           }});
         }}
       />
@@ -147,8 +155,12 @@ const Test = () => {
       <Button01 
         btnName="풀 팝업 테스트"
         clickFunc={() => {
-          openFullPopup({component:POP001,nFunc:()=>{
-            GLog.d('풀 팝업 닫힘');
+          openFullPopup({component:POP001,title:'풀 테스트',nFunc:(data?)=>{
+            if(data){
+              GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+            }else{
+              GLog.d('팝업 취소 닫힘');
+            }
           }});
         }}
       />

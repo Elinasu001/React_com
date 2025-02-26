@@ -18,12 +18,12 @@ declare global {
 const rootMap: Map<string, Root> = new Map();
 
 document.getRoot = function (formId: string): Root {
-  let container = document.getElementById(formId);
+  let container = this.getElementById(formId);
 
   if (!container) {
-    container = document.createElement("div");
+    container = this.createElement("div");
     container.id = formId;
-    document.body.appendChild(container);
+    this.body.appendChild(container);
   }
 
   // 해당 formId에 대한 Root가 없으면 생성 후 저장
@@ -35,7 +35,7 @@ document.getRoot = function (formId: string): Root {
 };
 
 document.removeRoot = function (formId: string) {
-  const container = document.getElementById(formId);
+  const container = this.getElementById(formId);
   if (container && rootMap.has(formId)) {
     // React 18의 Root에서 언마운트 (UI 제거)
     rootMap.get(formId)?.unmount();
