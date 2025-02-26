@@ -4,7 +4,6 @@ import { GLog, Common } from '@assets/js/common';
 import { progressBar } from "@src/components/loading";
 import { messageView } from '@src/components/alert';
 
-
 const COM001 = () => {
   const { doAction, makeForm, addFormData } = Common();
   const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
@@ -118,7 +117,7 @@ const COM001 = () => {
 
   };
 
-  // 인증번호 확인 이벤트
+  // 인증번호 확인 이벤트 TODO 인증번호체크인터페이스 필요
   const userConfirmAuth = async () => {
     console.log("인증 확인!");
 
