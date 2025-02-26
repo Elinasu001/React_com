@@ -3,7 +3,7 @@ import { TextField, IconButton, InputAdornment } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-const PasswordInput = () => {
+const EFC002 = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
 
@@ -46,4 +46,4 @@ const PasswordInput = () => {
   );
 };
 
-export default PasswordInput;
+export default EFC002;

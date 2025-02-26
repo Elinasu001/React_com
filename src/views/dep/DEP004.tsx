@@ -1,17 +1,17 @@
 /**
- * @fileoverview [전자금융관리] 
+ * @fileoverview [수신] 
  *
  * @author 
  * @version 1.0.0
  */
 import { Box } from "@mui/material";
 
-const EFC001 = () => {
+const DEP004 = () => {
   return (
     <Box sx={{textAlign: 'center'}}>
-      여신
+      샘플
     </Box>
   );
 };
 
-export default EFC001;
+export default DEP004;

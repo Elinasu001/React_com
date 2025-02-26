@@ -6,7 +6,7 @@
  */
 import { Box } from "@mui/material";
 
-const EFC001 = () => {
+const EFC005 = () => {
   return (
     <Box sx={{textAlign: 'center'}}>
       여신
@@ -14,4 +14,4 @@ const EFC001 = () => {
   );
 };
 
-export default EFC001;
+export default EFC005;
