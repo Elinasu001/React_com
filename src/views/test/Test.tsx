@@ -153,15 +153,6 @@ const Test = () => {
         }}
       />
 
-
-      <Button01 
-        btnName="휴대폰 본인인증 테스트"
-        clickFunc={() => {
-          openFullPopup({url:'/com/com001.view',nFunc:()=>{
-            GLog.d('풀 팝업 닫힘');
-          }});
-        }}
-      />
     </Box>
   );
 };
