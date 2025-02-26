@@ -22,6 +22,9 @@ import EFC008 from "@src/views/efc/EFC008";
 // INQ
 import Inq002 from "@src/views/inq/INQ002";
 
+// LON
+import LON001 from "@src/views/lon/LON001";
+
 
 const App = () => {
   return (
@@ -51,6 +54,10 @@ const App = () => {
           <Route path="com001.view" element={<COM001 />} />
           <Route path="com011.view" element={<COM011 />} />
           <Route path="com012.view" element={<COM012 />} />
+        </Route>
+
+        <Route path="/lon">
+          <Route path="LON001.view" element={<LON001 />} />
         </Route>
 
         <Route path="/popup">
