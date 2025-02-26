@@ -13,31 +13,38 @@ import { Card } from "@mui/material";
  */
 interface CardProps {
   children: React.ReactNode;
-  padding?: string;        // 내부 여백
-  boxShadow?: string;      // 그림자
-  borderRadius?: string;   // 테두리 둥글기
-  width?: string;          // 카드 너비
-  height?: string;         // 카드 높이
+  padding?: string;         // 내부 여백
+  borderRadius?: string;    // 테두리 둥글기
+  elevation?: number;       // 그림자 (0~24까지)
+  width?: string;           // 카드 너비
+  height?: string;          // 카드 높이
 }
 
 /**
  * 카드 컴포넌트
  */
-export const Card01 = ({ children, padding, boxShadow, borderRadius, width, height }: CardProps) => {
-  return (
-    <Card
-      sx={{
-        mb: 2,
-        padding: padding == null ? "5px" : padding,
-        boxShadow: boxShadow == null ? '2px' : boxShadow,
-        borderRadius: borderRadius == null ? '20px' : borderRadius,
-        width: width == null ? "95%" : width,
-        height: height == null ? "auto" : height,
-      }}
-    >
-      {children}
-    </Card>
-  );
+export const Card01 = ({
+    children,
+    padding = '5px',
+    borderRadius = '20px',
+    elevation = 5,
+    width = '95%',
+    height = 'auto',
+    }: CardProps) => {
+    return (
+        <Card
+        elevation={elevation}
+        sx={{
+            mb: 2,
+            p: padding,
+            borderRadius: borderRadius,
+            width: width,
+            height: height
+        }}
+        >
+        {children}
+        </Card>
+    );
 };
 
 export default { Card01 };
