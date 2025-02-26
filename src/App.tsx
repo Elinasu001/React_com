@@ -71,6 +71,11 @@ import EFC012 from "@src/views/efc/EFC012";
 import EFC013 from "@src/views/efc/EFC013";
 import EFC014 from "@src/views/efc/EFC014";
 
+// POP[팝업 레이어]
+import POP001 from "@src/views/pop/POP001";
+
+// 확장 함수
+import '@assets/extension/globalExtensions';
 
 const App = () => {
   return (
@@ -157,9 +162,27 @@ const App = () => {
           <Route path="EFC014.view" element={<EFC014 />} />
         </Route>
 
+        {/* 공통 페이지 라우트 */}
+        <Route path="/pop" element={<PopupLayout />}>
+          <Route path="POP001.view" element={<POP001 />} />
+        </Route>
+
       </Routes>
     </Router>
   );
 };
+
+// const PopUpWrapper: React.FC = () => {
+//   const navigate = useNavigate();
+
+//   const handleClose = (data?: string) => {
+//       console.log("팝업에서 받은 데이터:", data);
+//       navigate(-1); // ✅ 이전 페이지로 이동 (뒤로 가기)
+//   };
+
+//   return (
+//       <POP001 onClose={handleClose} />
+//   );
+// };
 
 export default App;
