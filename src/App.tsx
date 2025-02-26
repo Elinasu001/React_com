@@ -12,6 +12,8 @@ import Popup001 from "@src/views/popup/POPUP001";
         
 // COM
 import COM001 from "@src/views/com/COM001";
+import COM004 from "@src/views/com/COM004";
+import COM006 from "@src/views/com/COM006";
 import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
 
@@ -32,7 +34,6 @@ const App = () => {
           <Route path="/" element={<Main />} />
           <Route path="nativeTest.view" element={<NativeTest />} />
           <Route path="test.view" element={<Test />} />
-          <Route path="bankingtest.view" element={<BankingTest />} />
           <Route path="bankingTest.view" element={<BankingTest />} />
           <Route path="inputTest.view" element={<InputTest />} />
         </Route>
@@ -49,6 +50,8 @@ const App = () => {
         
         <Route path="/com" element={<PopupLayout />}>
           <Route path="com001.view" element={<COM001 />} />
+          <Route path="com004.view" element={<COM004 />} />
+          <Route path="com006.view" element={<COM006 />} />
           <Route path="com011.view" element={<COM011 />} />
           <Route path="com012.view" element={<COM012 />} />
         </Route>
