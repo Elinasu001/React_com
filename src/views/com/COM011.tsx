@@ -4,18 +4,16 @@
  * @author 
  * @version 1.0.0
  */
-
-import { Box } from "@mui/material";
+import { MainBox } from "@src/components/box";
+import { Button01 } from "@src/components/button";
 
 const COM011 = () => {
-
   return (
-    <Box
-    sx={{
-      textAlign: 'center'}}
-    >
-      여신
-    </Box>
+    <MainBox>
+      <h1>타이틀</h1>
+      <p>이것은 설명입니다.</p>
+      <Button01 btnName="확인" />
+    </MainBox>
   );
 };
 

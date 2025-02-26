@@ -4,14 +4,11 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { useState, useEffect} from 'react';
-import { createRoot, Root } from 'react-dom/client';
-import { Button, Box, Slide, Modal, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Box } from "@mui/material";
+import { ReactNode } from "react";
 
-let root: Root | null = null;
+export const MainBox = ({ children }: {children ?: ReactNode}) => {
+  return <Box sx={{ textAlign: "center" }}>{children}</Box>;
+};
 
-
-export const Button01 = () => {
-    
-}
+export default MainBox;
