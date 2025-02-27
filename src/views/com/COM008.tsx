@@ -9,7 +9,7 @@ import { useRef, useCallback, useEffect } from "react";
 import Webcam from "react-webcam";
 
 import { Box, Button } from "@mui/material";
-import { progressBar } from "@src/components/loading";
+import { progressBar } from "@src/components/Loading";
 import { GLog } from "@assets/js/common";
 
 const COM008 = () => {

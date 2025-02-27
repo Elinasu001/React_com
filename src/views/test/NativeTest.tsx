@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
-import { messageView } from '@src/components/alert';
-import { TextBox01 } from "@src/components/text";
-import { Button01 } from "@src/components/button";
-import { progressBar } from "@src/components/loading";
+import { messageView } from '@src/components/Alert';
+import { TextBox01 } from "@src/components/Text";
+import { Button01 } from "@src/components/Button";
+import { progressBar } from "@src/components/Loading";
 import { NativeUtil } from '@assets/js/common_native';
 
 const NativeTest = () => {

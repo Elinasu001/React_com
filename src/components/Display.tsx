@@ -46,7 +46,7 @@ export const LimitDisplay = ({
     label
   , value }: LimitDisplayProps) => {
   return (
-    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightgray", pb:"20px", width: "100%" }}>
+    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid lightgray", pb:"1px", width: "100%" }}>
       <Typography>{label}</Typography>
       <TextField
         variant="standard"

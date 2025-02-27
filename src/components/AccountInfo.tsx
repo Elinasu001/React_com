@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Button01 } from "@src/components/button";
-import { progressBar } from "./loading";
+import { Button01 } from "@src/components/Button";
+import { progressBar } from "./Loading";
 
 // 계좌 정보 데이터 예제
 const account = {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
 import { GLog, Common } from '@assets/js/common';
-import { progressBar } from "@src/components/loading";
-import { messageView } from '@src/components/alert';
-import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
-import { Button01 } from "@src/components/button";
-import { openBottomPopup } from "@src/components/popup";
+import { progressBar } from "@src/components/Loading";
+import { messageView } from '@src/components/Alert';
+import { NumberBox } from "@src/components/Input";
+import { Button01 } from "@src/components/Button";
+import { openBottomPopup } from "@src/components/Popup";
  
 
 const COM004 = () => {
@@ -25,40 +25,26 @@ const COM004 = () => {
   const [formData, setFormData] = useState(initialFormData);
 
   useEffect(() => {
-      fetchTest();
+      
     
-    }, []);
+  }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target; // 입력 필드의 name과 value 가져오기
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value, // 해당 name에 해당하는 값 업데이트
-        }));
-    };
 
-    const mblCtfcNoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setmblCtfcNo(event.target.value);
-    }
 
-  // 🔹 입력값 초기화 함수
+  // 입력값 초기화 함수
   const resetForm = () => {
     
   };
 
-  // 🔹 닫기 버튼 클릭 시 입력값 초기화 후 팝업 닫기
-  const handleClose = () => {
-    resetForm(); // 입력값 초기화
     
-  };
-    
-  const fetchTest = async () => { 
+  // 인증번호받기 이벤트 
+  const fsbAcnoAuth = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
-    addFormData(form,'txGbnCd','S01');
-    addFormData(form,'CD_DMN_ID','TEL_CD');
-
+    const form = makeForm('COM0004SC');
+    addFormData(form,'txGbnCd','A01');
+    addFormData(form,'CUSTNM', formData.custNm);
+    
     //로딩 ON
     progressBar(true, "통신중");
 
@@ -68,18 +54,36 @@ const COM004 = () => {
     //로딩 OFF
     progressBar(false);
     
-    settelCdData(test01.data.list || []);
-   
+    //결과실패
+    if(test01.header.respCd != 'N00000'){
+    GLog.e('에러발생 !!!');
+    messageView(
+        '통신 실패 : '+test01.header.respMsg,
+        '확인',
+        () => GLog.d('확인 클릭')
+    )
+    return;
+    }
+
+    //정상
+    messageView(
+    '통신완료 : '+JSON.stringify(test01.data),
+    '확인',
+    (() => {
+        // TODO컨펌화면으로 이동
+    })
+    
+    )
+    
+
   };
   
-  
-
   // 인증번호 확인 이벤트 TODO 인증번호체크인터페이스 필요
   const userConfirmAuth = async () => {
     console.log("인증 확인!");
 
     //폼생성,데이터 주입
-    const form = makeForm('http://localhost:8050/COM0001SC.act');
+    const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','A02');
     addFormData(form,'MBL_CTFC_NO', mblCtfcNo);
     //로딩 ON
@@ -150,7 +154,7 @@ const COM004 = () => {
 
 
           <Box mt="auto" display="flex" justifyContent="space-between" >
-            <Button variant="contained" color="primary" >
+            <Button variant="contained" color="primary" onClick={fsbAcnoAuth}>
               계좌인증
             </Button>
           </Box>

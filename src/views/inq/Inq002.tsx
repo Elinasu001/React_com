@@ -4,6 +4,7 @@
  * @author 
  * @version 1.0.0
  */
+
 import { Box, Typography } from "@mui/material";
 import { AccountTransactions } from "@src/components/Display";
 import { useEffect ,useState } from "react";
@@ -112,3 +113,4 @@ const INQ002 = () => {
 };
 
 export default INQ002;
+

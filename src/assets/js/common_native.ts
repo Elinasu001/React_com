@@ -1,6 +1,6 @@
 import { GLog, DataSet, APP_ENV, AppEnvType } from '@assets/js/common';
-import { messageView } from '@src/components/alert';
-import { progressBar } from '@src/components/loading';
+import { messageView } from '@src/components/Alert';
+import { progressBar } from '@src/components/Loading';
 
 //Data Type : 네이티브 데이터 전송 폼
 export type MessageSet = {
