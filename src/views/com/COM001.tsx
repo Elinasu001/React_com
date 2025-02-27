@@ -166,12 +166,6 @@ const COM001 = () => {
         }}
       >
        
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="h6">휴대폰 본인인증</Typography>
-            
-          </Box>
-
-        
           <Box mt={3}>
             <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
           </Box>
