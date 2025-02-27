@@ -1,88 +1,98 @@
-import { Box, Typography } from "@mui/material";
-import { Card01 } from "@src/components/Card";
+/**
+ * @fileoverview [여신] 대출상품 목록
+ *
+ * @author
+ * @version 1.0.0
+ */
+
+import { useState } from "react";
+import { Box } from "@mui/material";
+import { Card03 } from "@src/components/Card";
+import { Tab01 } from "@src/components/Tab";
 
 /**
  * 대출 상품 데이터
  */
 
+// PDCD "상품코드"
 const loanProducts = [
   {
-    title: "온라인햇살론",
-    category: "정책자금대출",
-    description: "저신용 저소득 서민에게 보증지원을 통해 생활의 안정을 돕고자 지원하는 보증부 대출상품입니다.",
-    tags: ["저신용", "저소득", "보증부대출", "최대금리우대1.3%P"],
-    maxAmount: "2000만원",
-    interestRateMin: "8",
-    interestRateMax: "10"
+    pdcd: "pd001",
+    pdnm: "온라인햇살론",
+    cmmProdCategoty: "정책자금대출",
+    pdDesc: "저신용 저소득 서민에게 보증지원을 통해 생활의 안정을 돕고자 지원하는 보증부 대출상품입니다.",
+    keyword: ["저신용", "저소득", "보증부대출", "최대금리우대1.3%P"],
+    maxLimit: "2000",
+    minIntrate: "8",
+    maxIntrate: "10"
   },
   {
-    title: "예스론",
-    category: "신용대출",
-    description: "비상금 신용대출 상품으로 간편하게 신청 가능",
-    tags: ["비대면", "신용", "대출", "예스"],
-    maxAmount: "300만원",
-    interestRateMin: "8",
-    interestRateMax: "10"
+    pdcd: "pd002",
+    pdnm: "예스론",
+    cmmProdCategoty: "신용대출",
+    pdDesc: "비상금 신용대출 상품으로 간편하게 신청 가능",
+    keyword: ["비대면", "신용", "대출", "예스"],
+    maxLimit: "300",
+    minIntrate: "8",
+    maxIntrate: "10"
+  },
+  {
+    pdcd: "pd003",
+    pdnm: "담보론",
+    cmmProdCategoty: "담보대출",
+    pdDesc: "자산 담보를 통한 저금리 대출상품입니다.",
+    keyword: ["담보", "저금리"],
+    maxLimit: "8000",
+    minIntrate: "4",
+    maxIntrate: "6"
   }
 ];
 
+/**
+ * 탭 항목 정의
+ */
+const tabItems = [
+  { label: "전체", value: "전체" },
+  { label: "신용대출", value: "신용대출" },
+  { label: "담보대출", value: "담보대출" },
+  { label: "정책자금대출", value: "정책자금대출" },
+  { label: "외국인대출", value: "외국인대출" }
+];
 
 const LON001 = () => {
+  const [selectedTab, setSelectedTab] = useState("전체");
+
+  // 탭 변경 시 이벤트
+  const handleTabChange = (value: string | number) => {
+    setSelectedTab(value.toString());
+  };
+
+  // 탭 - 카테고리에 따라서 필터링
+  const filteredProducts =
+  selectedTab === "전체"
+    ? loanProducts
+    : loanProducts.filter((product) => product.cmmProdCategoty === selectedTab);
 
   return (
-    <Box sx={{ backgroundColor: "#F8F9FA", minHeight: "100vh", pb: 8 }}>
-      
-      {/* 대출 상품 리스트 */}
-      <Box sx={{ mt: 3, mx: 2 }}>
-        {loanProducts.map((product, index) => (
-          <Card01 key={index}>
-            <Box sx={{ p: 2 }}>
 
+    <Box sx={{ width: "95%" }}>
+      {/* 대출 탭 컴포넌트 */}
+      <Tab01 items={tabItems} initialValue="전체" onChange={handleTabChange} />
 
-              {/* 대출 설명 */}
-              <Typography variant="body2" color="textSecondary">
-                {product.description}
-              </Typography>
-
-              {/* 카테고리 + 대출 상품명 */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-                <Box
-                  sx={{
-                    backgroundColor: "transparent",
-                    color: "Salmon",
-                    border: `2px solid Salmon`,
-                    fontSize: "12px",
-                    fontWeight: "bold",
-                    px: 1.0,
-                    py: 0.3,
-                    borderRadius: "20px",
-                    display: "inline-block",
-                  }}
-                >
-                  {product.category}
-                </Box>
-
-                <Typography variant="h6" sx={{ fontWeight: 700, mt: 1 }}>
-                  {product.title}
-                </Typography>
-              </Box>
-
-              {/* 태그 목록 */}
-              <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-                {product.tags.join(" | ")}
-              </Typography>
-
-              {/* 최대한도 */}
-              <Typography variant="subtitle2" color="secondary" sx={{ fontWeight: 700, mt: 2 }}>
-                <span>최대한도</span> {product.maxAmount}
-              </Typography>
-
-              {/* 금리 */}
-              <Typography variant="h6" color="primary" sx={{ fontWeight: "bold" }}>
-                연 {product.interestRateMin}%~{product.interestRateMax}%
-              </Typography>
-            </Box>
-          </Card01>
+      {/* 대출 상품 컴포넌트 */}
+      <Box sx={{ minHeight: "100vh", mx: 2, width: "95%", mt:3 }}>
+        {filteredProducts.map((product) => (
+          <Card03
+            key={product.pdcd}                          
+            pdcd={product.pdcd}                       // 상품코드
+            pdnm={product.pdnm}                       // 상품명
+            cmmProdCategoty={product.cmmProdCategoty} // 카테고리
+            pdDesc={product.pdDesc}                   // 상품설명
+            keyword={product.keyword}                 // 키워드
+            maxLimit={product.maxLimit}               // 최대한도
+            minIntrate={product.minIntrate}           // 최저금리
+            maxIntrate={product.maxIntrate}           // 최대금리
+          />
         ))}
       </Box>
     </Box>

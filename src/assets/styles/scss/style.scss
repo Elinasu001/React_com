@@ -63,6 +63,7 @@ body {
 
     --color-c: #CCCCCC;
     --color-e: #EEEEEE;
+    --color-d: #DDDDDD;
     --white: #FFFFFF;
     --color-f8: #F8F8F8;
     --color-f7: #F7FAFF;
@@ -82,9 +83,16 @@ body {
 body {
 
     /* 버튼 색상*/
+    //하단 버튼
     --btn-primary: var(--primary);
     --btn-secondary: var(--secondary);
-
+    //컨텐츠 버튼
+    --btn-con-primary: var(--primary);
+    --btn-con-secondary: var(--secondary);
+    //버튼 스타일
+    --btn-line: var(--color-d);
+    --btn-txt: var(--color-2);
+    
     /* 아이콘 색상*/
 
     
