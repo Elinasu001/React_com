@@ -49,7 +49,24 @@ interface ButtonProps {
 export const Button01 = ({ btnName, clickFunc }: ButtonProps) => {
   return (
 
-    // 버튼 감싸는 클래스 :: 컨텐츠 .btn-area, 팝업 .popup-footer, 페이지 하단 .content-footer
+    // 컨텐츠
+    <Box className="btn-area gap10">
+      {/* primary 버튼 */}
+      <Button className="btn btn-primary"  variant="contained" onClick={clickFunc}>
+        {btnName}
+      </Button>
+
+    </Box>
+
+  );
+};
+
+
+
+export const Button02 = ({ btnName, clickFunc }: ButtonProps) => {
+  return (
+
+    // 컨텐츠
     <Box className="btn-area gap10">
 
       {/* secondary - 라인 스타일 [variant 확인] */}
@@ -72,4 +89,33 @@ export const Button01 = ({ btnName, clickFunc }: ButtonProps) => {
   );
 };
 
-export default { Button01 };
+
+export const Button03 = ({ btnName, clickFunc }: ButtonProps) => {
+  return (
+
+    // 페이지 하단
+    <Box className="content-footer">
+
+      {/* secondary - 라인 스타일 [variant 확인] */}
+      <Button className="btn btn-secondary"  variant="outlined" onClick={clickFunc}>
+        {btnName}
+      </Button>
+
+      {/* primary 버튼 */}
+      <Button className="btn btn-primary"  variant="contained" onClick={clickFunc}>
+        {btnName}
+      </Button>
+
+      {/* secondary 버튼 */}
+      <Button className="btn btn-secondary"  variant="contained"  onClick={clickFunc}>
+        {btnName}
+      </Button>
+      
+    </Box>
+
+  );
+};
+
+
+
+export default { Button01, Button02, Button03 };
