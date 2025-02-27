@@ -288,7 +288,7 @@ const BankingTest = () => {
                 }
               } else {
                 // 그 외는 일반 페이지 이동
-                UseNavi().doActionURL(item.path);
+                navigate.doActionURL(item.path);
               }
             }}
 
