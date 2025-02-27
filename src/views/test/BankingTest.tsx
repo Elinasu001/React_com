@@ -168,7 +168,7 @@ const BankingTest = () => {
                     break;
                   case 'COM004':
                     openFullPopup({
-                      component: COM004,
+                      component: COM004_1,
                       title: item.text,
                       nFunc: (data?) => {
                         if (data) {
