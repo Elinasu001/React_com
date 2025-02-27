@@ -5,12 +5,11 @@ import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { NumberBox } from "@src/components/Input";
 import { Button01 } from "@src/components/Button";
-import { openBottomPopup } from "@src/components/Popup";
-import COM006 from "@src/views/com/COM006";
+
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import Logo from "@assets/images/com/svg/img_accountCrtf.png";
 
 interface DataSet {
   bankCode: string; 
@@ -39,11 +38,11 @@ const COM004_2 = () => {
 
     
   // 인증번호받기 이벤트 
-  const fsbAcnoAuth = async () => { 
-
+  const fsbAcnoConfirmAuth = async () => { 
+    
     //폼생성,데이터 주입
     const form = makeForm('COM0004SC');
-    addFormData(form,'txGbnCd','A01');
+    addFormData(form,'txGbnCd','A02');
     addFormData(form,'CUSTNM', "");
     
     //로딩 ON
@@ -68,7 +67,7 @@ const COM004_2 = () => {
 
     //정상
     messageView(
-    '통신완료 : '+JSON.stringify(test01.data),
+    '정상처리되었습니다',
     '확인',
     (() => {
         // TODO컨펌화면으로 이동
@@ -79,126 +78,26 @@ const COM004_2 = () => {
 
   };
   
-  // 인증번호 확인 이벤트 TODO 인증번호체크인터페이스 필요
-  const userConfirmAuth = async () => {
-    console.log("인증 확인!");
-
-    //폼생성,데이터 주입
-    const form = makeForm('COM0001SC');
-    addFormData(form,'txGbnCd','A02');
-    //로딩 ON
-    progressBar(true, "통신중");
-
-    //통신
-    const test01 = await doAction(form);
-
-    //로딩 OFF
-    progressBar(false);
-    
-    //결과실패
-    if(test01.header.respCd != 'N00000'){
-    GLog.e('에러발생 !!!');
-    messageView(
-        '통신 실패 : '+test01.header.respMsg,
-        '확인',
-        () => GLog.d('확인 클릭')
-    )
-    return;
-    }
-
-    //정상
-    messageView(
-    '정상처리 되었습니다.',
-    '확인',
-    (() => {
-        
-    })
-    )
-    
-  };
 
   return (
     
       <Box sx={{}}>
  
           <Box mt={3}>
-            <Typography variant="body1"><strong>타행 본인 계좌 인증으로 본인 확인을 진행해요</strong></Typography>
+            <Typography variant="body1"><strong>입력하신 계좌로<br/>
+                                            1원을 보내드렸어요<br/>
+                                            입금자명 뒤쪽 4자리 숫자를<br/>
+                                            입력해 주세요</strong></Typography>
           </Box>
 
-     
+          <Box component="img" src={Logo} alt="Logo"  sx={{ maxWidth: "320px" }} />
+          <InputLabel id="demo-simple-select-helper-label"><strong>입금자명 뒤쪽 4자리 숫자 입력하세요</strong></InputLabel>
           <Box mt={3}>
-            <Typography variant="body2">입금은행</Typography>
-              {/* <Button01 
-                fontSize="15px"
-                btnName="입금은행"
-                width="80%"
-                clickFunc={() => {
-
-                  openBottomPopup({
-                    component: COM006,
-                    title: "은행선택",
-                    nFunc: (data?) => {
-                      if (data) {
-                        GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-                        selectBankCd(data);
-                      } else {
-                        GLog.d('팝업 취소 닫힘');
-                      }
-                    }
-                  });
-                 
-                }}
-              /> */}
-
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-helper-label">은행선택</InputLabel>
-              <Select
-                labelId="demo-simple-select-helper-label"
-                id="demo-simple-select-helper"
-                value={selectedBankCd}
-                // onChange={handleChange}
-                open={false}
-                renderValue={(selected) => {
-                  // 아무것도 선택되지 않았다면 '은행선택' 표시
-                  if (!selected) return "은행선택";
-                  // 선택된 은행명이 있으면 그 이름을 표시
-                  return selectedBankNm;
-                }}
-                onClick={() => {
-
-                  openBottomPopup({
-                    component: COM006,
-                    title: "은행선택",
-                    nFunc: (data?) => {
-                      if (data) {
-                        GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-                        selectBankCd(data);
-                      } else {
-                        GLog.d('팝업 취소 닫힘');
-                      }
-                    }
-                  });
-                
-                }}
-              ></Select>
-
-          </FormControl>
+             <NumberBox label="숫자 입력" value={number} onChange={(e) => setNumber(e.target.value)} />
           </Box>
 
-
-          
-
-          <Box mt={3}>
-            <Typography variant="body2">계좌번호</Typography>
-            <NumberBox label="숫자 입력" value={number} onChange={(e) => setNumber(e.target.value)} />
-          </Box>
-
-
-          <Box mt="auto" display="flex" justifyContent="space-between" >
-            <Button variant="contained" color="primary" onClick={fsbAcnoAuth}>
-              계좌인증
-            </Button>
-          </Box>
+          <InputLabel id="demo-simple-select-helper-label"><strong>입금자명 뒤쪽 4자리 숫자 입력하세요</strong></InputLabel>
+            <Button01 btnName = '계좌인증'clickFunc={fsbAcnoConfirmAuth}/>
       </Box>
  
   );
