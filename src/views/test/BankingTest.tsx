@@ -8,10 +8,10 @@ import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/Text";
-import { Common } from '@assets/js/common';
+import { doActionURL } from '@assets/js/common';
 import { Button01 } from "@src/components/Button";
 import { openFullPopup, openBottomPopup } from "@src/components/Popup";
-import MainBox from "@src/components/Box";
+import {MainBox} from "@src/components/Box";
 
 import COM001 from "@src/views/com/COM001";
 import COM002 from "@src/views/com/COM002";
@@ -98,7 +98,6 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
  * 일반 테스트 화면 드로잉
  */
 const BankingTest = () => {
-  const { doActionURL } = Common();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const txGbnCd = queryParams.get("txGbnCd") || "com"; // 기본값: "com"
