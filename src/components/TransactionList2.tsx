@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button01 } from "./button";
-import { messageView } from "./alert";
+import { Button01 } from "./Button";
+import { messageView } from "./Alert";
 import { GLog } from "@src/assets/js/common";
 
 // 거래 내역 타입 정의

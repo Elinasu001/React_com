@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
 import { GLog, Common } from '@assets/js/common';
-import { progressBar } from "@src/components/loading";
-import { messageView } from '@src/components/alert';
+import { progressBar } from "@src/components/Loading";
+import { messageView } from '@src/components/Alert';
 
 const COM001 = () => {
   const { doAction, makeForm, addFormData } = Common();
