@@ -291,15 +291,11 @@ export const openWebPopup = (url: string, title: string, nFunc?: (data : DataSet
 
       //팝업상태
       const [open, setOpen] = useState(false);
-      //iframe 전달된 데이터
-      const [receivedData, setReceivedData] = useState(null);
-
-
+      
       //팝업 컴포넌트 생성후 처리
       useEffect(() => {
         setOpen(true);
         const iframeCallBack = (event: MessageEvent) => {
-            GLog.d("iframe에서 받은 데이터:" +  JSON.stringify(event.data));
             popupClose(new DataSet(event.data))
         };
         window.addEventListener("message", iframeCallBack);
@@ -313,7 +309,7 @@ export const openWebPopup = (url: string, title: string, nFunc?: (data : DataSet
         setOpen(false);
         setTimeout(() => {
           document.removeRoot(formId);
-          nFunc?.(data);
+          nFunc?.(new DataSet(data));
         }, 300);
       };
 
