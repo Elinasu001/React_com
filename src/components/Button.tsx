@@ -93,7 +93,7 @@ export const Button02 = ({ btnName, clickFunc }: ButtonProps) => {
 export const Button03 = ({ btnName, clickFunc }: ButtonProps) => {
   return (
 
-    // 페이지 하단
+    // 페이지 하단 [레이아웃 작업 시 test 필요 [작업 중] ]
     <Box className="content-footer">
 
       {/* secondary - 라인 스타일 [variant 확인] */}
