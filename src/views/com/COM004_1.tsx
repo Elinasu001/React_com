@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
-import { GLog, Common } from '@assets/js/common';
+import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import { NumberBox } from "@src/components/input";
+import { NumberBox } from "@src/components/Input";
 import { openBottomPopup,openFullPopup } from "@src/components/Popup";
 import COM006 from "@src/views/com/COM006";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
@@ -16,7 +16,7 @@ interface DataSet {
 } 
 
 const COM004_1 = () => {
-  const { doAction, makeForm, addFormData } = Common();
+  
   const [inputAcno, setinputAcno] = useState('');
   const [selectedBankCd, setSelectedBankCd] = useState<string>("");
   const [selectedBankNm, setSelectedBankNm] = useState<string>("");
