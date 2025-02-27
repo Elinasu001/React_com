@@ -37,6 +37,7 @@ export type ApiRes  = {
   data: DataSet;
 }
 
+
 export const GLog = (() => {
   const _debug = (logMessage: string): void => {
     if (APP_ENV != AppEnvType.PRODUCTION)console.log("[DEBUG]:" + logMessage);
