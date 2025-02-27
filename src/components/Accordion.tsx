@@ -4,7 +4,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 interface AccordionProps {
   title: string;
   checked: boolean;
-  contents: string;
+  contents: string | React.ReactNode; 
   onChange: () => void;
 }
 
