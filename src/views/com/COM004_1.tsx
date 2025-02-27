@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< HEAD:src/views/com/COM004.tsx
+import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
+import { GLog } from '@assets/js/common';
+=======
 import { Box, Typography, Button, TextField, MenuItem } from "@mui/material";
 import { GLog, Common } from '@assets/js/common';
+>>>>>>> b7831333212ce52d9ec724a1bd075ddc7058eb7e:src/views/com/COM004_1.tsx
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { NumberBox } from "@src/components/input";
@@ -133,6 +138,13 @@ const COM004_1 = () => {
                 btnName="입금은행"
                 width="80%"
                 clickFunc={() => {
+<<<<<<< HEAD:src/views/com/COM004.tsx
+                  // openBottomPopup({url: '/com/COM006.view',
+                  //   nFunc: (selectedBankCode: string) => { 
+                  //     console.log("선택된 은행 코드:", selectedBankCode); // 선택된 은행 코드 확인
+                  //     setSelectedBank(selectedBankCode);  }
+                  //   });
+=======
 
                   openBottomPopup({
                     component: COM006,
@@ -147,6 +159,7 @@ const COM004_1 = () => {
                     }
                   });
                  
+>>>>>>> b7831333212ce52d9ec724a1bd075ddc7058eb7e:src/views/com/COM004_1.tsx
                 }}
               /> */}
 

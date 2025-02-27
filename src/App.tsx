@@ -58,8 +58,6 @@ import EFC014 from "@src/views/efc/EFC014";
 // 확장 함수
 import '@assets/extension/globalExtensions';
 
-//공통함수
-import '@assets/js/common';
 
 const App = () => {
   return (

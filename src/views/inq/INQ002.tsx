@@ -8,7 +8,7 @@
 import { Box, Typography } from "@mui/material";
 import { AccountTransactions } from "@src/components/Display";
 import { useEffect ,useState } from "react";
-import { Common, GLog } from "@src/assets/js/common";
+import { GLog, doAction, makeForm, addFormData } from "@src/assets/js/common";
 import { messageView } from "@src/components/Alert";
 import { progressBar } from "@src/components/Loading";
 
@@ -62,7 +62,6 @@ const INQ002 = () => {
       API_RS_MSG: "정상 처리되었습니다.",
     }
   ]);
-  const { doAction, makeForm, addFormData } = Common();
 
   useEffect(() => {
     const fetchData = async () => {

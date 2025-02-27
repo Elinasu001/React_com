@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
+<<<<<<< HEAD
+import { doAction, makeForm, addFormData } from '@assets/js/common';
+=======
 import {  Common, DataSet } from '@assets/js/common';
+>>>>>>> b7831333212ce52d9ec724a1bd075ddc7058eb7e
 import { progressBar } from "@src/components/Loading";
 import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
 
@@ -33,9 +37,13 @@ function a11yProps(index: number) {
   };
 }
 
+<<<<<<< HEAD
+const COM006 = () => {
+=======
 const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
   const { doAction, makeForm, addFormData } = Common();
 
+>>>>>>> b7831333212ce52d9ec724a1bd075ddc7058eb7e
   const [text, setText] = useState("");  // 검색어
   const [tabValue, setTabValue] = useState<number>(0);  // 현재 선택된 탭
   const [bankList, setBankList] = useState<{ CD: string; CD_NM: string }[]>([]); // 은행사 / 증권사 리스트
