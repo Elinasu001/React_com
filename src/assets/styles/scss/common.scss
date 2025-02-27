@@ -75,6 +75,7 @@
       .btn {
         height: 56px;
         border-radius: 8px; // 디자인에 따라 변경 가능
+        font-size: var(--font18);
 
         &.btn-primary {
             background-color: var(--btn-primary);
