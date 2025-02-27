@@ -12,6 +12,7 @@ import { GLog } from "@src/assets/js/common";
 import { messageView } from "@src/components/Alert";
 import { progressBar } from "@src/components/Loading";
 import { Button01 } from "@src/components/Button";
+import { Card06 } from "@src/components/Card";
 
 
 const accountData = {
@@ -37,6 +38,12 @@ const transactionData = [
     API_RS_MSG: "정상 처리되었습니다.",
   }
 ]
+
+interface Card06Props {
+  type: string;
+  acno: string;
+  balance: number;
+}
 
 interface TransactionDisplayProps {
   ACNO : string;
@@ -133,39 +140,12 @@ const INQ002 = () => {
       <Typography variant="h5" sx={{ marginBottom: 3 }}>거래내역조회</Typography>
 
       {/* 계좌정보 */}
-      <Box
-        sx={{
-          background: "white",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-          marginBottom: "20px"
-        }}
-      >
-        <Typography variant="body2" sx={{ fontSize: "12px", color: "#666", marginBottom: "12px", textAlign: "left" }}>
-          입출금  보통예금(예스뱅킹)
-        </Typography>
-        <Typography variant="body2" sx={{ fontSize: "12px", color: "#666", marginBottom: "12px", textAlign: "left" }}>
-          계좌번호 : {accountData.ACNO}
-        </Typography>
-
-        <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: "bold", color: "#222", textAlign: "left" }}>
-          잔액 : {accountData.ACNT_BLNC.toLocaleString()} 원
-        </Typography>
-
-        <Typography variant="h6" sx={{ fontSize: "10px", fontWeight: "bold", color: "#222", textAlign: "left" }}>
-          출금가능금액 : {accountData.ACNT_BLNC.toLocaleString()} 원
-        </Typography>
-
-        <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px" , width: "100%" }}>
-          <Button01
-            btnName="이체"
-            clickFunc={async () => { //TODO 이체페이지 doactionurl 달아야함
-              // 이체 로직
-            }}
-          />
-        </Box>
-      </Box>
+      <Card06
+        type="입출금"    // 계좌 타입 (예금, 대출 등)
+        acno="123-456-789012" // 계좌 번호
+        balance={1000000} // 계좌 잔액
+        pdnm="보통예금(예스뱅킹)"
+      />
       
       {/* 거래내역 */}
       {transactionData.map((transaction, index) => (

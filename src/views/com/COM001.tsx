@@ -141,7 +141,8 @@ const COM001 = () => {
     messageView(
         '통신 실패 : '+test01.header.respMsg,
         '확인',
-        () => GLog.d('확인 클릭')
+        () => { resetForm(); // 입력값 초기화 
+        }
     )
     return;
     }

@@ -4,16 +4,13 @@ import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { NumberBox } from "@src/components/Input";
+import { Button01 } from "@src/components/Button";
 import { openBottomPopup,openFullPopup } from "@src/components/Popup";
 import COM006 from "@src/views/com/COM006";
-
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-
-interface DataSet {
-  bankCode: string; 
-  bankName: string; 
-} 
+import COM004_2 from "./COM004_2";
+import DataSet from "@assets/io/DataSet";
 
 const COM004_1 = () => {
   const [inputAcno, setinputAcno] = useState('');
@@ -68,7 +65,7 @@ const COM004_1 = () => {
     (() => {
         // TODO컨펌화면으로 이동
         openFullPopup({
-          component: COM004_1,
+          component: COM004_2,
           title: '타행계좌본인인증확인',
           nFunc: (data?) => {
             if (data) {
@@ -178,12 +175,8 @@ const COM004_1 = () => {
             <NumberBox label="숫자 입력" value={inputAcno} onChange={(e) => setinputAcno(e.target.value)} />
           </Box>
 
-
-          <Box mt="auto" display="flex" justifyContent="space-between" >
-            <Button variant="contained" color="primary" onClick={fsbAcnoAuth}>
-              계좌인증
-            </Button>
-          </Box>
+          <Button01 btnName = '계좌인증'clickFunc={fsbAcnoAuth}/>
+          
       </Box>
  
   );
