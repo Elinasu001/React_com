@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, MenuItem } from "@mui/material";
-import { GLog, Common } from '@assets/js/common';
+import { GLog,doAction, makeForm, addFormData  } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import { NumberBox } from "@src/components/input";
+import { NumberBox } from "@src/components/Input";
 import { Button01 } from "@src/components/Button";
 import { openBottomPopup } from "@src/components/Popup";
 import COM006 from "@src/views/com/COM006";
@@ -18,7 +18,7 @@ interface DataSet {
 }
 
 const COM004_2 = () => {
-  const { doAction, makeForm, addFormData } = Common();
+  
   const [number, setNumber] = useState('');
   const [selectedBankCd, setSelectedBankCd] = useState<string>("");
   const [selectedBankNm, setSelectedBankNm] = useState<string>("");

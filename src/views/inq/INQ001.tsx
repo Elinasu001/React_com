@@ -4,13 +4,11 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Card02 } from "@src/components/Card"; // 변경된 컴포넌트 임포트
-import { GLog, Common } from '@assets/js/common';
+import { GLog, doAction, makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading"
 import { messageView } from '@src/components/Alert';
 
 const INQ001 = () => {
-
-  const { doAction, makeForm, addFormData } = Common();
 
   useEffect(() => {
     const fetchAccountList = async () => { 

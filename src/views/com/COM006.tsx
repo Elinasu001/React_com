@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
 import { doAction, makeForm, addFormData } from '@assets/js/common';
-
-
 import { progressBar } from "@src/components/Loading";
-import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
+import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
+import DataSet from "@assets/io/DataSet";
+
 
 interface CustomTabPanelProps {
   children?: React.ReactNode;
@@ -37,8 +37,6 @@ function a11yProps(index: number) {
 
 
 const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
-  const { doAction, makeForm, addFormData } = Common();
-
 
   const [text, setText] = useState("");  // 검색어
   const [tabValue, setTabValue] = useState<number>(0);  // 현재 선택된 탭
@@ -110,10 +108,8 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
 
     console.log("선택한 은행 코드:", bankCode, bankName);
 
-    const selectedData: DataSet = { bankCode,bankName }; // DataSet 타입에 맞게 수정 필요
+    const selectedData = new DataSet({ bankCode, bankName });
     props.onClose(selectedData); // 팝업 닫고 데이터 전달
-
- // props.onClose({ bankCode,bankName } as DataSet);
 
   };
 
