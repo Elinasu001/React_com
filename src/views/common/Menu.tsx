@@ -9,13 +9,14 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
-import { doActionURL } from "@src/assets/js/common";
+import { useAppNavigator } from "@src/assets/js/common";
 
 const Menu = ({ open, onClose }: {
   open: boolean;
   onClose: () => void;
 }) => {
-
+  const navigator = useAppNavigator();
+  
   //메뉴 정의
   const menuItems = [
     { text: "홈", icon: <HomeIcon />, path: "/" },
@@ -37,7 +38,8 @@ const Menu = ({ open, onClose }: {
           <ListItem key={index} disablePadding>
             <ListItemButton
               onClick={() => {
-                doActionURL(item.path);
+                
+                navigator.doActionURL(item.path);
                 onClose();
               }}
             >

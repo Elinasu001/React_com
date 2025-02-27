@@ -1,6 +1,7 @@
 import { progressBar } from "@src/components/Loading";
 import axios from 'axios';
 import DataSet from "@assets/io/DataSet";
+import { useNavigate } from "react-router-dom";
 
 //앱 실행 환경
 export enum AppEnvType {
@@ -122,14 +123,20 @@ export const doAction = async (req: ApiReq): Promise<ApiRes> => {
  * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
  * @param uri 이동할 페이지의 경로
  */
-export const doActionURL = (uri : string) => {
-  // const navigate = useAppNavigate();
-  progressBar(true);
-  setTimeout(() => {
-    // navigate(uri);
-    location.replace(uri);
-    progressBar(false);
-  }, 500);
+
+export const useAppNavigator = () => {
+  const navigate = useNavigate();
+
+  // ✅ `doActionURL()`을 navigate에 추가하여 반환
+  const doActionURL = (uri: string) => {
+    progressBar(true);
+    setTimeout(() => {
+      navigate(uri);
+      progressBar(false);
+    }, 500);
+  };
+
+  return Object.assign(navigate, { doActionURL });
 };
 
 
@@ -141,6 +148,6 @@ export default {
   bottomNavHeight, 
   makeForm, 
   addFormData, 
-  doAction, 
-  doActionURL 
+  doAction,
+  useAppNavigator
 };
