@@ -11,12 +11,13 @@ import { TextBox01 } from "@src/components/Text";
 import { doActionURL } from '@assets/js/common';
 import { Button01 } from "@src/components/Button";
 import { openFullPopup, openBottomPopup } from "@src/components/Popup";
-import MainBox from "@src/components/Box";
+import {MainBox} from "@src/components/Box";
 
 import COM001 from "@src/views/com/COM001";
 import COM002 from "@src/views/com/COM002";
 import COM003 from "@src/views/com/COM003";
-import COM004 from "@src/views/com/COM004";
+import COM004_1 from "@src/views/com/COM004_1";
+import COM004_2 from "@src/views/com/COM004_2";
 import COM005 from "@src/views/com/COM005";
 import COM006 from "@src/views/com/COM006";
 import COM007 from "@src/views/com/COM007";
@@ -35,7 +36,7 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
     { text: "휴대폰본인인증", path: "COM001" },
     { text: "약관화면", path: "COM002" },
     { text: "타행본인계좌인증(이기종)", path: "COM003" },
-    { text: "타행본인계좌인증(중앙회)", path: "COM004" },
+    { text: "타행본인계좌인증(중앙회)", path: "COM004_1" },
     { text: "계좌리스트", path: "COM005" },
     { text: "은행리스트", path: "COM006" },
     { text: "주소검색", path: "COM007" },
@@ -165,9 +166,9 @@ const BankingTest = () => {
                       }
                     });
                     break;
-                  case 'COM004':
+                  case 'COM004_1':
                     openFullPopup({
-                      component: COM004,
+                      component: COM004_1,
                       title: item.text,
                       nFunc: (data?) => {
                         if (data) {

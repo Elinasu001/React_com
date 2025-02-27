@@ -65,9 +65,9 @@ const COM001 = () => {
     //로딩 OFF
     progressBar(false);
     
-    const list = (test01.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+    const list = (test01.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
 
-    settelCdData(list);
+    settelCdData(test01.data.getList('list'));
    
   };
   
@@ -164,12 +164,6 @@ const COM001 = () => {
         }}
       >
        
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="h6">휴대폰 본인인증</Typography>
-            
-          </Box>
-
-        
           <Box mt={3}>
             <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
           </Box>

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
 import { doAction, makeForm, addFormData } from '@assets/js/common';
+
+
 import { progressBar } from "@src/components/Loading";
-import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
+import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/input";
 
 interface CustomTabPanelProps {
   children?: React.ReactNode;
@@ -33,7 +35,11 @@ function a11yProps(index: number) {
   };
 }
 
-const COM006 = () => {
+
+const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
+  const { doAction, makeForm, addFormData } = Common();
+
+
   const [text, setText] = useState("");  // 검색어
   const [tabValue, setTabValue] = useState<number>(0);  // 현재 선택된 탭
   const [bankList, setBankList] = useState<{ CD: string; CD_NM: string }[]>([]); // 은행사 / 증권사 리스트
@@ -100,28 +106,20 @@ const COM006 = () => {
     setSelectedBank("");
   };
 
-  const handleBankSelect = (bankCode: string) => {
+  const handleBankSelect = (bankCode: string, bankName: string) => {
 
-    // if (window.nFunc) { 
-    //   console.log("window.nFunc 존재함, 실행 시도");
-    //   window.nFunc(bankCode);
-    // }else {
-    //   console.error("window.nFunc가 정의되지 않음!");
-    // }
+    console.log("선택한 은행 코드:", bankCode, bankName);
 
-    console.log("은행코드::::"+bankCode);
-    //onClose(); // 팝업 닫기
+    const selectedData: DataSet = { bankCode,bankName }; // DataSet 타입에 맞게 수정 필요
+    props.onClose(selectedData); // 팝업 닫고 데이터 전달
+
+ // props.onClose({ bankCode,bankName } as DataSet);
 
   };
 
   return (
     
       <Box sx={{}}>
-       
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="h6">은행선택</Typography>
-            
-          </Box>
 
           {/* 검색 입력 필드 */}
           <Box mt={3}>
@@ -157,7 +155,7 @@ const COM006 = () => {
                     backgroundColor: selectedBank === bank.CD ? "#f0f0f0" : "transparent",
                     "&:hover": { backgroundColor: "#e0e0e0" },
                   }}
-                  onClick={() => handleBankSelect(bank.CD)}
+                  onClick={() => handleBankSelect(bank.CD, bank.CD_NM)} 
                 >
                   {bank.CD_NM}
                 </Box>
@@ -179,7 +177,7 @@ const COM006 = () => {
                     backgroundColor: selectedBank === bank.CD ? "#f0f0f0" : "transparent",
                     "&:hover": { backgroundColor: "#e0e0e0" },
                   }}
-                  onClick={() => handleBankSelect(bank.CD)}
+                  onClick={() => handleBankSelect(bank.CD, bank.CD_NM)}
                 >
                   {bank.CD_NM}
                 </Box>

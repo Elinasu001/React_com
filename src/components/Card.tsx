@@ -5,7 +5,7 @@
  * import { Card01, Card02 } from "@src/components/Card";
  */
 import React from "react";
-import { Card, Box, Typography, IconButton, Divider, ListItemButton } from "@mui/material";
+import { Card as MuiCard, Card, CardContent, Box, Typography, IconButton, Divider, ListItemButton } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 /**
@@ -46,6 +46,30 @@ export const Card01 = ({
     </Card>
   );
 };
+
+/**
+ * 카드 기본 속성
+ */
+interface Card04Props {
+    children: React.ReactNode;
+    title: string;         // 제목
+  }
+
+/**
+ * 카드 컴포넌트 (제목이 있는 기본 카드)
+ */
+export const Card04 = ({ title, children }: Card04Props) => {
+    return (
+      <MuiCard sx={{ p: 2, borderRadius: "12px", mb: 2 }}>
+        {title && (
+          <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+            {title}
+          </Typography>
+        )}
+        <Box>{children}</Box>
+      </MuiCard>
+    );
+  };
 
 /**
  * 계좌 카드 속성
@@ -145,4 +169,77 @@ export const Card02 = ({ type, number, balance }: Card02Props) => {
   );
 };
 
-export default { Card01, Card02 };
+
+/**
+ * 대출상품 카드 속성
+ */
+interface Card03Props {
+  pdcd: string;               // 상품코드
+  pdnm: string;               // 상품명
+  cmmProdCategoty: string;    // 카테고리
+  pdDesc: string;             // 상품설명
+  keyword: string[];          // 키워드
+  maxLimit: string;           // 최대한도
+  minIntrate: string;         // 최저금리
+  maxIntrate: string;         // 최대금리
+}
+
+/**
+ * 대출상품 카드 컴포넌트
+ */
+export const Card03 = ({
+  pdcd,
+  pdnm,
+  cmmProdCategoty,
+  pdDesc,
+  keyword,
+  maxLimit,
+  minIntrate,
+  maxIntrate,
+}: Card03Props) => {
+
+  return (
+      <Card01 padding="2px" elevation={3}>
+          <CardContent>
+            <Typography variant="body2" color="textSecondary">
+              {pdDesc}
+            </Typography>
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+              <Box
+                sx={{
+                  color: "Salmon",
+                  border: "2px solid Salmon",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  px: 1,
+                  py: 0.3,
+                  borderRadius: "20px",
+                }}
+              >
+                {cmmProdCategoty}
+              </Box>
+
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                {pdnm}
+              </Typography>
+            </Box>
+
+            <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
+              {keyword.join(" | ")}
+            </Typography>
+
+            <Typography variant="subtitle2" color="secondary" sx={{ fontWeight: 700, mt: 2 }}>
+              최대한도 {maxLimit}만원
+            </Typography>
+
+            <Typography variant="h6" color="primary" sx={{ fontWeight: "bold" }}>
+              연 {minIntrate}%~{maxIntrate}%
+            </Typography>
+          </CardContent>
+
+      </Card01>
+    );
+  };
+
+export default { Card01, Card02, Card03, Card04 };

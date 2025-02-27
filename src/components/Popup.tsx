@@ -157,7 +157,10 @@ export const openFullPopup = ({ component: Component, title, nFunc }: PopupProps
                     <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
-                <Component onClose={popupClose} />
+                <Box className="pop-body">
+                  {/* 팝업 내용 */}
+                  <Component onClose={popupClose} />
+                </Box>
               </Box>
             </Slide>
           </Modal>
