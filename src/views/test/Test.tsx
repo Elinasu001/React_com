@@ -4,17 +4,16 @@ import { TextBox01, TextBox02 } from "@src/components/Text";
 import { progressBar } from "@src/components/Loading";
 import { Button01 } from "@src/components/Button";
 
-import { GLog, Common, API_URL, APP_ENV } from '@assets/js/common';
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
 import { openPopup , openBottomPopup , openFullPopup} from "@src/components/Popup";
 import POP001 from "@src/views/pop/POP001";
+import { GLog, API_URL, makeForm, addFormData, doAction, APP_ENV } from "@src/assets/js/common";
 
 /**
  * 일반 테스트 화면 드로잉
  */
 const Test = () => {
-  const { doAction, makeForm, addFormData } = Common();
   const isApp = NativeUtil.isApp() ? "앱" : "웹"
   return (
     <Box sx={{textAlign: 'center'}}>
@@ -116,9 +115,11 @@ const Test = () => {
             return;
           }
 
+          
+
           //정상
           messageView(
-            '통신완료 : '+JSON.stringify(test01),
+            '통신완료 : '+JSON.stringify(test01.data.getList('list')),
             '확인',
             () => GLog.d('확인 클릭')
           )
@@ -128,6 +129,7 @@ const Test = () => {
       <Button01 
         btnName="일반 팝업 테스트"
         clickFunc={() => {
+          
           openPopup({component:POP001,title:'일반 테스트',nFunc:(data?)=>{
             if(data){
               GLog.d('팝업 성공 닫힘' + JSON.stringify(data));

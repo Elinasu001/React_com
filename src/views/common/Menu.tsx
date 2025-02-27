@@ -9,13 +9,12 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
-import { Common } from '@assets/js/common';
+import { doActionURL } from "@src/assets/js/common";
 
 const Menu = ({ open, onClose }: {
   open: boolean;
   onClose: () => void;
 }) => {
-  const { doActionURL } = Common();
 
   //메뉴 정의
   const menuItems = [

@@ -7,10 +7,12 @@
 
 import { Box, Typography } from "@mui/material";
 import { useEffect ,useState } from "react";
+
 import { Common, GLog } from "@src/assets/js/common";
 import { messageView } from "@src/components/alert";
 import { progressBar } from "@src/components/loading";
 import { Button01 } from "@src/components/button";
+
 
 const accountData = {
   ACNO: "123-456-789012",
@@ -87,8 +89,10 @@ const INQ002 = () => {
       API_RS_MSG: "정상 처리되었습니다.",
     }
   ]);
+
   //TODO 백엔드 연결해서 데이터 받아와야함함
   // const { doAction, makeForm, addFormData } = Common();
+
 
   // useEffect(() => {
   //   const fetchData = async () => {

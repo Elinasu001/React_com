@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
-import { GLog, Common } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 
 const COM001 = () => {
-  const { doAction, makeForm, addFormData } = Common();
   const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
@@ -166,12 +164,6 @@ const COM001 = () => {
         }}
       >
        
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="h6">휴대폰 본인인증</Typography>
-            
-          </Box>
-
-        
           <Box mt={3}>
             <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
           </Box>

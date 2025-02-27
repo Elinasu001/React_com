@@ -7,10 +7,9 @@ import SavingsIcon from "@mui/icons-material/Savings";
 import MenuIcon from "@mui/icons-material/Menu";
 
 import Menu from "@views/common/Menu"
-import { Common, bottomNavHeight } from "@assets/js/common"
+import { bottomNavHeight, doActionURL } from "@assets/js/common"
 
 const BottomNav = () => {
-  const { doActionURL } = Common();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
