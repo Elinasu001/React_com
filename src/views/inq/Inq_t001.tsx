@@ -28,8 +28,8 @@ const INQ001 = () => {
 
   // 총 자산 계산 testData
   const totalBalance = accounts.reduce((sum, account) => sum + account.balance, 0);
-  const [isHidden, setIsHidden] = useState(false); // 총 자산 표시 여부
-
+  // 총 자산 표시 여부
+  const [isHidden, setIsHidden] = useState(false); 
   // 각 계좌 타입별 토글 상태
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
 
@@ -78,9 +78,9 @@ const INQ001 = () => {
               </AccordionSummary>
 
               {/* 펼쳐진 경우에만 계좌 목록 표시 */}
-              <AccordionDetails>
+              <AccordionDetails sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 {filteredAccounts.map((account, index) => (
-                  <Card01 key={index} padding="20px" borderRadius="12px" width="100%">
+                  <Card01 key={index} padding="10px" borderRadius="12px">
                     <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
                       <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                         {account.type} 계좌
