@@ -4,18 +4,18 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Modal, Slide, Typography } from '@mui/material';
 import DataSet from '@src/assets/io/DataSet';
-import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 /**
  * 팝업 파라미터 정의
  */
 interface PopupProps {
-  component: React.FC<{param: DataSet,onClose: (data?: DataSet) => void }>; // 팝업으로 열 페이지
-  title?: string;                                            // 팝업 타이틀
-  nFunc?: (data?: DataSet) => void;                          // 팝업 닫기 콜백
-  param?: DataSet;                                            // 팝업 파람
+  component: ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => React.ReactElement;
+  title?: string;
+  nFunc?: (data?: DataSet) => void;
+  param?: DataSet;
 }
 
 /**
