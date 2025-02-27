@@ -76,14 +76,14 @@ export const Card04 = ({ title, children }: Card04Props) => {
  */
 interface Card02Props {
   type: string;
-  number: string;
+  acno: string;
   balance: number;
 }
 
 /**
  * 카드 컴포넌트 (계좌 전용)
  */
-export const Card02 = ({ type, number, balance }: Card02Props) => {
+export const Card02 = ({ type, acno, balance }: Card02Props) => {
   return (
     <Card
       elevation={5}
@@ -103,8 +103,8 @@ export const Card02 = ({ type, number, balance }: Card02Props) => {
       {/* 계좌번호 및 복사 아이콘 */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Typography variant="body1" color="textSecondary">
-          {number}
-          <IconButton onClick={() => navigator.clipboard.writeText(number)} sx={{ p: 1 }}>
+          {acno}
+          <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
             <ContentCopyIcon fontSize="small" />
           </IconButton>
         </Typography>
