@@ -4,8 +4,9 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { DataSet } from '@assets/js/common';
+import { GLog } from '@assets/js/common';
 import { Box, Button, Modal, Slide, Typography } from '@mui/material';
+import DataSet from '@src/assets/io/DataSet';
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 /**
@@ -278,4 +279,73 @@ export const openPopup = ({ component: Component, title, nFunc }: PopupProps) =>
   );
 };
 
-export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2 };
+
+/**
+ * 타 웹 호출 팝업
+ * @param param0 
+ */
+export const openWebPopup = (url: string, title: string, nFunc?: (data : DataSet) => void) => {
+  const formId = 'gOpenWebPopup';
+  document.getRoot(formId).render(
+    React.createElement(() => {
+
+      //팝업상태
+      const [open, setOpen] = useState(false);
+      //iframe 전달된 데이터
+      const [receivedData, setReceivedData] = useState(null);
+
+
+      //팝업 컴포넌트 생성후 처리
+      useEffect(() => {
+        setOpen(true);
+        const iframeCallBack = (event: MessageEvent) => {
+            GLog.d("iframe에서 받은 데이터:" +  JSON.stringify(event.data));
+            popupClose(new DataSet(event.data))
+        };
+        window.addEventListener("message", iframeCallBack);
+        return () => {
+            window.removeEventListener("message", iframeCallBack);
+        };
+      }, []);
+
+      //팝업 컴포넌트 닫기 처리
+      const popupClose = (data?: DataSet) => {
+        setOpen(false);
+        setTimeout(() => {
+          document.removeRoot(formId);
+          nFunc?.(data);
+        }, 300);
+      };
+
+      //팝업 컴포넌트 생성
+      return (
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <Box className="popup-container full">
+                <Box className="pop-header">
+                  <Typography variant="h2" className="pop-tit">{title}</Typography>
+                  {/* X 닫기 버튼 */}
+                  <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <Typography component="span" className="sr-only">닫기</Typography>
+                  </Button>
+                </Box>
+                <Box className="pop-body">
+                  {/* 팝업 내용 */}
+                  <iframe
+                      src={url}
+                      width='100%'
+                      height='100%'
+                      style={{ border: "none" }}
+                  />
+                </Box>
+              </Box>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
+      );
+    })
+  );
+};
+
+export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openWebPopup };
