@@ -14,7 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 
 interface DataSet {
   bankCode: string; 
-  bankName: string; 
+  bankName: string;  
 }
 
 const COM004_2 = () => {

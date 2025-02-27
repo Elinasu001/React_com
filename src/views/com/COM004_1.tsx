@@ -15,7 +15,7 @@ import InputLabel from '@mui/material/InputLabel';
 interface DataSet {
   bankCode: string; 
   bankName: string; 
-}
+} 
 
 const COM004_1 = () => {
   const { doAction, makeForm, addFormData } = Common();

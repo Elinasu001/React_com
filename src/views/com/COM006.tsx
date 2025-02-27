@@ -151,7 +151,7 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
                     backgroundColor: selectedBank === bank.CD ? "#f0f0f0" : "transparent",
                     "&:hover": { backgroundColor: "#e0e0e0" },
                   }}
-                  onClick={() => handleBankSelect(bank.CD, bank.CD_NM)}
+                  onClick={() => handleBankSelect(bank.CD, bank.CD_NM)} 
                 >
                   {bank.CD_NM}
                 </Box>
