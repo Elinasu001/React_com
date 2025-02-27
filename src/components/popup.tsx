@@ -5,7 +5,7 @@
  * import { openBottomPopup } from "@src/components/popup";
  */
 import { DataSet } from '@assets/js/common';
-import { Box, Button, Modal, Slide } from '@mui/material';
+import { Box, Button, Modal, Slide, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 /**
@@ -47,9 +47,9 @@ export const openBottomPopup = ({ component: Component, title, nFunc }: PopupPro
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container btmSheet">
                 <Box className="pop-header">
-                  <h2 className="pop-tit">{title}</h2>
+                  <Typography variant="h2" className="pop-tit">{title}</Typography>
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <span className="sr-only">닫기</span>
+                    <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
                 <Box className="pop-body">
@@ -94,7 +94,7 @@ export const openBottomPopup2 = ({ component: Component, title, nFunc }: PopupPr
                   <h2 className="pop-tit">{title}</h2>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <span className="sr-only">닫기</span>
+                    <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
 
@@ -151,10 +151,10 @@ export const openFullPopup = ({ component: Component, title, nFunc }: PopupProps
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container full">
                 <Box className="pop-header">
-                  <h2 className="pop-tit">{title}</h2>
+                  <Typography variant="h2" className="pop-tit">{title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <span className="sr-only">닫기</span>
+                    <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
                 <Component onClose={popupClose} />
@@ -194,10 +194,10 @@ export const openFullPopup2 = ({ component: Component, title, nFunc }: PopupProp
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container full">
                 <Box className="pop-header">
-                  <h2 className="pop-tit">{title}</h2>
+                  <Typography variant="h2" className="pop-tit">{title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <span className="sr-only">닫기</span>
+                    <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
 
@@ -254,10 +254,10 @@ export const openPopup = ({ component: Component, title, nFunc }: PopupProps) =>
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container center">
                 <Box className="pop-header">
-                  <h2 className="pop-tit">{title}</h2>
+                  <Typography variant="h2" className="pop-tit">{title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <span className="sr-only">닫기</span>
+                    <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
 
