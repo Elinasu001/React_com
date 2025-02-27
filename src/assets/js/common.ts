@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { progressBar } from "@src/components/Loading";
 import axios from 'axios';
 import DataSet from "@assets/io/DataSet";
@@ -123,14 +122,16 @@ export const doAction = async (req: ApiReq): Promise<ApiRes> => {
  * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
  * @param uri 이동할 페이지의 경로
  */
-export const doActionURL = (uri: string) => {
-  const navigate = useNavigate();
+export const doActionURL = (uri : string) => {
+  // const navigate = useAppNavigate();
   progressBar(true);
   setTimeout(() => {
-    navigate(uri);
+    // navigate(uri);
+    location.replace(uri);
     progressBar(false);
   }, 500);
 };
+
 
 export default { 
   GLog, 

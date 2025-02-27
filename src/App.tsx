@@ -1,5 +1,5 @@
 // src/App.tsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {Routes,Route,BrowserRouter} from "react-router-dom";
 
 // [메인]
 import Layout from "@views/common/Layout";
@@ -56,14 +56,13 @@ import EFC013 from "@src/views/efc/EFC013";
 import EFC014 from "@src/views/efc/EFC014";
 
 // 확장 함수
-import '@assets/extension/globalExtensions';
+import "@assets/extension/globalExtensions";
 
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-
         {/* 메인,테스트 페이지 라우트 */}
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
@@ -128,9 +127,8 @@ const App = () => {
           <Route path="EFC013.view" element={<EFC013 />} />
           <Route path="EFC014.view" element={<EFC014 />} />
         </Route>
-
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
