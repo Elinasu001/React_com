@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
-import { GLog, Common } from '@assets/js/common';
+import { GLog } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { NumberBox } from "@src/components/Input";
@@ -139,11 +139,11 @@ const COM004 = () => {
                 btnName="입금은행"
                 width="100%"
                 clickFunc={() => {
-                  openBottomPopup({url: '/com/COM006.view',
-                    nFunc: (selectedBankCode: string) => { 
-                      console.log("선택된 은행 코드:", selectedBankCode); // 선택된 은행 코드 확인
-                      setSelectedBank(selectedBankCode);  }
-                    });
+                  // openBottomPopup({url: '/com/COM006.view',
+                  //   nFunc: (selectedBankCode: string) => { 
+                  //     console.log("선택된 은행 코드:", selectedBankCode); // 선택된 은행 코드 확인
+                  //     setSelectedBank(selectedBankCode);  }
+                  //   });
                 }}
               />
           </Box>

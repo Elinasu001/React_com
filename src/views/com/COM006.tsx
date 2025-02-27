@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
-import {  Common } from '@assets/js/common';
+import { doAction, makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
 
@@ -34,8 +34,6 @@ function a11yProps(index: number) {
 }
 
 const COM006 = () => {
-  const { doAction, makeForm, addFormData } = Common();
-
   const [text, setText] = useState("");  // 검색어
   const [tabValue, setTabValue] = useState<number>(0);  // 현재 선택된 탭
   const [bankList, setBankList] = useState<{ CD: string; CD_NM: string }[]>([]); // 은행사 / 증권사 리스트
