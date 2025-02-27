@@ -4,7 +4,7 @@ import { doAction, makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
 import DataSet from "@assets/io/DataSet";
-
+import { Tab01 } from "@src/components/Tab";
 
 interface CustomTabPanelProps {
   children?: React.ReactNode;
