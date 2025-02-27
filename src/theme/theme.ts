@@ -46,13 +46,21 @@ const themeOptions: ThemeOptions = {
           minWidth: "auto",
           margin: "0px",
           borderRadius: "4px",
-          boxShadow: "none",
+          boxShadow: "none !important",
+            "&:hover":{
+              boxShadow:"none",
+            },
+            "&:active": {
+              boxShadow: "none",
+            },
+            "&:focus": {
+              boxShadow: "none",
+            },
           textTransform: "none",
           fontSize: "inherit",
           fontWeight: "inherit",
           background: "transparent",
           transition: "background 0.2s ease-in-out, transform 0.2s ease-in-out",
-          
         },
       },
     },
