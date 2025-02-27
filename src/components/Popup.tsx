@@ -4,7 +4,6 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { GLog } from '@assets/js/common';
 import { Box, Button, Modal, Slide, Typography } from '@mui/material';
 import DataSet from '@src/assets/io/DataSet';
 import React, { useEffect, useState } from 'react';
@@ -13,15 +12,16 @@ import { MemoryRouter } from 'react-router-dom';
  * 팝업 파라미터 정의
  */
 interface PopupProps {
-  component: React.FC<{ onClose: (data?: DataSet) => void }>; // 팝업으로 열 페이지
+  component: React.FC<{param: DataSet,onClose: (data?: DataSet) => void }>; // 팝업으로 열 페이지
   title?: string;                                            // 팝업 타이틀
   nFunc?: (data?: DataSet) => void;                          // 팝업 닫기 콜백
+  param?: DataSet;                                            // 팝업 파람
 }
 
 /**
  *  밑에서 올라는 팝업
  */
-export const openBottomPopup = ({ component: Component, title, nFunc }: PopupProps) => {
+export const openBottomPopup = ({ component: Component, title, param, nFunc }: PopupProps) => {
   const formId = "gOpenBottomPopup";
   document.getRoot(formId).render(
     React.createElement(() => {
@@ -54,7 +54,7 @@ export const openBottomPopup = ({ component: Component, title, nFunc }: PopupPro
                   </Button>
                 </Box>
                 <Box className="pop-body">
-                  <Component onClose={popupClose} />
+                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
                 </Box>
               </Box>
             </Slide>
@@ -65,7 +65,7 @@ export const openBottomPopup = ({ component: Component, title, nFunc }: PopupPro
   );
 };
 
-export const openBottomPopup2 = ({ component: Component, title, nFunc }: PopupProps) => {
+export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: PopupProps) => {
   const formId = "gOpenBottomPopup2";
   document.getRoot(formId).render(
     React.createElement(() => {
@@ -101,7 +101,7 @@ export const openBottomPopup2 = ({ component: Component, title, nFunc }: PopupPr
 
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component onClose={popupClose} />
+                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
                 </Box>
 
                 {/* 버튼 */}
@@ -125,7 +125,7 @@ export const openBottomPopup2 = ({ component: Component, title, nFunc }: PopupPr
   );
 };
 
-export const openFullPopup = ({ component: Component, title, nFunc }: PopupProps) => {
+export const openFullPopup = ({ component: Component, title, param, nFunc }: PopupProps) => {
   const formId = 'gOpenFullPopup';
   document.getRoot(formId).render(
     React.createElement(() => {
@@ -160,7 +160,7 @@ export const openFullPopup = ({ component: Component, title, nFunc }: PopupProps
                 </Box>
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component onClose={popupClose} />
+                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
                 </Box>
               </Box>
             </Slide>
@@ -171,7 +171,7 @@ export const openFullPopup = ({ component: Component, title, nFunc }: PopupProps
   );
 };
 
-export const openFullPopup2 = ({ component: Component, title, nFunc }: PopupProps) => {
+export const openFullPopup2 = ({ component: Component, title, param, nFunc }: PopupProps) => {
   const formId = 'gOpenFullPopup2';
   document.getRoot(formId).render(
     React.createElement(() => {
@@ -207,7 +207,7 @@ export const openFullPopup2 = ({ component: Component, title, nFunc }: PopupProp
 
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component onClose={popupClose} />
+                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
                 </Box>
 
                 {/* 버튼 */}
@@ -231,7 +231,7 @@ export const openFullPopup2 = ({ component: Component, title, nFunc }: PopupProp
   );
 };
 
-export const openPopup = ({ component: Component, title, nFunc }: PopupProps) => {
+export const openPopup = ({ component: Component, title, param, nFunc }: PopupProps) => {
   const formId = 'gOpenPopup';
   document.getRoot(formId).render(
     React.createElement(() => {
@@ -267,7 +267,7 @@ export const openPopup = ({ component: Component, title, nFunc }: PopupProps) =>
 
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component onClose={popupClose} />
+                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
                 </Box>
 
               </Box>
