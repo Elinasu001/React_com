@@ -242,4 +242,77 @@ export const Card03 = ({
     );
   };
 
+
+
+  /**
+ * 예적금상품 카드 컴포넌트
+ */
+  interface Card05Props {
+    pdcd: string;               // 상품코드
+    pdnm: string;               // 상품명
+    cmmProdCategoty: string;    // 카테고리
+    pdDesc: string;             // 상품설명
+    keyword: string[];          // 키워드
+    depdate: string;            // 예적금기간
+    intr: string;               // 금리
+    pd_dvcd: string;            // 상품종류(단리,복리)
+    pd_kncd: string;            // 상품카테고리리
+  }
+
+export const Card05 = ({
+  pdcd,
+  pdnm,
+  cmmProdCategoty,
+  pdDesc,
+  keyword,
+  depdate,       //예적금 기간 
+  intr,           //금리
+  pd_dvcd,
+  pd_kncd
+}: Card05Props) => {
+
+  return (
+      <Card01 padding="2px" elevation={3}>
+          <CardContent>
+            <Typography variant="body2" color="textSecondary">
+              {pdDesc}
+            </Typography>
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+              <Box
+                sx={{
+                  color: "#612AD0",
+                  border: "2px solid #612AD0",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  px: 1,
+                  py: 0.3,
+                  borderRadius: "20px",
+                }}
+              >
+                {pd_kncd}
+              </Box>
+
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                {pdnm}
+              </Typography>
+            </Box>
+
+            <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
+              {keyword.join(" | ")}
+            </Typography>
+
+            <Typography variant="subtitle2" color="secondary" sx={{ fontWeight: 700, mt: 2 }}>
+              {depdate}개월
+            </Typography>
+
+            <Typography variant="h6" color="rgb(97, 42, 208)" sx={{ fontWeight: "bold"}}>
+              연 {intr}% {pd_dvcd}
+            </Typography>
+          </CardContent>
+
+      </Card01>
+    );
+  };
+
 export default { Card01, Card02, Card03, Card04 };
