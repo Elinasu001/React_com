@@ -5,6 +5,7 @@
  * 사용 예시:
  * import { alert } from "@assets/ui/alert";
  */
+import { Box, Button, Modal } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 
@@ -35,7 +36,7 @@ export function messageView(
   // 전역 컨테이너가 없으면 생성
   let container = document.getElementById(formId);
   if (!container) {
-    container = document.createElement('div');
+    container = document.createElement('Box');
     container.id = formId;
     document.body.appendChild(container);
   }
@@ -74,33 +75,34 @@ export function messageView(
     };
 
     return (
-      <div className="popup-container modal">
-        <div className="pop-body">
+      <Modal open={open} className="popup-container modal">
+        <Box className="pop-body">
           <p>
             {message}
           </p>
 
+      
           {/* 버튼 영역 */}
-          {!fBtn ? (
-            // fBtn이 없으면 단일 버튼만 표시
-            <div className="popup-footer">
-              <button  className="btn btn-primary" onClick={handleConfirm}>
-                {nBtn}
-              </button>
-            </div>
-          ) : (
-            // fBtn, fFunc가 있으면 2개 버튼 (확인/취소)
-            <div className="popup-footer gap10">
-              <button className="btn btn-secondary" onClick={handleConfirm}>
-                {nBtn}
-              </button>
-              <button className="btn btn-primary" onClick={handleCancel}>
-                {fBtn}
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+          <Box className="popup-footer gap10">
+            {!fBtn ? (
+              // fBtn이 없으면 단일 버튼만 표시
+                <Button  className="btn btn-primary" onClick={handleConfirm}>
+                  {nBtn}
+                </Button>
+            ) : (
+              // fBtn, fFunc가 있으면 2개 버튼 (확인/취소)
+              <>
+                <Button className="btn btn-secondary" onClick={handleConfirm}>
+                  {nBtn}
+                </Button>
+                <Button className="btn btn-primary" onClick={handleCancel}>
+                  {fBtn}
+                </Button>
+              </>
+            )}
+           </Box>
+        </Box>
+      </Modal>
     );
   };
 
