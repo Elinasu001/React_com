@@ -7,6 +7,7 @@
 import React from "react";
 import { Card as MuiCard, Card, CardContent, Box, Typography, IconButton, Divider, ListItemButton } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Button01, Button02, Button03 } from "@src/components/Button";
 
 /**
  * 카드 기본 속성
@@ -315,4 +316,64 @@ export const Card05 = ({
     );
   };
 
-export default { Card01, Card02, Card03, Card04 };
+  interface Card06props {
+    type: string;
+    acno: string;
+    balance: number;
+    pdnm: string;
+  }
+
+  export const Card06 = ({ type, pdnm, acno, balance }: Card06props) => {
+    return (
+      <Card
+        elevation={5}
+        sx={{
+          mb: 2,
+          p: 2,
+          borderRadius: "12px",
+          width: "95%",
+        }}
+      >
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
+            {type} {pdnm}
+          </Typography>
+        </Box>
+  
+        {/* 계좌번호 및 복사 아이콘 */}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Typography variant="body1" color="textSecondary">
+            {acno}
+            <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
+              <ContentCopyIcon fontSize="small" />
+            </IconButton>
+          </Typography>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          {/* 계좌 잔액 */}
+          <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
+            잔액 {balance.toLocaleString()} 원
+          </Typography>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+          {/* 계좌 잔액 */}
+          <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
+            출금가능금액 {balance.toLocaleString()} 원
+          </Typography>
+        </Box>
+        {/* 버튼 영역 */}
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
+          <Button01
+            btnName="이체"
+            clickFunc={async () => { //TODO 이체페이지 doactionurl 달아야함
+              // 이체 로직
+            }}
+          />
+        </Box>
+      </Card>
+    );
+  };
+
+export default { Card01, Card02, Card03, Card04, Card05, Card06 };
