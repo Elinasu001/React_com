@@ -5,8 +5,8 @@
  * import { openBottomPopup } from "@src/components/popup";
  */
 // import "@assets/styles/css/common.css";
-import { Modal, Slide } from '@mui/material';
-import React , { useEffect, useState } from 'react';
+import { Box, Button, Modal, Slide } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 
 import { DataSet } from '@assets/js/common';
@@ -46,17 +46,17 @@ export const openBottomPopup = ({ component: Component, nFunc }: PopupProps) => 
       return (
         <Modal open={open} onClose={popupClose}>
           <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-            <div className="popup-container btmSheet">
-              <div className="pop-header">
+            <Box className="popup-container btmSheet">
+              <Box className="pop-header">
                 <h2 className="pop-tit">바텀 팝업 타이틀</h2>
-                <button aria-label="close" onClick={popupClose} className="btn btn-close right">
+                <Button aria-label="close" onClick={popupClose} className="btn btn-close right">
                   <span className="sr-only">닫기</span>
-                </button>
-              </div>
-              <div className="pop-body">
+                </Button>
+              </Box>
+              <Box className="pop-body">
                 <Component onClose={popupClose} />
-              </div>
-            </div>
+              </Box>
+            </Box>
           </Slide>
         </Modal>
       );
@@ -71,7 +71,7 @@ export const openBottomPopup2 = (prop: PopupProps) => {
   // 전역 컨테이너가 없으면 생성
   let container = document.getElementById(formId);
   if (!container) {
-    container = document.createElement('div');
+    container = document.createElement('Box');
     container.id = formId;
     document.body.appendChild(container);
   }
@@ -110,32 +110,32 @@ export const openBottomPopup2 = (prop: PopupProps) => {
     return (
       <Modal open={open} onClose={handleClose}>
         <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container btmSheet">
-            <div className="pop-header">
+          <Box className="popup-container btmSheet">
+            <Box className="pop-header">
               <h2 className="pop-tit">바텀 팝업 타이틀</h2>
                 {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={handleClose} className="btn btn-close right">
+                <Button aria-label="close" onClick={handleClose} className="btn btn-close right">
                 <span className="sr-only">닫기</span>
-              </button>
-            </div>
-            <div className="pop-body">
+              </Button>
+            </Box>
+            <Box className="pop-body">
               {/* 팝업 내용 */}
               팝업 내용
-            </div>
+            </Box>
             
             {/* 버튼 */}
-            <div className="popup-footer gap10">
-              <button className="btn btn-secondary" onClick={handleClose}>
+            <Box className="popup-footer gap10">
+              <Button className="btn btn-secondary" onClick={handleClose}>
                 버튼1
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
+              </Button>
+              <Button className="btn btn-primary" onClick={handleClose}>
                 버튼2
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
+              </Button>
+              <Button className="btn btn-primary" onClick={handleClose}>
                 버튼3
-              </button>
-            </div>
-          </div>
+              </Button>
+            </Box>
+          </Box>
         </Slide>
       </Modal>
       );
@@ -150,7 +150,7 @@ export const openFullPopup = (prop: PopupProps) => {
   // 전역 컨테이너가 없으면 생성
   let container = document.getElementById(formId);
   if (!container) {
-    container = document.createElement('div');
+    container = document.createElement('Box');
     container.id = formId;
     document.body.appendChild(container);
   }
@@ -189,23 +189,23 @@ export const openFullPopup = (prop: PopupProps) => {
     return (
       <Modal open={open} onClose={handleClose}>
         <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container full">
-            <div className="pop-header">
+          <Box className="popup-container full">
+            <Box className="pop-header">
               <h2 className="pop-tit">풀팝업 타이틀</h2>
                {/* X 닫기 버튼 */}
-               <button aria-label="close" onClick={handleClose} className="btn btn-close right">
+               <Button aria-label="close" onClick={handleClose} className="btn btn-close right">
                   <span className="sr-only">닫기</span>
-                </button>
-            </div>
+                </Button>
+            </Box>
 
-            <div className="pop-body">
+            <Box className="pop-body">
               {/* 팝업 내용 */}
               <iframe src={prop.url} className="popup-iframe"></iframe>
 
               
-            </div>
+            </Box>
 
-          </div>
+          </Box>
         </Slide>
       </Modal>
     );
@@ -221,7 +221,7 @@ export const openFullPopup2 = (prop: PopupProps) => {
   // 전역 컨테이너가 없으면 생성
   let container = document.getElementById(formId);
   if (!container) {
-    container = document.createElement('div');
+    container = document.createElement('Box');
     container.id = formId;
     document.body.appendChild(container);
   }
@@ -260,33 +260,33 @@ export const openFullPopup2 = (prop: PopupProps) => {
     return (
       <Modal open={open} onClose={handleClose}>
         <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container full">
-            <div className="pop-header">
+          <Box className="popup-container full">
+            <Box className="pop-header">
               <h2 className="pop-tit">풀팝업 타이틀</h2>
                {/* X 닫기 버튼 */}
-               <button aria-label="close" onClick={handleClose} className="btn btn-close right">
+               <Button aria-label="close" onClick={handleClose} className="btn btn-close right">
                   <span className="sr-only">닫기</span>
-                </button>
-            </div>
+                </Button>
+            </Box>
 
-            <div className="pop-body">
+            <Box className="pop-body">
               {/* 팝업 내용 */}
               팝업 내용
-            </div>
+            </Box>
 
             {/* 버튼 */}
-            <div className="popup-footer gap10">
-              <button className="btn btn-secondary" onClick={handleClose}>
+            <Box className="popup-footer gap10">
+              <Button className="btn btn-secondary" onClick={handleClose}>
                 버튼1
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
+              </Button>
+              <Button className="btn btn-primary" onClick={handleClose}>
                 버튼2
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
+              </Button>
+              <Button className="btn btn-primary" onClick={handleClose}>
                 버튼3
-              </button>
-            </div>
-          </div>
+              </Button>
+            </Box>
+          </Box>
         </Slide>
       </Modal>
     );
@@ -302,7 +302,7 @@ export const openPopup = (prop: PopupProps) => {
   // 전역 컨테이너가 없으면 생성
   let container = document.getElementById(formId);
   if (!container) {
-    container = document.createElement('div');
+    container = document.createElement('Box');
     container.id = formId;
     document.body.appendChild(container);
   }
@@ -341,21 +341,21 @@ export const openPopup = (prop: PopupProps) => {
     return (
       <Modal open={open} onClose={handleClose}>
         <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container center">
-            <div className="pop-header">
+          <Box className="popup-container center">
+            <Box className="pop-header">
               <h2 className="pop-tit">일반 팝업 타이틀</h2>
                 {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={handleClose} className="btn btn-close right">
+                <Button aria-label="close" onClick={handleClose} className="btn btn-close right">
                   <span className="sr-only">닫기</span>
-                </button>
-            </div>
+                </Button>
+            </Box>
 
-            <div className="pop-body">
+            <Box className="pop-body">
               {/* 팝업 내용 */}
               <iframe src={prop.url} className="popup-iframe"></iframe>
-            </div>
+            </Box>
             
-          </div>
+          </Box>
         </Slide>
       </Modal>
     );
