@@ -16,7 +16,6 @@ interface DataSet {
 } 
 
 const COM004_1 = () => {
-  
   const [inputAcno, setinputAcno] = useState('');
   const [selectedBankCd, setSelectedBankCd] = useState<string>("");
   const [selectedBankNm, setSelectedBankNm] = useState<string>("");

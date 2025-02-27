@@ -5,7 +5,7 @@
  * 사용 예시:
  * import { alert } from "@assets/ui/alert";
  */
-import { Box, Button, Modal } from '@mui/material';
+import { Box, Button, Modal, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 
@@ -77,9 +77,9 @@ export function messageView(
     return (
       <Modal open={open} className="popup-container modal">
         <Box className="pop-body">
-          <p>
+          <Typography component="p">
             {message}
-          </p>
+          </Typography>
 
       
           {/* 버튼 영역 */}

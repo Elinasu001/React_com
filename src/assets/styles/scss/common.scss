@@ -33,7 +33,7 @@
     }
 
     // 팝업 본문
-    .pop-body { width: auto; height: 100%; padding: 0 20px; overflow-y: auto; background-color: var(--white); }
+    .pop-body { width: auto; height: 100%; padding: 0 20px 20px; overflow-y: auto; background-color: var(--white); }
   
     // 팝업 푸터
     .popup-footer { padding: 15px 20px 20px 20px; background-color: var(--white) }
@@ -50,7 +50,7 @@
     &.center { margin: 24px; width: auto; border-radius: 16px; box-shadow: 0px 2px 15px var(--dim); }
     
     // 모달&알럿
-    &.modal { flex-direction:initial;  align-items: end; z-index:999; background-color: var(--dim);
+    &.modal { flex-direction:initial;  align-items: end; z-index:9999; background-color: var(--dim);
         
         .pop-body {  width:100%; height:auto; padding:0; border-radius: 16px; margin:20px;
             p { padding:30px 20px 15px 20px; text-align: center;font-size: var(--font16); font-weight: var(--font-w-r); }
@@ -83,7 +83,7 @@
 .btn-area{
 
     @include mixin.flex-center;
-    .btn{  border-radius: 29px; color:var(--btn-2); }
+    .btn{  border-radius: 29px; color:var(--btn-txt); }
 
 }
 

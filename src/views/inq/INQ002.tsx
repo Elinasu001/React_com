@@ -8,10 +8,10 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect ,useState } from "react";
 
-import { Common, GLog } from "@src/assets/js/common";
-import { messageView } from "@src/components/alert";
-import { progressBar } from "@src/components/loading";
-import { Button01 } from "@src/components/button";
+import { GLog } from "@src/assets/js/common";
+import { messageView } from "@src/components/Alert";
+import { progressBar } from "@src/components/Loading";
+import { Button01 } from "@src/components/Button";
 
 
 const accountData = {
@@ -157,11 +157,9 @@ const INQ002 = () => {
           출금가능금액 : {accountData.ACNT_BLNC.toLocaleString()} 원
         </Typography>
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px" }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "16px" , width: "100%" }}>
           <Button01
             btnName="이체"
-            width="100%"
-            fontSize="16px"
             clickFunc={async () => { //TODO 이체페이지 doactionurl 달아야함
               // 이체 로직
             }}
