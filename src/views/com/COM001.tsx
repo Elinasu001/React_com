@@ -67,9 +67,9 @@ const COM001 = () => {
     //로딩 OFF
     progressBar(false);
     
-    const list = (test01.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+    const list = (test01.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
 
-    settelCdData(list);
+    settelCdData(test01.data.getList('list'));
    
   };
   
