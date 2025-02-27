@@ -11,7 +11,7 @@ import { TextBox01 } from "@src/components/Text";
 import { doActionURL } from '@assets/js/common';
 import { Button01 } from "@src/components/Button";
 import { openFullPopup, openBottomPopup } from "@src/components/Popup";
-import MainBox from "@src/components/Box";
+import {MainBox} from "@src/components/Box";
 
 import COM001 from "@src/views/com/COM001";
 import COM002 from "@src/views/com/COM002";

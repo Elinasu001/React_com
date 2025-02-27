@@ -5,7 +5,7 @@
  * import { Card01, Card02 } from "@src/components/Card";
  */
 import React from "react";
-import { Card, CardContent, Box, Typography, IconButton, Divider, ListItemButton } from "@mui/material";
+import { Card as MuiCard, Card, CardContent, Box, Typography, IconButton, Divider, ListItemButton } from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 /**
@@ -46,6 +46,30 @@ export const Card01 = ({
     </Card>
   );
 };
+
+/**
+ * 카드 기본 속성
+ */
+interface Card04Props {
+    children: React.ReactNode;
+    title: string;         // 제목
+  }
+
+/**
+ * 카드 컴포넌트 (제목이 있는 기본 카드)
+ */
+export const Card04 = ({ title, children }: Card04Props) => {
+    return (
+      <MuiCard sx={{ p: 2, borderRadius: "12px", mb: 2 }}>
+        {title && (
+          <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+            {title}
+          </Typography>
+        )}
+        <Box>{children}</Box>
+      </MuiCard>
+    );
+  };
 
 /**
  * 계좌 카드 속성
@@ -218,4 +242,4 @@ export const Card03 = ({
     );
   };
 
-export default { Card01, Card02, Card03 };
+export default { Card01, Card02, Card03, Card04 };
