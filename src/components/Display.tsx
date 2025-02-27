@@ -5,7 +5,7 @@
  * import { LimitDisplay } from "@src/components/Display";
  */
 import { Box, Typography, TextField } from "@mui/material";
-import { Button01 } from "./button";
+import { Button01 } from "./Button";
 
 interface LimitDisplayProps {
   label: string;

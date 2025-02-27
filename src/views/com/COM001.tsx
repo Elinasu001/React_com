@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
-import { GLog, Common } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 
 const COM001 = () => {
-  const { doAction, makeForm, addFormData } = Common();
   const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
