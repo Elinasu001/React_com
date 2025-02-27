@@ -1,6 +1,6 @@
 import { Box, Typography, Divider } from "@mui/material";
 import {LimitDisplay} from "@src/components/Display";
-import {LimitInput} from "@src/components/input";
+import {LimitInput} from "@src/components/Input";
 import {TextList} from "@src/components/TextList";
 
 const EFC008 = () => {

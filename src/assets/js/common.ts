@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { progressBar } from "@src/components/loading";
+import { progressBar } from "@src/components/Loading";
 import axios from 'axios';
 
 //앱 실행 환경

@@ -4,365 +4,275 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-// import "@assets/styles/css/common.css";
+import { MemoryRouter } from 'react-router-dom';
 import { Modal, Slide } from '@mui/material';
-import React , { useEffect, useState } from 'react';
-import { createRoot, Root } from 'react-dom/client';
-
+import React, { useEffect, useState } from 'react';
 import { DataSet } from '@assets/js/common';
-
-let root: Root | null = null;
-
 /**
  * 팝업 파라미터 정의
  */
 interface PopupProps {
   component: React.FC<{ onClose: (data?: DataSet) => void }>; // 팝업으로 열 페이지
-  title ?: string;                                            // 팝업 타이틀
-  nFunc ?: (data?: DataSet) => void;                          // 팝업 닫기 콜백
+  title?: string;                                            // 팝업 타이틀
+  nFunc?: (data?: DataSet) => void;                          // 팝업 닫기 콜백
 }
 
 /**
  *  밑에서 올라는 팝업
  */
-export const openBottomPopup = ({ component: Component, nFunc }: PopupProps) => {
-  const formId = "g-popup-bottom-view";
+export const openBottomPopup = ({ component: Component, title, nFunc }: PopupProps) => {
+  const formId = "gOpenBottomPopup";
   document.getRoot(formId).render(
     React.createElement(() => {
       const [open, setOpen] = useState(false);
 
+      //팝업 컴포넌트 생성후 처리
       useEffect(() => {
         setOpen(true);
       }, []);
 
-      const popupClose = () => {
+      //팝업 컴포넌트 닫기 처리
+      const popupClose = (data?: DataSet) => {
         setOpen(false);
         setTimeout(() => {
           document.removeRoot(formId);
-          nFunc?.();
+          nFunc?.(data);
         }, 300);
       };
 
+      //팝업 컴포넌트 생성
       return (
-        <Modal open={open} onClose={popupClose}>
-          <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-            <div className="popup-container btmSheet">
-              <div className="pop-header">
-                <h2 className="pop-tit">바텀 팝업 타이틀</h2>
-                <button aria-label="close" onClick={popupClose} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container btmSheet">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
+                <div className="pop-body">
+                  <Component onClose={popupClose} />
+                </div>
               </div>
-              <div className="pop-body">
-                <Component onClose={popupClose} />
-              </div>
-            </div>
-          </Slide>
-        </Modal>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
       );
     })
   );
 };
 
+export const openBottomPopup2 = ({ component: Component, title, nFunc }: PopupProps) => {
+  const formId = "gOpenBottomPopup2";
+  document.getRoot(formId).render(
+    React.createElement(() => {
+      const [open, setOpen] = useState(false);
 
-export const openBottomPopup2 = (prop: PopupProps) => {
-  const formId = 'g-popup-view';
+      //팝업 컴포넌트 생성후 처리
+      useEffect(() => {
+        setOpen(true);
+      }, []);
 
-  // 전역 컨테이너가 없으면 생성
-  let container = document.getElementById(formId);
-  if (!container) {
-    container = document.createElement('div');
-    container.id = formId;
-    document.body.appendChild(container);
-  }
+      //팝업 컴포넌트 닫기 처리
+      const popupClose = (data?: DataSet) => {
+        setOpen(false);
+        setTimeout(() => {
+          document.removeRoot(formId);
+          nFunc?.(data);
+        }, 300);
+      };
 
-  // 새로운 Root 생성
-  if (!root) {
-    root = createRoot(container);
-  }
+      //팝업 컴포넌트 생성
+      return (
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container btmSheet">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
 
-  /**
-   * 팝업 컴포넌트 (자동 열림, 닫기 버튼 포함)
-   */
-  const PopupView = () => {
-    const [open, setOpen] = useState(false);
+                <div className="pop-body">
+                  {/* 팝업 내용 */}
+                  <Component onClose={popupClose} />
+                </div>
 
-    // 컴포넌트 마운트 시 자동으로 팝업 열기
-    useEffect(() => {
-      setOpen(true);
-    }, []);
-
-    // 팝업 닫기 및 클린업 처리
-    const handleClose = () => {
-      setOpen(false);
-      setTimeout(() => {
-        if (prop.nFunc) {
-          prop.nFunc(); // 닫기 콜백 실행
-        }
-        if (root && container) {
-          root.unmount(); // 컴포넌트 언마운트
-          root = null; // 루트 초기화
-          container.remove(); // DOM에서 제거
-        }
-      }, 300); // 애니메이션 완료 후 클린업
-    };
-
-    return (
-      <Modal open={open} onClose={handleClose}>
-        <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container btmSheet">
-            <div className="pop-header">
-              <h2 className="pop-tit">바텀 팝업 타이틀</h2>
-                {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={handleClose} className="btn btn-close right">
-                <span className="sr-only">닫기</span>
-              </button>
-            </div>
-            <div className="pop-body">
-              {/* 팝업 내용 */}
-              팝업 내용
-            </div>
-            
-            {/* 버튼 */}
-            <div className="popup-footer gap10">
-              <button className="btn btn-secondary" onClick={handleClose}>
-                버튼1
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
-                버튼2
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
-                버튼3
-              </button>
-            </div>
-          </div>
-        </Slide>
-      </Modal>
+                {/* 버튼 */}
+                <div className="popup-footer gap10">
+                  <button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                    버튼1
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼2
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼3
+                  </button>
+                </div>
+              </div>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
       );
-    };
-
-  root.render(<PopupView />);
+    })
+  );
 };
 
-export const openFullPopup = (prop: PopupProps) => {
-  const formId = 'g-popup-view';
+export const openFullPopup = ({ component: Component, title, nFunc }: PopupProps) => {
+  const formId = 'gOpenFullPopup';
+  document.getRoot(formId).render(
+    React.createElement(() => {
+      const [open, setOpen] = useState(false);
 
-  // 전역 컨테이너가 없으면 생성
-  let container = document.getElementById(formId);
-  if (!container) {
-    container = document.createElement('div');
-    container.id = formId;
-    document.body.appendChild(container);
-  }
+      //팝업 컴포넌트 생성후 처리
+      useEffect(() => {
+        setOpen(true);
+      }, []);
 
-  // 새로운 Root 생성
-  if (!root) {
-    root = createRoot(container);
-  }
+      //팝업 컴포넌트 닫기 처리
+      const popupClose = (data?: DataSet) => {
+        setOpen(false);
+        setTimeout(() => {
+          document.removeRoot(formId);
+          nFunc?.(data);
+        }, 300);
+      };
 
-  /**
-   * 팝업 컴포넌트 (자동 열림, 닫기 버튼 포함)
-   */
-  const PopupView = () => {
-    const [open, setOpen] = useState(false);
-
-    // 컴포넌트 마운트 시 자동으로 팝업 열기
-    useEffect(() => {
-      setOpen(true);
-    }, []);
-
-    // 팝업 닫기 및 클린업 처리
-    const handleClose = () => {
-      setOpen(false);
-      setTimeout(() => {
-        if (prop.nFunc) {
-          prop.nFunc(); // 닫기 콜백 실행
-        }
-        if (root && container) {
-          root.unmount(); // 컴포넌트 언마운트
-          root = null; // 루트 초기화
-          container.remove(); // DOM에서 제거
-        }
-      }, 300); // 애니메이션 완료 후 클린업
-    };
-
-    return (
-      <Modal open={open} onClose={handleClose}>
-        <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container full">
-            <div className="pop-header">
-              <h2 className="pop-tit">풀팝업 타이틀</h2>
-               {/* X 닫기 버튼 */}
-               <button aria-label="close" onClick={handleClose} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
-            </div>
-
-            <div className="pop-body">
-              {/* 팝업 내용 */}
-              <iframe src={prop.url} className="popup-iframe"></iframe>
-
-              
-            </div>
-
-          </div>
-        </Slide>
-      </Modal>
-    );
-    
-  };
-
-  root.render(<PopupView />);
+      //팝업 컴포넌트 생성
+      return (
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container full">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
+                <Component onClose={popupClose} />
+              </div>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
+      );
+    })
+  );
 };
 
-export const openFullPopup2 = (prop: PopupProps) => {
-  const formId = 'g-popup-view';
+export const openFullPopup2 = ({ component: Component, title, nFunc }: PopupProps) => {
+  const formId = 'gOpenFullPopup2';
+  document.getRoot(formId).render(
+    React.createElement(() => {
+      const [open, setOpen] = useState(false);
 
-  // 전역 컨테이너가 없으면 생성
-  let container = document.getElementById(formId);
-  if (!container) {
-    container = document.createElement('div');
-    container.id = formId;
-    document.body.appendChild(container);
-  }
+      //팝업 컴포넌트 생성후 처리
+      useEffect(() => {
+        setOpen(true);
+      }, []);
 
-  // 새로운 Root 생성
-  if (!root) {
-    root = createRoot(container);
-  }
+      //팝업 컴포넌트 닫기 처리
+      const popupClose = (data?: DataSet) => {
+        setOpen(false);
+        setTimeout(() => {
+          document.removeRoot(formId);
+          nFunc?.(data);
+        }, 300);
+      };
 
-  /**
-   * 팝업 컴포넌트 (자동 열림, 닫기 버튼 포함)
-   */
-  const PopupView = () => {
-    const [open, setOpen] = useState(false);
+      //팝업 컴포넌트 생성
+      return (
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container full">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
 
-    // 컴포넌트 마운트 시 자동으로 팝업 열기
-    useEffect(() => {
-      setOpen(true);
-    }, []);
+                <div className="pop-body">
+                  {/* 팝업 내용 */}
+                  <Component onClose={popupClose} />
+                </div>
 
-    // 팝업 닫기 및 클린업 처리
-    const handleClose = () => {
-      setOpen(false);
-      setTimeout(() => {
-        if (prop.nFunc) {
-          prop.nFunc(); // 닫기 콜백 실행
-        }
-        if (root && container) {
-          root.unmount(); // 컴포넌트 언마운트
-          root = null; // 루트 초기화
-          container.remove(); // DOM에서 제거
-        }
-      }, 300); // 애니메이션 완료 후 클린업
-    };
-
-    return (
-      <Modal open={open} onClose={handleClose}>
-        <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container full">
-            <div className="pop-header">
-              <h2 className="pop-tit">풀팝업 타이틀</h2>
-               {/* X 닫기 버튼 */}
-               <button aria-label="close" onClick={handleClose} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
-            </div>
-
-            <div className="pop-body">
-              {/* 팝업 내용 */}
-              팝업 내용
-            </div>
-
-            {/* 버튼 */}
-            <div className="popup-footer gap10">
-              <button className="btn btn-secondary" onClick={handleClose}>
-                버튼1
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
-                버튼2
-              </button>
-              <button className="btn btn-primary" onClick={handleClose}>
-                버튼3
-              </button>
-            </div>
-          </div>
-        </Slide>
-      </Modal>
-    );
-    
-  };
-
-  root.render(<PopupView />);
+                {/* 버튼 */}
+                <div className="popup-footer gap10">
+                  <button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                    버튼1
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼2
+                  </button>
+                  <button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                    버튼3
+                  </button>
+                </div>
+              </div>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
+      );
+    })
+  );
 };
 
-export const openPopup = (prop: PopupProps) => {
-  const formId = 'g-popup-view';
+export const openPopup = ({ component: Component, title, nFunc }: PopupProps) => {
+  const formId = 'gOpenPopup';
+  document.getRoot(formId).render(
+    React.createElement(() => {
+      const [open, setOpen] = useState(false);
 
-  // 전역 컨테이너가 없으면 생성
-  let container = document.getElementById(formId);
-  if (!container) {
-    container = document.createElement('div');
-    container.id = formId;
-    document.body.appendChild(container);
-  }
+      //팝업 컴포넌트 생성후 처리
+      useEffect(() => {
+        setOpen(true);
+      }, []);
 
-  // 새로운 Root 생성
-  if (!root) {
-    root = createRoot(container);
-  }
+      //팝업 컴포넌트 닫기 처리
+      const popupClose = (data?: DataSet) => {
+        setOpen(false);
+        setTimeout(() => {
+          document.removeRoot(formId);
+          nFunc?.(data);
+        }, 300);
+      };
 
-  /**
-   * 팝업 컴포넌트 (자동 열림, 닫기 버튼 포함)
-   */
-  const PopupView = () => {
-    const [open, setOpen] = useState(false);
+      //팝업 컴포넌트 생성
+      return (
+        <MemoryRouter>
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <div className="popup-container center">
+                <div className="pop-header">
+                  <h2 className="pop-tit">{title}</h2>
+                  {/* X 닫기 버튼 */}
+                  <button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <span className="sr-only">닫기</span>
+                  </button>
+                </div>
 
-    // 컴포넌트 마운트 시 자동으로 팝업 열기
-    useEffect(() => {
-      setOpen(true);
-    }, []);
+                <div className="pop-body">
+                  {/* 팝업 내용 */}
+                  <Component onClose={popupClose} />
+                </div>
 
-    // 팝업 닫기 및 클린업 처리
-    const handleClose = () => {
-      setOpen(false);
-      setTimeout(() => {
-        if (prop.nFunc) {
-          prop.nFunc(); // 닫기 콜백 실행
-        }
-        if (root && container) {
-          root.unmount(); // 컴포넌트 언마운트
-          root = null; // 루트 초기화
-          container.remove(); // DOM에서 제거
-        }
-      }, 300); // 애니메이션 완료 후 클린업
-    };
-
-    return (
-      <Modal open={open} onClose={handleClose}>
-        <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-          <div className="popup-container center">
-            <div className="pop-header">
-              <h2 className="pop-tit">일반 팝업 타이틀</h2>
-                {/* X 닫기 버튼 */}
-                <button aria-label="close" onClick={handleClose} className="btn btn-close right">
-                  <span className="sr-only">닫기</span>
-                </button>
-            </div>
-
-            <div className="pop-body">
-              {/* 팝업 내용 */}
-              <iframe src={prop.url} className="popup-iframe"></iframe>
-            </div>
-            
-          </div>
-        </Slide>
-      </Modal>
-    );
-    
-  };
-
-  root.render(<PopupView />);
+              </div>
+            </Slide>
+          </Modal>
+        </MemoryRouter>
+      );
+    })
+  );
 };
 
-export default { openPopup , openBottomPopup , openFullPopup, openFullPopup2, openBottomPopup2 };
+export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2 };

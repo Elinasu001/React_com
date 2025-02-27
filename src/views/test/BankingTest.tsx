@@ -1,30 +1,49 @@
+/**
+ * @fileoverview [테스트] 업무테스트
+ *
+ * @author 
+ * @version 1.0.0
+ */
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
-
 import { GLog } from '@assets/js/common';
-
-import { TextBox01 } from "@src/components/text";
+import { TextBox01 } from "@src/components/Text";
 import { Common } from '@assets/js/common';
-import { Button01 } from "@src/components/button";
-import { openFullPopup, openBottomPopup } from "@src/components/popup";
+import { Button01 } from "@src/components/Button";
+import { openFullPopup, openBottomPopup } from "@src/components/Popup";
+import MainBox from "@src/components/Box";
+
+import COM001 from "@src/views/com/COM001";
+import COM002 from "@src/views/com/COM002";
+import COM003 from "@src/views/com/COM003";
+import COM004 from "@src/views/com/COM004";
+import COM005 from "@src/views/com/COM005";
+import COM006 from "@src/views/com/COM006";
+import COM007 from "@src/views/com/COM007";
+import COM008 from "@src/views/com/COM008";
+import COM009 from "@src/views/com/COM009";
+import COM010 from "@src/views/com/COM010";
+import COM011 from "@src/views/com/COM011";
+import COM012 from "@src/views/com/COM012";
+
 
 /**
  * 메뉴별 버튼 목록 정의
  */
 const menuItems: Record<string, { text: string; path: string }[]> = {
   com: [
-    { text: "휴대폰본인인증", path: "/com/COM001.view" },
-    { text: "약관화면", path: "/com/COM002.view" },
-    { text: "타행본인계좌인증(이기종)", path: "/com/COM003.view" },
-    { text: "타행본인계좌인증(중앙회)", path: "/com/COM004.view" },
-    { text: "계좌리스트", path: "/com/COM005.view" },
-    { text: "은행리스트", path: "/com/COM006.view" },
-    { text: "주소검색", path: "/com/COM007.view" },
-    { text: "OCR인증", path: "/com/COM008.view" },
-    { text: "직종선택", path: "/com/COM009.view" },
-    { text: "CDD/EDD", path: "/com/COM010.view" },
-    { text: "보안카드", path: "/com/COM011.view" },
-    { text: "OTP인증", path: "/com/COM012.view" }
+    { text: "휴대폰본인인증", path: "COM001" },
+    { text: "약관화면", path: "COM002" },
+    { text: "타행본인계좌인증(이기종)", path: "COM003" },
+    { text: "타행본인계좌인증(중앙회)", path: "COM004" },
+    { text: "계좌리스트", path: "COM005" },
+    { text: "은행리스트", path: "COM006" },
+    { text: "주소검색", path: "COM007" },
+    { text: "OCR인증", path: "COM008" },
+    { text: "직종선택", path: "COM009" },
+    { text: "CDD/EDD", path: "COM010" },
+    { text: "보안카드", path: "COM011" },
+    { text: "OTP인증", path: "COM012" },
   ],
   inq: [
     { text: "전계좌조회", path: "/inq/INQ001.view" },
@@ -83,24 +102,18 @@ const BankingTest = () => {
   const queryParams = new URLSearchParams(location.search);
   const txGbnCd = queryParams.get("txGbnCd") || "com"; // 기본값: "com"
 
-  console.log("전체 URL:", window.location);
-
-
+  GLog.d("전체 URL:" + window.location);
 
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
 
   return (
-    <Box sx={{
-          display: 'flex',
-          flexWrap: 'wrap', // 자동 줄바꿈
-          justifyContent: 'space-between', // 좌우 정렬
-          gap: 1, // 버튼 간의 간격
-        }}>
+     <MainBox>
 
       <TextBox01 text="업무 테스트"/>
 
       {/* 버튼 컨테이너 */}
+      
 
       {buttons.map((item, index) => {
         // "휴대폰본인인증" 버튼이면 handleOpenAuth, 아니면 기본 doActionURL 사용
@@ -109,29 +122,170 @@ const BankingTest = () => {
             key={index}
             btnName={item.text}
             fontSize="15px"
-
-            width="100%"
-
+            width="43%"
             clickFunc={() => {
+              // "com" 그룹의 경우 팝업 호출
               if (txGbnCd === 'com') {
-
-                if(item.path.split('/')[2] === 'COM005.view' || item.path.split('/')[2] === 'COM006.view'){
-                   // "com" 그룹의 경우 팝업 호출
-                   openBottomPopup({
-                    url: item.path,
-                    nFunc: () => {
-                      GLog.d('팝업 닫힘');
-                    }
-                  });
-                }else {
-
-                  // "com" 그룹의 경우 팝업 호출
-                  openFullPopup({
-                    url: item.path,
-                    nFunc: () => {
-                      GLog.d('풀 팝업 닫힘');
-                    }
-                  });
+                switch (item.path) {
+                  case 'COM001':
+                    openFullPopup({
+                      component: COM001,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM002':
+                    openFullPopup({
+                      component: COM002,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM003':
+                    openFullPopup({
+                      component: COM003,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM004':
+                    openFullPopup({
+                      component: COM004,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM005':
+                    openBottomPopup({
+                      component: COM005,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM006':
+                    openBottomPopup({
+                      component: COM006,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM007':
+                    openFullPopup({
+                      component: COM007,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM008':
+                    openFullPopup({
+                      component: COM008,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM009':
+                    openFullPopup({
+                      component: COM009,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM010':
+                    openFullPopup({
+                      component: COM010,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM011':
+                    openFullPopup({
+                      component: COM011,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  case 'COM012':
+                    openFullPopup({
+                      component: COM012,
+                      title: item.text,
+                      nFunc: (data?) => {
+                        if (data) {
+                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                        } else {
+                          GLog.d('팝업 취소 닫힘');
+                        }
+                      }
+                    });
+                    break;
+                  default:
+                    GLog.d('알 수 없는 컴포넌트: ' + item.path);
+                    break;
                 }
               } else {
                 // 그 외는 일반 페이지 이동
@@ -142,7 +296,7 @@ const BankingTest = () => {
           />
         );
       })}
-    </Box>
+    </MainBox>
 
   );
 };

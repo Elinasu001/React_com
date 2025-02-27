@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
 import { GLog, Common } from '@assets/js/common';
-import { progressBar } from "@src/components/loading";
-import { messageView } from '@src/components/alert';
-import { NumberBox } from "@src/components/input";
-import { Button01 } from "@src/components/button";
-import { openBottomPopup } from "@src/components/popup";
+import { progressBar } from "@src/components/Loading";
+import { messageView } from '@src/components/Alert';
+import { NumberBox } from "@src/components/Input";
+import { Button01 } from "@src/components/Button";
+import { openBottomPopup } from "@src/components/Popup";
  
 
 const COM004 = () => {

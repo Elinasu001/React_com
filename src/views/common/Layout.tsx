@@ -5,7 +5,6 @@ import { Outlet } from 'react-router-dom';
 import {headerHeight,bottomNavHeight} from "@assets/js/common"
 
 const Layout = () => {
-
   return (
     <Box>
       {/* 고정 헤더 */}
