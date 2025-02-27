@@ -91,7 +91,7 @@ export const openBottomPopup2 = ({ component: Component, title, nFunc }: PopupPr
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container btmSheet">
                 <Box className="pop-header">
-                  <h2 className="pop-tit">{title}</h2>
+                  <Typography variant="h2" className="pop-tit">{title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
                     <Typography component="span" className="sr-only">닫기</Typography>
