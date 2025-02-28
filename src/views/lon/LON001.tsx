@@ -67,26 +67,22 @@ const LON001 = () => {
       }
 
       // 대출상품 리스트 가져오기
-      if (response.data?.LIST) {
-        const resData = new DataSet(response.data);
-        const loanList = resData.getList<Record<string, unknown>>("LIST");
+      const resData = new DataSet(response.data);
+      const loanList = resData.getList<Record<string, unknown>>("LIST");
 
-        const formattedData: LoanProduct[] = loanList.map((item) => ({
-          pdcd: String(item["pdcd"] || ""),
-          pdnm: String(item["pdnm"] || ""),
-          cmmProdCategoty: String(item["cmmProdCategoty"] || ""),
-          pdDesc: String(item["pdDesc"] || ""),
-          keyword: item["keyword"] ? String(item["keyword"]).split("/") : [],
-          maxLimit: String(item["maxLimit"] || "0"),
-          minIntrate: String(item["minIntrate"] || "0"),
-          maxIntrate: String(item["maxIntrate"] || "0"),
-        }));
-
-        setLoanProducts(formattedData);
-      } else {
-        messageView("대출상품 데이터가 없습니다.", "확인");
-      }
+      const formattedData: LoanProduct[] = loanList.map((item) => ({
+        pdcd: String(item["pdcd"] || ""),
+        pdnm: String(item["pdnm"] || ""),
+        cmmProdCategoty: String(item["cmmProdCategoty"] || ""),
+        pdDesc: String(item["pdDesc"] || ""),
+        keyword: item["keyword"] ? String(item["keyword"]).split("/") : [],
+        maxLimit: String(item["maxLimit"] || "0"),
+        minIntrate: String(item["minIntrate"] || "0"),
+        maxIntrate: String(item["maxIntrate"] || "0"),
+      }));
       
+      setLoanProducts(formattedData);  
+
     } catch (error) {
         GLog.e("대출상품 조회 중 오류 발생:", error);
         messageView("대출상품 조회 중 오류가 발생했습니다.", "확인");
@@ -120,7 +116,7 @@ const LON001 = () => {
         title="내 대출한도가 궁금하세요?"
         description="신용평점에 영향 없이 대출한도를 알아보세요."
         buttonText="간편대출한도조회 ▶"
-        onButtonClick={() => navigate.doActionURL("/")}
+        onButtonClick={() => navigate.doActionURL("/lon/LON001_1.view")}
       />
 
       {/* 대출 상품 컴포넌트 */}
