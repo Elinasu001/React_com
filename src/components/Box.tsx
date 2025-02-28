@@ -12,6 +12,12 @@ export const MainBox = ({ children }: {children ?: ReactNode}) => {
 };
 
 
+interface BoxProps {
+  children?: React.ReactNode;
+  padding?: string;
+  maxWidth?: string;
+}
+
 export const Box01 = ({ children, padding = "16px", maxWidth = "600px" }: BoxProps) => {
   return (
     <MuiBox sx={{ maxWidth, mx: "auto", p: padding }}>
@@ -82,4 +88,41 @@ export const Box02 = ({ icon, title, description, buttonText, onButtonClick }: B
   );
 };
 
-export default { MainBox, Box02 };
+interface ListItem {
+  key: string;
+  label: string;
+  onClick?: () => void;
+}
+
+interface BoxListProps {
+  items: ListItem[];
+  selectedKey?: string;
+  filterPrefix?: string;
+}
+
+export function BoxList({ items, selectedKey, filterPrefix = "" }: BoxListProps) {
+  return (
+    <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+      {items
+        .filter((item) => item.key.startsWith(filterPrefix)) // 특정 접두사로 필터링 가능
+        .map((item) => (
+          <Box
+            key={item.key}
+            component="li"
+            sx={{
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              cursor: item.onClick ? "pointer" : "default",
+              backgroundColor: selectedKey === item.key ? "#f0f0f0" : "transparent",
+              "&:hover": item.onClick ? { backgroundColor: "#e0e0e0" } : {},
+            }}
+            onClick={item.onClick}
+          >
+            {item.label}
+          </Box>
+        ))}
+    </Box>
+  );
+};
+
+export default { MainBox, Box02, BoxList };
