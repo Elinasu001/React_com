@@ -92,7 +92,7 @@ export const Box02 = ({ title, description, buttonText, onButtonClick }: Box02Pr
 
 interface ListItem {
   key: string;
-  label: string;
+  label: ReactNode;
   onClick?: () => void;
 }
 
