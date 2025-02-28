@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { GLog, doAction, makeForm, addFormData } from '@assets/js/common';
+import DataSet from '@src/assets/io/DataSet';
 import { Box01 } from "@src/components/Box";
 import { Button01 } from "@src/components/Button";
 import { Card04 } from "@src/components/Card";
@@ -8,14 +9,14 @@ import { EmailBox } from "@src/components/Input";
 import { TextBox01, TextBox02 } from "@src/components/Text";
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import DataSet from '@src/assets/io/DataSet';
+import { decode } from "html-entities";
 
 // COM002의 props 타입 정의
 interface COM002Props {
   title?: string;           // 헤더 제목
   buttonText?: string;      // 버튼 텍스트
   stplatClsCd?: string;     // 약관분류코드
-  onSubmit?: () => void;    // 버튼 클릭 시 실행할 함수
+  nFunc?: () => void;       // 버튼 클릭 시 실행할 함수
 }
 
 // 서버에서 받아올 약관 데이터 타입 정의
@@ -35,7 +36,7 @@ export const COM002 = ({
   title = "헤더 제목",
   buttonText = "다음 버튼 문구",
   stplatClsCd = "O049001", //TODO 제거
-  onSubmit
+  nFunc
 }: COM002Props) => {
   const [requiredAgreements, setRequiredAgreements] = useState<Agreement[]>([]);
   const [optionalAgreements, setOptionalAgreements] = useState<Agreement[]>([]);
@@ -69,7 +70,7 @@ export const COM002 = ({
         apiCd: String(item["API_CD"] || ""),
         prdctCd: String(item["PRDCT_CD"] || ""),
         cmpusYn: String(item["CMPUS_YN"] || ""),
-        contents: String(item["STPLAT_CNTN"] || ""),
+        contents: decode(String(item["STPLAT_CNTN"] || "")),
         atchFileNm: item["ATCH_FLE_NM"] ? String(item["ATCH_FLE_NM"]) : undefined,
         summary: item["SMR_DC_CNTN"] ? String(item["SMR_DC_CNTN"]) : undefined,
         checked: false
@@ -147,7 +148,7 @@ export const COM002 = ({
       )}
 
       {/* 제출 버튼 */}
-      <Button01 btnName={buttonText} clickFunc={onSubmit} />
+      <Button01 btnName={buttonText} clickFunc={nFunc} />
     </Box01>
   );
 };

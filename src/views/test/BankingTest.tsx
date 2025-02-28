@@ -10,6 +10,7 @@ import { TextBox01 } from "@src/components/Text";
 import { Button01 } from "@src/components/Button";
 import { openFullPopup, openBottomPopup } from "@src/components/Popup";
 import { MainBox } from "@src/components/Box";
+import DataSet from '@src/assets/io/DataSet';
 
 import COM001 from "@src/views/com/COM001";
 import COM002 from "@src/views/com/COM002";
@@ -139,19 +140,26 @@ const BankingTest = () => {
                       }
                     });
                     break;
-                  case 'COM002':
-                    openFullPopup({
-                      component: COM002,
-                      title: item.text,
-                      nFunc: (data?) => {
-                        if (data) {
-                          GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-                        } else {
-                          GLog.d('팝업 취소 닫힘');
-                        }
-                      }
-                    });
-                    break;
+                    case 'COM002':
+                      openFullPopup({
+                          component: ({ param, onClose }) => (
+                              <COM002 
+                                  title={item.text}
+                                  buttonText="다음 버튼"
+                                  stplatClsCd="O049001"
+                                  nFunc={() => onClose(param)} // onClose 호출 방식 수정
+                              />
+                          ),
+                          param: new DataSet(), // 적절한 DataSet 객체 전달
+                          nFunc: (data?) => {
+                              if (data) {
+                                  GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                              } else {
+                                  GLog.d('팝업 취소 닫힘');
+                              }
+                          }
+                      });
+                      break;
                   case 'COM003':
                     openFullPopup({
                       component: COM003,
