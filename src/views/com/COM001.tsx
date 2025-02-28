@@ -3,8 +3,9 @@ import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/mater
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
+import DataSet from "@assets/io/DataSet";
 
-const COM001 = () => {
+const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
   const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
@@ -153,6 +154,7 @@ const COM001 = () => {
     '확인',
     (() => {
         resetForm(); // 입력값 초기화
+        onClose();
     })
     )
     

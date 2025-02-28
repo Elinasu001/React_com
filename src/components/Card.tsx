@@ -4,10 +4,13 @@
  * 사용 예시:
  * import { Card01, Card02 } from "@src/components/Card";
  */
-import React from "react";
-import { Card as MuiCard, Card, CardContent, Box, Typography, IconButton, Divider, ListItemButton } from "@mui/material";
+import { Card as MuiCard, Card, CardHeader, CardContent, Box, Typography, IconButton, Divider, ListItemButton, Snackbar, Alert } from "@mui/material";
+import React, { useState } from "react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button01, Button02, Button03 } from "@src/components/Button";
+import CompareArrowsIcon from "@mui/icons-material/CardGiftcard";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { styled } from "@mui/material/styles";
 
 /**
  * 카드 기본 속성
@@ -172,76 +175,162 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
 
 
 /**
- * 대출상품 카드 속성
+ * 상품 카드 속성
  */
 interface Card03Props {
-  pdcd: string;               // 상품코드
-  pdnm: string;               // 상품명
-  cmmProdCategoty: string;    // 카테고리
-  pdDesc: string;             // 상품설명
-  keyword: string[];          // 키워드
-  maxLimit: string;           // 최대한도
-  minIntrate: string;         // 최저금리
-  maxIntrate: string;         // 최대금리
+  pdcd: string;             // 상품코드
+  pdnm: string;             // 상품명
+  categoty: string;         // 카테고리
+  pdDesc: string;           // 상품설명
+  keyword: string[];        // 키워드
+  contents1: string;        // 내용1
+  contents2: string;        // 내용2
 }
 
 /**
- * 대출상품 카드 컴포넌트
+ * 스타일 지정 (아이콘 클릭 시 테두리 제거)
+ */
+const StyledIconButton = styled(IconButton)({
+  outline: "none",
+  "&:focus": {
+    outline: "none",
+  },
+  "&:hover": {
+    backgroundColor: "transparent",
+  },
+  "&.active": {
+    color: "Salmon",
+  },
+});
+
+/**
+ * 상품 카드 컴포넌트
  */
 export const Card03 = ({
   pdcd,
   pdnm,
-  cmmProdCategoty,
+  categoty,
   pdDesc,
   keyword,
-  maxLimit,
-  minIntrate,
-  maxIntrate,
+  contents1,
+  contents2
 }: Card03Props) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isCompared, setIsCompared] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  // 관심상품 클릭 핸들러
+  const handleGiftClick = () => {
+    setIsFavorite(!isFavorite);
+    setSnackbarMessage(
+      isFavorite ? "관심상품에서 제거되었습니다." : "관심상품으로 등록했어요."
+    );
+    setSnackbarOpen(true);
+  };
+
+  // 비교상품 클릭 핸들러
+  const handleCompareClick = () => {
+    setIsCompared(!isCompared);
+    setSnackbarMessage(
+      isCompared ? "비교상품에서 제거되었습니다." : "비교상품으로 등록했어요."
+    );
+    setSnackbarOpen(true);
+  };
+
+  // 알림 닫기
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
   return (
-      <Card01 padding="2px" elevation={3}>
-          <CardContent>
-            <Typography variant="body2" color="textSecondary">
+    <>
+      <Card variant="outlined" sx={{ mb: 2, borderRadius: "20px" }}>
+        {/* 카드 헤더 - 상품 설명 + 아이콘 */}
+        <CardHeader
+          sx={{ pb: 0 }}
+          title={
+            <Typography variant="body2">
               {pdDesc}
             </Typography>
-
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-              <Box
-                sx={{
-                  color: "Salmon",
-                  border: "2px solid Salmon",
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  px: 1,
-                  py: 0.3,
-                  borderRadius: "20px",
-                }}
+          }
+          action={
+            <Box>
+              {/* 비교상품 아이콘 */}
+              <StyledIconButton
+                onClick={handleCompareClick}
+                disableRipple
+                className={isCompared ? "active" : ""}
               >
-                {cmmProdCategoty}
-              </Box>
+                <CompareArrowsIcon />
+              </StyledIconButton>
 
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                {pdnm}
-              </Typography>
+              {/* 관심상품 아이콘 */}
+              <StyledIconButton
+                onClick={handleGiftClick}
+                disableRipple
+                className={isFavorite ? "active" : ""}
+              >
+                <FavoriteIcon />
+              </StyledIconButton>
             </Box>
+          }
+        />
 
-            <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
-              {keyword.join(" | ")}
+        {/* 카드 본문 */}
+        <CardContent sx={{ pt: 1 }}>
+          {/* 상품명 + 카테고리 (첫 줄) */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                border: "2px solid Salmon",
+                color: "Salmon !important",
+                px: 1,
+                py: 0.3,
+                borderRadius: "20px",
+                fontWeight: "bold",
+              }}
+            >
+              {categoty}
             </Typography>
 
-            <Typography variant="subtitle2" color="secondary" sx={{ fontWeight: 700, mt: 2 }}>
-              최대한도 {maxLimit}만원
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              {pdnm}
             </Typography>
+          </Box>
 
-            <Typography variant="h6" color="primary" sx={{ fontWeight: "bold" }}>
-              연 {minIntrate}%~{maxIntrate}%
-            </Typography>
-          </CardContent>
+          {/* 키워드 */}
+          <Typography variant="body2" sx={{ mt: 1.5 }}>
+            {keyword.join(" | ")}
+          </Typography>
 
-      </Card01>
-    );
-  };
+          {/* 내용1 */}
+          <Typography variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
+            {contents1}
+          </Typography>
+
+          {/* 내용2 */}
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            {contents2}
+          </Typography>
+        </CardContent>
+      </Card>
+
+      {/* 알림창 */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </>
+  );
+};
 
 
 
