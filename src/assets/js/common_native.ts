@@ -1,6 +1,7 @@
-import { GLog, DataSet, APP_ENV, AppEnvType } from '@assets/js/common';
+import { GLog, APP_ENV, AppEnvType } from '@assets/js/common';
 import { messageView } from '@src/components/Alert';
 import { progressBar } from '@src/components/Loading';
+import DataSet from '@assets/io/DataSet';
 
 //Data Type : 네이티브 데이터 전송 폼
 export type MessageSet = {
@@ -68,7 +69,7 @@ export const NativeUtil = (() => {
     if (_isApp()) {
 
       //1. 파라미터 셋팅
-      const message = makeMessage('NativeUtil.bridgeCallBack', 'appClose', {});
+      const message = makeMessage('NativeUtil.bridgeCallBack', 'appClose', new DataSet({}));
 
       //2. 네이티브 통신
       nativeCall(message);
@@ -95,7 +96,7 @@ export const NativeUtil = (() => {
   const _getDeviceInfo = async (): Promise<DataSet> => {
     if (_isApp()) {
       //1. 파라미터 셋팅
-      const message = makeMessage('NativeUtil.bridgeCallBack', 'getDeviceInfo', {});
+      const message = makeMessage('NativeUtil.bridgeCallBack', 'getDeviceInfo', new DataSet({}));
 
       //2. 네이티브 통신
       const result = await nativeCall(message);

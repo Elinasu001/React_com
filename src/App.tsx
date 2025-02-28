@@ -57,6 +57,7 @@ import EFC014 from "@src/views/efc/EFC014";
 
 // 확장 함수
 import "@assets/extension/globalExtensions";
+import NativeUtil from "./assets/js/common_native";
 
 
 const App = () => {
@@ -131,5 +132,8 @@ const App = () => {
     </BrowserRouter>
   );
 };
+
+//네이티브 호출용 함수 추가
+(window as any).NativeUtil = NativeUtil;
 
 export default App;

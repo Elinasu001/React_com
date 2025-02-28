@@ -38,10 +38,6 @@
     // 팝업 푸터
     .popup-footer { padding: 15px 20px 20px 20px; background-color: var(--white) }
   
-    // 풀팝업
-    &.full { height: 100dvh;
-      .pop-body { height: 100dvh; flex: 1 1 auto; }
-    }
   
     // 바텀시트
     &.btmSheet { top: initial; height: 70%; border-radius: 16px 16px 0 0; }

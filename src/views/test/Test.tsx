@@ -6,9 +6,8 @@ import { Button01 } from "@src/components/Button";
 
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openWebPopup, openHtmlPopup} from "@src/components/Popup";
+import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup} from "@src/components/Popup";
 import POP001 from "@src/views/pop/POP001";
-import POP002 from "@src/views/pop/POP002";
 import { GLog, API_URL, makeForm, addFormData, doAction, APP_ENV } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
 
@@ -188,7 +187,7 @@ const Test = () => {
             GLog.d('팝업 성공 닫힘' + JSON.stringify(signData));
           }else{
             GLog.d('팝업 취소 닫힘');
-            
+
           }
         }}
       />
