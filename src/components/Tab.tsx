@@ -46,7 +46,7 @@ export const Tab01 = ({
     <Box sx={{ width: "100%" }}>
       {/* 탭 버튼 리스트 */}
       <Box sx={{ borderBottom: borderBottom ? 1 : 0, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} variant="fullWidth">
+        <Tabs value={value} onChange={handleChange} variant="fullWidth" >
           {items.map((item) => (
             <Tab key={item.value} label={item.label} value={item.value} />
           ))}
