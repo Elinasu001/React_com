@@ -191,7 +191,7 @@ const Test = () => {
           // });
 
 
-          openHtmlPopup('/public/solution/wizvera/delfino/delfino.html', "전자서명", (data) => {
+          openHtmlPopup('/solution/wizvera/view/delfino.html?txGbnCd=login', "전자서명", (data) => {
             if(data){
               GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
             }else{

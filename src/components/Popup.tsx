@@ -383,23 +383,14 @@ export const openHtmlPopup = (url: string, title: string, nFunc?: (data : DataSe
           <Modal open={open} onClose={() => { popupClose(); }}>
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container full">
-                <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{title}</Typography>
-                  {/* X 닫기 버튼 */}
-                  <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <Typography component="span" className="sr-only">닫기</Typography>
-                  </Button>
-                </Box>
-                <Box className="pop-body">
-                  
                   {/* 팝업 내용 */}
                   <iframe
                       src={url}
                       width='100%'
                       height='100%'
+                      title="인앱"
                       style={{ border: "none" }}
                   />
-                </Box>
               </Box>
             </Slide>
           </Modal>

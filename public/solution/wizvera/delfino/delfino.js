@@ -1242,10 +1242,10 @@ var _Delfino = {
     _addNonce:function(data, options){
         if(options.addNonce){
             var nonce = DelfinoConfig.nonce || DC_get(DelfinoConfig.nonceUrl);
-            if(nonce.length<20 || nonce.length>40){
-                window.DC_alert("전자서명 실패[nonce 오류]:" + nonce.length);
-                return null;
-            }
+            // if(nonce.length<20 || nonce.length>40){
+            //     window.DC_alert("전자서명 실패[nonce 오류]:" + nonce.length);
+            //     return null;
+            // }
             if(DelfinoConfig.useNonceOption){
                 options.attributeAsData = true;
                 if(options.signedAttribute == null){

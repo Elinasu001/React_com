@@ -3,16 +3,16 @@ if (!window.location.origin) {
 }
 
 
-var _Delfino_NotUseJsp = false; //servlet 사용여부(_Delfino_Servlet 경로 확인)
-var _Delfino_Base = window.location.origin + "/resources/wizvera/delfino";
-var _Delfino_Svc  = window.location.origin + "/resources/wizvera/delfino/svc"; //jsp base
-var _Delfino_Servlet = window.location.origin + "/wizveraServlet"; //servlet base
+var _Delfino_NotUseJsp = true; //servlet 사용여부(_Delfino_Servlet 경로 확인)
+var _Delfino_Base = "/solution/wizvera/delfino";
+var _Delfino_Svc  = "/svc"; //jsp base
+var _Delfino_Servlet = "/wizveraServlet"; //servlet base
 var _Delfino_Down = _Delfino_Base + "/down";
 
 //_Delfino_Down = "http://help.wizvera.com/svc/wizvera/delfino_test";
 //if (window.location.protocol.toLowerCase()=="https:") _Delfino_Down = "https://help.wizvera.com/svc/wizvera/delfino_test";
 
-var _Delfino_SystemMode = "real"; //"dev", "test", "real"
+var _Delfino_SystemMode = "test"; //"dev", "test", "real"
 var _Delfino_SystemLang = "KOR";  //"KOR", "ENG", "CHN", "JPN", "VNM"
 var _Delfino_ModuleType = "";     //"G2", "G3", "G4"
 if (typeof _SITE_SystemMode != "undefined") _Delfino_SystemMode = _SITE_SystemMode;
@@ -589,7 +589,7 @@ DelfinoConfig.g4 = {};
 //DelfinoConfig.g4.signServerUrl = "https://sign.wizvera.com/delfino4html/web";
 //DelfinoConfig.g4.signServerUrl = "https://ts.wizvera.com/wizvera/delfino4html/g4";
 //DelfinoConfig.g4.signServerUrl = window.location.origin + "/wizvera/delfino4html/g4";
-DelfinoConfig.g4.signServerUrl = window.location.origin + "/resources/wizvera/delfino4html/g10";
+DelfinoConfig.g4.signServerUrl = window.location.origin + "/solution/wizvera/delfino4html/g10";
 
 //iframe 및 새 창 이용 시 예전 get 요청 방식 사용. ui.jsp에서는 사용불가능 반드시 ui.html일경우 사용
 if (_Delfino_NotUseJsp) {
