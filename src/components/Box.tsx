@@ -125,4 +125,4 @@ export function BoxList({ items, selectedKey, filterPrefix = "" }: BoxListProps)
   );
 };
 
-export default { MainBox, Box02, BoxList };
+export default { MainBox, Box01, Box02, BoxList };
