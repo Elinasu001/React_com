@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
+import { Box, Typography, Select } from "@mui/material";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
@@ -67,12 +67,13 @@ const COM004_1 = () => {
         // TODO컨펌화면으로 이동
 
         const bkData = new DataSet();
-        bkData.putString('BKCD',selectedBankCd)
+        bkData.putString('BKCD',selectedBankCd);
+        bkData.putString('ACNO',inputAcno);
 
         openFullPopup({
           component: COM004_2,
           title: '타행계좌본인인증확인',
-          param:new DataSet(form),
+          param:new DataSet(bkData),
           nFunc: (data?) => {
             if (data) {
               GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
@@ -88,44 +89,6 @@ const COM004_1 = () => {
     )
     
 
-  };
-  
-  // 인증번호 확인 이벤트 TODO 인증번호체크인터페이스 필요
-  const userConfirmAuth = async () => {
-    console.log("인증 확인!");
-
-    //폼생성,데이터 주입
-    const form = makeForm('COM0001SC');
-    addFormData(form,'txGbnCd','A02');
-    //로딩 ON
-    progressBar(true, "통신중");
-
-    //통신
-    const test01 = await doAction(form);
-
-    //로딩 OFF
-    progressBar(false);
-    
-    //결과실패
-    if(test01.header.respCd != 'N00000'){
-    GLog.e('에러발생 !!!');
-    messageView(
-        '통신 실패 : '+test01.header.respMsg,
-        '확인',
-        () => GLog.d('확인 클릭')
-    )
-    return;
-    }
-
-    //정상
-    messageView(
-    '정상처리 되었습니다.',
-    '확인',
-    (() => {
-        
-    })
-    )
-    
   };
 
   return (
