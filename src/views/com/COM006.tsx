@@ -6,71 +6,21 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
 import { doAction, makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { TextBox } from "@src/components/Input";
-import DataSet from "@assets/io/DataSet";
+import { Button01 } from "@src/components/Button";
 import { Tab01 } from "@src/components/Tab";
 import { Box01, BoxList } from "@src/components/Box";
-
-interface CustomTabPanelProps {
-  children?: React.ReactNode;
-  value: number;
-  index: number;
-}
-
-function CustomTabPanel(props: CustomTabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `tab-${index}`,
-    "aria-controls": `tabpanel-${index}`,
-  };
-}
-
+import DataSet from "@assets/io/DataSet";
 
 const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
 
   const [text, setText] = useState("");                                           // 검색어
-  const [tabValue, setTabValue] = useState<number>(0);                            // 현재 선택된 탭
   const [bankList, setBankList] = useState<{ CD: string; CD_NM: string }[]>([]);  // 은행사 / 증권사 리스트
   const [selectedBank, setSelectedBank] = useState<string>("");                   // 선택한 은행
-  const [tabItem, setTabItem] = useState<{value:string; label:string}[]>([]);
-  
-  useEffect(() => {
-    setTabItem([
-      { value: "tab1", label: "은행사" },
-      { value: "tab2", label: "증권사" }
-    ]);
-  }, []);
 
-  /** 
-   * TODO 탭변경
-   * <Tab01  items={tabItem}
-            initialValue={tabValue}
-            
-          /> */
-
-  //  탭 변경 이벤트
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
-
+  // 은행검색이벤트
   const searchBank = async () => { 
 
     //폼생성,데이터 주입
@@ -92,6 +42,7 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
    
   };
     
+  // 은행코드리스트조회이벤트
   const fetchBankList = async () => { 
 
     //폼생성,데이터 주입
@@ -108,10 +59,8 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
     //로딩 OFF
     progressBar(false);
     
-    
-    const list = (resDs.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
-
-    setBankList(resDs.data.getList('list'));
+    const list = (resDs.data?.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
+    setBankList(list);
    
   };
   
@@ -132,60 +81,55 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
 
     const selectedData = new DataSet({ bankCode, bankName });
     props.onClose(selectedData); // 팝업 닫고 데이터 전달
+    resetForm();
 
   };
 
   return (
+        <Box01>
     
-      <Box01 >
-
           {/* 검색 입력 필드 */}
           <TextBox label="은행검색" value={text} onChange={(e) => setText(e.target.value)} />
-          <Button variant="contained" color="primary"   onClick={searchBank} >검색</Button>
-          
-
-          {/* 탭영역 */}
-          
-          <Tabs  
-            value={tabValue}
-            onChange={handleTabChange}
-            textColor="secondary"
-            indicatorColor="secondary"
-            aria-label="은행사/증권사 선택"
-          >
-              <Tab label="은행사" {...a11yProps(0)} />
-              <Tab label="증권사" {...a11yProps(1)} />
-            </Tabs>
-
-          {/* 은행사 목록 */}
-          <CustomTabPanel value={tabValue} index={0}>
-            <BoxList
-              items={bankList.map((bank) => ({
-                key: bank.CD,
-                label: bank.CD_NM,
-                onClick: () => handleBankSelect(bank.CD, bank.CD_NM),
-              }))}
-              selectedKey={selectedBank}
-              filterPrefix="0"
-            />
-          </CustomTabPanel>
-
-          {/* 증권사 목록 */}
-          <CustomTabPanel value={tabValue} index={1}>
-            <BoxList
-              items={bankList.map((bank) => ({
-                key: bank.CD,
-                label: bank.CD_NM,
-                onClick: () => handleBankSelect(bank.CD, bank.CD_NM),
-              }))}
-              selectedKey={selectedBank}
-              filterPrefix="2"
-            />    
-          </CustomTabPanel>
-
-           
-      </Box01>
- 
+          <Button01 btnName="검색" clickFunc={searchBank}></Button01>
+         
+          <Tab01
+            initialValue="bank" // 기본 선택 탭 설정
+            items={[
+              {
+                label: "은행사",
+                value: "bank",
+                component: (
+                  <BoxList
+                    items={bankList
+                      .filter((bank) => bank.CD.startsWith("0"))
+                      .map((bank) => ({
+                        key: bank.CD,
+                        label: bank.CD_NM,
+                        onClick: () => handleBankSelect(bank.CD, bank.CD_NM),
+                      }))}
+                    selectedKey={selectedBank}
+                  />
+                ),
+              },
+              {
+                label: "증권사",
+                value: "securities",
+                component: (
+                  <BoxList
+                    items={bankList
+                      .filter((bank) => bank.CD.startsWith("2"))
+                      .map((bank) => ({
+                        key: bank.CD,
+                        label: bank.CD_NM,
+                        onClick: () => handleBankSelect(bank.CD, bank.CD_NM),
+                      }))}
+                    selectedKey={selectedBank}
+                  />
+                ),
+              },
+            ]}
+          />
+        </Box01>
   );
 };
 
