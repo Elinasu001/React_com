@@ -116,7 +116,7 @@ const LON001 = () => {
         title="내 대출한도가 궁금하세요?"
         description="신용평점에 영향 없이 대출한도를 알아보세요."
         buttonText="간편대출한도조회 ▶"
-        onButtonClick={() => navigate.doActionURL("/lon/LON001_1.view")}
+        onButtonClick={() => navigate.doActionURL("/")}
       />
 
       {/* 대출 상품 컴포넌트 */}
