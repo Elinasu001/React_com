@@ -42,7 +42,7 @@
                     break;
                 default:
                     console.error("구분 없음");
-                    window.parent.postMessage({'resultCd':'9999','resultMsg':'작업구분 없음'}, "*");
+                    window.parent.postMessage({'status':0,'message':'작업구분 없음'}, "*");
             }
 
 
@@ -102,6 +102,5 @@
     </script>
 </head>
 <body>
-    <h1>전자서명</h1>
 </body>
 </html>

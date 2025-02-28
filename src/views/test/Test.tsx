@@ -180,24 +180,16 @@ const Test = () => {
 
       <Button01 
         btnName="델피노 테스트"
-        clickFunc={() => {
-          
-          // openWebPopup(API_URL+'/delfino.frm', "전자서명", (data) => {
-          //   if(data){
-          //     GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-          //   }else{
-          //     GLog.d('팝업 취소 닫힘');
-          //   }
-          // });
+        clickFunc={async () => {
 
+          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html?txGbnCd=login");
 
-          openHtmlPopup('/solution/wizvera/view/delfino.html?txGbnCd=login', "전자서명", (data) => {
-            if(data){
-              GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-            }else{
-              GLog.d('팝업 취소 닫힘');
-            }
-          });
+          if(signData.getNumber('status')!=0){
+            GLog.d('팝업 성공 닫힘' + JSON.stringify(signData));
+          }else{
+            GLog.d('팝업 취소 닫힘');
+            
+          }
         }}
       />
 

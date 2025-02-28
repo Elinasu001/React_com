@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Button, Modal, Slide, Typography } from '@mui/material';
 import DataSet from '@src/assets/io/DataSet';
 import { MemoryRouter } from 'react-router-dom';
+import { progressBar } from './Loading';
 /**
  * 팝업 파라미터 정의
  */
@@ -348,56 +349,61 @@ export const openWebPopup = (url: string, title: string, nFunc?: (data : DataSet
  * 타 웹 호출 팝업
  * @param param0 
  */
-export const openHtmlPopup = (url: string, title: string, nFunc?: (data : DataSet) => void) => {
-  const formId = 'gOpenHtmlPopup';
-  document.getRoot(formId).render(
-    React.createElement(() => {
+export const openHtmlPopup = (url: string): Promise<DataSet> => {
+  return new Promise((resolve) => {
+    const formId = "gOpenHtmlPopup";
+    document.getRoot(formId).render(
+      React.createElement(() => {
+        // 팝업 상태
+        const [open, setOpen] = useState(false);
 
-      //팝업상태
-      const [open, setOpen] = useState(false);
-      
-      //팝업 컴포넌트 생성후 처리
-      useEffect(() => {
-        setOpen(true);
-        const iframeCallBack = (event: MessageEvent) => {
-            popupClose(new DataSet(event.data))
-        };
-        window.addEventListener("message", iframeCallBack);
-        return () => {
+        // 팝업 컴포넌트 생성 후 처리
+        useEffect(() => {
+          setOpen(true);
+
+          const iframeCallBack = (event: MessageEvent) => {
+            popupClose(new DataSet(event.data));
+          };
+
+          window.addEventListener("message", iframeCallBack);
+          return () => {
             window.removeEventListener("message", iframeCallBack);
+          };
+        }, []);
+
+        // 팝업 닫기 처리
+        const popupClose = (data?: DataSet) => {
+          progressBar(true);
+          setOpen(false);
+          setTimeout(() => {
+            document.removeRoot(formId);
+            resolve(new DataSet(data)); // ✅ Promise를 통해 데이터 반환
+            progressBar(false);
+          }, 300);
         };
-      }, []);
 
-      //팝업 컴포넌트 닫기 처리
-      const popupClose = (data?: DataSet) => {
-        setOpen(false);
-        setTimeout(() => {
-          document.removeRoot(formId);
-          nFunc?.(new DataSet(data));
-        }, 300);
-      };
-
-      //팝업 컴포넌트 생성
-      return (
-        <MemoryRouter>
-          <Modal open={open} onClose={() => { popupClose(); }}>
-            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-              <Box className="popup-container full">
+        // 팝업 컴포넌트 생성
+        return (
+          <MemoryRouter>
+            <Modal open={open} onClose={() => popupClose()}>
+              <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+                <Box className="popup-container full">
                   {/* 팝업 내용 */}
                   <iframe
-                      src={url}
-                      width='100%'
-                      height='100%'
-                      title="인앱"
-                      style={{ border: "none" }}
+                    src={url}
+                    width="100%"
+                    height="100%"
+                    title="인앱"
+                    style={{ border: "none" }}
                   />
-              </Box>
-            </Slide>
-          </Modal>
-        </MemoryRouter>
-      );
-    })
-  );
+                </Box>
+              </Slide>
+            </Modal>
+          </MemoryRouter>
+        );
+      })
+    );
+  });
 };
 
 export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openWebPopup, openHtmlPopup };
