@@ -9,50 +9,17 @@ import InputLabel from '@mui/material/InputLabel';
 import Logo from "@assets/images/com/svg/img_accountCrtf.png";
 import DataSet from "@assets/io/DataSet";
 
-const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
+const COM004_2 = () => {
   
-  const [conNumber, setConNumber] = useState('');                             // 입력된인증번호
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);   // 버튼상태
-  const [seconds, setSeconds] =  useState<number>(180);                       // 타이머시작
-  const [isRunning, setIsRunning] = useState<boolean>(true);                  // 타이머상태
-
-  useEffect(() => {
-    if (!isRunning) return;
-
-    const timer = setInterval(() => {
-      setSeconds((prev: number) => {
-        if (prev <= 1) {
-          clearInterval(timer);       // 타이머 정리
-          setIsRunning(false);        // 시간이 다 지나면 자동으로 멈춤
-          setIsButtonDisabled(true);  // 버튼상태
-          return 0;                   // 0초 유지
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isRunning]);
-
-  const minutes = Math.floor(seconds / 60);
-  const displaySeconds = seconds % 60;
-
-  // 초기화
-  // { setSeconds(180); setIsRunning(true); }
-
-
-  if(!isRunning){
-
-  }
-
-  // 인증번호확인 이벤트 
+  const [number, setNumber] = useState('');
+    
+  // 인증번호받기 이벤트 
   const fsbAcnoConfirmAuth = async () => { 
     
     //폼생성,데이터 주입
     const form = makeForm('COM0004SC');
     addFormData(form,'txGbnCd','A02');
-    addFormData(form,'AUTN_STR', conNumber);
-    addFormData(form,'BKCD', param.getString("BKCD"));
+    addFormData(form,'AUTN_STR', number);
     
     //로딩 ON
     progressBar(true, "통신중");
@@ -90,7 +57,6 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
         '확인',
         (() => {
             // TODO 팝업닫기
-            onClose;
         })
         
         )
@@ -113,11 +79,11 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
           <Box component="img" src={Logo} alt="Logo"  sx={{ maxWidth: "320px" }} />
           <InputLabel id="demo-simple-select-helper-label"><strong>입금자명 뒤쪽 4자리 숫자 입력하세요</strong></InputLabel>
           <Box mt={3}>
-             <NumberBox label="숫자 입력" value={conNumber} onChange={(e) => setConNumber(e.target.value)} />
+             <NumberBox label="숫자 입력" value={number} onChange={(e) => setNumber(e.target.value)} />
           </Box>
 
-          <InputLabel id="demo-simple-select-helper-label"><strong>입력시간:  {minutes}:{displaySeconds.toString().padStart(2, "0")}</strong></InputLabel>
-          <Button01 btnName = '확인'clickFunc={fsbAcnoConfirmAuth} />
+          <InputLabel id="demo-simple-select-helper-label"><strong>입력시간:타이머</strong></InputLabel>
+          <Button01 btnName = '확인'clickFunc={fsbAcnoConfirmAuth}/>
       </Box>
  
   );
