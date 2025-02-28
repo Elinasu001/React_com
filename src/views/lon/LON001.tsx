@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
+import { GLog, doAction,makeForm, addFormData, useAppNavigator } from '@assets/js/common';
 import DataSet from '@src/assets/io/DataSet';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
@@ -14,8 +14,6 @@ import { Box } from "@mui/material";
 import { Card03 } from "@src/components/Card";
 import { Tab01 } from "@src/components/Tab";
 import { Box02 } from "@src/components/Box";
-import { useNavigate } from "react-router-dom";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 /**
  * 대출 상품 데이터 타입 정의
@@ -45,6 +43,7 @@ const tabItems = [
 const LON001 = () => {
   const [selectedTab, setSelectedTab] = useState("전체");
   const [loanProducts, setLoanProducts] = useState<LoanProduct[]>([]);
+  const navigate = useAppNavigator();
 
   const fetchLoanProducts = async () => { 
 
@@ -111,8 +110,6 @@ const LON001 = () => {
     ? loanProducts
     : loanProducts.filter((product) => product.cmmProdCategoty === selectedTab);
 
-  const navigate = useNavigate();
-
   return (
     <Box>
       {/* 대출 탭 컴포넌트 */}
@@ -120,11 +117,10 @@ const LON001 = () => {
 
       {/* 대출 한도 조회 컴포넌트 */}
       <Box02
-        icon={<AccountBalanceWalletIcon sx={{ fontSize: 50, color: "#6A0DAD" }} />}
         title="내 대출한도가 궁금하세요?"
         description="신용평점에 영향 없이 대출한도를 알아보세요."
         buttonText="간편대출한도조회 ▶"
-        onButtonClick={() => navigate("/")}
+        onButtonClick={() => navigate.doActionURL("/")}
       />
 
       {/* 대출 상품 컴포넌트 */}
