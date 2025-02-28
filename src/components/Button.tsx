@@ -15,6 +15,7 @@ interface ButtonProps {
   width ?: string;              // 가로 길이
   fontSize ?: string;           // 가로 길이
   clickFunc ?: () => void;      // 클릭 이벤트 함수
+  disabled ?: () => void;       // 버튼상태 함수
 }
 
 /**
@@ -60,6 +61,7 @@ export const Button01 = ({ btnName, clickFunc }: ButtonProps) => {
 
   );
 };
+
 
 
 
