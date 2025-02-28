@@ -1,3 +1,10 @@
+/**
+ * @fileoverview [공통] 은행리스트팝업
+ *  
+ * @author 
+ * @version 1.0.0
+ */
+
 import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
 import { doAction, makeForm, addFormData } from '@assets/js/common';
@@ -5,7 +12,7 @@ import { progressBar } from "@src/components/Loading";
 import { TextBox } from "@src/components/Input";
 import DataSet from "@assets/io/DataSet";
 import { Tab01 } from "@src/components/Tab";
-import { Box01 } from "@src/components/Box";
+import { Box01, BoxList } from "@src/components/Box";
 
 interface CustomTabPanelProps {
   children?: React.ReactNode;
@@ -101,9 +108,10 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
     //로딩 OFF
     progressBar(false);
     
-    const list = (resDs.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+    
+    const list = (resDs.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
 
-    setBankList((prev) => (JSON.stringify(prev) === JSON.stringify(list) ? prev : list));
+    setBankList(resDs.data.getList('list'));
    
   };
   
@@ -151,47 +159,29 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
 
           {/* 은행사 목록 */}
           <CustomTabPanel value={tabValue} index={0}>
-            <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
-              {bankList.filter((bank) => bank.CD.startsWith("0")) 
-              .map((bank) => (
-                <Box
-                  key={bank.CD}
-                  component="li"
-                  sx={{padding: "10px",
-                    borderBottom: "1px solid #ddd",
-                    cursor: "pointer",
-                    backgroundColor: selectedBank === bank.CD ? "#f0f0f0" : "transparent",
-                    "&:hover": { backgroundColor: "#e0e0e0" },
-                  }}
-                  onClick={() => handleBankSelect(bank.CD, bank.CD_NM)} 
-                >
-                  {bank.CD_NM}
-                </Box>
-              ))}
-            </Box>
+            <BoxList
+              items={bankList.map((bank) => ({
+                key: bank.CD,
+                label: bank.CD_NM,
+                onClick: () => handleBankSelect(bank.CD, bank.CD_NM),
+              }))}
+              selectedKey={selectedBank}
+              filterPrefix="0"
+            />
           </CustomTabPanel>
 
           {/* 증권사 목록 */}
           <CustomTabPanel value={tabValue} index={1}>
-          <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
-              {bankList.filter((bank) => bank.CD.startsWith("2")) 
-              .map((bank) => (
-                <Box
-                  key={bank.CD}
-                  component="li"
-                  sx={{padding: "10px",
-                    borderBottom: "1px solid #ddd",
-                    cursor: "pointer",
-                    backgroundColor: selectedBank === bank.CD ? "#f0f0f0" : "transparent",
-                    "&:hover": { backgroundColor: "#e0e0e0" },
-                  }}
-                  onClick={() => handleBankSelect(bank.CD, bank.CD_NM)}
-                >
-                  {bank.CD_NM}
-                </Box>
-              ))}
-            </Box>
-        </CustomTabPanel>
+            <BoxList
+              items={bankList.map((bank) => ({
+                key: bank.CD,
+                label: bank.CD_NM,
+                onClick: () => handleBankSelect(bank.CD, bank.CD_NM),
+              }))}
+              selectedKey={selectedBank}
+              filterPrefix="2"
+            />    
+          </CustomTabPanel>
 
            
       </Box01>
