@@ -90,7 +90,7 @@ export const Box02 = ({ icon, title, description, buttonText, onButtonClick }: B
 
 interface ListItem {
   key: string;
-  label: string;
+  label: ReactNode;
   onClick?: () => void;
 }
 

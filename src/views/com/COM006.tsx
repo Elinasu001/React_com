@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { doAction, makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { TextBox } from "@src/components/Input";
@@ -37,7 +37,7 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
     //로딩 OFF
     progressBar(false);
     
-    const list = (resDs.data?.list as { CD: string; CD_NM: string }[]) ?? [];
+    const list = (resDs.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
     setBankList(list);
    
   };
