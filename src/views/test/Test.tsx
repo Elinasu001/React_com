@@ -6,8 +6,9 @@ import { Button01 } from "@src/components/Button";
 
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openWebPopup} from "@src/components/Popup";
+import { openPopup , openBottomPopup , openFullPopup, openWebPopup, openHtmlPopup} from "@src/components/Popup";
 import POP001 from "@src/views/pop/POP001";
+import POP002 from "@src/views/pop/POP002";
 import { GLog, API_URL, makeForm, addFormData, doAction, APP_ENV } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
 
@@ -181,7 +182,16 @@ const Test = () => {
         btnName="델피노 테스트"
         clickFunc={() => {
           
-          openWebPopup(API_URL+'/delfino.frm', "전자서명", (data) => {
+          // openWebPopup(API_URL+'/delfino.frm', "전자서명", (data) => {
+          //   if(data){
+          //     GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+          //   }else{
+          //     GLog.d('팝업 취소 닫힘');
+          //   }
+          // });
+
+
+          openHtmlPopup('/public/solution/wizvera/delfino/delfino.html', "전자서명", (data) => {
             if(data){
               GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
             }else{

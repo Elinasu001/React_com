@@ -10,7 +10,7 @@ import { Box } from "@mui/material";
 import { Card05 } from "@src/components/Card";
 import { Tab01 } from "@src/components/Tab";
 
-const loanProducts = [
+const depProducts = [
   {
     pdcd: "pd001",
     pdnm: "회전정기예금",
@@ -111,8 +111,8 @@ const DEP001 = () => {
   // 탭 - 카테고리에 따라서 필터링
   const filteredProducts =
   selectedTab === "전체"
-    ? loanProducts
-    : loanProducts.filter((product) => product.cmmProdCategoty === selectedTab);
+    ? depProducts
+    : depProducts.filter((product) => product.cmmProdCategoty === selectedTab);
 
   return (
 
