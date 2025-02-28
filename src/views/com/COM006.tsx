@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Tab, Tabs } from "@mui/material";
 import { doAction, makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
-import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
+import { TextBox } from "@src/components/Input";
 import DataSet from "@assets/io/DataSet";
 import { Tab01 } from "@src/components/Tab";
+import { Box01 } from "@src/components/Box";
 
 interface CustomTabPanelProps {
   children?: React.ReactNode;
@@ -38,12 +39,25 @@ function a11yProps(index: number) {
 
 const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
 
-  const [text, setText] = useState("");  // 검색어
-  const [tabValue, setTabValue] = useState<number>(0);  // 현재 선택된 탭
-  const [bankList, setBankList] = useState<{ CD: string; CD_NM: string }[]>([]); // 은행사 / 증권사 리스트
-  const [selectedBank, setSelectedBank] = useState<string>(""); // 선택한 은행
-
+  const [text, setText] = useState("");                                           // 검색어
+  const [tabValue, setTabValue] = useState<number>(0);                            // 현재 선택된 탭
+  const [bankList, setBankList] = useState<{ CD: string; CD_NM: string }[]>([]);  // 은행사 / 증권사 리스트
+  const [selectedBank, setSelectedBank] = useState<string>("");                   // 선택한 은행
+  const [tabItem, setTabItem] = useState<{value:string; label:string}[]>([]);
   
+  useEffect(() => {
+    setTabItem([
+      { value: "tab1", label: "은행사" },
+      { value: "tab2", label: "증권사" }
+    ]);
+  }, []);
+
+  /** 
+   * TODO 탭변경
+   * <Tab01  items={tabItem}
+            initialValue={tabValue}
+            
+          /> */
 
   //  탭 변경 이벤트
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -89,7 +103,7 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
     
     const list = (resDs.data?.list as { CD: string; CD_NM: string }[]) ?? [];
 
-    setBankList(list);
+    setBankList((prev) => (JSON.stringify(prev) === JSON.stringify(list) ? prev : list));
    
   };
   
@@ -115,17 +129,16 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
 
   return (
     
-      <Box sx={{}}>
+      <Box01 >
 
           {/* 검색 입력 필드 */}
-          <Box mt={3}>
-            <TextBox label="은행검색" value={text} onChange={(e) => setText(e.target.value)} />
-              <Button variant="contained" color="primary"   onClick={searchBank} >검색</Button>
-          </Box>
+          <TextBox label="은행검색" value={text} onChange={(e) => setText(e.target.value)} />
+          <Button variant="contained" color="primary"   onClick={searchBank} >검색</Button>
+          
 
           {/* 탭영역 */}
-          <Box mt={3}>
-          <Tabs
+          
+          <Tabs  
             value={tabValue}
             onChange={handleTabChange}
             textColor="secondary"
@@ -135,7 +148,6 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
               <Tab label="은행사" {...a11yProps(0)} />
               <Tab label="증권사" {...a11yProps(1)} />
             </Tabs>
-          </Box>
 
           {/* 은행사 목록 */}
           <CustomTabPanel value={tabValue} index={0}>
@@ -182,7 +194,7 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
         </CustomTabPanel>
 
            
-      </Box>
+      </Box01>
  
   );
 };

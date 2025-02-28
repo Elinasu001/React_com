@@ -4,7 +4,8 @@ import { GLog,doAction, makeForm, addFormData  } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { NumberBox } from "@src/components/Input";
-import { Button01 } from "@src/components/Button";
+import { Button04 } from "@src/components/Button";
+import { Box01 } from "@src/components/Box";
 import InputLabel from '@mui/material/InputLabel';
 import Logo from "@assets/images/com/svg/img_accountCrtf.png";
 import DataSet from "@assets/io/DataSet";
@@ -48,11 +49,23 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
   // 인증번호확인 이벤트 
   const fsbAcnoConfirmAuth = async () => { 
     
+
+    if (isButtonDisabled){
+      messageView(
+        '입력시간이 초과되었습니다',
+        '확인',
+        () => GLog.d('확인 클릭')
+      )
+      return;
+    }
+    
+
     //폼생성,데이터 주입
     const form = makeForm('COM0004SC');
     addFormData(form,'txGbnCd','A02');
     addFormData(form,'AUTN_STR', conNumber);
     addFormData(form,'BKCD', param.getString("BKCD"));
+    addFormData(form,'ACNO', param.getString("ACNO"));
     
     //로딩 ON
     progressBar(true, "통신중");
@@ -90,7 +103,7 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
         '확인',
         (() => {
             // TODO 팝업닫기
-            onClose;
+            onClose();
         })
         
         )
@@ -101,24 +114,21 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
 
   return (
     
-      <Box sx={{}}>
- 
-          <Box mt={3}>
-            <Typography variant="body1"><strong>입력하신 계좌로<br/>
-                                            1원을 보내드렸어요<br/>
-                                            입금자명 뒤쪽 4자리 숫자를<br/>
-                                            입력해 주세요</strong></Typography>
-          </Box>
+      <Box01>    
+        <Typography variant="body1"><strong>입력하신 계좌로<br/>
+                                        1원을 보내드렸어요<br/>
+                                        입금자명 뒤쪽 4자리 숫자를<br/>
+                                        입력해 주세요</strong></Typography>
 
           <Box component="img" src={Logo} alt="Logo"  sx={{ maxWidth: "320px" }} />
           <InputLabel id="demo-simple-select-helper-label"><strong>입금자명 뒤쪽 4자리 숫자 입력하세요</strong></InputLabel>
-          <Box mt={3}>
-             <NumberBox label="숫자 입력" value={conNumber} onChange={(e) => setConNumber(e.target.value)} />
-          </Box>
+          
+          <NumberBox label="숫자 입력" value={conNumber} onChange={(e) => setConNumber(e.target.value)} />
+          
 
           <InputLabel id="demo-simple-select-helper-label"><strong>입력시간:  {minutes}:{displaySeconds.toString().padStart(2, "0")}</strong></InputLabel>
-          <Button01 btnName = '확인'clickFunc={fsbAcnoConfirmAuth} />
-      </Box>
+          <Button04 btnName = '확인'clickFunc={fsbAcnoConfirmAuth} disabled={isButtonDisabled}/>
+      </Box01>
  
   );
 };

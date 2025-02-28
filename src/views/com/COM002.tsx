@@ -13,7 +13,7 @@ import { decode } from "html-entities";
 
 // COM002의 props 타입 정의
 interface COM002Props {
-  title?: string;           // 헤더 제목
+  title?: string;           // 헤더 제목f
   buttonText?: string;      // 버튼 텍스트
   stplatClsCd?: string;     // 약관분류코드
   nFunc?: () => void;       // 버튼 클릭 시 실행할 함수
