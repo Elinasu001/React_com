@@ -9,6 +9,7 @@ import { Box, Button, Modal, Slide, Typography } from '@mui/material';
 import DataSet from '@src/assets/io/DataSet';
 import { MemoryRouter } from 'react-router-dom';
 import { progressBar } from './Loading';
+import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 /**
  * 팝업 파라미터 정의
  */
@@ -288,8 +289,8 @@ export const openPopup = ({ component: Component, title, param, nFunc }: PopupPr
  * 정적 HTML 풀 호출 팝업
  * @param param0 
  */
-export const openHtmlPopup = (url: string): Promise<DataSet> => {
-  return new Promise((resolve) => {
+export const openHtmlPopup = (url: string): AsyncPromiss => {
+  return new AsyncPromiss((success) => {
     const formId = "gOpenHtmlPopup";
     document.getRoot(formId).render(
       React.createElement(() => {
@@ -316,7 +317,7 @@ export const openHtmlPopup = (url: string): Promise<DataSet> => {
           setOpen(false);
           setTimeout(() => {
             document.removeRoot(formId);
-            resolve(new DataSet(data)); // ✅ Promise를 통해 데이터 반환
+            success(new DataSet(data)); // Promise를 통해 데이터 반환
             progressBar(false);
           }, 300);
         };
