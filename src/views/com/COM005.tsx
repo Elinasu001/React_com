@@ -4,15 +4,13 @@
  * @author 
  * @version 1.0.0
  */
+import React, { useState, useEffect } from "react";
+import DataSet from "@assets/io/DataSet";
 import { GLog } from "@src/assets/js/common";
 import { BoxList } from "@src/components/Box";
-import DataSet from "@assets/io/DataSet";
 import { doAction, makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import React, { useState, useEffect } from "react";
-
-
 
 const COM005 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
 
@@ -75,9 +73,6 @@ const COM005 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
           }))}
           selectedKey={selectedAcno}
       />
-
-
-
   
   );
 };

@@ -6,6 +6,7 @@
  */
 import { ReactNode } from "react";
 import { Box as MuiBox, Box, Typography, Button } from "@mui/material";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 export const MainBox = ({ children }: {children ?: ReactNode}) => {
   return <Box sx={{ textAlign: "center" }}>{children}</Box>;
@@ -30,7 +31,6 @@ export const Box01 = ({ children, padding = "16px", maxWidth = "600px" }: BoxPro
  * 박스 속성2
  */
 interface Box02Props {
-  icon: React.ReactNode;  // 아이콘을 prop으로 받아서 동적으로 설정
   title: string;          // 제목
   description: string;    // 설명
   buttonText: string;     // 버튼 텍스트
@@ -40,7 +40,7 @@ interface Box02Props {
 /**
  * 박스 컴포넌트2
  */
-export const Box02 = ({ icon, title, description, buttonText, onButtonClick }: Box02Props) => {
+export const Box02 = ({ title, description, buttonText, onButtonClick }: Box02Props) => {
   return (
     <Box
       sx={{
@@ -53,7 +53,9 @@ export const Box02 = ({ icon, title, description, buttonText, onButtonClick }: B
       }}
     >
       {/* 아이콘 */}
-      {icon}
+      <Box>
+        <AccountBalanceWalletIcon sx={{ fontSize: 50, color: "#6A0DAD" }} />
+      </Box>
 
       {/* 제목 */}
       <Typography variant="h6" sx={{ fontWeight: "bold", mt: 1 }}>
@@ -125,4 +127,4 @@ export function BoxList({ items, selectedKey, filterPrefix = "" }: BoxListProps)
   );
 };
 
-export default { MainBox, Box02, BoxList };
+export default { MainBox, Box01, Box02, BoxList };

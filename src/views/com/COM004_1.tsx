@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Select } from "@mui/material";
+import { Select } from "@mui/material";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { NumberBox } from "@src/components/Input";
 import { Button01 } from "@src/components/Button";
+import { TextBox02 } from "@src/components/Text";
+import { Box01 } from "@src/components/Box";
 import { openBottomPopup,openFullPopup } from "@src/components/Popup";
 import COM006 from "@src/views/com/COM006";
 import FormControl from '@mui/material/FormControl';
@@ -93,14 +95,11 @@ const COM004_1 = () => {
 
   return (
     
-      <Box sx={{}}>
- 
-          <Box mt={3}>
-            <Typography variant="body1"><strong>타행 본인 계좌 인증으로 본인 확인을 진행해요</strong></Typography>
-          </Box>
+      <Box01>
+           <TextBox02 text="타행 본인 계좌 인증으로 본인 확인을 진행해요"/>
+         
 
-          <Box mt={3}>
-            <Typography variant="body2">입금은행</Typography>
+            <TextBox02 text="입금은행"/>
 
               <FormControl sx={{ m: 1, minWidth: 120 }}>
                 <InputLabel id="demo-simple-select-helper-label">은행선택</InputLabel>
@@ -133,20 +132,16 @@ const COM004_1 = () => {
                     
                     }}
                   ></Select>
-              </FormControl>
-          </Box>
+              </FormControl>        
 
-
-          
-
-          <Box mt={3}>
-            <Typography variant="body2">계좌번호</Typography>
-            <NumberBox label="숫자 입력" value={inputAcno} onChange={(e) => setinputAcno(e.target.value)} />
-          </Box>
+    
+            <TextBox02 text="계좌번호"/>
+            <NumberBox label="계좌번호입력" value={inputAcno} onChange={(e) => setinputAcno(e.target.value)} />
+    
 
           <Button01 btnName = '계좌인증'clickFunc={fsbAcnoAuth}/>
           
-      </Box>
+      </Box01>
  
   );
 };
