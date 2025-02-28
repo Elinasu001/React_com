@@ -98,11 +98,11 @@ const LON001 = () => {
             key={product.pdcd}                          
             pdcd={product.pdcd}                       // 상품코드
             pdnm={product.pdnm}                       // 상품명
-            cmmProdCategoty={product.cmmProdCategoty} // 카테고리
+            categoty={product.cmmProdCategoty}        // 카테고리
             pdDesc={product.pdDesc}                   // 상품설명
             keyword={product.keyword}                 // 키워드
-            maxLimit={`최대한도 ${product.maxLimit}만원`}                  // 최대한도
-            intrate={`연 ${product.minIntrate}%~${product.maxIntrate}%`}  // 금리
+            contents1={`최대한도 ${product.maxLimit}만원`}                   // 최대한도
+            contents2={`연 ${product.minIntrate}%~${product.maxIntrate}%`}  // 금리
           />
         ))}
       </Box>
