@@ -5,7 +5,11 @@
  * @version 1.0.0
  */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
+import DataSet from '@src/assets/io/DataSet';
+import { progressBar } from "@src/components/Loading";
+import { messageView } from '@src/components/Alert';
 import { Box } from "@mui/material";
 import { Card03 } from "@src/components/Card";
 import { Tab01 } from "@src/components/Tab";
@@ -14,40 +18,18 @@ import { useNavigate } from "react-router-dom";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 /**
- * 대출 상품 데이터
+ * 대출 상품 데이터 타입 정의
  */
-const loanProducts = [
-  {
-    pdcd: "pd001",
-    pdnm: "온라인햇살론",
-    cmmProdCategoty: "정책자금대출",
-    pdDesc: "저신용 저소득 서민에게 보증지원을 통해 생활의 안정을 돕고자 지원하는 보증부 대출상품입니다.",
-    keyword: ["저신용", "저소득", "보증부대출", "최대금리우대1.3%P"],
-    maxLimit: "2000",
-    minIntrate: "8",
-    maxIntrate: "10"
-  },
-  {
-    pdcd: "pd002",
-    pdnm: "예스론",
-    cmmProdCategoty: "신용대출",
-    pdDesc: "비상금 신용대출 상품으로 간편하게 신청 가능",
-    keyword: ["비대면", "신용", "대출", "예스"],
-    maxLimit: "300",
-    minIntrate: "8",
-    maxIntrate: "10"
-  },
-  {
-    pdcd: "pd003",
-    pdnm: "담보론",
-    cmmProdCategoty: "담보대출",
-    pdDesc: "자산 담보를 통한 저금리 대출상품입니다.",
-    keyword: ["담보", "저금리"],
-    maxLimit: "8000",
-    minIntrate: "4",
-    maxIntrate: "6"
-  }
-];
+interface LoanProduct {
+  pdcd: string;               // 상품코드
+  pdnm: string;               // 상품명
+  cmmProdCategoty: string;    // 카테고리
+  pdDesc: string;             // 상품설명
+  keyword: string[];          // 키워드 배열
+  maxLimit: string;           // 최대한도
+  minIntrate: string;         // 최저금리
+  maxIntrate: string;         // 최대금리
+}
 
 /**
  * 탭 항목 정의
@@ -62,6 +44,61 @@ const tabItems = [
 
 const LON001 = () => {
   const [selectedTab, setSelectedTab] = useState("전체");
+  const [loanProducts, setLoanProducts] = useState<LoanProduct[]>([]);
+
+  const fetchLoanProducts = async () => { 
+
+    //폼생성,데이터 주입
+    const form = makeForm('LON0000SC');
+    addFormData(form,'txGbnCd','TEST');
+
+    //로딩 ON
+    progressBar(true, "통신중");
+
+    try {
+      //통신
+      const response = await doAction(form);
+      //로딩 OFF
+      progressBar(false);
+
+      if (response.header.respCd !== "N00000") {
+        GLog.e("대출상품 조회 실패:", response.header.respMsg);
+        messageView(`통신 실패 : ${response.header.respMsg}`, "확인", () => GLog.d("확인 클릭"));
+        return;
+      }
+
+      // 대출상품 리스트 가져오기
+      if (response.data?.LIST) {
+        const resData = new DataSet(response.data);
+        const loanList = resData.getList<Record<string, unknown>>("LIST");
+
+        const formattedData: LoanProduct[] = loanList.map((item) => ({
+          pdcd: String(item["pdcd"] || ""),
+          pdnm: String(item["pdnm"] || ""),
+          cmmProdCategoty: String(item["cmmProdCategoty"] || ""),
+          pdDesc: String(item["pdDesc"] || ""),
+          keyword: item["keyword"] ? String(item["keyword"]).split("/") : [],
+          maxLimit: String(item["maxLimit"] || "0"),
+          minIntrate: String(item["minIntrate"] || "0"),
+          maxIntrate: String(item["maxIntrate"] || "0"),
+        }));
+
+        setLoanProducts(formattedData);
+      } else {
+        messageView("대출상품 데이터가 없습니다.", "확인");
+      }
+      
+    } catch (error) {
+        GLog.e("대출상품 조회 중 오류 발생:", error);
+        messageView("대출상품 조회 중 오류가 발생했습니다.", "확인");
+        progressBar(false);
+    }
+  };
+
+  // 최초 조회
+  useEffect(() => {
+    fetchLoanProducts();
+  }, []);
 
   // 탭 변경 시 이벤트
   const handleTabChange = (value: string | number) => {
@@ -77,8 +114,7 @@ const LON001 = () => {
   const navigate = useNavigate();
 
   return (
-
-    <Box sx={{ width: "95%" }}>
+    <Box>
       {/* 대출 탭 컴포넌트 */}
       <Tab01 items={tabItems} initialValue="전체" onChange={handleTabChange} />
 
@@ -92,23 +128,20 @@ const LON001 = () => {
       />
 
       {/* 대출 상품 컴포넌트 */}
-      <Box sx={{ minHeight: "100vh", mx: 2, width: "95%", mt:3 }}>
-        {filteredProducts.map((product) => (
-          <Card03
-            key={product.pdcd}                          
-            pdcd={product.pdcd}                       // 상품코드
-            pdnm={product.pdnm}                       // 상품명
-            categoty={product.cmmProdCategoty}        // 카테고리
-            pdDesc={product.pdDesc}                   // 상품설명
-            keyword={product.keyword}                 // 키워드
-            contents1={`최대한도 ${product.maxLimit}만원`}                   // 최대한도
-            contents2={`연 ${product.minIntrate}%~${product.maxIntrate}%`}  // 금리
-          />
-        ))}
-      </Box>
+      {filteredProducts.map((product) => (
+        <Card03
+          key={product.pdcd}                          
+          pdcd={product.pdcd}                 // 상품코드
+          pdnm={product.pdnm}                 // 상품명
+          categoty={product.cmmProdCategoty}  // 카테고리
+          pdDesc={product.pdDesc}             // 상품설명
+          keyword={product.keyword}           // 키워드
+          contents1={`최대한도 ${product.maxLimit}만원`}                   // 최대한도
+          contents2={`연 ${product.minIntrate}%~${product.maxIntrate}%`}  // 금리
+        />
+      ))}
     </Box>
   );
 };
-
 
 export default LON001;

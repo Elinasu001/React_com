@@ -245,7 +245,7 @@ export const Card03 = ({
 
   return (
     <>
-      <Card variant="outlined" sx={{ mb: 2, borderRadius: "20px" }}>
+      <Card variant="outlined" sx={{ mt:2, mb: 2, borderRadius: "20px"}}>
         {/* 카드 헤더 - 상품 설명 + 아이콘 */}
         <CardHeader
           sx={{ pb: 0 }}
