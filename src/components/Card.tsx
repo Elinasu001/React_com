@@ -406,13 +406,13 @@ export const Card05 = ({
   };
 
   interface Card06props {
-    type: string;
-    acno: string;
-    balance: number;
-    pdnm: string;
+    ACCO_KNCD: string;
+    ACNO: string;
+    ACNT_BLNC: number;
+    PROD_NM: string;
   }
 
-  export const Card06 = ({ type, pdnm, acno, balance }: Card06props) => {
+  export const Card06 = ({ ACCO_KNCD, PROD_NM, ACNO, ACNT_BLNC }: Card06props) => {
     return (
       <Card
         elevation={5}
@@ -425,15 +425,15 @@ export const Card05 = ({
       >
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-            {type} {pdnm}
+            {ACCO_KNCD} {PROD_NM}
           </Typography>
         </Box>
   
         {/* 계좌번호 및 복사 아이콘 */}
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="body1" color="textSecondary">
-            {acno}
-            <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
+            {ACNO}
+            <IconButton onClick={() => navigator.clipboard.writeText(ACNO)} sx={{ p: 1 }}>
               <ContentCopyIcon fontSize="small" />
             </IconButton>
           </Typography>
@@ -442,14 +442,14 @@ export const Card05 = ({
 
           {/* 계좌 잔액 */}
           <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            잔액 {balance.toLocaleString()} 원
+            잔액 {ACNT_BLNC.toLocaleString()} 원
           </Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
           {/* 계좌 잔액 */}
           <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            출금가능금액 {balance.toLocaleString()} 원
+            출금가능금액 {ACNT_BLNC.toLocaleString()} 원
           </Typography>
         </Box>
         {/* 버튼 영역 */}

@@ -20,6 +20,7 @@ export const Box01 = ({ children, padding = "16px", maxWidth = "600px" }: BoxPro
   );
 };
 
+<<<<<<< Updated upstream
 /**
  * 박스 속성2
  */
@@ -83,3 +84,35 @@ export const Box02 = ({ icon, title, description, buttonText, onButtonClick }: B
 };
 
 export default { MainBox, Box02 };
+=======
+interface BoxProps {
+  children: React.ReactNode;
+  flexDirection?: "row" | "column";
+  gap?: number;
+  padding?: string;
+  maxWidth?: string;
+}
+
+export const Box02: React.FC<BoxProps> = ({
+  children,
+  flexDirection = "column",
+  gap = 3,
+  padding = "16px",
+  maxWidth = "600px",
+}) => {
+  return (
+    <MuiBox
+      sx={{
+        display: "flex",
+        flexDirection,
+        gap,
+        p: padding,
+        maxWidth,
+        mx: "auto",
+      }}
+    >
+      {children}
+    </MuiBox>
+  );
+};
+>>>>>>> Stashed changes
