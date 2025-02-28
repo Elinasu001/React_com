@@ -16,6 +16,7 @@ const COM004_1 = () => {
   const [inputAcno, setinputAcno] = useState('');
   const [selectedBankCd, setSelectedBankCd] = useState<string>("");
   const [selectedBankNm, setSelectedBankNm] = useState<string>("");
+  const form = makeForm('COM0004SC');
   
   // 은행선택 콜백
   function selectBankCd(data?: DataSet) {
@@ -33,7 +34,7 @@ const COM004_1 = () => {
   const fsbAcnoAuth = async () => { 
 
     //폼생성,데이터 주입
-    const form = makeForm('COM0004SC');
+    
     addFormData(form,'txGbnCd','A01');
     addFormData(form,'BKCD', selectedBankCd); // 은행코드
     addFormData(form,'ACNO', inputAcno);      // 계좌번호
@@ -64,9 +65,14 @@ const COM004_1 = () => {
     '확인',
     (() => {
         // TODO컨펌화면으로 이동
+
+        const bkData = new DataSet();
+        bkData.putString('BKCD',selectedBankCd)
+
         openFullPopup({
           component: COM004_2,
           title: '타행계좌본인인증확인',
+          param:new DataSet(form),
           nFunc: (data?) => {
             if (data) {
               GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
