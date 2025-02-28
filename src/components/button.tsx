@@ -3,6 +3,7 @@
  * @fileoverview 버튼 UI
  *
  * 사용 예시:
+<<<<<<< HEAD
  * import { Button01 } from "@src/components/button";
  */
 import { Box, Button } from '@mui/material'; //Typography 타이포그래피 텍스트박스 생성 도구
@@ -117,7 +118,5 @@ export const Button03 = ({ btnName, clickFunc }: ButtonProps) => {
 
   );
 };
-
-
 
 export default { Button01, Button02, Button03 };
