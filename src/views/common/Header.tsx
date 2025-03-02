@@ -52,14 +52,15 @@ const Header = () => {
       const resData = new DataSet(response.data);
 
       if (resData) {
-        messageView("로그인 성공!", "확인");
-        sessionStorage.setItem("custInfo", JSON.stringify(resData));    // 고객정보저장
-        sessionStorage.setItem("loginTime", Date.now().toString());     // 현재시간저장
-
-        // 고객정보 불러오기
-        const storedCustInfo = new DataSet(JSON.parse(sessionStorage.getItem("custInfo") || "{}"));
-        console.log(storedCustInfo);
-        handleClose(); // 로그인 성공 시 팝업 닫기
+        messageView("로그인 성공!", "확인", () => {
+          sessionStorage.setItem("custInfo", JSON.stringify(resData.getObj));    // 고객정보저장
+          sessionStorage.setItem("loginTime", Date.now().toString());           // 현재시간저장
+  
+          // 고객정보 불러오기
+          const storedCustInfo = new DataSet(JSON.parse(sessionStorage.getItem("custInfo") || "{}"));
+          console.log(storedCustInfo);
+          handleClose(); // 로그인 성공 시 팝업 닫기
+        });
       } else {
         messageView("로그인 정보가 없습니다.", "확인");
       }
