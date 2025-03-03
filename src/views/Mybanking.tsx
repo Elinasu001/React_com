@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MainBox } from "@src/components/Box";
-import { Card02, Card03, Card04 } from "@src/components/Card";
+import { Card02, Card03 } from "@src/components/Card";
 import { Typography, Box, Tabs, Tab } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -171,8 +171,8 @@ const Mybanking = () => {
           "& .Mui-selected": { color: "#612AD0 !important" },
         }}
       >
-        <Tab label="수신 (예금·적금)" />
-        <Tab label="여신 (대출)" />
+        <Tab label="예적금" />
+        <Tab label="대출" />
       </Tabs>
 
       {/* ✅ 수신 계좌 */}
