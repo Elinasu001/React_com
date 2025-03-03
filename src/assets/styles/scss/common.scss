@@ -105,17 +105,43 @@
 ---------------------------------------------*/
 // 탭 기본
 .tab-container {
-    .tab-item {
-         border-bottom: 1px solid var(--tab-line);
-        button {
-            &.Mui-selected{color: var(--tab-line-active); transition: all 2s;} //Mui 활성화
-            /*flex: 1 1 auto;*/ width:100px; min-height:inherit; max-width: inherit; min-width: inherit; padding:16px 0;
+    
+    display: flex; flex-direction: column;
+    .tab-item { display:flex; align-items: center; border-bottom: 1px solid var(--tab-line); transition: linear all 1s;
+        button { flex:1 1 auto; min-width:89px; min-height:inherit; max-width: inherit; min-width: inherit; padding:16px 8px;
+            &.Mui-selected{ color: var(--tab-line-active); } //Mui 활성화
         }
-        .css-ehhs8s-MuiTabs-indicator { /*display:none;*/  border-bottom: 2px solid var(--tab-line-active); }//Mui 활성화
+        .MuiTabs-indicator { border-bottom: 2px solid var(--tab-line-active); }//Mui 활성화
+        &.scroll button{ flex: initial; min-width:70px; }
+    }
+
+    // background 탭
+    &.bg-gray {
+        .tab-item {  padding:4px 5px; border-bottom: none; border-radius: 8px; background-color: var(--tab-bg-gray);
+            .MuiTabs-flexContainer{  flex-wrap: wrap; gap:5px; }
+            button{ width:calc(50% - 10px); padding:8px;
+                &.Mui-selected { border-radius: 8px; background-color: var(--tab-bg-gray-active);  } //Mui 활성화
+                &:last-of-type { max-width: 49%;}
+            }
+            .MuiTabs-indicator { display: none; }
+        }
+    }
+
+    // round 탭
+    &.round {
+        .tab-item { border-bottom: none;
+            .MuiTabs-flexContainer{ gap:5px; }
+            button{
+                padding:8px 16px; border-radius: 30px; background-color: var(--tab-round);
+                &.Mui-selected{ background-color:var(--tab-round-active); color:var(--white)}  //Mui 활성화
+            }
+            .MuiTabs-indicator { display: none; }
+        }
     }
     
-    // &scroll{
-        
-    // }
+    .tab-body {
+        flex-grow:1; min-height:200px;
+    }
+
 }
 
