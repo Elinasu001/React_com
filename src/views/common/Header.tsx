@@ -3,7 +3,7 @@ import { AppBar, Toolbar, IconButton, Box, Button, Dialog, DialogTitle, DialogCo
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "@assets/images/logo.svg";
-import { GLog, doAction, makeForm, addFormData } from '@assets/js/common';
+import { GLog, doAction, makeForm, addFormData, useAppNavigator } from '@assets/js/common';
 import { messageView } from '@src/components/Alert';
 import { progressBar } from "@src/components/Loading";
 import DataSet from '@src/assets/io/DataSet';
@@ -13,6 +13,7 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(""); // ID 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
+  const navigator = useAppNavigator();
 
   // 팝업 열기
   const handleOpen = () => {
@@ -43,9 +44,9 @@ const Header = () => {
       const response = await doAction(form);
       progressBar(false);
 
-      if (response.header.respCd !== "N00000") {
-        GLog.e("로그인 실패:", response.header.respMsg);
-        messageView(`로그인 실패: ${response.header.respMsg}`, "확인");
+      if (response.header.respCd !== "N00000" || response.data.getString("API_RS_MSG") !== "SUCEESS") {
+        GLog.e("로그인 실패:", response.data.getString("API_RS_MSG"));
+        messageView(`${response.data.getString("API_RS_MSG")}`, "확인");
         return;
       }
 
@@ -53,13 +54,14 @@ const Header = () => {
 
       if (resData) {
         messageView("로그인 성공!", "확인", () => {
-          sessionStorage.setItem("custInfo", JSON.stringify(resData.getObj));    // 고객정보저장
+          sessionStorage.setItem("custInfo", JSON.stringify(resData));          // 고객정보저장
           sessionStorage.setItem("loginTime", Date.now().toString());           // 현재시간저장
   
           // 고객정보 불러오기
           const storedCustInfo = new DataSet(JSON.parse(sessionStorage.getItem("custInfo") || "{}"));
           console.log(storedCustInfo);
           handleClose(); // 로그인 성공 시 팝업 닫기
+          navigator.doActionURL('/Mybanking.view');
         });
       } else {
         messageView("로그인 정보가 없습니다.", "확인");
