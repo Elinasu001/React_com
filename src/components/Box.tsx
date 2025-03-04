@@ -6,7 +6,7 @@
  */
 import { ReactNode } from "react";
 import { Box as MuiBox, Box, Typography, Button } from "@mui/material";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import LoanIcon from "@assets/images/com/svg/ico_date.svg";
 
 export const MainBox = ({ children }: {children ?: ReactNode}) => {
   return <Box sx={{ textAlign: "center" }}>{children}</Box>;
@@ -44,26 +44,24 @@ export const Box02 = ({ title, description, buttonText, onButtonClick }: Box02Pr
   return (
     <Box
       sx={{
-        backgroundColor: "#F9F7FF",
+        backgroundColor: "#F8F8F8",
         borderRadius: "12px",
         textAlign: "center",
-        py: 3,
-        px: 2,
-        mt: 2,
+        py: 4,
       }}
     >
       {/* 아이콘 */}
       <Box>
-        <AccountBalanceWalletIcon sx={{ fontSize: 50, color: "#6A0DAD" }} />
-      </Box>
-
+        <Box
+          component="img" src={LoanIcon} alt="대출한도조회" sx={{ width: 60, height: 60 }}/>
+        </Box>
       {/* 제목 */}
-      <Typography variant="h6" sx={{ fontWeight: "bold", mt: 1 }}>
+      <Typography variant="h6" sx={{ fontWeight: "bold", mt: 0.5 }}>
         {title}
       </Typography>
 
       {/* 설명 */}
-      <Typography variant="body1" sx={{ color: "text.secondary", mt: 1 }}>
+      <Typography variant="body1" sx={{ mt: 0.5 }}>
         {description}
       </Typography>
 
@@ -71,16 +69,14 @@ export const Box02 = ({ title, description, buttonText, onButtonClick }: Box02Pr
       <Button
         variant="text"
         sx={{
-          mt: 1,
+          mt: 0.5,
+          fontSize: "15px",
           fontWeight: "bold",
-          color: "#6A0DAD",
-          textDecoration: "underline",
           cursor: "pointer",
-          outline: "none",
-          "&:focus": { outline: "none", backgroundColor: "transparent" },
-          "&:focus-visible": { outline: "none", backgroundColor: "transparent" },
-          "&:active": { outline: "none", backgroundColor: "transparent" },
+          textDecoration: "none",
+          color: "inherit",
           "&:hover": { backgroundColor: "transparent" },
+          "&:focus": { outline: "none" },
         }}
         onClick={onButtonClick}
       >
