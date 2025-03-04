@@ -7,13 +7,21 @@
  *  <TextBox01 text="내부 기능 테스트"/>
  * 
  */
-import { Typography } from '@mui/material'; //Typography 타이포그래피 텍스트박스 생성 도구
+import { Box, Typography } from '@mui/material'; //Typography 타이포그래피 텍스트박스 생성 도구
 
 /**
  * 텍스트 박스 속성
  */
 interface TextBoxProps {
   text: string;
+}
+
+/**
+ * 컨텐츠 상단 타이틀 속성
+ */
+interface ContentTitleProps {
+  title?: React.ReactNode; // h3 제목 (선택적)
+  text?: string;   // 추가 텍스트 (선택적)
 }
 
 /**
@@ -24,7 +32,7 @@ interface TextBoxProps {
 export const TextBox01 = ({ text }: TextBoxProps) => {
   return (
     <Typography 
-    sx={{ 
+    sx={{
       fontFamily: "SCDream",
       fontWeight: 800,
       fontSize: "30px",
@@ -60,4 +68,14 @@ export const TextBox02 = ({ text }: TextBoxProps) => {
   )
 }
 
-export default { TextBox01 , TextBox02 };
+
+export const ContentTitle = ({ title, text }: ContentTitleProps) => {
+  return (
+    <Box className="content-tit-wrap">
+      {title && <Typography variant="h3" className="tit">{title}</Typography>}
+      {text && <Typography className="txt">{text}</Typography>}
+    </Box>
+  )
+}
+
+export default { TextBox01 , TextBox02, ContentTitle };
