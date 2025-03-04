@@ -29,13 +29,13 @@ const COM011 = () => {
       />
 
       {/* 보안카드 입력 영역 */}
-      <Box className="security-input-wrap flex-row gap20">
+      <Box className="security-input-wrap flex-col gap40">
         {/* 앞 두 자리 입력 */}
-        <Box sx={{ mb: 3 }}>
-          <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>
+        <Box>
+          <Typography variant="body1" >
             <span id="SECUNO_IDX1_text">12</span> 앞 두자리
           </Typography>
-          <Box sx={{ display: "flex", gap: 1 }}>
+          <Box className="flex-row gap10">
             <Input type="tel" inputProps={{ maxLength: 1 }} />
             <Input type="tel" inputProps={{ maxLength: 1 }}/>
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
@@ -45,10 +45,10 @@ const COM011 = () => {
 
         {/* 뒤 두 자리 입력 */}
         <Box>
-          <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>
+          <Typography variant="body1" >
             <span id="SECUNO_IDX2_text">34</span> 뒤 두자리
           </Typography>
-          <Box sx={{ display: "flex", gap: 1 }}>
+          <Box className="flex-row gap10">
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
             <Input type="tel" inputProps={{ maxLength: 1 }} />
