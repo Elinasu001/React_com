@@ -1,7 +1,10 @@
 import { progressBar } from "@src/components/Loading";
 import axios from 'axios';
 import DataSet from "@assets/io/DataSet";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "./redux/hooks";
+import { logout,login, convertUserData } from '@assets/js/redux/authSlice';
+import { AppDispatch } from "@assets/js/redux/store";
 
 //앱 실행 환경
 export enum AppEnvType {
@@ -134,7 +137,7 @@ export const doAction = async (req: ApiReq): Promise<ApiRes> => {
 export const useAppNavigator = () => {
   const navigate = useNavigate();
 
-  // ✅ `doActionURL()`을 navigate에 추가하여 반환
+  //`doActionURL()`을 navigate에 추가하여 반환
   const doActionURL = (uri: string) => {
     progressBar(true);
     setTimeout(() => {
@@ -147,6 +150,76 @@ export const useAppNavigator = () => {
 };
 
 
+/**
+ * 로그인 처리
+ */
+export const doIdLogin = async (dispatch:AppDispatch,id:string,pwd:string) => {
+  //OPEN API 로그인 요청
+  const form = makeForm("COM0000SC");
+  addFormData(form, "txGbnCd", "LOGIN");
+  addFormData(form, "loginType", "I");
+  addFormData(form, "USER_ID_12", id);
+  addFormData(form, "USR_PWD", pwd);
+
+  progressBar(true);
+
+  //OPEN API 전자뱅킹 아이디 조회
+  const response = await doAction(form);
+
+  progressBar(false);
+
+  GLog.d('로그인 결과 : '+response.data.toString());
+
+  const { respCd } = response.header;                     //통신결과
+  const apiRsMsg = response.data.getString("API_RS_MSG",'E00000,처리중 오류가 발생했습니다.') //OPEN API 전문결과
+
+  //로그인 성공 처리
+  if (respCd == "N00000" && apiRsMsg == "SUCCESS")
+  {
+      //로그인처리
+      dispatch(login(convertUserData(response.data)));
+      return "OK";
+  }
+  //로그인 에러 처리
+  else
+  {
+    return apiRsMsg.split(',')[1];//OPEN API 로그인 실패 메세지는 , 구분으로 내려옴
+  }
+};
+
+/**
+ * 로그아웃 처리
+ */
+export const doLogout = async (dispatch: AppDispatch, navigate: NavigateFunction) => {
+  progressBar(true);
+  setTimeout(() => {
+    dispatch(logout());
+    navigate('/');
+    progressBar(false);
+  }, 1000);
+  
+}
+
+
+// 세션 체크
+export const sessionCheck = async () => {
+  const form = makeForm("COM0000SC");
+  addFormData(form, "txGbnCd", "LOGIN");
+  addFormData(form, "loginType", "SC");
+  const response = await doAction(form);
+  const isLogin = response.data.getBoolean('IS_LOGIN',false);
+  GLog.d('로그인 세션 확인 + '+isLogin);
+  if(isLogin){
+    addFormData(form, "txGbnCd", "LOGIN");
+    addFormData(form, "loginType", "R");
+    const response2 = await doAction(form);
+    GLog.d('로그인 세션 갱신 + '+response2.data.toString());
+    return true;
+  }else{
+    return false;
+  }
+}
+
 export default { 
   GLog, 
   APP_ENV, 
@@ -156,5 +229,7 @@ export default {
   makeForm, 
   addFormData, 
   doAction,
+  doIdLogin,
+  doLogout,
   useAppNavigator
 };

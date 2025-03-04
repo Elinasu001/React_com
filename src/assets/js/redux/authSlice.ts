@@ -6,7 +6,7 @@
  */
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import DataSet from '@src/assets/io/DataSet';
-import axios from 'axios';
+import { addFormData, doAction, GLog, makeForm } from '../common';
 
 interface User {
   USR_ID: string;         // 아이디
@@ -25,21 +25,6 @@ const initialState: AuthState = {
   user: null
 };
 
-// 세션 갱신 API 호출을 위한 thunk
-export const refreshSession = createAsyncThunk(
-  'COM0000SC?txGbnCd=LOGIN&loginType=D',
-  async (_, thunkAPI) => {
-    try {
-      // 세션 갱신 API 호출 (별도의 API 엔드포인트 사용)
-      const response = await axios.post('/api/refreshSession', null, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      return response.data as User;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
-    }
-  }
-);
 
 const authSlice = createSlice({
   name: 'auth',

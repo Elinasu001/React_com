@@ -1,12 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, IconButton, Box, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "@assets/images/logo.svg";
-import { GLog, doAction, makeForm, addFormData, useAppNavigator } from '@assets/js/common';
+import { GLog, useAppNavigator, doLogout, doIdLogin } from '@assets/js/common';
 import { messageView } from '@src/components/Alert';
-import { progressBar } from "@src/components/Loading";
-import { logout,login,convertUserData } from '@assets/js/redux/authSlice';
 
 
 import { useAppSelector, useAppDispatch } from '@src/assets/js/redux/hooks';
@@ -15,6 +14,8 @@ const Header = () => {
 
   //리덕스 상태 관련
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const { user } = useAppSelector((state) => state.auth);
   const isLogin = !!user;  // 로그인 상태: user가 null이 아니면 로그인한 상태
 
@@ -24,17 +25,15 @@ const Header = () => {
   const [password, setPassword] = useState(""); // 비밀번호 상태
   const navigator = useAppNavigator();
 
+
   // 로그인/로그아웃 버튼
-  const handleOpen = () => {
+  const handleOpen = async () => {
     //로그인 중일때는 로그아웃 처리
-    if (isLogin) 
-    {
-      dispatch(logout());
-      navigator.doActionURL('/');
+    if (isLogin){
+      await doLogout(dispatch,navigate);
     }
     //미 로그인시는 팝업 열기
-    else
-    {
+    else{
       setOpen(true);
     }
   };
@@ -51,39 +50,17 @@ const Header = () => {
       return;
     }
 
-    //OPEN API 로그인 요청
-    const form = makeForm("COM0000SC");
-    addFormData(form, "txGbnCd", "LOGIN");
-    addFormData(form, "loginType", "I");
-    addFormData(form, "USER_ID_12", id);
-    addFormData(form, "USR_PWD", password);
+    const result = await doIdLogin(dispatch,id,password);
+    
+    if(result == 'OK'){
+      handleClose(); // 로그인 성공 시 팝업 닫기
+      navigator.doActionURL('/Mybanking.view');
+    }else{
 
-    progressBar(true);
-
-    //OPEN API 전자뱅킹 아이디 조회
-    const response = await doAction(form);
-
-    progressBar(false);
-
-    GLog.d('로그인 결과 : '+response.data.toString());
-
-    const { respCd } = response.header;                     //통신결과
-    const apiRsMsg = response.data.getString("API_RS_MSG",'E00000,처리중 오류가 발생했습니다.') //OPEN API 전문결과
-
-    //로그인 성공 처리
-    if (respCd == "N00000" && apiRsMsg == "SUCCESS")
-    {
-        //로그인처리
-        dispatch(login(convertUserData(response.data)));
-        handleClose(); // 로그인 성공 시 팝업 닫기
-        navigator.doActionURL('/Mybanking.view');
-    }
-    //로그인 에러 처리
-    else
-    {
-      messageView(apiRsMsg.split(',')[1], "확인"); //OPEN API 로그인 실패 메세지는 , 구분으로 내려옴
+      messageView(result,"확인");
     }
   };
+
   return (
     <>
       {/* 헤더 */}
