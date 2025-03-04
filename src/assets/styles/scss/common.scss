@@ -191,5 +191,15 @@
 ---------------------------------------------*/
 .security-input-wrap {
     margin:40px 0;
+    .numeric-info { font-weight: var(--font-w-m); color:var(--color-3);
+        span { font-weight: var(--font-w-b); color:var(--tertiary); }
+    }
+
+    .numeric-box {
+        margin-top:15px;
+        input {
+            &[type="tel"] { border:1px solid var(--primary); }
+        }
+    }
 
  }

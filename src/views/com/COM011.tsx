@@ -32,10 +32,10 @@ const COM011 = () => {
       <Box className="security-input-wrap flex-col gap40">
         {/* 앞 두 자리 입력 */}
         <Box>
-          <Typography variant="body1" >
+          <Typography className="numeric-info">
             <span id="SECUNO_IDX1_text">12</span> 앞 두자리
           </Typography>
-          <Box className="flex-row gap10">
+          <Box className="numeric-box flex-row gap10">
             <Input type="tel" inputProps={{ maxLength: 1 }} />
             <Input type="tel" inputProps={{ maxLength: 1 }}/>
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
@@ -45,10 +45,10 @@ const COM011 = () => {
 
         {/* 뒤 두 자리 입력 */}
         <Box>
-          <Typography variant="body1" >
+          <Typography className="numeric-info">
             <span id="SECUNO_IDX2_text">34</span> 뒤 두자리
           </Typography>
-          <Box className="flex-row gap10">
+          <Box className="numeric-box flex-row gap10">
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
             <Input type="tel" inputProps={{ maxLength: 1 }} />
