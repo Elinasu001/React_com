@@ -17,7 +17,8 @@ const COM011 = () => {
 
   return (
     <MainBox>
-
+      
+      {/* 컨텐츠 상단 타이틀 */}
       <ContentTitle
         title={
           <>
@@ -30,6 +31,7 @@ const COM011 = () => {
 
       {/* 보안카드 입력 영역 */}
       <Box className="security-input-wrap flex-col gap40">
+
         {/* 앞 두 자리 입력 */}
         <Box>
           <Typography className="numeric-info">
@@ -57,7 +59,7 @@ const COM011 = () => {
         </Box>
       </Box>
 
-
+      {/* 정보 */}
       <InfoList
           title="보안카드 입력 안내"
           items={[
