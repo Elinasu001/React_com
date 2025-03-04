@@ -13,7 +13,11 @@
     />
  * 
  */
-import { Box, List, ListItem, Typography } from "@mui/material"; //Typography 타이포그래피 텍스트박스 생성 도구
+
+import { Box, Typography, List, ListItem, TextField  } from "@mui/material"; //Typography 타이포그래피 텍스트박스 생성 도구
+import DataSet from '@src/assets/io/DataSet';
+
+
 
 interface InfoListProps {
   title: string;
@@ -39,7 +43,41 @@ export const TextList = ({ title, items, pb=5 }: InfoListProps) => {
   );
 };
 
-//  하단 정보 리스트
+
+interface labelInfoProps {
+  title: string;
+  param: string[];
+  
+}
+export const TextLabel01 = ({ title, param }: labelInfoProps) => {
+  return (
+    <Box
+      sx={{maxWidth: "100%", mx: "auto", textAlign: "start" }}
+    >
+    
+      <Typography variant="h6" sx={{ fontWeight: "bold" }}>{title}</Typography> 
+      <Box
+        sx={{
+          display: "inline-block",
+          flexDirection: "column",
+          padding: "8px",
+          backgroundColor: "#f5f5f5",
+          borderRadius: "4px",
+          fontSize: "14px",
+          maxWidth: "100%",
+          color: "#333", 
+        }}
+      >
+        {param.map((line, index) => (
+          <Typography key={index} sx={{ marginBottom: "4px" }}>
+            {line}
+          </Typography>
+        ))}
+      </Box>
+      
+        );
+};
+
 export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => {
   return (
     <Box className="info-wrap">
@@ -59,8 +97,12 @@ export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => 
           </ListItem>
         ))}
       </List>
+
     </Box>
   );
 };
 
-export default { TextList, InfoList };
+
+
+export default { TextList, InfoList, TextLabel01 };
+
