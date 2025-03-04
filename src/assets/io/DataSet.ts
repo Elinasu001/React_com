@@ -18,6 +18,8 @@ export interface DataSetType {
     putBoolean(key: string, value: boolean): void;
     putObj<T = Record<string, unknown>>(key: string, value: T): void;
     putList<T = any>(key: string, value: T[]): void;
+
+    toString(): string ;
 }
 
 export class DataSet implements DataSetType {
@@ -73,6 +75,10 @@ export class DataSet implements DataSetType {
 
     putList<T = any>(key: string, value: T[]): void {
         this[key] = value;
+    }
+
+    toString(): string {
+        return JSON.stringify(this);
     }
 }
 
