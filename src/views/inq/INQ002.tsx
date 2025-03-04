@@ -8,36 +8,18 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect ,useState } from "react";
 
-import { GLog } from "@src/assets/js/common";
+import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { messageView } from "@src/components/Alert";
 import { progressBar } from "@src/components/Loading";
 import { Button01 } from "@src/components/Button";
 import { Card06 } from "@src/components/Card";
+import DataSet from "@src/assets/io/DataSet";
 
 
 const accountData = {
   ACNO: "123-456-789012",
   ACNT_BLNC: 98750000,
 };
-const transactionData = [
-  {
-    ACNO: "123-456-789012",
-    DEPR_NM: "홍길동",
-    NEXT_TRAN_YN: "Y",
-    DTA_NCNT: 1,
-    OUT_REC: {
-      TRN_DT: "2024-02-26",
-      TRN_TKTM: "14:30",
-      TRAN_AMT_SIGN: " ",
-      TRN_AMT: 50000,
-      TRNF_AF_BLNC_SIGN: "+",
-      ACNT_BLNC: 98700000,
-      OUTL: "스타벅스",
-    },
-    NEXT_DATA_XN: "N",
-    API_RS_MSG: "정상 처리되었습니다.",
-  }
-]
 
 interface Card06Props {
   type: string;
@@ -45,13 +27,13 @@ interface Card06Props {
   balance: number;
 }
 
-interface TransactionDisplayProps {
-  ACNO : string;
-  DEPR_NM : string;
-  NEXT_TRAN_YN : string;
-  DTA_NCNT : number;
+interface TradeListProps {
+  ACNO?: string;
+  DEPR_NM?: string;
+  NEXT_TRAN_YN?: string;
+  DTA_NCNT?: number;
   OUT_REC: {
-    TRN_DT: string;                 //거래일자
+    TRN_DT: String;                 //거래일자
     TRN_TKTM : string;              //거래시각
     TRAN_AMT_SIGN: string;          //거래금액부호
     TRN_AMT: number;                //거래금액
@@ -59,8 +41,8 @@ interface TransactionDisplayProps {
     ACNT_BLNC: number;              //계좌잔액
     OUTL : string                   //거래자명
   }[];
-  NEXT_DATA_XN: string;
-  API_RS_MSG : string
+  NEXT_DATA_XN?: string;
+  API_RS_MSG?: string;
 }
 
 const INQ002 = () => {
@@ -69,7 +51,7 @@ const INQ002 = () => {
     ACNO: "123-456-789012",  // 초기값 설정
     ACNT_BLNC: 98750000,
   });
-  const [transactionData, setTransactionData] = useState<TransactionDisplayProps[]>([
+  const [tradeList, settradeList] = useState<TradeListProps[]>([
     {
       ACNO: "123-456-789012",
       DEPR_NM: "홍길동",
@@ -96,59 +78,85 @@ const INQ002 = () => {
       API_RS_MSG: "정상 처리되었습니다.",
     }
   ]);
-
-  //TODO 백엔드 연결해서 데이터 받아와야함함
-  // const { doAction, makeForm, addFormData } = Common();
+  const fetchTradeList = async () => { 
 
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     //Form 생성 및 데이터 셋팅
-  //     const form = makeForm("INQ002SC");
-  //     addFormData(form, "acno", "123-456-789012"); // 계좌번호 추가
+    //폼생성,데이터 주입
+    const form = makeForm('INQ0002SC');
+    addFormData(form,'txGbnCd','TL');
 
-  //     //로딩 시작
-  //     progressBar(true, "");
+    //로딩 ON
+    progressBar(true, "통신중");
 
-  //     //API 호출
-  //     const resDs = await doAction(form);
+    try {
+      //통신
+      const response = await doAction(form);
+      //로딩 OFF
+      progressBar(false);
 
-  //     //로딩 끝
-  //     progressBar(false);
+      if (response.header.respCd !== "N00000") {
+        GLog.e("거래내역 조회 실패:", response.header.respMsg);
+        messageView(`통신 실패 : ${response.header.respMsg}`, "확인", () => GLog.d("확인 클릭"));
+        return;
+      }
 
-  //     //응답값 확인
-  //     // if (resDs.header.respCd !== "N00000") {
-  //     //   messageView(`통신 실패 : ${resDs.header.respMsg}`, "확인", () =>
-  //     //     console.log("확인 클릭")
-  //     //   );
-  //     //   return; 
-  //     // }
+      // 거래내역 리스트 가져오기
+      const resData = new DataSet(response.data);
+      const tradeList = resData.getList<Record<string, unknown>>("LIST");
 
-  //     //응답값 세팅 TODO INQ002SC 완성하면 데이터 셋팅 해줘야함함
-  //     setAccountData(accountData);
-  //     setTransactionData(transactionData);
-  //     //GLog.d(`${JSON.stringify(resDs)}`)
-
+      const formattedData: TradeListProps[] = tradeList.map((item) => ({
+        ACNO: (item.ACNO as string) || "", // 계좌번호 (예제 값)
+        DEPR_NM: (item.DEPR_NM as string) || "", // 예금주명 (예제 값)
+        NEXT_TRAN_YN: (item.NEXT_TRAN_YN as string) || "N", // 다음 거래 여부
+        DTA_NCNT: (item.DTA_NCNT as number) || 0, // 데이터 개수
+        OUT_REC:[
+          {
+            TRN_DT: String(item.TRN_DT) || "",
+            TRN_TKTM: String(item.TRN_TKTM) || "",
+            TRAN_AMT_SIGN: String(item.TRAN_AMT_SIGN) || "",
+            TRN_AMT: Number(item.TRN_AMT),
+            TRNF_AF_BLNC_SIGN: String(item.TRNF_AF_BLNC_SIGN) || "",
+            ACNT_BLNC: Number(item.ACNT_BLNC),
+            OUTL: String(item.OUTL) || ""
+          }
+          
+        ],
+        NEXT_DATA_XN: (item.NEXT_DATA_XN as string) || "", // 예제 값
+        API_RS_MSG: (item.API_RS_MSG as string) || "" // 예제 값
+        
+      }));
       
-  //   };
+      settradeList(formattedData);  
 
-  //   fetchData();
-  // }, []);
+    } catch (error) {
+        GLog.e("거래내역 조회 중 오류 발생:", error);
+        messageView("거래내역 조회 중 오류가 발생했습니다.", "확인");
+        progressBar(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTradeList();
+  }, []);
+
   return (
     <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "center", p: 3 }}>
       {/* 페이지 메인 제목 */}
       <Typography variant="h5" sx={{ marginBottom: 3 }}>거래내역조회</Typography>
 
       {/* 계좌정보 */}
-      <Card06
+      {tradeList.map((transaction, index) => (
+        <Card06
         type="입출금"    // 계좌 타입 (예금, 대출 등)
         acno="123-456-789012" // 계좌 번호
         balance={1000000} // 계좌 잔액
         pdnm="보통예금(예스뱅킹)"
       />
+      ))}
+      
       
       {/* 거래내역 */}
-      {transactionData.map((transaction, index) => (
+      {tradeList.map((transaction, index) => (
         transaction.OUT_REC.map((outRec, outRecIndex) => (
           <Box
             key={`${index}-${outRecIndex}`}
