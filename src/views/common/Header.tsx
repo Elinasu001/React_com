@@ -41,6 +41,7 @@ const Header = () => {
     progressBar(true);
 
     try {
+      
       const response = await doAction(form);
       progressBar(false);
 
@@ -50,11 +51,12 @@ const Header = () => {
         return;
       }
 
-      const resData = new DataSet(response.data);
+      alert(response.data);
 
-      if (resData) {
+      if (response.data) {
         messageView("로그인 성공!", "확인", () => {
-          sessionStorage.setItem("custInfo", JSON.stringify(resData));          // 고객정보저장
+
+          sessionStorage.setItem("custInfo", JSON.stringify(response.data));    // 고객정보저장
           sessionStorage.setItem("loginTime", Date.now().toString());           // 현재시간저장
   
           // 고객정보 불러오기
@@ -62,6 +64,7 @@ const Header = () => {
           console.log(storedCustInfo);
           handleClose(); // 로그인 성공 시 팝업 닫기
           navigator.doActionURL('/Mybanking.view');
+
         });
       } else {
         messageView("로그인 정보가 없습니다.", "확인");
