@@ -1,3 +1,25 @@
+/**
+ * @fileoverview [공통] 타행본인계좌인증(중앙회)
+ *
+ * 호출방법 PROD_KNCD : 10:보통예금, 20:정기예금, 30:적금, 40:BC카드, 41:롯데카드, 
+50:사잇돌, 60:신용, 70:종합통장, 80:햇살론, EL:전자금융, LR:대출철회, IR:금리인하요구, CF:제증명, EN:계좌비밀번호3회오류해제, TI:이체한도증액, CD:재수행주기도래(CDD), AS: API앱 재설정 및 재설치
+ * 
+  openFullPopup({
+    component: COM004_1,
+    title: item.text,
+    param: new DataSet({'PROD_KNCD':'1'}),
+    nFunc: (data?) => {
+      if (data) {
+        GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+      } else {
+        GLog.d('팝업 취소 닫힘');
+      }
+    }
+  });
+ * @author 
+ * @version 1.0.0
+ */
+
 import React, { useState, useEffect } from "react";
 import { Select } from "@mui/material";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
@@ -14,7 +36,7 @@ import InputLabel from '@mui/material/InputLabel';
 import COM004_2 from "./COM004_2";
 import DataSet from "@assets/io/DataSet";
 
-const COM004_1 = () => {
+const COM004_1 = ({ param }: { param: DataSet}) => {
   const [inputAcno, setinputAcno] = useState('');
   const [selectedBankCd, setSelectedBankCd] = useState<string>("");
   const [selectedBankNm, setSelectedBankNm] = useState<string>("");
@@ -35,60 +57,69 @@ const COM004_1 = () => {
   // 인증번호받기 이벤트 
   const fsbAcnoAuth = async () => { 
 
-    //폼생성,데이터 주입
-    
+    try {
+
+      //폼생성,데이터 주입
     addFormData(form,'txGbnCd','A01');
-    addFormData(form,'BKCD', selectedBankCd); // 은행코드
-    addFormData(form,'ACNO', inputAcno);      // 계좌번호
+    addFormData(form,'BKCD', selectedBankCd);                         // 은행코드
+    addFormData(form,'ACNO', inputAcno);                              // 계좌번호
+    addFormData(form,'PROD_KNCD', param.getString("PROD_KNCD"));      // 비대면상품종류코드
     
     //로딩 ON
     progressBar(true, "통신중");
 
     //통신
-    const test01 = await doAction(form);
+    const resDs = await doAction(form);
 
     //로딩 OFF
     progressBar(false);
     
     //결과실패
-    if(test01.header.respCd != 'N00000'){
+    if(resDs.header.respCd != 'N00000'){
     GLog.e('에러발생 !!!');
     messageView(
-        '통신 실패 : '+test01.header.respMsg,
+        '통신 실패 : '+resDs.header.respMsg,
         '확인',
-        () => GLog.d('확인 클릭')
+        () => {return;}
     )
-    return;
+      
+    }else {
+        
+        if (resDs.data.getString('API_RS_MSG') != "SUCCESS") {
+          messageView(resDs.data.getString('API_RS_MSG'), "확인", () => {return;});
+        }else { 
+
+          const bkData = new DataSet();
+          bkData.putString('BKCD',selectedBankCd);
+          bkData.putString('ACNO',inputAcno);
+          bkData.putString('PROD_KNCD', param.getString("PROD_KNCD"));
+
+          openFullPopup({
+            component: COM004_2,
+            title: '타행계좌본인인증확인',
+            param:new DataSet(bkData),
+            nFunc: (data?) => {
+              if (data) {
+                GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+              } else {
+                GLog.d('팝업 취소 닫힘');
+              }
+            }
+          });
+
+        }
+
+
     }
 
-    //정상
-    messageView(
-    '통신완료 : '+JSON.stringify(test01.data),
-    '확인',
-    (() => {
-        // TODO컨펌화면으로 이동
-
-        const bkData = new DataSet();
-        bkData.putString('BKCD',selectedBankCd);
-        bkData.putString('ACNO',inputAcno);
-
-        openFullPopup({
-          component: COM004_2,
-          title: '타행계좌본인인증확인',
-          param:new DataSet(bkData),
-          nFunc: (data?) => {
-            if (data) {
-              GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-            } else {
-              GLog.d('팝업 취소 닫힘');
-            }
-          }
-        });
-
-
-    })
+    }catch(error){
+      progressBar(false);
+      GLog.e("타행본인계좌인증 중 오류 발생:", error);
+      messageView("타행본인계좌인증 중 오류가 발생했습니다.", "확인", () => {return;});
+               
+    }
     
-    )
+
     
 
   };
