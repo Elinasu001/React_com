@@ -1,6 +1,18 @@
 /**
  * @fileoverview [공통] 계좌리스트팝업
  *
+ * 호출방법 ACCO_KNCD : 계좌종류 1:요구성, 2:적금, 3:정기예금, 4:대출, 9:전체
+ * openBottomPopup({
+                       component: COM005,
+                       title: item.text,
+                       param: new DataSet({'ACCO_KNCD':'1'}),
+                       nFunc: (data?) => {
+                         if (data) {
+                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                         } else {
+                           GLog.d('팝업 취소 닫힘');
+                         }
+                       }
  * @author 
  * @version 1.0.0
  */

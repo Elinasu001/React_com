@@ -17,7 +17,7 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
 
   const [inputAddr, setInputAddr] = useState("");   // 검색어
   const [flag, setFlag] = useState("");             // 주소조회검증플래그 1:조회, 2:검증
-  const [addrList, setAddrList] = useState<{ ZPCD: string; ZPCD_ADDR: string }[]>([]);
+  const [addrList, setAddrList] = useState<Record<string, any>[]>([]);
   const [selectedAddr, setSelectedAddr] = useState<string | null>(null); 
   const test = '1234';
   GLog.d('로그는 이거쓰세요 : '+test);
@@ -66,7 +66,7 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
           messageView("입력하신 주소로 200건 이상의 주소가 검색돼요.", "확인", () => resetForm());
           return;
         }else {
-          const list = (resDs.data.getList<{ ZPCD: string; ZPCD_ADDR: string }>("REC") ?? []).flat();
+          const list = (resDs.data.getList<{ }>("REC") ?? []).flat();
           setAddrList(list);
         }
       }
@@ -81,7 +81,7 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
    
   };
 
-  const handleAddrSelect = (addr: { ZPCD: string; ZPCD_ADDR: string }) =>  {
+  const handleAddrSelect = (addr: Record<string, any>) => {
   
       console.log("선택한 주소:", addr);
       setSelectedAddr(addr.ZPCD); 
