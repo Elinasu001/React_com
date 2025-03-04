@@ -106,7 +106,8 @@ axios.defaults.timeout = 15000;// 기본 타임아웃 설정 (예: 15000ms = 15�
  * gp_backend 서비스랑 통신하는 함수 입니다.
  * @param req 서비스명,파라미터
  */
-export const doAction = async (req: ApiReq): Promise<ApiRes> => {
+export const doAction = async (req: ApiReq, isLogin = false): Promise<ApiRes> => {
+
   try {
     //axios 통신
     const response = await axios.post('/api/' + req.serviceCd + '.act', req.param, {
@@ -140,13 +141,37 @@ export const doAction = async (req: ApiReq): Promise<ApiRes> => {
 /**
  * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
  * @param uri 이동할 페이지의 경로
+ * @param isLogin 로그인 필수 여부부
  */
-export const doActionURL = (uri: string):void =>{
+export const doActionURL = async (uri: string, isLogin = false) =>{
   const navigate = getNavigation();
+
   if (!navigate) {
     messageView("처리중 오류 발생했습니다.","확인");
     return;
   }
+
+  //로그인 체크
+  if(isLogin){
+    if(!IS_LOGIN()){
+      messageView('로그인이 필요합니다','확인',()=>{
+        //페이지 이어하기 작업중
+      });
+      return;
+    }
+
+    //로그인 세션 체크
+    const chk = await sessionCheck();
+    GLog.d('로그인 서버 세션 체크 '+chk);
+    if(!chk){
+      messageView('로그인 세션이 만료되었습니다. 필요합니다','확인',() => {
+        doLogout(false);
+      });
+      return;
+    }
+  }
+
+  
   progressBar(true);
   setTimeout(() => {
     navigate(uri);
@@ -187,14 +212,14 @@ export const doLogin = async (loginType:LoginType,data : DataSet) => {
   }
 
   //OPEN API 로그인전문 송신
-  const response = await doAction(form);
-  // const response: ApiRes = {
-  //   header: {
-  //     respCd: "N00000",
-  //     respMsg: "성공적으로 처리되었습니다.",
-  //   },
-  //   data: new DataSet({'API_RS_MSG':'SUCCESS','USR_ID':'hipen8','USR_NM':'김남교'})
-  // };
+  //const response = await doAction(form);
+  const response: ApiRes = {
+    header: {
+      respCd: "N00000",
+      respMsg: "성공적으로 처리되었습니다.",
+    },
+    data: new DataSet({'API_RS_MSG':'SUCCESS','USR_ID':'hipen8','USR_NM':'김남교'})
+  };
 
   progressBar(false);
 
@@ -220,11 +245,16 @@ export const doLogin = async (loginType:LoginType,data : DataSet) => {
 /**
  * 로그아웃 처리
  */
-export const doLogout = () => {
-  messageView('로그아웃 하시겠습니까?','예',() => {
+export const doLogout = (isMessage : Boolean = true) => {
+  if(isMessage){
+    messageView('로그아웃 하시겠습니까?','예',() => {
+      store.dispatch(logout());
+      doActionURL('/');
+    },'아니요');
+  }else{
     store.dispatch(logout());
     doActionURL('/');
-  },'아니요');
+  }
 }
 
 

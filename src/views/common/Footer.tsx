@@ -39,7 +39,7 @@ const BottomNav = () => {
         <BottomNavigationAction
           label="대출"
           onClick={() => {
-            doActionURL('/');
+            doActionURL('/lon/LON001.view',true);
           }}
           icon={<AttachMoneyIcon />}
           sx={{
@@ -51,7 +51,7 @@ const BottomNav = () => {
         <BottomNavigationAction
           label="예/적금"
           onClick={() => {
-            doActionURL('/');
+            doActionURL('/dep/DEP001.view');
           }}
           icon={<SavingsIcon />}
           sx={{
