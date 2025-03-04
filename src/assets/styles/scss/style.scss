@@ -82,7 +82,7 @@ body {
 ---------------------------------------------*/
 body {
 
-    /* 버튼 색상*/
+    /*버튼 색상*/
     //하단 버튼
     --btn-primary: var(--primary);
     --btn-secondary: var(--secondary);
@@ -99,5 +99,12 @@ body {
     /* 테이블 색상*/
 
     /* 탭 색상*/
+    //탭 스타일
+    --tab-line: var(--color-d);
+    --tab-line-active: var(--btn-primary);
+    --tab-bg-gray: var(--color-f8);
+    --tab-bg-gray-active: var(--white);
+    --tab-round: var(--color-f8);
+    --tab-round-active: var(--hover);
 
 }

@@ -4,6 +4,7 @@ import {Routes,Route,BrowserRouter} from "react-router-dom";
 // [메인]
 import Layout from "@views/common/Layout";
 import Main from "@views/Main";
+import Mybanking from "@views/Mybanking";
 import NativeTest from "@src/views/test/NativeTest";
 import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
@@ -67,6 +68,7 @@ const App = () => {
         {/* 메인,테스트 페이지 라우트 */}
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
+          <Route path="Mybanking.view" element={<Mybanking />} />
           <Route path="nativeTest.view" element={<NativeTest />} />
           <Route path="test.view" element={<Test />} />
           <Route path="bankingTest.view" element={<BankingTest />} />

@@ -12,7 +12,7 @@
 .btn-area { padding-top:20px; }
 
 /*---------------------------------------------
-	#팝업
+	#팝업 [Type : 풀팝업 , 바텀시트, 일반, 알럿&모달]
 ---------------------------------------------*/
 .popup-container { position: fixed; display: flex; flex-direction: column; top: 0; bottom: 0; left: 0; right: 0; width: 100%; background-color: var(--white); overflow: hidden;
     
@@ -38,73 +38,110 @@
     // 팝업 푸터
     .popup-footer { padding: 15px 20px 20px 20px; background-color: var(--white) }
   
-  
     // 바텀시트
     &.btmSheet { top: initial; height: 70%; border-radius: 16px 16px 0 0; }
   
-    // 가운데 팝업
+    // 가운데 일반 팝업
     &.center { margin: 24px; width: auto; border-radius: 16px; box-shadow: 0px 2px 15px var(--dim); }
     
     // 모달&알럿
     &.modal { flex-direction:initial;  align-items: end; z-index:9999; background-color: var(--dim);
-        
         .pop-body {  width:100%; height:auto; padding:0; border-radius: 16px; margin:20px;
             p { padding:30px 20px 15px 20px; text-align: center;font-size: var(--font16); font-weight: var(--font-w-r); }
         }
-        
         .btn{ height:54px; }
-      
     }
+
   }
 
 
 /*---------------------------------------------
-	#버튼
+	#버튼 [Type: 컨텐츠, 컨텐츠 하단, 팝업 하단]
 ---------------------------------------------*/
 .btn { display: flex; align-items: center; justify-content: center; width: 100%; border-radius: 5px; font-weight: var(--font-w-r); font-size: var(--font16); }
-
-// 팝업 하단, 컨텐츠 하단 버튼 높이 및 폰트
-.content-footer {
-    .btn { height:58px; font-size: var(--font18); }
-}
 
 // 컨텐츠 버튼 높이 및 폰트
 .btn-area {
     .btn{ height:48px; font-size: var(--font16); }
 }
 
-//팝업 하단, 컨텐츤 하단, 컨텐츠 버튼 스타일 공통 적용
-.popup-footer,
+// 컨텐츠 하단 버튼, 팝업 하단 높이 및 폰트
 .content-footer,
-.btn-area{
+.popup-footer {
+    .btn { height:58px; font-size: var(--font18); }
+}
 
+// 컨텐츠 버튼, 컨텐츠 하단, 팝업 하단 스타일 공통 적용
+.btn-area,
+.content-footer,
+.popup-footer {
     @include mixin.flex-center;
     .btn{  border-radius: 29px; color:var(--btn-txt); }
-
 }
 
-//팝업 하단, 컨텐츤 하단 버튼 스타일 공통 적용
-.popup-footer,
-.content-footer {
-    .btn {
-        &.btn-primary { background-color: var(--btn-primary); color: var(--white); }
-
-        &.btn-secondary { background-color: var(--btn-secondary); }
-
-        //라인
-        &.MuiButton-outlined.btn-secondary { background-color: var(--white); border:1px solid var(--btn-line); }
-    }
-}
-
-//컨텐츤 버튼 스타일 적용
-.btn-area{
+// 컨텐츠 버튼 스타일 적용
+.btn-area {
     .btn {
         &.btn-primary { background-color: var(--btn-con-primary); color: var(--white); }
-
         &.btn-secondary { background-color: var(--btn-con-secondary); }
-
         //라인
         &.MuiButton-outlined.btn-secondary { background-color: var(--white); border:1px solid var(--btn-line); }
     }
+}
+
+//컨텐츠 하단, 팝업 하단 버튼 스타일 공통 적용
+.content-footer,
+.popup-footer {
+    .btn {
+        &.btn-primary { background-color: var(--btn-primary); color: var(--white); }
+        &.btn-secondary { background-color: var(--btn-secondary); }
+        //라인
+        &.MuiButton-outlined.btn-secondary { background-color: var(--white); border:1px solid var(--btn-line); }
+    }
+}
+
+/*---------------------------------------------
+   #탭 [Type: line, bg, style]
+---------------------------------------------*/
+// 탭 기본
+.tab-container {
+    
+    display: flex; flex-direction: column;
+    .tab-item { display:flex; align-items: center; border-bottom: 1px solid var(--tab-line); transition: linear all 1s;
+        button { flex:1 1 auto; min-width:89px; min-height:inherit; max-width: inherit; min-width: inherit; padding:16px 8px;
+            &.Mui-selected{ color: var(--tab-line-active); } //Mui 활성화
+        }
+        .MuiTabs-indicator { border-bottom: 2px solid var(--tab-line-active); }//Mui 활성화
+        &.scroll button{ flex: initial; min-width:70px; }
+    }
+
+    // background 탭
+    &.bg-gray {
+        .tab-item {  padding:4px 5px; border-bottom: none; border-radius: 8px; background-color: var(--tab-bg-gray);
+            .MuiTabs-flexContainer{  flex-wrap: wrap; gap:5px; }
+            button{ width:calc(50% - 10px); padding:8px;
+                &.Mui-selected { border-radius: 8px; background-color: var(--tab-bg-gray-active);  } //Mui 활성화
+                &:last-of-type { max-width: 49%;}
+            }
+            .MuiTabs-indicator { display: none; }
+        }
+    }
+
+    // round 탭
+    &.round {
+        .tab-item { border-bottom: none;
+            .MuiTabs-flexContainer{ gap:5px; }
+            button{
+                padding:8px 16px; border-radius: 30px; background-color: var(--tab-round);
+                &.Mui-selected{ background-color:var(--tab-round-active); color:var(--white)}  //Mui 활성화
+            }
+            .MuiTabs-indicator { display: none; }
+        }
+    }
+    
+    .tab-body {
+        flex-grow:1; min-height:200px;
+    }
+
 }
 

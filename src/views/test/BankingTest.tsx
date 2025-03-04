@@ -190,6 +190,7 @@ const BankingTest = () => {
                     openBottomPopup({
                       component: COM005,
                       title: item.text,
+                      param: new DataSet({'ACCO_KNCD':'1'}),
                       nFunc: (data?) => {
                         if (data) {
                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));

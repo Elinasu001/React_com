@@ -120,7 +120,7 @@ const Test = () => {
 
           //정상
           messageView(
-            '통신완료 : '+JSON.stringify(test01.data.getList('list')),
+            '통신완료 : '+JSON.stringify(test01.data),
             '확인',
             () => GLog.d('확인 클릭')
           )
