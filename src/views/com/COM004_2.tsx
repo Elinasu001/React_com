@@ -66,6 +66,7 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
     addFormData(form,'AUTN_STR', conNumber);
     addFormData(form,'BKCD', param.getString("BKCD"));
     addFormData(form,'ACNO', param.getString("ACNO"));
+    addFormData(form,'PROD_KNCD', param.getString("PROD_KNCD"));
     
     //로딩 ON
     progressBar(true, "통신중");

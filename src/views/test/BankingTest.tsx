@@ -177,6 +177,7 @@ const BankingTest = () => {
                     openFullPopup({
                       component: COM004_1,
                       title: item.text,
+                      param: new DataSet({'PROD_KNCD':'10'}),
                       nFunc: (data?) => {
                         if (data) {
                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
