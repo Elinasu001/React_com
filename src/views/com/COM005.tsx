@@ -3,16 +3,16 @@
  *
  * 호출방법 ACCO_KNCD : 계좌종류 1:요구성, 2:적금, 3:정기예금, 4:대출, 9:전체
  * openBottomPopup({
-                       component: COM005,
-                       title: item.text,
-                       param: new DataSet({'ACCO_KNCD':'1'}),
-                       nFunc: (data?) => {
-                         if (data) {
-                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-                         } else {
-                           GLog.d('팝업 취소 닫힘');
-                         }
-                       }
+    component: COM005,
+    title: item.text,
+    param: new DataSet({'ACCO_KNCD':'1'}),
+    nFunc: (data?) => {
+      if (data) {
+        GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+      } else {
+        GLog.d('팝업 취소 닫힘');
+      }
+    }
  * @author 
  * @version 1.0.0
  */
@@ -70,7 +70,7 @@ const COM005 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
     const handleAcnoSelect = (acno: string) => {
         const selectedData = new DataSet({acno});
         setSelectedAcno(acno);
-       // onClose(selectedData); // 팝업 닫고 데이터 전달
+        onClose(selectedData); // 팝업 닫고 데이터 전달
     
     };
 
