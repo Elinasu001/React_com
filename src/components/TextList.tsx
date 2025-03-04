@@ -59,7 +59,7 @@ export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => 
        *  타이틀 아이콘 적용 :: titleIcon [ !! titleIcon 쓰일 경우 불러오는 화면 에서 hideTitle={true} 삭제 필요 ]
        **/
 
-    <Box className="info-wrap">
+    <Box className="info-wrap listIcon">
       {title && (
 
         // hideTitle 이 true면 sr-only 클래스 적용

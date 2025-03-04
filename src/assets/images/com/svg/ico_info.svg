@@ -1,19 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
-  <defs>
-    <clipPath id="clip-path">
-      <rect id="사각형_15884" data-name="사각형 15884" width="20" height="20" transform="translate(316 237)" fill="#764cca"/>
-    </clipPath>
-  </defs>
-  <g id="마스크_그룹_8556" data-name="마스크 그룹 8556" transform="translate(-316 -237)" clip-path="url(#clip-path)">
-    <g id="그룹_64002" data-name="그룹 64002">
-      <text id="_" data-name="!" transform="translate(324 251.5)" fill="#26282c" font-size="12" font-family="SpoqaHanSansNeo-Regular, Spoqa Han Sans Neo" letter-spacing="-0.04em"><tspan x="0" y="0">!</tspan></text>
-      <g id="그룹_34560" data-name="그룹 34560" transform="translate(319 240)">
-        <g id="타원_90" data-name="타원 90" transform="translate(-1 -1)" fill="none" stroke="#26282c" stroke-width="1">
-          <circle cx="8" cy="8" r="8" stroke="none"/>
-          <circle cx="8" cy="8" r="7.5" fill="none"/>
-        </g>
-      </g>
-    </g>
-    <rect id="사각형_15883" data-name="사각형 15883" width="24" height="24" transform="translate(314 235)" fill="none"/>
-  </g>
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_303_5891" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40">
+<path d="M40 0H0V40H40V0Z" fill="#222222"/>
+</mask>
+<g mask="url(#mask0_303_5891)">
+</g>
+<g clip-path="url(#clip0_303_5891)">
+<path d="M32 20C32 26.6274 26.6274 32 20 32C13.3726 32 8 26.6274 8 20C8 13.3726 13.3726 8 20 8C26.6274 8 32 13.3726 32 20Z" stroke="#0063B4" stroke-width="2"/>
+<path d="M20 24.875C19.1025 24.875 18.375 25.6025 18.375 26.5C18.375 27.3975 19.1025 28.125 20 28.125C20.8975 28.125 21.625 27.3975 21.625 26.5C21.625 25.6025 20.8975 24.875 20 24.875Z" fill="#0063B4"/>
+<path d="M18.7 22.275L21.3 22.275L21.3 11.875L18.7 11.875L18.7 22.275Z" fill="#0063B4"/>
+</g>
+<defs>
+<clipPath id="clip0_303_5891">
+<rect width="26" height="26" fill="white" transform="translate(7 7)"/>
+</clipPath>
+</defs>
 </svg>
