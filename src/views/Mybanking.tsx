@@ -52,31 +52,30 @@ const Mybanking = () => {
     const form = makeForm("COM0000SC");
     addFormData(form, "txGbnCd", "M");
     addFormData(form, "ACCO_KNCD", "9");
-  
+
     progressBar(true);
     try {
       const response = await doAction(form);
       progressBar(false);
-  
+
       if (response.header.respCd !== "N00000") {
         messageView(`계좌 조회 실패: ${response.header.respMsg}`, "확인");
         return;
       }
-  
+
       const resData = response.data;
-  
-      const depositAccounts = resData.getList<{ ACNO: string; BALANCE: number }>("REC1").map(acc => ({
-        type: "수신",
-        acno: acc.ACNO, 
-        balance: acc.BALANCE,
-      }));
-  
-      const loanAccounts = resData.getList<{ ACNO: string; BALANCE: number }>("REC4").map(acc => ({
-        type: "여신",
+
+      // ✅ `OUT_REC`의 데이터를 활용하여 계좌 정보 매핑
+      const accounts = resData.getList<{ ACNO: string; ACCO_KNCD: string; ACNT_BLNC: number }>("OUT_REC").map(acc => ({
+        type: acc.ACCO_KNCD === "4" ? "여신" : "수신",
         acno: acc.ACNO,
-        balance: acc.BALANCE,
+        balance: acc.ACNT_BLNC,
       }));
-  
+
+      // ✅ 계좌 유형별로 분리
+      const depositAccounts = accounts.filter(acc => acc.type === "수신");
+      const loanAccounts = accounts.filter(acc => acc.type === "여신");
+
       setAccountList(depositAccounts);
       setLoanList(loanAccounts);
     } catch (error) {
@@ -85,6 +84,7 @@ const Mybanking = () => {
       console.error("계좌 조회 오류:", error);
     }
   };
+
   
 
   const fetchProducts = async () => {

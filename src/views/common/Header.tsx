@@ -44,7 +44,7 @@ const Header = () => {
       const response = await doAction(form);
       progressBar(false);
 
-      if (response.header.respCd !== "N00000" || response.data.getString("API_RS_MSG") !== "SUCEESS") {
+      if (response.header.respCd !== "N00000" || response.data.getString("API_RS_MSG") !== "SUCCESS") {
         GLog.e("로그인 실패:", response.data.getString("API_RS_MSG"));
         messageView(`${response.data.getString("API_RS_MSG")}`, "확인");
         return;
