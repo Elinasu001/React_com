@@ -11,42 +11,29 @@ import { TextBox } from "@src/components/Input";
 import { Button01 } from "@src/components/Button";
 import { Box01, BoxList } from "@src/components/Box";
 import { messageView } from '@src/components/Alert';
+import { TextLabel01 } from "@src/components/TextList";
 import DataSet from "@assets/io/DataSet";
 
 const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
 
   const [inputAddr, setInputAddr] = useState("");   // 검색어
+  const [inputDetailAddr, setInputDetailAddr] = useState("");   // 상세주소
   const [flag, setFlag] = useState("");             // 주소조회검증플래그 1:조회, 2:검증
   const [addrList, setAddrList] = useState<Record<string, any>[]>([]);
-  const [selectedAddr, setSelectedAddr] = useState<string | null>(null); 
-  const test = '1234';
-  GLog.d('로그는 이거쓰세요 : '+test);
+  const [selectedAddr, setSelectedAddr] = useState<string[]>([]); 
+  const [selectedAddrText, setSelectedAddrText] = useState<string[]>([]);
+  const [selectedAddrInfo, setSelectedAddrInfo] = useState<DataSet | null>(null); 
+  const [showInput, setShowInput] = useState(false);   
 
-  // 입력값 초기화 함수
-  const resetForm = () => {
-    setInputAddr("");
-    setFlag("");
-    setAddrList([]);
-  };
 
-  // 주소검색이벤트
-  const searchAddr = async () => { 
 
-    if(inputAddr.trim() === '') {
-      messageView("주소를 입력해 주세요", "확인");
-      return;
+  useEffect(() => {
+    if (inputAddr === ""  && showInput) {
+      resetForm();
     }
+  }, [inputAddr, showInput]);
 
-    setFlag('1');
-
-    //폼생성,데이터 주입
-    const form = makeForm('COM0007SC');
-    addFormData(form,'txGbnCd','S01');
-    addFormData(form,'INPT_ADDR',inputAddr);
-    addFormData(form,'FLAG',flag);
-
-    //로딩 ON
-    progressBar(true, "통신중");
+  const searchAddrWithForm = async (form: any, currentFlag: string) => {
 
     try {
 
@@ -66,8 +53,26 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
           messageView("입력하신 주소로 200건 이상의 주소가 검색돼요.", "확인", () => resetForm());
           return;
         }else {
-          const list = (resDs.data.getList<{ }>("REC") ?? []).flat();
-          setAddrList(list);
+
+          if (resDs.data.getString('API_RS_MSG') != "SUCCESS") {
+            messageView(resDs.header.respMsg, "확인", () => resetForm());
+            
+          }else {
+            
+            if(currentFlag  === "1"){
+              const list = (resDs.data.getList<{ }>("REC") ?? []).flat();
+              setAddrList(list);
+            }else if(currentFlag  === "2"){
+              const list = (resDs.data.getList<{ }>("REC_1")[0] ?? []);
+
+              const outData = new DataSet(list)
+              GLog.d("주소검증::::"+JSON.stringify(outData));
+
+              props.onClose(outData); // 팝업 닫고 데이터 전달
+              resetForm();
+            }
+          }
+
         }
       }
       
@@ -79,20 +84,98 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
                
     }
    
+
+  }
+  // 입력값 초기화 함수
+  const resetForm = () => {
+    setInputAddr("");
+    setInputDetailAddr("");
+    setFlag("");
+    setAddrList([]);
+    setShowInput(false);
+  };
+
+  // 주소검색이벤트
+  const searchAddr = async () => { 
+    
+    if(inputAddr.trim() === '') {
+      messageView("주소를 입력해 주세요", "확인");
+      return;
+    }
+    setFlag(prevFlag => {
+      const newFlag = "1";
+   
+      const form = makeForm("COM0007SC");
+      addFormData(form, "txGbnCd", "S01");
+      addFormData(form, "INPT_ADDR", inputAddr);
+      addFormData(form, "FLAG", newFlag);  
+  
+      searchAddrWithForm(form, newFlag);
+      return newFlag;
+    });
+    
+    //로딩 ON
+    progressBar(true, "통신중");
+
   };
 
   const handleAddrSelect = (addr: Record<string, any>) => {
   
-      console.log("선택한 주소:", addr);
+      
       setSelectedAddr(addr.ZPCD); 
-  
+      
       const selectedData = new DataSet({ addr});
-      props.onClose(selectedData); // 팝업 닫고 데이터 전달
-      resetForm();
+
+      const roadAddr = addr.ZPCD_ADDR.split("\n")[0].replace("[도로명주소] ", ""); // 도로명 주소
+      const jibunAddr = addr.ZPCD_ADDR.split("\n")[1]?.replace("[지번주소] ", ""); // 지번 주소
+      const newAddrInfo = new DataSet(selectedData.getObj('addr'));
+      setSelectedAddrInfo(newAddrInfo);
+
+      setSelectedAddrText([
+        `우편번호: ${addr.ZPCD}`,
+        `도로명 주소: ${roadAddr}`,
+        `지번 주소: ${jibunAddr}`
+      ]);
+      setShowInput(true);
+      // props.onClose(selectedData); // 팝업 닫고 데이터 전달
+      // resetForm();
+  
+    };
+
+
+    // 주소검증이벤트
+    const handleAddrInfoClose = () => {
+
+      if(inputDetailAddr.trim() === '') {
+        messageView("상세주소를 입력해 주세요", "확인");
+        return;
+      }
+      
+
+      const selectedData = new DataSet({ selectedAddrInfo});
+
+      setFlag(prevFlag => {
+        const newFlag = "2";
+    
+        const form = makeForm("COM0007SC");
+        addFormData(form, "txGbnCd", "S01");
+        addFormData(form, "INPT_ADDR", inputAddr);
+        addFormData(form, "FLAG", newFlag);  
+    
+        if (selectedAddrInfo) {
+          addFormData(form, "ZPCD", selectedAddrInfo.getString('ZPCD'));  
+          addFormData(form, "ZPCD_ADDR", selectedAddrInfo.getString('ZPCD_ADDR'));  
+          addFormData(form, "DTAD", inputDetailAddr);  
+        }
+    
+        searchAddrWithForm(form, newFlag);
+        return newFlag;
+      });
   
     };
 
   return (
+    <>
     <Box01>
 
     {/* 검색 입력 필드 */}
@@ -116,10 +199,21 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
           onClick: () => handleAddrSelect(addr), // 선택 이벤트 실행
         };
       })}
-      selectedKey={selectedAddr ?? undefined} 
+      //selectedKey={selectedAddr ?? undefined} 
     />
    
     </Box01>
+    {showInput && (     
+    <Box01>
+    <TextLabel01  
+        title="선택한 주소"   // 제목
+        param={selectedAddrText}
+    />
+    <TextBox label="상세주소" value={inputDetailAddr} onChange={(e) => setInputDetailAddr(e.target.value)} />
+    <Button01 btnName="확인" clickFunc={handleAddrInfoClose}></Button01>
+    </Box01>
+    )}
+    </>
   );
 };
 
