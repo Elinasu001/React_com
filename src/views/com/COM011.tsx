@@ -4,6 +4,7 @@
  * @author 
  * @version 1.0.0
  */
+import { Box, Input, Typography } from "@mui/material";
 import { GLog } from "@src/assets/js/common";
 import { MainBox } from "@src/components/Box";
 import { ContentTitle } from "@src/components/Text";
@@ -26,6 +27,36 @@ const COM011 = () => {
           </>
         }
       />
+
+      {/* 보안카드 입력 영역 */}
+      <Box className="security-input-wrap flex-row gap20">
+        {/* 앞 두 자리 입력 */}
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>
+            <span id="SECUNO_IDX1_text">12</span> 앞 두자리
+          </Typography>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Input type="tel" inputProps={{ maxLength: 1 }} />
+            <Input type="tel" inputProps={{ maxLength: 1 }}/>
+            <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
+            <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
+          </Box>
+        </Box>
+
+        {/* 뒤 두 자리 입력 */}
+        <Box>
+          <Typography variant="body1" sx={{ fontWeight: "bold", mb: 1 }}>
+            <span id="SECUNO_IDX2_text">34</span> 뒤 두자리
+          </Typography>
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
+            <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
+            <Input type="tel" inputProps={{ maxLength: 1 }} />
+            <Input type="tel" inputProps={{ maxLength: 1 }} />
+          </Box>
+        </Box>
+      </Box>
+
 
       <InfoList
           title="보안카드 입력 안내"
