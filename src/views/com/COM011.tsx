@@ -7,7 +7,7 @@
 import { GLog } from "@src/assets/js/common";
 import { MainBox } from "@src/components/Box";
 import { ContentTitle } from "@src/components/Text";
-import { TextList } from "@src/components/TextList";
+import { InfoList } from "@src/components/TextList";
 
 const COM011 = () => {
 
@@ -27,7 +27,7 @@ const COM011 = () => {
         }
       />
 
-      <TextList
+      <InfoList
           title="보안카드 입력 안내"
           items={[
             "5회 오류 시 서비스 이용이 중단되고 메인으로 이동해요",

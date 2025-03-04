@@ -6,7 +6,7 @@
  *  <InfoList  
         title="보안매체에 따른 최대 이체한도"   // 제목
         items={[    // 내용
-            "OTP - 1일 5억원, 1회 1억원",
+            "OTP - 1일 5억원, 1회 1억원",       
             "보안카드/mOTP - 1일 5천만원, 1회 1천만원",
             "보안카드/mOTP+SMS - 1일 2억5천만원, 1회 5천만원"
         ]}
@@ -19,10 +19,28 @@ interface InfoListProps {
   title: string;
   items: string[];
   pb?: number;
-  hideTitle?: boolean; // title 숨기기 여부 추가
+  hideTitle?: boolean
+
 }
 
-export const TextList = ({ title, items, hideTitle = false }: InfoListProps) => {
+//  기존 코드
+export const TextList = ({ title, items, pb=5 }: InfoListProps) => {
+  return (
+    <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "start", pb}}>
+      <Typography variant="h6" sx={{ fontWeight: "bold" }}>{title}</Typography>
+      <List sx={{ listStyleType: "disc", pl: 2 }}>
+        {items.map((item, index) => (
+          <ListItem key={index} sx={{ display: "list-item", pl: 0 }}>
+            <Typography variant="body2" color="textSecondary">{item}</Typography>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+};
+
+//  하단 정보 리스트
+export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => {
   return (
     <Box className="info-wrap">
       {/* <Typography variant="h6">{title}</Typography> */}
@@ -45,4 +63,4 @@ export const TextList = ({ title, items, hideTitle = false }: InfoListProps) => 
   );
 };
 
-export default TextList;
+export default { TextList, InfoList };
