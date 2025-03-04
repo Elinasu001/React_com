@@ -14,6 +14,9 @@ import { progressBar } from "@src/components/Loading";
 import { Button01 } from "@src/components/Button";
 import { Card06 } from "@src/components/Card";
 import DataSet from "@src/assets/io/DataSet";
+import POP003 from "@src/views/pop/POP003";
+import { openBottomPopup } from "@src/components/Popup";
+import { useLocation } from 'react-router-dom';
 
 
 const accountData = {
@@ -46,44 +49,18 @@ interface TradeListProps {
 }
 
 const INQ002 = () => {
+  const location = useLocation();
+  const { account } = location.state || {}; // ListItemButton에서 전달된 데이터 받기
   const [showBalance] = useState(true);
-  const [accountData, setAccountData] = useState({
-    ACNO: "123-456-789012",  // 초기값 설정
-    ACNT_BLNC: 98750000,
-  });
-  const [tradeList, settradeList] = useState<TradeListProps[]>([
-    {
-      ACNO: "123-456-789012",
-      DEPR_NM: "홍길동",
-      NEXT_TRAN_YN: "Y",
-      DTA_NCNT: 1,
-      OUT_REC: [{
-        TRN_DT: "2024-02-26",
-        TRN_TKTM: "14:30",
-        TRAN_AMT_SIGN: " ",
-        TRN_AMT: 50000,
-        TRNF_AF_BLNC_SIGN: "+",
-        ACNT_BLNC: 98700000,
-        OUTL: "스타벅스",
-      },{
-        TRN_DT: "2024-02-27",
-        TRN_TKTM: "14:40",
-        TRAN_AMT_SIGN: " ",
-        TRN_AMT: 50000,
-        TRNF_AF_BLNC_SIGN: "+",
-        ACNT_BLNC: 98700000,
-        OUTL: "구내식당",
-      }],
-      NEXT_DATA_XN: "N",
-      API_RS_MSG: "정상 처리되었습니다.",
-    }
-  ]);
-  const fetchTradeList = async () => { 
+  const [tradeList, settradeList] = useState<TradeListProps[]>([]);
+  const fetchTradeList = async (acno: string) => { 
 
 
     //폼생성,데이터 주입
     const form = makeForm('INQ0002SC');
     addFormData(form,'txGbnCd','TL');
+    addFormData(form, 'acno', acno); // 계좌번호를 폼에 추가
+    
 
     //로딩 ON
     progressBar(true, "통신중");
@@ -102,30 +79,26 @@ const INQ002 = () => {
 
       // 거래내역 리스트 가져오기
       const resData = new DataSet(response.data);
-      const tradeList = resData.getList<Record<string, unknown>>("LIST");
-
+      const tradeList = resData.getList("OUT_REC");
+      console.log("resData +++ " + resData.getString("ACNO"));
       const formattedData: TradeListProps[] = tradeList.map((item) => ({
-        ACNO: (item.ACNO as string) || "", // 계좌번호 (예제 값)
-        DEPR_NM: (item.DEPR_NM as string) || "", // 예금주명 (예제 값)
-        NEXT_TRAN_YN: (item.NEXT_TRAN_YN as string) || "N", // 다음 거래 여부
-        DTA_NCNT: (item.DTA_NCNT as number) || 0, // 데이터 개수
-        OUT_REC:[
-          {
-            TRN_DT: String(item.TRN_DT) || "",
-            TRN_TKTM: String(item.TRN_TKTM) || "",
-            TRAN_AMT_SIGN: String(item.TRAN_AMT_SIGN) || "",
-            TRN_AMT: Number(item.TRN_AMT),
-            TRNF_AF_BLNC_SIGN: String(item.TRNF_AF_BLNC_SIGN) || "",
-            ACNT_BLNC: Number(item.ACNT_BLNC),
-            OUTL: String(item.OUTL) || ""
-          }
-          
-        ],
-        NEXT_DATA_XN: (item.NEXT_DATA_XN as string) || "", // 예제 값
-        API_RS_MSG: (item.API_RS_MSG as string) || "" // 예제 값
-        
+        ACNO: resData.getString("ACNO") || "",  
+        DEPR_NM: resData.getString("DEPR_NM") || "", 
+        NEXT_TRAN_YN: resData.getString("NEXT_TRAN_YN") || "N",  
+        DTA_NCNT: Number(resData.getString("DTA_NCNT")) || 0,  
+        OUT_REC: [{
+          TRN_DT: item.TRN_DT || "",  // 거래일자
+          TRN_TKTM: item.TRN_TKTM || "",  // 거래시각
+          TRAN_AMT_SIGN: item.TRAN_AMT_SIGN || "",  // 거래금액 부호
+          TRN_AMT: Number(item.TRN_AMT),  // 거래금액
+          TRNF_AF_BLNC_SIGN: item.TRNF_AF_BLNC_SIGN || "",  // 거래후잔액 부호
+          ACNT_BLNC: Number(item.ACNT_BLNC),  // 계좌잔액
+          OUTL: item.OUTL || ""  // 거래자명
+        }],
+        NEXT_DATA_XN: resData.getString("NEXT_DATA_XN") || "",  
+        API_RS_MSG: resData.getString("API_RS_MSG") || ""  
       }));
-      
+     
       settradeList(formattedData);  
 
     } catch (error) {
@@ -136,8 +109,20 @@ const INQ002 = () => {
   };
 
   useEffect(() => {
-    fetchTradeList();
-  }, []);
+    if (account) {
+      // fetchTradeList 호출
+      const fetchData = async () => {
+        const data = await fetchTradeList(account.acno); // 계좌번호를 fetchTradeList에 전달
+        setTradeList(data);
+      };
+      fetchData();
+    }
+  }, [account]);
+  
+  useEffect(() => {
+    console.log(tradeList); // tradeList가 제대로 업데이트되는지 확인
+  }, [tradeList]);
+  
 
   return (
     <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "center", p: 3 }}>
@@ -147,19 +132,36 @@ const INQ002 = () => {
       {/* 계좌정보 */}
       {tradeList.map((transaction, index) => (
         <Card06
-        type="입출금"    // 계좌 타입 (예금, 대출 등)
-        acno="123-456-789012" // 계좌 번호
-        balance={1000000} // 계좌 잔액
+        key={transaction.ACNO}
+        type="입출금"
+        acno={transaction.ACNO || "123-456-789012"}
+        balance={transaction.OUT_REC[0]?.ACNT_BLNC || 0}
         pdnm="보통예금(예스뱅킹)"
       />
       ))}
       
+      {/* 조회기간 설정 */}
+      <Button01 
+        btnName="조회기간TEST"
+        clickFunc={() => {
+          openBottomPopup({
+            component:POP003
+            ,title:'조회기간 설정',nFunc:(data?)=>{
+            if(data){
+              GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+            }else{
+              GLog.d('팝업 취소 닫힘');
+            }
+          }});
+        }}
+      />
+
       
       {/* 거래내역 */}
       {tradeList.map((transaction, index) => (
         transaction.OUT_REC.map((outRec, outRecIndex) => (
           <Box
-            key={`${index}-${outRecIndex}`}
+            key={`${transaction.ACNO}-${outRecIndex}`}
             sx={{
               display: "flex",
               flexDirection: "row",
