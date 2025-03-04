@@ -82,8 +82,12 @@ body {
 ---------------------------------------------*/
 body {
 
-    //타이틀
+    //텍스트
     --tit-h3 : var(--color-2);
+    --info-txt : var(--color-2);
+    --info-list: var(--color-45);
+    --info-list-icon: var(--outline);
+    --info-tit-icon: var(--tertiary);
 
     /*버튼 색상*/
     //하단 버튼

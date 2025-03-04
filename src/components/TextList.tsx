@@ -61,7 +61,8 @@ export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => 
 
     <Box className="info-wrap">
       {title && (
-        // hideTitle이 true면 sr-only 클래스 적용
+
+        // hideTitle 이 true면 sr-only 클래스 적용
         <Typography variant="h6" className= {`${hideTitle ? "sr-only" : ""} info-tit`}>
           {title}
         </Typography>
