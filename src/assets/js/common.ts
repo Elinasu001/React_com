@@ -95,9 +95,12 @@ export const doAction = async (req: ApiReq): Promise<ApiRes> => {
   try {
 
     //axios 통신
-    const response = await axios.post(API_URL + '/' + req.serviceCd + '.act', req.param, {
+    const response = await axios.post('/api/' + req.serviceCd + '.act', req.param, {
       headers: { 'Content-Type': 'application/json' }
     });
+    // const response = await axios.post(API_URL + '/' + req.serviceCd + '.act', req.param, {
+    //   headers: { 'Content-Type': 'application/json' }
+    // });
 
     // 응답 데이터 분리
     const { APP_HEADER: appHeader, ...data } = response.data;

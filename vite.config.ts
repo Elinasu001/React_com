@@ -18,19 +18,19 @@ export default defineConfig(({ mode }) => {
       //추후 만약 프로시 필요시 하단에 정의
       proxy: {
         // '/api'로 시작하는 요청을 VITE_API_TARGET으로 프록시 처리
-        // '/api': {
-        //   target: env.VITE_APP_API_BASE_URL,
-        //   changeOrigin: true,
-        //   secure: false,
-        //   rewrite: (path) => path.replace(/^\/api/, ""),
-        //   // 프록시 요청 시 Origin 헤더를 제거하거나 재설정
-        //   configure: (proxy) => {
-        //     proxy.on('proxyReq', (proxyReq, req, res) => {
-        //       // 백엔드 서버가 특정 Origin을 요구하지 않는다면 Origin 헤더를 제거해볼 수 있습니다.
-        //       proxyReq.removeHeader('origin');
-        //     });
-        //   },
-        // },
+        '/api': {
+          target: env.VITE_APP_API_BASE_URL,
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ""),
+          // 프록시 요청 시 Origin 헤더를 제거하거나 재설정
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyReq, req, res) => {
+              // 백엔드 서버가 특정 Origin을 요구하지 않는다면 Origin 헤더를 제거해볼 수 있습니다.
+              proxyReq.removeHeader('origin');
+            });
+          },
+        },
       },
     },
   };
