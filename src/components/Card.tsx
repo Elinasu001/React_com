@@ -82,12 +82,13 @@ interface Card02Props {
   type: string;
   acno: string;
   balance: number;
+  pdnm: string;
 }
 
 /**
  * 카드 컴포넌트 (계좌 전용)
  */
-export const Card02 = ({ type, acno, balance }: Card02Props) => {
+export const Card02 = ({ type, acno, balance, pdnm }: Card02Props) => {
   return (
     <Card
       elevation={5}
@@ -100,23 +101,28 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-          {type} 계좌
+          {type} 계좌 {pdnm}
         </Typography>
       </Box>
 
       {/* 계좌번호 및 복사 아이콘 */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <Typography variant="body1" color="textSecondary">
           {acno}
           <IconButton
             onClick={() => {
-              try {
-                navigator.clipboard.writeText(acno);
-              } catch (error) {
-                console.error("클립보드 복사 오류:", error);
+              if (typeof window !== "undefined" && navigator?.clipboard) {
+                try {
+                  navigator.clipboard.writeText(acno);
+                } catch (error) {
+                  console.error("클립보드 복사 오류:", error);
+                }
+              } else {
+                console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
               }
             }}
-            sx={{ p: 1 }}
+            sx={{ p: 1, ml: "auto" }}
           >
             <ContentCopyIcon fontSize="small" />
           </IconButton>
