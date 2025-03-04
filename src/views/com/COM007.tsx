@@ -55,7 +55,7 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
         }else {
 
           if (resDs.data.getString('API_RS_MSG') != "SUCCESS") {
-            messageView(resDs.header.respMsg, "확인", () => resetForm());
+            messageView(resDs.data.getString('API_RS_MSG'), "확인", () => resetForm());
             
           }else {
             

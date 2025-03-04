@@ -11,6 +11,7 @@
     --ico-search: url(/src/assets/images/com/svg/ico_search.svg);
     --ico-clear: url(/src/assets/images/com/svg/ico_clear.svg);
     --ico-info: url(/src/assets/images/com/svg/ico_info.svg);
+    --ico-info-tri: url(/src/assets/images/com/svg/ico_info_tri.svg);
     --ico-check: url(/src/assets/images/com/svg/ico_check.svg);
     --ico-se-arrow: url(/src/assets/images/com/svg/ico_se_arrow.svg);
     --ico-file: url(/src/assets/images/com/svg/ico_file.svg);
@@ -82,8 +83,11 @@ body {
 ---------------------------------------------*/
 body {
 
-    //타이틀
+    //텍스트
     --tit-h3 : var(--color-2);
+    --info-list: var(--color-75);
+    --info-list-icon: var(--outline);
+    --info-tit-icon: var(--tertiary);
 
     /*버튼 색상*/
     //하단 버튼

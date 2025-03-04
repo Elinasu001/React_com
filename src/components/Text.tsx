@@ -68,7 +68,9 @@ export const TextBox02 = ({ text }: TextBoxProps) => {
   )
 }
 
-
+/**
+ *  컨텐츠 상단 타이틀
+ */
 export const ContentTitle = ({ title, text }: ContentTitleProps) => {
   return (
     <Box className="content-tit-wrap">

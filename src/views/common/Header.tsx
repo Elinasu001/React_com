@@ -6,18 +6,37 @@ import Logo from "@assets/images/logo.svg";
 import { GLog, doAction, makeForm, addFormData, useAppNavigator } from '@assets/js/common';
 import { messageView } from '@src/components/Alert';
 import { progressBar } from "@src/components/Loading";
-import DataSet from '@src/assets/io/DataSet';
+import { logout,login,convertUserData } from '@assets/js/redux/authSlice';
+
+
+import { useAppSelector, useAppDispatch } from '@src/assets/js/redux/hooks';
 
 const Header = () => {
+
+  //리덕스 상태 관련
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const isLogin = !!user;  // 로그인 상태: user가 null이 아니면 로그인한 상태
+
   // 로그인 팝업 상태
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(""); // ID 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
   const navigator = useAppNavigator();
 
-  // 팝업 열기
+  // 로그인/로그아웃 버튼
   const handleOpen = () => {
-    setOpen(true);
+    //로그인 중일때는 로그아웃 처리
+    if (isLogin) 
+    {
+      dispatch(logout());
+      navigator.doActionURL('/');
+    }
+    //미 로그인시는 팝업 열기
+    else
+    {
+      setOpen(true);
+    }
   };
 
   // 팝업 닫기
@@ -25,13 +44,14 @@ const Header = () => {
     setOpen(false);
   };
 
-   // 로그인 요청 함수
+   // 로그인/로그아웃 버튼 이벤트
   const handleLogin = async () => {
     if (!id || !password) {
       messageView("아이디와 비밀번호를 입력하세요.", "확인");
       return;
     }
 
+    //OPEN API 로그인 요청
     const form = makeForm("COM0000SC");
     addFormData(form, "txGbnCd", "LOGIN");
     addFormData(form, "loginType", "I");
@@ -40,40 +60,28 @@ const Header = () => {
 
     progressBar(true);
 
-    try {
-      
-      const response = await doAction(form);
-      progressBar(false);
+    //OPEN API 전자뱅킹 아이디 조회
+    const response = await doAction(form);
 
-      if (response.header.respCd !== "N00000" || response.data.getString("API_RS_MSG") !== "SUCCESS") {
-        GLog.e("로그인 실패:", response.data.getString("API_RS_MSG"));
-        messageView(`${response.data.getString("API_RS_MSG")}`, "확인");
-        return;
-      }
+    progressBar(false);
 
-      alert(response.data);
+    GLog.d('로그인 결과 : '+response.data.toString());
 
-      if (response.data) {
-        messageView("로그인 성공!", "확인", () => {
+    const { respCd } = response.header;                     //통신결과
+    const apiRsMsg = response.data.getString("API_RS_MSG",'E00000,처리중 오류가 발생했습니다.') //OPEN API 전문결과
 
-          sessionStorage.setItem("custInfo", JSON.stringify(response.data));    // 고객정보저장
-          sessionStorage.setItem("loginTime", Date.now().toString());           // 현재시간저장
-  
-          // 고객정보 불러오기
-          const storedCustInfo = new DataSet(JSON.parse(sessionStorage.getItem("custInfo") || "{}"));
-          console.log(storedCustInfo);
-          handleClose(); // 로그인 성공 시 팝업 닫기
-          navigator.doActionURL('/Mybanking.view');
-
-        });
-      } else {
-        messageView("로그인 정보가 없습니다.", "확인");
-      }
-
-    } catch (error) {
-      GLog.e("로그인 중 오류 발생:", error);
-      messageView("로그인 중 오류가 발생했습니다.", "확인");
-      progressBar(false);
+    //로그인 성공 처리
+    if (respCd == "N00000" && apiRsMsg == "SUCCESS")
+    {
+        //로그인처리
+        dispatch(login(convertUserData(response.data)));
+        handleClose(); // 로그인 성공 시 팝업 닫기
+        navigator.doActionURL('/Mybanking.view');
+    }
+    //로그인 에러 처리
+    else
+    {
+      messageView(apiRsMsg.split(',')[1], "확인"); //OPEN API 로그인 실패 메세지는 , 구분으로 내려옴
     }
   };
   return (
@@ -97,7 +105,7 @@ const Header = () => {
                 textTransform: "none",
               }}
             >
-              로그인 &gt;
+              {isLogin ? "로그아웃" : "로그인"} &gt;
             </Button>
 
             {/* 돋보기 아이콘 */}

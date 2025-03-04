@@ -205,6 +205,7 @@ interface Card03Props {
   keyword: string[];        // 키워드
   contents1: string;        // 내용1
   contents2: string;        // 내용2
+  onClick?: () => void;
 }
 
 /**
@@ -212,15 +213,8 @@ interface Card03Props {
  */
 const StyledIconButton = styled(IconButton)({
   outline: "none",
-  "&:focus": {
-    outline: "none",
-  },
-  "&:hover": {
-    backgroundColor: "transparent",
-  },
-  "&.active": {
-    color: "Salmon",
-  },
+  "&:focus": { outline: "none" },
+  "&.active": { color: "Salmon" },
 });
 
 /**
@@ -233,27 +227,30 @@ export const Card03 = ({
   pdDesc,
   keyword,
   contents1,
-  contents2
+  contents2,
+  onClick
 }: Card03Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCompared, setIsCompared] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  // 관심상품 클릭 핸들러
-  const handleGiftClick = () => {
+  // 관심상품 클릭
+  const handleGiftClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsFavorite(!isFavorite);
     setSnackbarMessage(
-      isFavorite ? "관심상품에서 제거되었습니다." : "관심상품으로 등록했어요."
+      isFavorite ? "관심 상품에서 제외되었습니다." : "관심 상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
 
-  // 비교상품 클릭 핸들러
-  const handleCompareClick = () => {
+  // 비교상품 클릭
+  const handleCompareClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsCompared(!isCompared);
     setSnackbarMessage(
-      isCompared ? "비교상품에서 제거되었습니다." : "비교상품으로 등록했어요."
+      isCompared ? "비교 상품에서 제외되었습니다." : "비교 상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
@@ -265,7 +262,7 @@ export const Card03 = ({
 
   return (
     <>
-      <Card variant="outlined" sx={{ mt:2, mb: 2, borderRadius: "20px"}}>
+      <Card variant="outlined" sx={{ mb: 2, borderRadius: "20px"}} onClick={onClick}>
         {/* 카드 헤더 - 상품 설명 + 아이콘 */}
         <CardHeader
           sx={{ pb: 0 }}
@@ -299,12 +296,12 @@ export const Card03 = ({
 
         {/* 카드 본문 */}
         <CardContent sx={{ pt: 1 }}>
-          {/* 상품명 + 카테고리 (첫 줄) */}
+          {/* 상품명 + 카테고리 */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Typography
               variant="body2"
               sx={{
-                border: "2px solid Salmon",
+                border: "2px solid",
                 color: "Salmon !important",
                 px: 1,
                 py: 0.3,
@@ -340,11 +337,11 @@ export const Card03 = ({
       {/* 알림창 */}
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%" }}>
+        <Alert onClose={handleSnackbarClose} severity="info">
           {snackbarMessage}
         </Alert>
       </Snackbar>

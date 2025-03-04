@@ -14,9 +14,9 @@
  * 
  */
 
-import { Box, Typography, List, ListItem, TextField  } from "@mui/material"; //Typography 타이포그래피 텍스트박스 생성 도구
+import { Box, List, ListItem, Typography } from "@mui/material"; //Typography 타이포그래피 텍스트박스 생성 도구
 
-interface InfoListProps {
+interface TextListProps {
   title: string;
   items: string[];
   pb?: number;
@@ -25,7 +25,7 @@ interface InfoListProps {
 }
 
 //  기존 코드
-export const TextList = ({ title, items, pb=5 }: InfoListProps) => {
+export const TextList = ({ title, items, pb=5 }: TextListProps) => {
   return (
     <Box sx={{ maxWidth: "100%", mx: "auto", textAlign: "start", pb}}>
       <Typography variant="h6" sx={{ fontWeight: "bold" }}>{title}</Typography>
@@ -41,26 +41,39 @@ export const TextList = ({ title, items, pb=5 }: InfoListProps) => {
 };
 
 
+interface InfoListProps {
+  title: string;
+  items: string[];
+  pb?: number;
+  hideTitle?: boolean
+
+}
+
+//  ! 정보 리스트
 export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => {
   return (
-    <Box className="info-wrap">
-      {/* <Typography variant="h6">{title}</Typography> */}
+
+      /**
+       *  default :: bullet 형태
+       *  리스트 아이콘 적용 :: listIcon
+       *  타이틀 아이콘 적용 :: titleIcon [ !! titleIcon 쓰일 경우 불러오는 화면 에서 hideTitle={true} 삭제 필요 ]
+       **/
+
+    <Box className="info-wrap listIcon">
       {title && (
-        <Typography
-          variant="h6"
-          className={hideTitle ? "sr-only" : ""} // hideTitle이 true면 sr-only 클래스 적용
-        >
+
+        // hideTitle 이 true면 sr-only [스크린 리더 전용(안보이게 처리)] 클래스 적용
+        <Typography variant="h6" className= {`${hideTitle ? "sr-only" : ""} info-tit`}>
           {title}
         </Typography>
       )}
-      <List>
+      <List className="info-list">
         {items.map((item, index) => (
           <ListItem key={index}>
             <>{item}</>
           </ListItem>
         ))}
       </List>
-
     </Box>
   );
 };

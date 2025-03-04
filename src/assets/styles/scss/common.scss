@@ -17,6 +17,36 @@
 ---------------------------------------------*/
 .content-tit-wrap { text-align: left;
     h3.tit { font-size:var(--font22); font-weight:var(--font-w-b); color: var(--tit-h3); }
+    .txt { font-size:var(--font18); font-weight:var(--font-w-m); }
+}
+
+.info-wrap {
+
+    //기본
+    .info-tit { padding-bottom:15px; font-size:var(--font18); font-weight: var(--font-w-b); text-align: left; }
+    .info-list { padding:0;
+        li {
+            position: relative; padding:5px 0 0 10px; font-size:var(--font14); color:var(--info-list);
+            &::before { content: ""; position: absolute; left:0px; top:11px; width:3px; height:3px; border-radius: 50%; background-color: var(--info-list); }
+        }
+    }
+
+    //타이틀 아이콘 들어갈 경우 ex) triangle 느낌표
+    &.titleIcon .info-tit {
+        position: relative;
+        padding:0 0 10px 30px;
+        &::before { content: ""; position: absolute; top:2px; left:0; width: 24px; height: 24px; background-color: var(--info-tit-icon);  @include mixin.mask-style(var(--ico-info-tri), auto, 24px); }
+
+    }
+   
+    //리스트 아이콘 들어갈 경우 ex) round 느낌표
+    &.listIcon .info-list {
+        li {
+            padding:5px 0 0 24px;
+            &::before { left:0px; top:3px; width:20px; height:20px; background-color: var(--info-list-icon);  @include mixin.mask-style(var(--ico-info), auto, 20px);  }
+        }
+    }
+
 }
 
 
@@ -94,7 +124,7 @@
         &.btn-primary { background-color: var(--btn-con-primary); color: var(--white); }
         &.btn-secondary { background-color: var(--btn-con-secondary); }
         //라인
-        &.MuiButton-outlined.btn-secondary { background-color: var(--white); border:1px solid var(--btn-line); }
+        &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
     }
 }
 
@@ -105,7 +135,7 @@
         &.btn-primary { background-color: var(--btn-primary); color: var(--white); }
         &.btn-secondary { background-color: var(--btn-secondary); }
         //라인
-        &.MuiButton-outlined.btn-secondary { background-color: var(--white); border:1px solid var(--btn-line); }
+        &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
     }
 }
 
@@ -159,3 +189,17 @@
 /*---------------------------------------------
    #보안카드
 ---------------------------------------------*/
+.security-input-wrap {
+    margin:40px 0;
+    .numeric-info { font-weight: var(--font-w-m); color:var(--color-3);
+        span { font-weight: var(--font-w-b); color:var(--tertiary); }
+    }
+
+    .numeric-box {
+        margin-top:15px;
+        input {
+            &[type="tel"] { border:1px solid var(--primary); }
+        }
+    }
+
+ }

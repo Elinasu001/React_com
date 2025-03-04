@@ -1,4 +1,14 @@
 
+// mask 관련 공통 스타일
+@mixin mask-style($image, $sizeX: auto, $sizeY: auto) {
+    -webkit-mask-image: $image;
+    mask-image: $image;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: $sizeX $sizeY;
+    mask-size: $sizeX $sizeY;
+  }
+
 // 믹스인: 플렉스 정렬
 @mixin flex-center {
     display: flex;
@@ -12,6 +22,7 @@
 
 // 버튼이 3개일 경우 스타일 적용
 @mixin three-button-layout($parent) {
+
     #{$parent}:has(> button:nth-child(3):last-child) {
         display: flex;
         flex-wrap: wrap;
