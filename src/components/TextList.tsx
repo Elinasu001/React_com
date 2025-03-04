@@ -15,9 +15,6 @@
  */
 
 import { Box, Typography, List, ListItem, TextField  } from "@mui/material"; //Typography 타이포그래피 텍스트박스 생성 도구
-import DataSet from '@src/assets/io/DataSet';
-
-
 
 interface InfoListProps {
   title: string;
@@ -43,6 +40,30 @@ export const TextList = ({ title, items, pb=5 }: InfoListProps) => {
   );
 };
 
+
+export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => {
+  return (
+    <Box className="info-wrap">
+      {/* <Typography variant="h6">{title}</Typography> */}
+      {title && (
+        <Typography
+          variant="h6"
+          className={hideTitle ? "sr-only" : ""} // hideTitle이 true면 sr-only 클래스 적용
+        >
+          {title}
+        </Typography>
+      )}
+      <List>
+        {items.map((item, index) => (
+          <ListItem key={index}>
+            <>{item}</>
+          </ListItem>
+        ))}
+      </List>
+
+    </Box>
+  );
+};
 
 interface labelInfoProps {
   title: string;
@@ -74,34 +95,9 @@ export const TextLabel01 = ({ title, param }: labelInfoProps) => {
           </Typography>
         ))}
       </Box>
-      
-        );
-};
-
-export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => {
-  return (
-    <Box className="info-wrap">
-      {/* <Typography variant="h6">{title}</Typography> */}
-      {title && (
-        <Typography
-          variant="h6"
-          className={hideTitle ? "sr-only" : ""} // hideTitle이 true면 sr-only 클래스 적용
-        >
-          {title}
-        </Typography>
-      )}
-      <List>
-        {items.map((item, index) => (
-          <ListItem key={index}>
-            <>{item}</>
-          </ListItem>
-        ))}
-      </List>
-
     </Box>
   );
 };
-
 
 
 export default { TextList, InfoList, TextLabel01 };
