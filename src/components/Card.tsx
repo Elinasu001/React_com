@@ -456,6 +456,7 @@ export const Card05 = ({
         <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
           <Button01
             btnName="이체"
+            width = "100%"
             clickFunc={async () => { //TODO 이체페이지 doactionurl 달아야함
               // 이체 로직
             }}
