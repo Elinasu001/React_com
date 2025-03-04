@@ -86,16 +86,16 @@ export function messageView(
           <Box className="popup-footer gap10">
             {!fBtn ? (
               // fBtn이 없으면 단일 버튼만 표시
-                <Button  className="btn btn-primary" variant="contained" onClick={handleConfirm}>
+                <Button  className="btn btn-primary" onClick={handleConfirm}>
                   {nBtn}
                 </Button>
             ) : (
               // fBtn, fFunc가 있으면 2개 버튼 (확인/취소)
               <>
-                <Button className="btn btn-secondary" variant="outlined" onClick={handleCancel}>
+                <Button className="btn btn-outlined" onClick={handleCancel}>
                   {fBtn}
                 </Button>
-                <Button className="btn btn-primary" variant="contained" onClick={handleConfirm}>
+                <Button className="btn btn-primary"  onClick={handleConfirm}>
                   {nBtn}
                 </Button>
               </>

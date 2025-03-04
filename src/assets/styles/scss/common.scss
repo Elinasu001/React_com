@@ -124,7 +124,7 @@
         &.btn-primary { background-color: var(--btn-con-primary); color: var(--white); }
         &.btn-secondary { background-color: var(--btn-con-secondary); }
         //라인
-        &.MuiButton-outlined.btn-secondary { background-color: var(--white); border:1px solid var(--btn-line); }
+        &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
     }
 }
 
@@ -135,7 +135,7 @@
         &.btn-primary { background-color: var(--btn-primary); color: var(--white); }
         &.btn-secondary { background-color: var(--btn-secondary); }
         //라인
-        &.MuiButton-outlined.btn-secondary { background-color: var(--white); border:1px solid var(--btn-line); }
+        &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
     }
 }
 

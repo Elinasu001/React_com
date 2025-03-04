@@ -4,12 +4,12 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import React, { useEffect, useState } from 'react';
 import { Box, Button, Modal, Slide, Typography } from '@mui/material';
+import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 import DataSet from '@src/assets/io/DataSet';
+import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { progressBar } from './Loading';
-import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 /**
  * 팝업 파라미터 정의
  */
@@ -108,15 +108,15 @@ export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: 
 
                 {/* 버튼 */}
                 <Box className="popup-footer gap10">
-                  <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
-                    버튼1
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼2
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼3
-                  </Button>
+                    <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                      버튼1
+                    </Button>
+                    <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                      버튼2
+                    </Button>
+                    <Button className="btn btn-outlined" onClick={() => { popupClose(); }}>
+                      버튼3
+                    </Button>
                 </Box>
               </Box>
             </Slide>
@@ -214,15 +214,15 @@ export const openFullPopup2 = ({ component: Component, title, param, nFunc }: Po
 
                 {/* 버튼 */}
                 <Box className="popup-footer gap10">
-                  <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
-                    버튼1
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼2
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼3
-                  </Button>
+                    <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                      버튼1
+                    </Button>
+                    <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                      버튼2
+                    </Button>
+                    <Button className="btn btn-outlined" onClick={() => { popupClose(); }}>
+                      버튼3
+                    </Button>
                 </Box>
               </Box>
             </Slide>
