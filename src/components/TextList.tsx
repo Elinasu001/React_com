@@ -55,8 +55,8 @@ export const InfoList = ({ title, items, hideTitle = false }: InfoListProps) => 
 
       /**
        *  default :: bullet 형태
-       *  리스트 아이콘 적용 :: listIcon
        *  타이틀 아이콘 적용 :: titleIcon [ !! titleIcon 쓰일 경우 불러오는 화면 에서 hideTitle={true} 삭제 필요 ]
+       *  리스트 아이콘 적용 :: listIcon
        **/
 
     <Box className="info-wrap listIcon">
