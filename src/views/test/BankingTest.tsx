@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 import { useLocation, useNavigate } from "react-router-dom";
-import { GLog, useAppNavigator } from '@assets/js/common';
+import { doActionURL, GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/Text";
 import { Button01 } from "@src/components/Button";
 import { openFullPopup, openBottomPopup } from "@src/components/Popup";
@@ -97,7 +97,6 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
  */
 const BankingTest = () => {
   const location = useLocation();
-  const navigate = useAppNavigator();
 
   const queryParams = new URLSearchParams(location.search);
   const txGbnCd = queryParams.get("txGbnCd") || "com"; // 기본값: "com"
@@ -298,7 +297,7 @@ const BankingTest = () => {
                 }
               } else {
                 // 그 외는 일반 페이지 이동
-                navigate.doActionURL(item.path);
+                doActionURL(item.path);
               }
             }}
 

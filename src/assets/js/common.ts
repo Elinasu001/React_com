@@ -1,10 +1,20 @@
+/**
+ * @fileoverview [공통] 기능 함수 모음음
+ *
+ * 사용 예시:
+ * import CommonFORM from '@assets/js/common_form';
+ *
+ * @file common.ts
+ * @author GNB
+ * @version 1.0.0
+ */
 import { progressBar } from "@src/components/Loading";
+import { logout,login, convertUserData } from '@src/assets/js/redux/slice/custDs';
 import axios from 'axios';
 import DataSet from "@assets/io/DataSet";
-import { NavigateFunction, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "./redux/hooks";
-import { logout,login, convertUserData } from '@assets/js/redux/authSlice';
-import { AppDispatch } from "@assets/js/redux/store";
+import { getNavigation } from '@assets/js/service/navigationService'; // 전역 네비게이션 ref
+import { messageView } from "@src/components/Alert";
+import { store } from "@assets/js/redux/store";
 
 //앱 실행 환경
 export enum AppEnvType {
@@ -21,9 +31,11 @@ export const headerHeight = 50;
 //하단 헤더 높이
 export const bottomNavHeight = 60;
 
-//Data Type : 데이터 폼
-// export type DataSet = Record<string,string|number|boolean|JSON|unknown>;
 
+//로그인 상태 값
+export const IS_LOGIN = (): boolean => {
+  return Boolean(store.getState().custDs.user);
+};
 
 //Data Type : 데이터 전송 요청 폼
 export type ApiReq  = {
@@ -96,14 +108,10 @@ axios.defaults.timeout = 15000;// 기본 타임아웃 설정 (예: 15000ms = 15�
  */
 export const doAction = async (req: ApiReq): Promise<ApiRes> => {
   try {
-
     //axios 통신
     const response = await axios.post('/api/' + req.serviceCd + '.act', req.param, {
       headers: { 'Content-Type': 'application/json' }
     });
-    // const response = await axios.post(API_URL + '/' + req.serviceCd + '.act', req.param, {
-    //   headers: { 'Content-Type': 'application/json' }
-    // });
 
     // 응답 데이터 분리
     const { APP_HEADER: appHeader, ...data } = response.data;
@@ -133,38 +141,60 @@ export const doAction = async (req: ApiReq): Promise<ApiRes> => {
  * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
  * @param uri 이동할 페이지의 경로
  */
-
-export const useAppNavigator = () => {
-  const navigate = useNavigate();
-
-  //`doActionURL()`을 navigate에 추가하여 반환
-  const doActionURL = (uri: string) => {
-    progressBar(true);
-    setTimeout(() => {
-      navigate(uri);
-      progressBar(false);
-    }, 500);
-  };
-
-  return Object.assign(navigate, { doActionURL });
-};
+export const doActionURL = (uri: string):void =>{
+  const navigate = getNavigation();
+  if (!navigate) {
+    messageView("처리중 오류 발생했습니다.","확인");
+    return;
+  }
+  progressBar(true);
+  setTimeout(() => {
+    navigate(uri);
+    logout();
+    progressBar(false);
+  }, 500);
+}
 
 
-/**
- * 로그인 처리
- */
-export const doIdLogin = async (dispatch:AppDispatch,id:string,pwd:string) => {
+export enum LoginType{
+  PIN,      //간편비밀번호
+  BIO,      //생체인증
+  PATTERN,  //패턴
+  COM,      //공동인증서
+  FIN,      //금융인증서
+  ID        //전자금융아이디
+}
+
+export const doLogin = async (loginType:LoginType,data : DataSet) => {
+  progressBar(true);
+
   //OPEN API 로그인 요청
   const form = makeForm("COM0000SC");
   addFormData(form, "txGbnCd", "LOGIN");
-  addFormData(form, "loginType", "I");
-  addFormData(form, "USER_ID_12", id);
-  addFormData(form, "USR_PWD", pwd);
 
-  progressBar(true);
+  switch (loginType) {
+    case LoginType.PIN:
+    case LoginType.BIO:
+    case LoginType.PATTERN:
+    case LoginType.COM:
+    case LoginType.FIN:
+      break;
+    case LoginType.ID:
+      addFormData(form, "loginType", "I");
+      addFormData(form, "USER_ID_12", data.getString('ID'));
+      addFormData(form, "USR_PWD", data.getString('PW'));
+      break;
+  }
 
-  //OPEN API 전자뱅킹 아이디 조회
-  const response = await doAction(form);
+  //OPEN API 로그인전문 송신
+  // const response = await doAction(form);
+  const response: ApiRes = {
+    header: {
+      respCd: "N00000",
+      respMsg: "성공적으로 처리되었습니다.",
+    },
+    data: new DataSet({'API_RS_MSG':'SUCCESS','USR_ID':'hipen8','USR_NM':'김남교'})
+  };
 
   progressBar(false);
 
@@ -177,27 +207,24 @@ export const doIdLogin = async (dispatch:AppDispatch,id:string,pwd:string) => {
   if (respCd == "N00000" && apiRsMsg == "SUCCESS")
   {
       //로그인처리
-      dispatch(login(convertUserData(response.data)));
-      return "OK";
+      store.dispatch(login(convertUserData(response.data)));
+      return {result:true,msg:"정상로그인"};
   }
   //로그인 에러 처리
   else
   {
-    return apiRsMsg.split(',')[1];//OPEN API 로그인 실패 메세지는 , 구분으로 내려옴
+    return {result:false,msg:apiRsMsg.split(',')[1]};//OPEN API 로그인 실패 메세지는 , 구분으로 내려옴
   }
-};
+}
 
 /**
  * 로그아웃 처리
  */
-export const doLogout = async (dispatch: AppDispatch, navigate: NavigateFunction) => {
-  progressBar(true);
-  setTimeout(() => {
-    dispatch(logout());
-    navigate('/');
-    progressBar(false);
-  }, 1000);
-  
+export const doLogout = () => {
+  messageView('로그아웃 하시겠습니까?','예',() => {
+    store.dispatch(logout());
+    doActionURL('/');
+  },'아니요');
 }
 
 
@@ -229,7 +256,7 @@ export default {
   makeForm, 
   addFormData, 
   doAction,
-  doIdLogin,
-  doLogout,
-  useAppNavigator
+  doActionURL,
+  doLogin,
+  doLogout
 };
