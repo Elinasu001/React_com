@@ -83,36 +83,49 @@ export const addFormData = (form: ApiReq, name: string, value: string): void => 
   form.param.putString(name,value);
 };
 
+
+axios.defaults.withCredentials = true;// axios 설정: 쿠키를 포함하여 요청하기 위해 withCredentials 옵션을 true로 설정
+axios.defaults.timeout = 10000;// 기본 타임아웃 설정 (예: 10000ms = 10초)
+
 /**
  * gp_backend 서비스랑 통신하는 함수 입니다.
  * @param req 서비스명,파라미터
  */
 export const doAction = async (req: ApiReq): Promise<ApiRes> => {
+
   try {
-    axios.defaults.withCredentials = true;
-    const response = await axios.post(API_URL+'/'+req.serviceCd+'.act', req.param, {
-      headers: { 'Content-Type': 'application/json' }
-    });
 
-    //응답 데이터
-    const { APP_HEADER: appHeader, ...data } = response.data;
+    const service = async (req: ApiReq) => {
+      try {
+        const response = await axios.post('/api/'+req.serviceCd+'.act', req.param, {
+          headers: { 'Content-Type': 'application/json' }
+        });
 
-    //응답 리턴
-    return {
-      header: {
-        respCd: appHeader?.respCd || "N00000", // 성공 코드
-        respMsg: appHeader?.respMsg || "성공적으로 처리되었습니다."
-      },
-      data: new DataSet(data) // 성공 시 반환 데이터
-    };
-  } catch (error: any) {
+        //응답 데이터
+        const { APP_HEADER: appHeader, ...data } = response.data;
+
+        //응답 리턴
+        return {
+          header: {
+            respCd: appHeader?.respCd || "N00000", // 성공 코드
+            respMsg: appHeader?.respMsg || "성공적으로 처리되었습니다."
+          },
+          data: new DataSet(data) // 성공 시 반환 데이터
+        };
+      } catch (error) {throw error;}
+    }
+
+    return service(req);
+    
+  } catch (error) {
     // 에러 발생 시 처리
-    const errorMsg = error.response?.data?.message|| error.message || "처리 중 오류가 발생하였습니다.";
+    // const errorMsg = error.response?.data?.message|| error.message || "처리 중 오류가 발생하였습니다.";
+    const errorMsg = error;
 
     return {
       header: {
         respCd: "E00000", // 에러 코드
-        respMsg: errorMsg
+        respMsg: 'errorMsg : '+errorMsg
       },
       data: new DataSet({}) // 실패 시 데이터는 null
     };

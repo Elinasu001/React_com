@@ -21,7 +21,7 @@ export function progressBar(isLoading: boolean, msg?: string) {
         <Backdrop
           sx={{
             color: "#fff",
-            zIndex: (theme) => theme.zIndex.drawer + 1,
+            zIndex: (theme) => theme.zIndex.modal + 1,
             backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 어둡게
           }}
           open={isLoading}
