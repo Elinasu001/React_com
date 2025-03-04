@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { MainBox, Box01 } from "@src/components/Box";
 import { Card02, Card06 } from "@src/components/Card"; 
 import { progressBar } from "@src/components/Loading"
@@ -15,8 +16,10 @@ const INQ001 = () => {
     type: string;
     acno: string;
     balance: number;
+    pdnm: string;
   }
 
+  const navigate = useNavigate();
   const [custInfo, setCustInfo] = useState<DataSet | null>(null);
   const [accountList, setAccountList] = useState<Account[]>([]);
   const [loanList, setLoanList] = useState<Account[]>([]);
@@ -26,7 +29,7 @@ const INQ001 = () => {
   useEffect(() => {
     const storedData = sessionStorage.getItem("custInfo");
     if (!storedData) {
-      messageView("로그인이 필요합니다.", "확인");
+      messageView("로그인이 필요합니다.", "확인", () => navigate("/"));
       return;
     }
 
@@ -52,17 +55,18 @@ const INQ001 = () => {
         progressBar(false);
   
         if (response.header.respCd !== "N00000") {
-          messageView(`계좌 조회 실패: ${response.header.respMsg}`, "확인");
+          messageView(`계좌 조회 실패: ${response.header.respMsg}`, "확인", () => navigate("/"));
           return;
         }
   
         const resData = response.data;
   
         // ✅ `OUT_REC`의 데이터를 활용하여 계좌 정보 매핑
-        const accounts = resData.getList<{ ACNO: string; ACCO_KNCD: string; ACNT_BLNC: number }>("OUT_REC").map(acc => ({
+        const accounts = resData.getList<{ ACNO: string; ACCO_KNCD: string; ACNT_BLNC: number, PROD_NM:string }>("OUT_REC").map(acc => ({
           type: acc.ACCO_KNCD === "4" ? "여신" : "수신",
           acno: acc.ACNO,
           balance: acc.ACNT_BLNC,
+          pdnm: acc.PROD_NM,
         }));
   
         // ✅ 계좌 유형별로 분리

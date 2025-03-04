@@ -85,7 +85,7 @@ export const addFormData = (form: ApiReq, name: string, value: string): void => 
 
 
 axios.defaults.withCredentials = true;// axios 설정: 쿠키를 포함하여 요청하기 위해 withCredentials 옵션을 true로 설정
-axios.defaults.timeout = 10000;// 기본 타임아웃 설정 (예: 10000ms = 10초)
+axios.defaults.timeout = 100000;// 기본 타임아웃 설정 (예: 10000ms = 10초)
 
 /**
  * gp_backend 서비스랑 통신하는 함수 입니다.
@@ -98,7 +98,7 @@ export const doAction = async (req: ApiReq): Promise<ApiRes> => {
     const service = async (req: ApiReq) => {
       try {
         const response = await axios.post('/api/'+req.serviceCd+'.act', req.param, {
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json' },
         });
 
         //응답 데이터
