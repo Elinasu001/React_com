@@ -89,6 +89,7 @@ export const addFormData = (form: ApiReq, name: string, value: string): void => 
  */
 export const doAction = async (req: ApiReq): Promise<ApiRes> => {
   try {
+    axios.defaults.withCredentials = true;
     const response = await axios.post(API_URL+'/'+req.serviceCd+'.act', req.param, {
       headers: { 'Content-Type': 'application/json' }
     });
