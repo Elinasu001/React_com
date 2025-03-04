@@ -53,7 +53,7 @@ const INQ002 = () => {
   const { account } = location.state || {}; // ListItemButton에서 전달된 데이터 받기
   const [showBalance] = useState(true);
   const [tradeList, settradeList] = useState<TradeListProps[]>([]);
-  const fetchTradeList = async (acno: string) => { 
+  const fetchTradeList = async (acno: string): Promise<TradeListProps[]> =>{ 
 
 
     //폼생성,데이터 주입
@@ -74,7 +74,7 @@ const INQ002 = () => {
       if (response.header.respCd !== "N00000") {
         GLog.e("거래내역 조회 실패:", response.header.respMsg);
         messageView(`통신 실패 : ${response.header.respMsg}`, "확인", () => GLog.d("확인 클릭"));
-        return;
+        return[];
       }
 
       // 거래내역 리스트 가져오기
@@ -99,21 +99,22 @@ const INQ002 = () => {
         API_RS_MSG: resData.getString("API_RS_MSG") || ""  
       }));
      
-      settradeList(formattedData);  
+      return formattedData;  // 반환값 추가
 
     } catch (error) {
         GLog.e("거래내역 조회 중 오류 발생:", error);
         messageView("거래내역 조회 중 오류가 발생했습니다.", "확인");
         progressBar(false);
+        return [];  // 오류 발생 시 빈 배열 반환
     }
   };
 
   useEffect(() => {
-    if (account) {
+    if (account?.acno) {
       // fetchTradeList 호출
       const fetchData = async () => {
         const data = await fetchTradeList(account.acno); // 계좌번호를 fetchTradeList에 전달
-        setTradeList(data);
+        settradeList(data);
       };
       fetchData();
     }
