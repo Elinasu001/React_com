@@ -108,23 +108,32 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Typography variant="body1" color="textSecondary">
           {acno}
-          <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
+          <IconButton
+            onClick={() => {
+              try {
+                navigator.clipboard.writeText(acno);
+              } catch (error) {
+                console.error("클립보드 복사 오류:", error);
+              }
+            }}
+            sx={{ p: 1 }}
+          >
             <ContentCopyIcon fontSize="small" />
           </IconButton>
         </Typography>
-
-        {/* 계좌 잔액 */}
-        <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-          {balance.toLocaleString()} 원
-        </Typography>
       </Box>
+
+      {/* 계좌 잔액 */}
+      <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
+        {(balance ?? 0).toLocaleString()} 원
+      </Typography>
 
       {/* 구분선 */}
       <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} />
 
       {/* 버튼 영역 */}
       <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-        {type === "대출" ? (
+        {type === "4" ? (
           <ListItemButton
             sx={{
               justifyContent: "center",
@@ -152,7 +161,11 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
               거래내역
             </ListItemButton>
 
-            <Divider orientation="vertical" flexItem sx={{ height: "35px", borderColor: "lightgray" }} />
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ height: "35px", borderColor: "lightgray", alignSelf: "center" }}
+            />
 
             <ListItemButton
               sx={{
@@ -172,6 +185,7 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
     </Card>
   );
 };
+
 
 
 /**
@@ -406,13 +420,13 @@ export const Card05 = ({
   };
 
   interface Card06props {
-    ACCO_KNCD: string;
-    ACNO: string;
-    ACNT_BLNC: number;
-    PROD_NM: string;
+    type: string;
+    acno: string;
+    balance: number;
+    pdnm: string;
   }
 
-  export const Card06 = ({ ACCO_KNCD, PROD_NM, ACNO, ACNT_BLNC }: Card06props) => {
+  export const Card06 = ({ type, pdnm, acno, balance }: Card06props) => {
     return (
       <Card
         elevation={5}
@@ -425,15 +439,15 @@ export const Card05 = ({
       >
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-            {ACCO_KNCD} {PROD_NM}
+            {type} {pdnm}
           </Typography>
         </Box>
   
         {/* 계좌번호 및 복사 아이콘 */}
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Typography variant="body1" color="textSecondary">
-            {ACNO}
-            <IconButton onClick={() => navigator.clipboard.writeText(ACNO)} sx={{ p: 1 }}>
+            {acno}
+            <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
               <ContentCopyIcon fontSize="small" />
             </IconButton>
           </Typography>
@@ -442,14 +456,14 @@ export const Card05 = ({
 
           {/* 계좌 잔액 */}
           <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            잔액 {ACNT_BLNC.toLocaleString()} 원
+            잔액 {balance.toLocaleString()} 원
           </Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
           {/* 계좌 잔액 */}
           <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            출금가능금액 {ACNT_BLNC.toLocaleString()} 원
+            출금가능금액 {balance.toLocaleString()} 원
           </Typography>
         </Box>
         {/* 버튼 영역 */}
