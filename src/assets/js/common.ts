@@ -187,14 +187,14 @@ export const doLogin = async (loginType:LoginType,data : DataSet) => {
   }
 
   //OPEN API 로그인전문 송신
-  // const response = await doAction(form);
-  const response: ApiRes = {
-    header: {
-      respCd: "N00000",
-      respMsg: "성공적으로 처리되었습니다.",
-    },
-    data: new DataSet({'API_RS_MSG':'SUCCESS','USR_ID':'hipen8','USR_NM':'김남교'})
-  };
+  const response = await doAction(form);
+  // const response: ApiRes = {
+  //   header: {
+  //     respCd: "N00000",
+  //     respMsg: "성공적으로 처리되었습니다.",
+  //   },
+  //   data: new DataSet({'API_RS_MSG':'SUCCESS','USR_ID':'hipen8','USR_NM':'김남교'})
+  // };
 
   progressBar(false);
 
