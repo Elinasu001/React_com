@@ -199,14 +199,19 @@
     }
 
     .numeric-box {
-        &.MuiInput-root { border-bottom: 0; } // mui reset
+        // mui reset
+        &.MuiInput-root { border-bottom: 0; }
+        .MuiInput-root::before,
+        .MuiInput-root::after { content: none;}
+
         position: relative;
         margin-top:15px;
         input {
-            &[type="tel"] { padding:0; width:60px; height:60px; border:1px solid var(--primary); }
+            &[type="tel"] { border-radius: 13px; padding:0; width:60px; height:60px; text-align: center; border:2px solid var(--primary); }
             &[type="tel"]:disabled { border:1px solid var(--color-d); background-color: var(--color-f8); }
         }
-        & .MuiInputBase-root.Mui-disabled::before { z-index:1; content: ""; position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); width:10px; height:10px; border-radius: 50%; background-color: var(--color-9); }
+        .Mui-disabled::before { z-index:1; content: ""; position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); width:10px; height:10px; border-radius: 50%; border:1px solid var(--color-9); background-color: var(--color-9); }
+        
     }
 
  }
