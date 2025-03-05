@@ -26,13 +26,13 @@ const tabItems1 = [
 
 const tabItems2 = [
   { label: "전체", value: "" },
-  { label: "입금", value: "1" },
-  { label: "출금", value: "2" },
+  { label: "입금", value: "입금" },
+  { label: "출금", value: "출금" },
 ];
 
 const tabItems3 = [
-  { label: "최신순", value: "1" },
-  { label: "과거순", value: "2" },
+  { label: "최신순", value: "최신순" },
+  { label: "과거순", value: "과거순" },
 ];
 
 
@@ -104,7 +104,7 @@ const POP003 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
       )}
 
       <Typography>정렬순서</Typography>
-      <Tab01 items={tabItems3} initialValue="1" onChange={handleTabChange2}/>
+      <Tab01 items={tabItems3} initialValue="최신순" onChange={handleTabChange2}/>
       <Button01 btnName="조회" clickFunc={() => onClose(popupResult)} />
     </MainBox>
   );

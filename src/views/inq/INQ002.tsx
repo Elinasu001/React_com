@@ -43,7 +43,6 @@ const INQ002 = () => {
   const accountData = JSON.parse(location.state)
   const [showBalance] = useState(true);
   const [tradeList, settradeList] = useState<TradeListProps[]>([]);
-  const currentDate = getDate("YYYYMMDD", new Date());
   const [popupData, setPopupData] = useState({
     
     selectedDate : "3개월", 
@@ -52,6 +51,25 @@ const INQ002 = () => {
     isDeposit : "",
     lnpBase : "최신순"
   });
+  const EDDT = getDate("YYYYMMDD", new Date());
+  const currentDate = new Date(); // 현재 날짜
+  
+  //1개월 셋팅
+  currentDate.setMonth(currentDate.getDay() - 7); 
+  const oneWeekDate = getDate("YYYYMMDD", currentDate);
+
+  //1개월 셋팅
+  currentDate.setMonth(currentDate.getMonth() - 1); 
+  const oneMonthDate = getDate("YYYYMMDD", currentDate);
+
+  //3개월 셋팅
+  currentDate.setMonth(currentDate.getMonth() - 3); 
+  const threeMonthDate = getDate("YYYYMMDD", currentDate);
+
+  //6개월 셋팅
+  currentDate.setMonth(currentDate.getMonth() - 6); 
+  const sixMonthDate = getDate("YYYYMMDD", currentDate);
+
   const fetchTradeList = async (account:DataSet): Promise<TradeListProps[]> =>{ 
     
 
@@ -59,8 +77,8 @@ const INQ002 = () => {
     const form = makeForm('INQ0002SC');
     addFormData(form,'txGbnCd','TL');       
     addFormData(form, 'acno', accountData.acno);                                      //계좌번호
-    addFormData(form, 'stdt', currentDate);                               //시작일자
-    addFormData(form, 'eddt', currentDate);                               //종료일자
+    addFormData(form, 'stdt', threeMonthDate);                               //시작일자
+    addFormData(form, 'eddt', EDDT);                               //종료일자
     addFormData(form, 'type', account.getString("type"));                 //계좌 구분코드
     addFormData(form, 'IOMN_DVCD', account.getString("ioDvcd") || "");    //입출금 구분코드
     addFormData(form, 'LNP_BASE', account.getString("lnpBase") || "");    //조회방식
@@ -153,7 +171,7 @@ const INQ002 = () => {
       
       {/* 조회기간 설정 */}
       <Button01 
-        btnName={`${popupData.selectedDate} ${popupData.lnpBase} ${popupData.ioDvcd}`}
+        btnName={`${popupData.selectedDate} · ${popupData.ioDvcd} · ${popupData.lnpBase}`}
         clickFunc={() => {
           openBottomPopup({
             component:POP003
@@ -163,7 +181,7 @@ const INQ002 = () => {
                   const popup = data; 
                   
                   const popupData = {
-                    selectedDate: popup.getString("selectedDate") || "3개월월",
+                    selectedDate: popup.getString("selectedDate") || "3개월",
                     ioDvcd: popup.getString("ioDvcd") || "전체", 
                     searchName: popup.getString("searchName") || "",
                     isDeposit: popup.getString("isDeposit") || "",
