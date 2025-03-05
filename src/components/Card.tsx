@@ -11,7 +11,8 @@ import { Button01, Button02, Button03 } from "@src/components/Button";
 import CompareArrowsIcon from "@mui/icons-material/CardGiftcard";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
-import { useAppNavigator, doAction,makeForm, addFormData } from "@src/assets/js/common";
+import { doAction,makeForm, addFormData, doActionView } from "@src/assets/js/common";
+import DataSet from "@src/assets/io/DataSet";
 
 /**
  * 카드 기본 속성
@@ -91,7 +92,6 @@ interface Card02Props {
  */
 
 export const Card02 = ({ type, acno, balance, pdnm }: Card02Props) => {
-  const { doActionURL } = useAppNavigator();
   const pageHandle = async () => {
     const form = makeForm("INQ0002SC");
 
@@ -103,7 +103,7 @@ export const Card02 = ({ type, acno, balance, pdnm }: Card02Props) => {
 
       if (response.header.respCd === "N00000") {
         // 성공 시 페이지 이동
-        doActionURL(`/inq/INQ002.view`); // 예시: 계좌번호를 기반으로 거래내역 페이지로 이동 { state: { account: { acno } } }
+        doActionView("/inq/INQ002.view", new DataSet({ acno }));
         
       } else {
         console.error("Error:", response.header.respMsg);
