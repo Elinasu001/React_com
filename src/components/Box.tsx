@@ -4,9 +4,13 @@
  * 사용 예시:
  * import { MainBox } from "@src/components/Box";
  */
-import { ReactNode } from "react";
-import { Box as MuiBox, Box, Typography, Button } from "@mui/material";
+import { ReactNode, useState } from "react";
+import { Box as MuiBox, Box, Typography, Button, IconButton, Snackbar, Alert } from "@mui/material";
 import LoanIcon from "@assets/images/com/svg/ico_date.svg";
+import LimitImg from "@assets/images/com/svg/ico_date.svg";
+import IntrateImg from "@assets/images/com/svg/ico_date.svg";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { styled } from "@mui/material/styles";
 
 export const MainBox = ({ children }: {children ?: ReactNode}) => {
   return <Box sx={{ textAlign: "center" }}>{children}</Box>;
@@ -86,6 +90,158 @@ export const Box02 = ({ title, description, buttonText, onButtonClick }: Box02Pr
   );
 };
 
+/**
+ * 박스 속성3
+ */
+interface Box03Props {
+  categoty: string;       // 카테고리
+  title: string;          // 제목
+  //keyword: string[];    // 키워드
+  subtitle1: string;      // 소제목1
+  subtitle2: string;      // 소제목2
+  contents1: string;      // 내용1
+  contents2: string;      // 내용2
+}
+
+/**
+ * 스타일 지정 (아이콘 클릭 시 테두리 제거)
+ */
+const StyledIconButton = styled(IconButton)({
+  outline: "none",
+  "&:focus": { outline: "none" },
+  "&:hover": { backgroundColor: "transparent" },
+  "&.active": { color: "Salmon" },
+});
+
+/**
+ * 박스 컴포넌트3
+ */
+export const Box03 = ({ categoty, title, subtitle1, subtitle2, contents1, contents2 }: Box03Props) => {
+
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  // 관심상품 클릭
+  const handleGiftClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsFavorite(!isFavorite);
+    setSnackbarMessage(
+      isFavorite ? "관심 상품에서 제외되었습니다." : "관심 상품으로 등록되었습니다."
+    );
+    setSnackbarOpen(true);
+  };
+
+  // 알림 닫기
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  return (
+    <Box
+      sx={{
+        backgroundColor: "#F8F8F8",
+        borderRadius: "12px",
+        py: 3,
+      }}
+    >
+      {/* 카테고리 + 관심상품 아이콘 */}
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", }}>
+        <Typography
+        variant="body2"
+        sx={{
+          border: "1px solid",
+          color: "Salmon !important",
+          px: 1,
+          py: 0.1,
+          borderRadius: 5,
+          fontWeight: "bold",
+          width: "fit-content",
+        }}
+        >
+          {categoty}
+        </Typography>
+
+        {/* 관심상품 아이콘 */}
+        <StyledIconButton
+          onClick={handleGiftClick}
+          disableRipple
+          className={isFavorite ? "active" : ""}
+          sx={{ position: "absolute", right: 15 }}
+        >
+          <FavoriteIcon/>
+        </StyledIconButton>
+      </Box>
+
+      {/* 상품명 */}
+      <Typography variant="h5" sx={{ mt: 1, fontWeight: "bold" }}>
+        {title}
+      </Typography>
+
+      {/* 키워드 */}
+      {/* <Typography variant="body2" sx={{ mt: 1, }}>
+        {keyword.join(" | ")}
+      </Typography> */}
+
+      {/* 최대한도 & 대출금리 (이미지 + 텍스트 포함) */}
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 10, mt: 2 }}>
+        {/* 한도 정보 */}
+        <Box sx={{ textAlign: "center" }}>
+        <Box
+          component="img" src={LimitImg} alt="최대한도"
+          sx={{
+            width: 60,
+            height: 60,
+            borderRadius: "50%",
+            backgroundColor: "#fff",
+            p: 1,
+          }}
+        />
+        <Typography variant="body2" sx={{ mt: 0.5, fontWeight: "bold" }}>
+          {subtitle1}
+        </Typography>
+        <Typography variant="body1" sx={{ mt: 0.5, fontWeight: "bold" }}>
+          {contents1}
+        </Typography>
+        </Box>
+
+        {/* 대출금리 정보 */}
+        <Box sx={{ textAlign: "center" }}>
+        <Box
+          component="img" src={IntrateImg} alt="대출금리"
+          sx={{
+            width: 60,
+            height: 60,
+            borderRadius: "50%",
+            backgroundColor: "#fff",
+            p: 1,
+          }}
+        />
+        <Typography variant="body2" sx={{ mt: 0.5, fontWeight: "bold" }}>
+          {subtitle2}
+        </Typography>
+        <Typography variant="body1" sx={{ mt: 0.5, fontWeight: "bold" }}>
+          {contents2}
+        </Typography>
+        </Box>
+      </Box>
+
+      {/* 알림창 */}
+      <Snackbar
+      open={snackbarOpen}
+      autoHideDuration={1000}
+      onClose={handleSnackbarClose}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+      <Alert onClose={handleSnackbarClose} severity="info">
+        {snackbarMessage}
+      </Alert>
+      </Snackbar>
+    </Box>
+
+  );
+};
+
 interface ListItem {
   key: string;
   label: ReactNode;
@@ -123,4 +279,4 @@ export function BoxList({ items, selectedKey, filterPrefix = "" }: BoxListProps)
   );
 };
 
-export default { MainBox, Box01, Box02, BoxList };
+export default { MainBox, Box01, Box02, Box03, BoxList };
