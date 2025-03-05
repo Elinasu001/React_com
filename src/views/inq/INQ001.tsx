@@ -5,10 +5,9 @@ import { Card02 } from "@src/components/Card";
 import { progressBar } from "@src/components/Loading"
 import { messageView } from '@src/components/Alert';
 import { TextBox01, TextBox02 } from "@src/components/Text";
-import { GLog, doAction, makeForm, addFormData } from '@assets/js/common';
+import { GLog, doAction, makeForm, addFormData, getCustDs } from '@assets/js/common';
 import { Accordion01 } from "@src/components/Accordion";
-import { useSelector } from "react-redux";
-import { RootState } from "@assets/js/redux/store";
+
 
 const INQ001 = () => {
 
@@ -24,23 +23,23 @@ const INQ001 = () => {
   const [accountList, setAccountList] = useState<Account[]>([]);
   const [loanList, setLoanList] = useState<Account[]>([]);
   const [expanded, setExpanded] = useState<string | false>(false);
-  const user = useSelector((state: RootState) => state.custDs.user);
+  const user = getCustDs();
   
   useEffect(() => {
-    
-    GLog.d("user :::: " + user);
-    if (!user) {
-      navigate("/");
-    }
 
+    if (!user) {
+      messageView("로그인이 필요합니다.", "확인", () => navigate("/"));
+      return;
+    }
+    
     const fetchApiInqOvvi0100_01 = async () => { 
      
       // 폼 생성 및 데이터 주입
       const form = makeForm('INQ0000SC');
       addFormData(form, 'txGbnCd'   , 'A');
       addFormData(form, 'SBCD'      , "050");
-      addFormData(form, 'CSNO'      , user?.CSNO || "");   
-      addFormData(form, 'USR_ID'    , user?.USR_ID || ""); 
+      addFormData(form, 'CSNO'      , user.CSNO);   
+      addFormData(form, 'USR_ID'    , user.USR_ID); 
       addFormData(form, 'ACCO_KNCD' , "9"); // 전계좌조회
 
       // 로딩 ON
@@ -56,21 +55,28 @@ const INQ001 = () => {
         }
   
         const resData = response.data;
-  
-        // ✅ `OUT_REC`의 데이터를 활용하여 계좌 정보 매핑
-        const accounts = resData.getList<{ ACNO: string; ACCO_KNCD: string; ACNT_BLNC: number, PROD_NM:string }>("OUT_REC").map(acc => ({
-          type: acc.ACCO_KNCD === "4" ? "여신" : "수신",
+
+        // 여신 계좌
+        const loanAccounts = resData.getList("REC4").map(acc => ({
+          type: "여신",
           acno: acc.ACNO,
           balance: acc.ACNT_BLNC,
           pdnm: acc.PROD_NM,
         }));
-  
-        // ✅ 계좌 유형별로 분리
-        const depositAccounts = accounts.filter(acc => acc.type === "수신");
-        const loanAccounts = accounts.filter(acc => acc.type === "여신");
+
+        // 수신 계좌
+        const depositAccounts = ["REC1", "REC2", "REC3"]
+          .flatMap(key => resData.getList(key))
+          .map(acc => ({
+            type: "수신",
+            acno: acc.ACNO,
+            balance: acc.ACNT_BLNC,
+            pdnm: acc.PROD_NM,
+        }));
   
         setAccountList(depositAccounts);
         setLoanList(loanAccounts);
+
       } catch (error) {
         progressBar(false);
         messageView("계좌 조회 중 오류 발생", "확인");
@@ -89,20 +95,6 @@ const INQ001 = () => {
   
 
   return (
-    // <Box01>
-
-    //   <TextBox01 text="전계좌조회"></TextBox01>
-
-    //     <TextBox02 text="계좌 목록"></TextBox02>
-    //       {accountList.length > 0 ? (
-    //         accountList.map((account, index) =>
-    //         account ? <Card02 key={index} {...account} /> : null
-    //         )
-    //       ) : (
-    //         <TextBox02 text="계좌 정보가 없습니다."></TextBox02>
-    //       )}
-
-    // </Box01>
 
     <MainBox>
       <Box01>
