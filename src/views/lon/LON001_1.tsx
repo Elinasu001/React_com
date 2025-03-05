@@ -45,10 +45,10 @@ interface LoanPd {
  */
 const tabItems = [
   { label: "전체", value: "10" },
-  { label: "신용대출", value: "11" },
-  { label: "담보대출", value: "12" },
-  { label: "정책자금대출", value: "13" },
-  { label: "외국인대출", value: "14" }
+  { label: "신용대출", value: "신용대출" },
+  { label: "담보대출", value: "담보대출" },
+  { label: "정책자금대출", value: "정책자금대출" },
+  { label: "외국인대출", value: "외국인대출" }
 ];
 
 const LON001_1 = () => {
@@ -85,7 +85,7 @@ const LON001_1 = () => {
       const products = loanPdResList.map(prod => ({
         pdcd: prod.PRDCT_CD,            // 상품코드
         pdnm: prod.PRDCT_NM,            // 상품명
-        categoty: convert(prod.PRDCT_CLS_CD),                     // 상품유형명
+        categoty: convert(prod.PRDCT_CLS_CD),                     // 상품분류코드
         pdDesc: prod.SMR_DC_CNTN,       // 요약설명내용
         keyword: ["추천", "금융상품"],   // 추천어
         contents1: `최대한도 ${formatAmount(prod.MAX_AMT)}만원`,   // 최대한도
@@ -157,22 +157,22 @@ const LON001_1 = () => {
   const convert = (categoryCode: string | undefined) => {
     switch (categoryCode) {
     case "11":
-        return "신용대출";
+      return "신용대출";
     case "12":
-        return "담보대출";
+      return "담보대출";
     case "13":
-        return "정책자금대출";
+      return "정책자금대출";
     case "14":
-        return "외국인대출";
+      return "외국인대출";
     default:
-        return "기타";
+      return "기타";
     }
   };
 
   return (
     <>
       {/* 대출 탭 컴포넌트 */}
-      <Tab01 items={tabItems} initialValue="전체" onChange={handleTabChange} />
+      <Tab01 items={tabItems} initialValue="10" onChange={handleTabChange} />
 
       {/* 대출 한도 조회 컴포넌트 */}
       <Box02
