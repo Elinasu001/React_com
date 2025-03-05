@@ -4,12 +4,15 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Modal, Slide, Typography } from '@mui/material';
-import DataSet from '@src/assets/io/DataSet';
-import { MemoryRouter } from 'react-router-dom';
-import { progressBar } from './Loading';
+import { Box, Button, IconButton, Modal, Slide, Typography, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
 import AsyncPromiss from '@src/assets/io/AsyncPromiss';
+import DataSet from '@src/assets/io/DataSet';
+import React, { useEffect, useState } from 'react';
+import { MemoryRouter } from 'react-router-dom';
+import CloseIcon from "@mui/icons-material/Close";
+import { progressBar } from '@src/components/Loading';
+import { messageView } from './Alert';
+import { doLogin, LoginType } from '@src/assets/js/common';
 /**
  * 팝업 파라미터 정의
  */
@@ -108,15 +111,15 @@ export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: 
 
                 {/* 버튼 */}
                 <Box className="popup-footer gap10">
-                  <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
-                    버튼1
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼2
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼3
-                  </Button>
+                    <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                      버튼1
+                    </Button>
+                    <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                      버튼2
+                    </Button>
+                    <Button className="btn btn-outlined" onClick={() => { popupClose(); }}>
+                      버튼3
+                    </Button>
                 </Box>
               </Box>
             </Slide>
@@ -214,15 +217,15 @@ export const openFullPopup2 = ({ component: Component, title, param, nFunc }: Po
 
                 {/* 버튼 */}
                 <Box className="popup-footer gap10">
-                  <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
-                    버튼1
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼2
-                  </Button>
-                  <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                    버튼3
-                  </Button>
+                    <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
+                      버튼1
+                    </Button>
+                    <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
+                      버튼2
+                    </Button>
+                    <Button className="btn btn-outlined" onClick={() => { popupClose(); }}>
+                      버튼3
+                    </Button>
                 </Box>
               </Box>
             </Slide>
@@ -284,13 +287,130 @@ export const openPopup = ({ component: Component, title, param, nFunc }: PopupPr
   );
 };
 
+/**
+ * 일반팝업 호출
+ */
+export const loginPopup = (): AsyncPromiss => {
+  return new AsyncPromiss((nFunc) => {
+    const formId = 'gLoginPopup';
+    document.getRoot(formId).render(
+      React.createElement(() => {
+        // 로그인 팝업 상태
+        const [open, setOpen] = useState(false);
+        const [id, setId] = useState(""); // ID 상태
+        const [password, setPassword] = useState(""); // 비밀번호 상태
+
+        //팝업 컴포넌트 생성후 처리
+        useEffect(() => {
+          setOpen(true);
+        }, []);
+
+        //팝업 컴포넌트 닫기 처리
+        const popupClose = () => {
+          setOpen(false);
+          setTimeout(() => {
+            document.removeRoot(formId);
+            nFunc(new DataSet({result:false}));
+          }, 300);
+        };
+
+        const login = async () => {
+            if (!id || !password) {
+              messageView("아이디와 비밀번호를 입력하세요.", "확인");
+              return;
+            }
+            //로그인 통신
+            const loginResult = await doLogin(LoginType.ID,new DataSet({'ID':id,'PW':password}));
+            
+            //결과분기
+            if(loginResult.result){
+              setOpen(false);
+              nFunc(new DataSet({result:true}));
+            }else{
+              messageView(loginResult.msg,"확인");
+            }
+          };
+
+        //팝업 컴포넌트 생성
+        return (
+          <MemoryRouter>
+            {/* 로그인 팝업 */}
+            <Dialog
+              open={open}
+              onClose={popupClose}
+              maxWidth="xs"
+              fullWidth
+              PaperProps={{
+                sx: {
+                  borderRadius: 3,
+                  padding: 2,
+                  background: 'linear-gradient(135deg, #f5f7fa, #c3cfe2)',
+                  boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
+                },
+              }}
+            >
+              <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', color: '#333' }}>
+                로그인
+              </DialogTitle>
+              <DialogContent>
+                <TextField
+                  label="아이디"
+                  fullWidth
+                  margin="dense"
+                  variant="outlined"
+                  value={id}
+                  onChange={(e) => setId(e.target.value)}
+                  sx={{
+                    mb: 2,
+                    backgroundColor: '#fff',
+                    borderRadius: 1,
+                  }}
+                />
+                <TextField
+                  label="비밀번호"
+                  type="password"
+                  fullWidth
+                  margin="dense"
+                  variant="outlined"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  sx={{
+                    backgroundColor: '#fff',
+                    borderRadius: 1,
+                  }}
+                />
+              </DialogContent>
+              <DialogActions sx={{ justifyContent: 'center', pb: 2 }}>
+                <Button
+                  onClick={login}
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    px: 4,
+                    py: 1,
+                    borderRadius: 2,
+                    textTransform: 'none',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  로그인
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </MemoryRouter>
+        );
+      })
+    );
+  });
+};
+
 
 /**
  * 정적 HTML 풀 호출 팝업
  * @param param0 
  */
 export const openHtmlPopup = (url: string): AsyncPromiss => {
-  return new AsyncPromiss((success) => {
+  return new AsyncPromiss((nFunc) => {
     const formId = "gOpenHtmlPopup";
     document.getRoot(formId).render(
       React.createElement(() => {
@@ -317,7 +437,7 @@ export const openHtmlPopup = (url: string): AsyncPromiss => {
           setOpen(false);
           setTimeout(() => {
             document.removeRoot(formId);
-            success(new DataSet(data)); // Promise를 통해 데이터 반환
+            nFunc(new DataSet(data)); // Promise를 통해 데이터 반환
             progressBar(false);
           }, 300);
         };

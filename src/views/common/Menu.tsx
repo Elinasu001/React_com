@@ -9,20 +9,20 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
-import { useAppNavigator } from "@src/assets/js/common";
+import { doActionView } from "@src/assets/js/common";
+import DataSet from "@src/assets/io/DataSet";
 
 const Menu = ({ open, onClose }: {
   open: boolean;
   onClose: () => void;
 }) => {
-  const navigator = useAppNavigator();
-  
+
   //메뉴 정의
   const menuItems = [
     { text: "홈", icon: <HomeIcon />, path: "/" },
-    { text: "기능 테스트", icon: <CodeIcon />, path: "/test.view"},
-    { text: "폼 테스트", icon: <CodeIcon />, path: "/inputTest.view"},
-    { text: "네이티브", icon: <CodeIcon />, path: "/nativeTest.view"},
+    { text: "기능 테스트", icon: <CodeIcon />, path: "/test.view" },
+    { text: "폼 테스트", icon: <CodeIcon />, path: "/inputTest.view" },
+    { text: "네이티브", icon: <CodeIcon />, path: "/nativeTest.view" },
     { text: "공통(COM)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=com" },
     { text: "조회(INQ)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=inq" },
     { text: "이체(TNF)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=tnf" },
@@ -38,8 +38,7 @@ const Menu = ({ open, onClose }: {
           <ListItem key={index} disablePadding>
             <ListItemButton
               onClick={() => {
-                
-                navigator.doActionURL(item.path);
+                doActionView(item.path,new DataSet({"page":item.text}));
                 onClose();
               }}
             >

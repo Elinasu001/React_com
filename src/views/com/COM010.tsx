@@ -6,6 +6,7 @@
  */
 import { GLog } from "@src/assets/js/common";
 import { MainBox } from "@src/components/Box";
+import { ContentTitle } from "@src/components/Text";
 
 const COM010 = () => {
 
@@ -14,8 +15,27 @@ const COM010 = () => {
 
   return (
     <MainBox>
-      <h1>타이틀~</h1>
-      <p>개발중</p>
+      {/* 컨텐츠 상단 타이틀 */}
+      <ContentTitle
+        title={
+          <>
+            <strong>정보확인 기간이 만료</strong>되어
+            <br />
+            <strong>재확인</strong>이 필요해요
+          </>
+        }
+        desc={
+          <>
+            본 제도는 「특정금융거래보고법」과
+            <br />
+            금융정보분석원 고시 「자금세탁방지 및
+            <br />
+            공중협박자금조달금지 업무규정」에 따라
+            <br />
+            1년 주기로 고객정보를 재확인 하고 있습니다
+          </>
+        }
+      />
     </MainBox>
   );
 };

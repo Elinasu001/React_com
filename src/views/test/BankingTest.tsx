@@ -4,8 +4,8 @@
  * @author 
  * @version 1.0.0
  */
-import { useLocation, useNavigate } from "react-router-dom";
-import { GLog, useAppNavigator } from '@assets/js/common';
+import { useLocation } from "react-router-dom";
+import { doActionURL, getParameter, GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/Text";
 import { Button01 } from "@src/components/Button";
 import { openFullPopup, openBottomPopup } from "@src/components/Popup";
@@ -97,7 +97,6 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
  */
 const BankingTest = () => {
   const location = useLocation();
-  const navigate = useAppNavigator();
 
   const queryParams = new URLSearchParams(location.search);
   const txGbnCd = queryParams.get("txGbnCd") || "com"; // 기본값: "com"
@@ -106,6 +105,10 @@ const BankingTest = () => {
 
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
+
+  const param = getParameter()
+  GLog.d('페이지 파라미터1 : '+param.toString());
+  GLog.d('페이지 파라미터2 : '+param.getString('page'));
 
   return (
      <MainBox>
@@ -177,6 +180,7 @@ const BankingTest = () => {
                     openFullPopup({
                       component: COM004_1,
                       title: item.text,
+                      param: new DataSet({'PROD_KNCD':'10'}),
                       nFunc: (data?) => {
                         if (data) {
                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
@@ -297,7 +301,7 @@ const BankingTest = () => {
                 }
               } else {
                 // 그 외는 일반 페이지 이동
-                navigate.doActionURL(item.path);
+                doActionURL(item.path);
               }
             }}
 

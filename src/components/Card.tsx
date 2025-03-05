@@ -83,12 +83,14 @@ interface Card02Props {
   type: string;
   acno: string;
   balance: number;
+  pdnm: string;
 }
 
 /**
  * 카드 컴포넌트 (계좌 전용)
  */
-export const Card02 = ({ type, acno, balance }: Card02Props) => {
+
+export const Card02 = ({ type, acno, balance, pdnm }: Card02Props) => {
   const { doActionURL } = useAppNavigator();
   const pageHandle = async () => {
     const form = makeForm("INQ0002SC");
@@ -122,31 +124,45 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-          {type} 계좌
+          {type} 계좌 {pdnm}
         </Typography>
       </Box>
 
       {/* 계좌번호 및 복사 아이콘 */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <Typography variant="body1" color="textSecondary">
           {acno}
-          <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
+          <IconButton
+            onClick={() => {
+              if (typeof window !== "undefined" && navigator?.clipboard) {
+                try {
+                  navigator.clipboard.writeText(acno);
+                } catch (error) {
+                  console.error("클립보드 복사 오류:", error);
+                }
+              } else {
+                console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
+              }
+            }}
+            sx={{ p: 1, ml: "auto" }}
+          >
             <ContentCopyIcon fontSize="small" />
           </IconButton>
         </Typography>
-
-        {/* 계좌 잔액 */}
-        <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-          {balance.toLocaleString()} 원
-        </Typography>
       </Box>
+
+      {/* 계좌 잔액 */}
+      <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
+        {(balance ?? 0).toLocaleString()} 원
+      </Typography>
 
       {/* 구분선 */}
       <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} />
 
       {/* 버튼 영역 */}
       <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-        {type === "대출" ? (
+        {type === "4" ? (
           <ListItemButton
             sx={{
               justifyContent: "center",
@@ -175,7 +191,11 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
               거래내역
             </ListItemButton>
 
-            <Divider orientation="vertical" flexItem sx={{ height: "35px", borderColor: "lightgray" }} />
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ height: "35px", borderColor: "lightgray", alignSelf: "center" }}
+            />
 
             <ListItemButton
               sx={{
@@ -197,6 +217,7 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
 };
 
 
+
 /**
  * 상품 카드 속성
  */
@@ -208,6 +229,7 @@ interface Card03Props {
   keyword: string[];        // 키워드
   contents1: string;        // 내용1
   contents2: string;        // 내용2
+  onClick?: () => void;
 }
 
 /**
@@ -215,15 +237,8 @@ interface Card03Props {
  */
 const StyledIconButton = styled(IconButton)({
   outline: "none",
-  "&:focus": {
-    outline: "none",
-  },
-  "&:hover": {
-    backgroundColor: "transparent",
-  },
-  "&.active": {
-    color: "Salmon",
-  },
+  "&:focus": { outline: "none" },
+  "&.active": { color: "Salmon" },
 });
 
 /**
@@ -236,27 +251,30 @@ export const Card03 = ({
   pdDesc,
   keyword,
   contents1,
-  contents2
+  contents2,
+  onClick
 }: Card03Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCompared, setIsCompared] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  // 관심상품 클릭 핸들러
-  const handleGiftClick = () => {
+  // 관심상품 클릭
+  const handleGiftClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsFavorite(!isFavorite);
     setSnackbarMessage(
-      isFavorite ? "관심상품에서 제거되었습니다." : "관심상품으로 등록했어요."
+      isFavorite ? "관심 상품에서 제외되었습니다." : "관심 상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
 
-  // 비교상품 클릭 핸들러
-  const handleCompareClick = () => {
+  // 비교상품 클릭
+  const handleCompareClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsCompared(!isCompared);
     setSnackbarMessage(
-      isCompared ? "비교상품에서 제거되었습니다." : "비교상품으로 등록했어요."
+      isCompared ? "비교 상품에서 제외되었습니다." : "비교 상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
@@ -268,7 +286,7 @@ export const Card03 = ({
 
   return (
     <>
-      <Card variant="outlined" sx={{ mt:2, mb: 2, borderRadius: "20px"}}>
+      <Card variant="outlined" sx={{ mb: 2, borderRadius: "20px"}} onClick={onClick}>
         {/* 카드 헤더 - 상품 설명 + 아이콘 */}
         <CardHeader
           sx={{ pb: 0 }}
@@ -302,12 +320,12 @@ export const Card03 = ({
 
         {/* 카드 본문 */}
         <CardContent sx={{ pt: 1 }}>
-          {/* 상품명 + 카테고리 (첫 줄) */}
+          {/* 상품명 + 카테고리 */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <Typography
               variant="body2"
               sx={{
-                border: "2px solid Salmon",
+                border: "2px solid",
                 color: "Salmon !important",
                 px: 1,
                 py: 0.3,
@@ -343,11 +361,11 @@ export const Card03 = ({
       {/* 알림창 */}
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={2000}
+        autoHideDuration={1000}
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={handleSnackbarClose} severity="info" sx={{ width: "100%" }}>
+        <Alert onClose={handleSnackbarClose} severity="info">
           {snackbarMessage}
         </Alert>
       </Snackbar>

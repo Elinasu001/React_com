@@ -16,7 +16,7 @@ export const Accordion01 = ({ title, checked, contents, onChange }: AccordionPro
         <Typography>{title}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>{contents}</Typography>
+        <Typography component="div">{contents}</Typography>
       </AccordionDetails>
     </MuiAccordion>
   );
