@@ -18,13 +18,13 @@
 //상단 타이틀
 .content-tit-wrap { text-align: left;
     h3.tit { font-size:var(--font22); font-weight:var(--font-w-m); color: var(--tit-h3); }
-    p.desc { margin-top:10px; font-size:var(--font16); font-weight:var(--font-w-m); color: var(--desc); }
+    p.desc { padding-top:10px; font-size:var(--font16); font-weight:var(--font-w-m); color: var(--desc); }
 }
 
 .info-wrap {
 
     //기본
-    .info-tit { padding-bottom:15px; font-size:var(--font18); font-weight: var(--font-w-b); text-align: left; }
+    .info-tit { padding-bottom:15px; font-size:var(--font18); font-weight: var(--font-w-b); text-align: left; color:var(--info-list); }
     .info-list { padding:0;
         li {
             position: relative; padding:5px 0 0 10px; font-size:var(--font14); color:var(--info-list);
