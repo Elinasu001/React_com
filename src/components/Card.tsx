@@ -13,6 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
 import { doAction,makeForm, addFormData, doActionView } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 /**
  * 카드 기본 속성
@@ -107,6 +108,9 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
           {type} 계좌 {pdnm}
+          <IconButton onClick={() => nFunc?.(new DataSet({ acno, type, pdnm, balance, action: "더보기" }))}>
+          <MoreVertIcon />
+          </IconButton>
         </Typography>
       </Box>
 
@@ -169,7 +173,7 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
                 "&:hover": { bgcolor: "grey.400" },
               }}
               onClick={() => 
-                nFunc?.(new DataSet({  acno, type, pdnm, balance }))
+                nFunc?.(new DataSet({  acno, type, pdnm, balance, action: "거래내역" }))
               }
 
             >

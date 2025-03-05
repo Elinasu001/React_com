@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // common
-import { doAction, makeForm, addFormData, getCustDs } from '@assets/js/common';
+import { doAction, makeForm, addFormData, getCustDs, doActionView } from '@assets/js/common';
 
 //components
 import { Accordion01 } from "@src/components/Accordion";
@@ -118,7 +118,15 @@ const INQ001 = () => {
           contents={
             accountList.length > 0 ? (
               accountList.map((account, index) => (
-                <Card02 key={index} {...account} />
+                <Card02 key={index} {...account} 
+                  nFunc={(accountData) => {
+                    if (accountData?.getString("action") === "거래내역") {
+                      doActionView("/inq/INQ002.view", accountData);
+                    } else if (accountData?.getString("action") === "더보기") {
+                      doActionView("/efc/EFC004.view", accountData);
+                    }
+                  }}
+                />
               ))
             ) : (
               <TextBox02 text="수신 계좌가 없습니다." />
