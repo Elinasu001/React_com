@@ -64,7 +64,7 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
     { text: "적금납입일변경", path: "/dep/DEP006.view" },
   ],
   lon: [
-    { text: "상품안내/신청", path: "/lon/LON001.view" },
+    { text: "상품안내/신청", path: "/lon/LON001_1.view" },
     { text: "간편한도조회", path: "/lon/LON002.view" },
     { text: "전자약정", path: "/lon/LON003.view" },
     { text: "신용조회동의", path: "/lon/LON004.view" },
