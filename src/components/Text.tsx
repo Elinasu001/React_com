@@ -87,7 +87,7 @@ export const ContentTitle = ({ title, desc }: ContentTitleProps) => {
 
     <Box className="content-tit-wrap">
       {title && <Typography variant="h3" className="tit">{title}</Typography>}
-      {desc && <Typography className="txt">{desc}</Typography>}
+      {desc && <Typography className="desc">{desc}</Typography>}
     </Box>
   )
 }
