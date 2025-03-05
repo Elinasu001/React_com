@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
+import { Typography } from "@mui/material";
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
+import { TextBox } from '@src/components/Input';
 import { SelectBox01 } from '@src/components/SelectBox';
+import { Box01 } from "@src/components/Box";
+import { Button01 } from "@src/components/Button";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import DataSet from "@assets/io/DataSet";
-import { Dataset } from "@mui/icons-material";
+
 
 const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
-  const [telCdData, settelCdData] = useState<{ key: string; label: string }[]>([]);  /** 통신사코드리스트 */
+  const [telCdData, settelCdData] = useState<{ key: string; label: string }[]>([]); /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
   const [showVerificationInput, setShowVerificationInput] = useState(false);        /** 인증번호입력필드 상태값 */
@@ -173,82 +176,27 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
 
   return (
     
-      <Box
-        sx={{
-           
-        }}
-      >
-       
-          <Box mt={3}>
+    <Box01>
             <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
-          </Box>
-
-     
-          <Box mt={3}>
-            <Typography variant="body2">이름</Typography>
-            <TextField 
-              fullWidth
-              id="custNm"
-              name="custNm"
-              placeholder="이름 입력"
-              variant="outlined"
-              required
-              value={formData.custNm}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box mt={3}>
-            <Typography variant="body2">주민등록번호</Typography>
-            <TextField 
-              fullWidth
-              id="rsrNo"
-              name="rsrNo"
-              placeholder="주민등록번호 입력"
-              variant="outlined"
-              required
-              value={formData.rsrNo} // 상태 값 바인딩
-              onChange={handleChange} // 입력값 변경 감지
-            />
-          </Box>
-
-
-          <SelectBox01 label="통신사" items={telCdData}  onChange={setSelectedCarrier} />
-
-          <Box mt={3}>
-            <Typography variant="body2">휴대폰번호</Typography>
-            <TextField 
-              fullWidth
-              id="telNo"
-              name="telNo"
-              placeholder="휴대폰번호 입력"
-              variant="outlined"
-              required
-              value={formData.telNo} // 상태 값 바인딩
-              onChange={handleChange} // 입력값 변경 감지
-            />
-          </Box>
-          {showVerificationInput && (       
-            <Box mt={3}>
-                <Typography variant="body2">인증번호</Typography>
-                <TextField 
-                fullWidth
-                id="telConNo"
-                name="telConNo"
-                placeholder="인증번호 입력"
-                variant="outlined"
-                required
-                value={mblCtfcNo ?? ""} // 상태 값 바인딩
-                onChange={mblCtfcNoChange} // 입력값 변경 감지
-                />
-            </Box>
-            )}
-          <Box mt="auto" display="flex" justifyContent="space-between"  sx={{ mt: 2 }}>
-            <Button variant="contained" color="primary"   onClick={isVerified ? userConfirmAuth : userAuth} >
-                {isVerified ? "인증확인" : "인증번호받기"} {/* 상태에 따라 버튼 변경 */}
-            </Button>
+            
+            <TextBox label="이름 입력" onChange={handleChange} value={formData.custNm}></TextBox>
+            <TextBox label="주민등록번호 입력" onChange={handleChange} value={formData.rsrNo}></TextBox>
+            <SelectBox01 label="통신사" items={telCdData}  onChange={setSelectedCarrier} />
+            <TextBox label="휴대폰번호 입력" onChange={handleChange} value={formData.telNo}></TextBox>
+           
+              {showVerificationInput && (       
+              <Box01>
+                  <Typography variant="body2">인증번호</Typography>
+                  <TextBox label="인증번호 입력" onChange={mblCtfcNoChange} value={mblCtfcNo ?? ""}></TextBox>
+                  
+              </Box01>
+              )}
+              
+          <Button01 btnName = {isVerified ? "인증확인" : "인증번호받기"} clickFunc={isVerified ? userConfirmAuth : userAuth} />
+              
+      </Box01>
          
-          </Box>
-      </Box>
+      
  
   );
 };
