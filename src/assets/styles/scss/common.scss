@@ -102,7 +102,9 @@
 
 // 컨텐츠 버튼 높이 및 폰트
 .btn-area {
-    .btn{ height:48px; font-size: var(--font16); }
+    .btn{ height:48px; font-size: var(--font16);
+        &:disabled { color:var(--btn-disabled-txt) !important; background-color: var(--btn-disabled) !important; }
+    }
 }
 
 // 컨텐츠 하단 버튼, 팝업 하단 높이 및 폰트
