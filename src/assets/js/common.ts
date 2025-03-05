@@ -16,6 +16,7 @@ import { getNavigation } from '@assets/js/service/navigationService'; // 전역 
 import { messageView } from "@src/components/Alert";
 import { store } from "@assets/js/redux/store";
 import { useAppSelector } from "./redux/hooks";
+import { getLocation } from "./service/useLocationService";
 
 //앱 실행 환경
 export enum AppEnvType {
@@ -149,7 +150,6 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
   progressBar(true);
 
   const navigate = getNavigation();
-
   if (!navigate) {
     messageView("처리중 오류 발생했습니다.","확인");
     return;
@@ -184,6 +184,42 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
     progressBar(false);
   }, 500);
 }
+
+
+/**
+ * 페이지 전환 전 로딩을 켜고, 일정 시간 후 uri로 navigate 합니다.
+ * @param uri 이동할 페이지의 경로
+ * @param isLogin 로그인 필수 여부부
+ */
+export const doActionView = async (uri: string,param: DataSet = new DataSet({}), isLogin = false) =>{
+  progressBar(true);
+
+  const navigate = getNavigation();
+  if (!navigate) {
+    messageView("처리중 오류 발생했습니다.","확인");
+    return;
+  }
+
+  setTimeout(() => {
+    navigate(uri, { state: param.toString() });
+    logout();
+    progressBar(false);
+  }, 500);
+}
+
+/**
+ * 넘긴 페이지 파라미터 불러오기
+ */
+export const getParameter = (): DataSet => {
+  const location = getLocation();
+  // location.state가 객체이고, key가 있다면 그 값을 문자열로 반환
+  if(location){
+    const stateString = location.state as string;
+    return new DataSet(JSON.parse(stateString));
+  }else{
+    return new DataSet({});
+  }
+};
 
 
 export enum LoginType{
@@ -297,7 +333,9 @@ export default {
   addFormData, 
   doAction,
   doActionURL,
+  doActionView,
   doLogin,
   doLogout,
-  getCustDs
+  getCustDs,
+  getParameter
 };

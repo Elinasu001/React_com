@@ -9,7 +9,8 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
-import { doActionURL } from "@src/assets/js/common";
+import { doActionView } from "@src/assets/js/common";
+import DataSet from "@src/assets/io/DataSet";
 
 const Menu = ({ open, onClose }: {
   open: boolean;
@@ -37,7 +38,7 @@ const Menu = ({ open, onClose }: {
           <ListItem key={index} disablePadding>
             <ListItemButton
               onClick={() => {
-                doActionURL(item.path);
+                doActionView(item.path,new DataSet({"page":item.text}));
                 onClose();
               }}
             >

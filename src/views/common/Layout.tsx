@@ -1,18 +1,21 @@
 import { Box, Container } from '@mui/material';
 import Header from '@views/common/Header';
 import Footer from '@views/common/Footer';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {headerHeight,bottomNavHeight, GLog} from "@assets/js/common"
 import { useEffect } from 'react';
 import { navigationRef } from '@assets/js/service/navigationService'; // 전역 네비게이션 ref
+import { locationRef } from '@assets/js/service/useLocationService'; // 전역 로케이션 ref
 
 const Layout = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   // 전역 내부객체 저장
   useEffect(() => {
     navigationRef.current = navigate;
+    locationRef.current = location;
   }, [navigate]);
 
   return (

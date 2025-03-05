@@ -4,8 +4,16 @@
  * 사용 예시:
  * import { progressBar } from "@assets/ui/loading";
  */
-import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import { Backdrop, Typography, Box } from "@mui/material";
+import SavingsIcon from '@mui/icons-material/Savings';
+import { keyframes } from '@emotion/react';
 import React from "react";
+
+// 회전 애니메이션 정의 (2초에 한 바퀴)
+const spinAnimation = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
 
 /**
  * 로딩 on/off
@@ -19,28 +27,43 @@ export function progressBar(isLoading: boolean, msg?: string) {
       //팝업 컴포넌트 생성
       return (
         <Backdrop
+      sx={{
+        color: '#fff',
+        zIndex: (theme) => theme.zIndex.modal + 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        transition: 'background-color 0.3s ease',
+      }}
+      open={isLoading}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <SavingsIcon
           sx={{
-            color: "#fff",
-            zIndex: (theme) => theme.zIndex.modal + 1,
-            backgroundColor: "rgba(0, 0, 0, 0.5)", // 배경 어둡게
+            fontSize: 80,
+            animation: `${spinAnimation} 1.5s linear infinite`,
+            mb: 2,
           }}
-          open={isLoading}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+        />
+        {msg && (
+          <Typography
+            variant="h5"
+            sx={{
+              mt: 2,
+              fontWeight: 'bold',
+              letterSpacing: '0.5px',
             }}
           >
-            <CircularProgress color="inherit" />
-            {msg && (
-              <Typography variant="h6" sx={{ mt: 2 }}>
-                {msg}
-              </Typography>
-            )}
-          </div>
-        </Backdrop>
+            {msg}
+          </Typography>
+        )}
+      </Box>
+    </Backdrop>
       );
     })
   );

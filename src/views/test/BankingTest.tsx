@@ -4,8 +4,8 @@
  * @author 
  * @version 1.0.0
  */
-import { useLocation, useNavigate } from "react-router-dom";
-import { doActionURL, GLog } from '@assets/js/common';
+import { useLocation } from "react-router-dom";
+import { doActionURL, getParameter, GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/Text";
 import { Button01 } from "@src/components/Button";
 import { openFullPopup, openBottomPopup } from "@src/components/Popup";
@@ -105,6 +105,10 @@ const BankingTest = () => {
 
   // txGbnCd에 해당하는 버튼 목록 가져오기
   const buttons = menuItems[txGbnCd] || [];
+
+  const param = getParameter()
+  GLog.d('페이지 파라미터1 : '+param.toString());
+  GLog.d('페이지 파라미터2 : '+param.getString('page'));
 
   return (
      <MainBox>
