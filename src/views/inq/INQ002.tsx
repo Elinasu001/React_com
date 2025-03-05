@@ -17,6 +17,7 @@ import DataSet from "@src/assets/io/DataSet";
 import POP003 from "@src/views/pop/POP003";
 import { openBottomPopup } from "@src/components/Popup";
 import { useLocation } from 'react-router-dom';
+import getDate from "@src/assets/js/common_date";
 
 interface TradeListProps {
   ACNO?: string;
@@ -42,14 +43,29 @@ const INQ002 = () => {
   const accountData = JSON.parse(location.state)
   const [showBalance] = useState(true);
   const [tradeList, settradeList] = useState<TradeListProps[]>([]);
-  const fetchTradeList = async (acno:string): Promise<TradeListProps[]> =>{ 
+  const currentDate = getDate("YYYYMMDD", new Date());
+  const [popupData, setPopupData] = useState({
+    
+    selectedDate : "3개월", 
+    ioDvcd : "전체", 
+    searchName : "", 
+    isDeposit : "",
+    lnpBase : "최신순"
+  });
+  const fetchTradeList = async (account:DataSet): Promise<TradeListProps[]> =>{ 
     
 
     //폼생성,데이터 주입
     const form = makeForm('INQ0002SC');
-    addFormData(form,'txGbnCd','TL');
-    addFormData(form, 'acno', acno); // 계좌번호를 폼에 추가
-   
+    addFormData(form,'txGbnCd','TL');       
+    addFormData(form, 'acno', accountData.acno);                                      //계좌번호
+    addFormData(form, 'stdt', currentDate);                               //시작일자
+    addFormData(form, 'eddt', currentDate);                               //종료일자
+    addFormData(form, 'type', account.getString("type"));                 //계좌 구분코드
+    addFormData(form, 'IOMN_DVCD', account.getString("ioDvcd") || "");    //입출금 구분코드
+    addFormData(form, 'LNP_BASE', account.getString("lnpBase") || "");    //조회방식
+
+    console.log(form.param)
 
     //로딩 ON
     progressBar(true, "통신중");
@@ -69,38 +85,40 @@ const INQ002 = () => {
       // 거래내역 리스트 가져오기
       const resData = new DataSet(response.data);
       const tradeList = resData.getList("OUT_REC");
-      console.log("resData +++ " + resData.getString("ACNO"));
+
       const formattedData: TradeListProps[] = tradeList.map((item) => ({
         ACNO: resData.getString("ACNO") || "",  
         DEPR_NM: resData.getString("DEPR_NM") || "", 
         NEXT_TRAN_YN: resData.getString("NEXT_TRAN_YN") || "N",  
         DTA_NCNT: Number(resData.getString("DTA_NCNT")) || 0,  
         OUT_REC: [{
-          TRN_DT: item.TRN_DT || "",  // 거래일자
-          TRN_TKTM: item.TRN_TKTM || "",  // 거래시각
-          TRAN_AMT_SIGN: item.TRAN_AMT_SIGN || "",  // 거래금액 부호
-          TRN_AMT: Number(item.TRN_AMT),  // 거래금액
+          TRN_DT: item.TRN_DT || "",                        // 거래일자
+          TRN_TKTM: item.TRN_TKTM || "",                    // 거래시각
+          TRAN_AMT_SIGN: item.TRAN_AMT_SIGN || "",          // 거래금액 부호
+          TRN_AMT: Number(item.TRN_AMT),                    // 거래금액
           TRNF_AF_BLNC_SIGN: item.TRNF_AF_BLNC_SIGN || "",  // 거래후잔액 부호
-          ACNT_BLNC: Number(item.ACNT_BLNC),  // 계좌잔액
-          OUTL: item.OUTL || ""  // 거래자명
+          ACNT_BLNC: Number(item.ACNT_BLNC),                // 계좌잔액
+          OUTL: item.OUTL || ""                             // 거래자명
         }],
         NEXT_DATA_XN: resData.getString("NEXT_DATA_XN") || "",  
         API_RS_MSG: resData.getString("API_RS_MSG") || ""  
       }));
      
-      return formattedData;  // 반환값 추가
-
+      return formattedData;
     } catch (error) {
         GLog.e("거래내역 조회 중 오류 발생:", error);
         messageView("거래내역 조회 중 오류가 발생했습니다.", "확인");
         progressBar(false);
-        return [];  // 오류 발생 시 빈 배열 반환
+        return [];  
     }
   };
 
   useEffect(() => {
     const param = getParameter(location);
-    const account = param.getString('acno');
+    const account = new DataSet();
+    
+    account.putString("acno", param.getString("acno"));
+    
     
     if (account) {
       const fetchData = async () => {
@@ -113,7 +131,7 @@ const INQ002 = () => {
 
   
   useEffect(() => {
-    console.log(tradeList); // tradeList가 제대로 업데이트되는지 확인
+    console.log(tradeList); // tradeList 확인용용
   }, [tradeList]);
   
 
@@ -135,13 +153,29 @@ const INQ002 = () => {
       
       {/* 조회기간 설정 */}
       <Button01 
-        btnName="조회기간TEST"
+        btnName={`${popupData.selectedDate} ${popupData.lnpBase} ${popupData.ioDvcd}`}
         clickFunc={() => {
           openBottomPopup({
             component:POP003
             ,title:'조회기간 설정',nFunc:(data?)=>{
             if(data){
-              GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
+                  
+                  const popup = data; 
+                  
+                  const popupData = {
+                    selectedDate: popup.getString("selectedDate") || "3개월월",
+                    ioDvcd: popup.getString("ioDvcd") || "전체", 
+                    searchName: popup.getString("searchName") || "",
+                    isDeposit: popup.getString("isDeposit") || "",
+                    lnpBase: popup.getString("lnpBase") || "최신순", 
+                  };
+                  
+                  setPopupData(popupData);
+              const fetchData = async () => {
+                const accountData = await fetchTradeList(data);
+                settradeList(accountData);
+              };
+              fetchData();
             }else{
               GLog.d('팝업 취소 닫힘');
             }

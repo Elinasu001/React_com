@@ -6,6 +6,7 @@
  */
 import { Stack, TextField, Typography } from "@mui/material";
 import DataSet from "@src/assets/io/DataSet";
+import getDate from "@src/assets/js/common_date";
 import { Box01, MainBox } from "@src/components/Box";
 import { Button01 } from "@src/components/Button";
 import { TextBox } from "@src/components/Input";
@@ -22,40 +23,55 @@ const tabItems1 = [
 
 ];
 
+
 const tabItems2 = [
-  { label: "전체", value: "전체" },
-  { label: "입금", value: "입금" },
-  { label: "출금", value: "출금" },
+  { label: "전체", value: "" },
+  { label: "입금", value: "1" },
+  { label: "출금", value: "2" },
 ];
 
 const tabItems3 = [
-  { label: "최신순", value: "최신순" },
-  { label: "과거순", value: "과거순" },
+  { label: "최신순", value: "1" },
+  { label: "과거순", value: "2" },
 ];
 
 
 
-const POP002 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
+const POP003 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
+
+
 
   // 탭 변경 시 이벤트
-  const handleTabChange = (value: string | number) => {
-    setSelectedTab(value.toString());
+  const handleTabChange1 = (value: string | number) => {
+    setSelectedDate(value.toString());
   };
 
-  const result = new DataSet({ result: "콜백 가자" });
-  const [selectedTab, setSelectedTab] = useState("3개월");
-  const [selectedType, setSelectedType] = useState("전체");
+  const handleTabChange2 = (value: string | number) => {
+    setLnpBase(value.toString());
+  };
+
+
+  const [selectedDate, setSelectedDate] = useState("3개월");
+  const [ioDvcd, setioDvcd] = useState("전체");
+  const [lnpBase, setLnpBase] = useState("최신순");
   const [searchName, setSearchName] = useState("");
   const [isDeposit, setIsDeposit] = useState(false);
 
+  const popupResult =new DataSet({ 
+    selectedDate, 
+    ioDvcd, 
+    searchName, 
+    isDeposit,
+    lnpBase
+  })
 
   const handleSearchNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(e.target.value);
   };
 
   const handleTypeTabChange = (value: string | number) => {
-    setSelectedType(value.toString());
-    if (value === "입금") {
+    setioDvcd(value.toString());
+    if (value === "1") {
       setIsDeposit(true);  
     } else {
       setIsDeposit(false);  
@@ -66,12 +82,12 @@ const POP002 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
   return (
     <MainBox>
       <Typography>조회기간</Typography>
-      <Tab01 items={tabItems1} initialValue="3개월" onChange={handleTabChange}/>
+      <Tab01 items={tabItems1} initialValue="3개월" onChange={handleTabChange1}/>
       {/* 날짜 선택 */}
       
 
       <Typography>거래유형</Typography>
-      <Tab01 items={tabItems2} initialValue="전체" onChange={handleTypeTabChange}/>
+      <Tab01 items={tabItems2} initialValue="" onChange={handleTypeTabChange}/>
 
       {isDeposit && (
         <Box01 padding="24px" maxWidth="500px"> 
@@ -88,10 +104,10 @@ const POP002 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
       )}
 
       <Typography>정렬순서</Typography>
-      <Tab01 items={tabItems3} initialValue="최신순" onChange={handleTabChange}/>
-      <Button01 btnName="조회" clickFunc={() => onClose(result)} />
+      <Tab01 items={tabItems3} initialValue="1" onChange={handleTabChange2}/>
+      <Button01 btnName="조회" clickFunc={() => onClose(popupResult)} />
     </MainBox>
   );
 };
 
-export default POP002;
+export default POP003;
