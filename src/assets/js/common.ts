@@ -9,12 +9,13 @@
  * @version 1.0.0
  */
 import { progressBar } from "@src/components/Loading";
-import { logout,login, convertUserData } from '@src/assets/js/redux/slice/custDs';
+import { logout,login, convertUserData, CustDs } from '@src/assets/js/redux/slice/custDs';
 import axios from 'axios';
 import DataSet from "@assets/io/DataSet";
 import { getNavigation } from '@assets/js/service/navigationService'; // 전역 네비게이션 ref
 import { messageView } from "@src/components/Alert";
 import { store } from "@assets/js/redux/store";
+import { useAppSelector } from "./redux/hooks";
 
 //앱 실행 환경
 export enum AppEnvType {
@@ -144,6 +145,9 @@ export const doAction = async (req: ApiReq, isLogin = false): Promise<ApiRes> =>
  * @param isLogin 로그인 필수 여부부
  */
 export const doActionURL = async (uri: string, isLogin = false) =>{
+  
+  progressBar(true);
+
   const navigate = getNavigation();
 
   if (!navigate) {
@@ -163,6 +167,11 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
     //로그인 세션 체크
     const chk = await sessionCheck();
     GLog.d('로그인 서버 세션 체크 '+chk);
+
+    // const { user } = useAppSelector((state) => state.custDs);
+    // const userName = user?.USER_NM || '';
+    GLog.d('USER_NM : '+getCustDs()?.USR_ID);
+
     if(!chk){
       messageView('로그인 세션이 만료되었습니다. 필요합니다','확인',() => {
         doLogout(false);
@@ -172,7 +181,6 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
   }
 
   
-  progressBar(true);
   setTimeout(() => {
     navigate(uri);
     logout();
@@ -189,6 +197,7 @@ export enum LoginType{
   FIN,      //금융인증서
   ID        //전자금융아이디
 }
+
 
 export const doLogin = async (loginType:LoginType,data : DataSet) => {
   progressBar(true);
@@ -212,14 +221,14 @@ export const doLogin = async (loginType:LoginType,data : DataSet) => {
   }
 
   //OPEN API 로그인전문 송신
-  //const response = await doAction(form);
-  const response: ApiRes = {
-    header: {
-      respCd: "N00000",
-      respMsg: "성공적으로 처리되었습니다.",
-    },
-    data: new DataSet({'API_RS_MSG':'SUCCESS','USR_ID':'hipen8','USR_NM':'김남교'})
-  };
+  const response = await doAction(form);
+  // const response: ApiRes = {
+  //   header: {
+  //     respCd: "N00000",
+  //     respMsg: "성공적으로 처리되었습니다.",
+  //   },
+  //   data: new DataSet({'API_RS_MSG':'SUCCESS','USR_ID':'hipen8','USR_NM':'김남교'})
+  // };
 
   progressBar(false);
 
@@ -257,6 +266,10 @@ export const doLogout = (isMessage : Boolean = true) => {
   }
 }
 
+export const getCustDs = (): CustDs | null => {
+  return store.getState().custDs.user;
+}
+
 
 // 세션 체크
 export const sessionCheck = async () => {
@@ -288,5 +301,6 @@ export default {
   doAction,
   doActionURL,
   doLogin,
-  doLogout
+  doLogout,
+  getCustDs
 };

@@ -8,7 +8,7 @@ import { createSlice,PayloadAction } from '@reduxjs/toolkit';
 import DataSet from '@src/assets/io/DataSet';
 import getDate from '@assets/js/common_date';
 
-interface CustDs {
+export interface CustDs {
   USR_ID: string;           // 아이디
   USER_NM: string;          // 이름
   PHONE_NO: string;         // 전화번호
