@@ -109,6 +109,14 @@ axios.defaults.timeout = 15000;// 기본 타임아웃 설정 (예: 15000ms = 15�
  */
 export const doAction = async (req: ApiReq, isLogin = false): Promise<ApiRes> => {
 
+  // if(isLogin){
+  //   const loginChk = await loginCheck();
+  //   if(!loginChk){
+  //     messageView('로그인이 필요합니다','확인',()=>{
+  //       //페이지 이어하기 작업중
+  //     });
+  //   }
+  // }
   try {
     //axios 통신
     const response = await axios.post('/api/' + req.serviceCd + '.act', req.param, {
@@ -148,35 +156,21 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
   
   progressBar(true); //로딩 열기
 
+  if(isLogin){
+    const loginChk = await loginCheck();
+    if(!loginChk){
+      progressBar(false);
+      messageView('로그인이 필요합니다','확인',()=>{
+        doLogout(false);
+      });
+    }
+  }
+
   const navigate = getNavigation();
   if (!navigate) {
     messageView("처리중 오류 발생했습니다.","확인");
     return;
   }
-
-  //로그인 체크
-  if(isLogin){
-    if(!IS_LOGIN()){
-      progressBar(false);
-      messageView('로그인이 필요합니다','확인',()=>{
-        //페이지 이어하기 작업중
-      });
-      return;
-    }
-
-    //로그인 세션 체크
-    const chk = await sessionCheck();
-    GLog.d('로그인 서버 세션 체크 '+chk);
-    GLog.d('USER_NM : '+getCustDs()?.USR_ID);
-
-    if(!chk){
-      messageView('로그인 세션이 만료되었습니다. 필요합니다','확인',() => {
-        doLogout(false);
-      });
-      return;
-    }
-  }
-
   
   setTimeout(() => {
     navigate(uri);
@@ -195,35 +189,22 @@ export const doActionView = async (uri: string,param: DataSet = new DataSet({}),
 
   progressBar(true); //로딩 열기
 
+  if(isLogin){
+    const loginChk = await loginCheck();
+    if(!loginChk){
+      progressBar(false);
+      messageView('로그인이 필요합니다','확인',()=>{
+        doLogout(false);
+      });
+    }
+  }
+
   const navigate = getNavigation();
   if (!navigate) {
     messageView("처리중 오류 발생했습니다.","확인");
     return;
   }
 
-  //로그인 체크
-  if(isLogin){
-    if(!IS_LOGIN()){
-      progressBar(false);
-      messageView('로그인이 필요합니다','확인',()=>{
-        //페이지 이어하기 작업중
-      });
-      return;
-    }
-
-    //로그인 세션 체크
-    const chk = await sessionCheck();
-    GLog.d('로그인 서버 세션 체크 '+chk);
-    GLog.d('USER_NM : '+getCustDs()?.USR_ID);
-
-    if(!chk){
-      messageView('로그인 세션이 만료되었습니다. 필요합니다','확인',() => {
-        doLogout(false);
-      });
-      return;
-    }
-  }
-  
   setTimeout(() => {
     navigate(uri, { state: param.toString() });
     progressBar(false);
@@ -285,6 +266,10 @@ export const doLogin = async (loginType:LoginType, data : DataSet) => {
 
   progressBar(false);
 
+  if(response.data.getString('API_RS_MSG') == ''){
+    return {result:false,msg:"서버와의 통신 오류입니다."};//서버 재기동 필요
+  }
+
   GLog.d('로그인 결과 : '+response.data.toString());
 
   const { respCd } = response.header;                     //통신결과
@@ -324,8 +309,18 @@ export const getCustDs = (): CustDs | null => {
 }
 
 
-// 세션 체크
-export const sessionCheck = async () => {
+/**
+ * 로그인 세션 여부 체크
+ */
+export const loginCheck = async (): Promise<boolean> => {
+
+  //쿠키 체크
+  if(!IS_LOGIN())
+    {
+    return false;
+  }
+
+  //세션 체크
   const form = makeForm("COM0000SC");
   addFormData(form, "txGbnCd", "LOGIN");
   addFormData(form, "loginType", "SC");
@@ -337,11 +332,33 @@ export const sessionCheck = async () => {
     addFormData(form, "loginType", "R");
     const response2 = await doAction(form);
     GLog.d('로그인 세션 갱신 + '+response2.data.toString());
-    return true;
-  }else{
+  }
+  else
+  {
     return false;
   }
+
+  return true;
 }
+
+// 세션 체크
+// export const sessionCheck = async () => {
+//   const form = makeForm("COM0000SC");
+//   addFormData(form, "txGbnCd", "LOGIN");
+//   addFormData(form, "loginType", "SC");
+//   const response = await doAction(form);
+//   const isLogin = response.data.getBoolean('IS_LOGIN',false);
+//   GLog.d('로그인 세션 확인 + '+isLogin);
+//   if(isLogin){
+//     addFormData(form, "txGbnCd", "LOGIN");
+//     addFormData(form, "loginType", "R");
+//     const response2 = await doAction(form);
+//     GLog.d('로그인 세션 갱신 + '+response2.data.toString());
+//     return true;
+//   }else{
+//     return false;
+//   }
+// }
 
 export default { 
   GLog, 

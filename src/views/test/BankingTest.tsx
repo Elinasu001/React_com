@@ -7,7 +7,7 @@
 import { doActionURL, getParameter, GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/Text";
 import { Button01 } from "@src/components/Button";
-import { openFullPopup, openBottomPopup } from "@src/components/Popup";
+import { openFullPopup, openBottomPopup, openFullPopup2 } from "@src/components/Popup";
 import { MainBox } from "@src/components/Box";
 import DataSet from '@src/assets/io/DataSet';
 
@@ -271,9 +271,10 @@ const BankingTest = () => {
                     });
                     break;
                   case 'COM011':
-                    openFullPopup({
+                    openFullPopup2({
                       component: COM011,
                       title: item.text,
+                      btnName: '인증',
                       nFunc: (data?) => {
                         if (data) {
                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));

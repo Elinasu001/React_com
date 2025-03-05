@@ -164,9 +164,9 @@ const Test = () => {
         btnName="풀 팝업 테스트"
         clickFunc={() => {
           openFullPopup2({
-            component:POP001
-            ,title:'풀 테스트'
-            ,nFunc:(data?)=>{
+            component:POP001    //컴포넌트 명
+            ,title:'풀 테스트'    //타이틀
+            ,nFunc:(data?)=>{   //콜백
             if(data){
               GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
             }else{
