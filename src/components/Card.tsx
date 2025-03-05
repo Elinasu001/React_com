@@ -11,8 +11,10 @@ import { Button01, Button02, Button03 } from "@src/components/Button";
 import CompareArrowsIcon from "@mui/icons-material/CardGiftcard";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
+
 import { doAction,makeForm, addFormData, doActionView } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
+
 
 /**
  * 카드 기본 속성
