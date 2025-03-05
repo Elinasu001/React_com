@@ -37,11 +37,13 @@ interface TradeListProps {
 }
 
 const INQ002 = () => {
+  
   const location = useLocation();
+  const accountData = JSON.parse(location.state)
   const [showBalance] = useState(true);
   const [tradeList, settradeList] = useState<TradeListProps[]>([]);
   const fetchTradeList = async (acno:string): Promise<TradeListProps[]> =>{ 
-
+    
 
     //폼생성,데이터 주입
     const form = makeForm('INQ0002SC');
@@ -98,8 +100,8 @@ const INQ002 = () => {
 
   useEffect(() => {
     const param = getParameter(location);
-
     const account = param.getString('acno');
+    
     if (account) {
       const fetchData = async () => {
         const data = await fetchTradeList(account);
@@ -121,15 +123,15 @@ const INQ002 = () => {
       <Typography variant="h5" sx={{ marginBottom: 3 }}>거래내역조회</Typography>
 
       {/* 계좌정보 */}
-      {tradeList.map((transaction, index) => (
+      
         <Card06
-        key={transaction.ACNO}
-        type="입출금"
-        acno={transaction.ACNO || "123-456-789012"}
-        balance={transaction.OUT_REC[0]?.ACNT_BLNC || 0}
-        pdnm="보통금(예스뱅킹)예"
+        key={accountData.acno}
+        type={accountData.type}
+        acno={accountData.acno}
+        balance={Number(accountData.balance)}
+        pdnm={accountData.pdnm}
       />
-      ))}
+      
       
       {/* 조회기간 설정 */}
       <Button01 
@@ -146,23 +148,7 @@ const INQ002 = () => {
           }});
         }}
       />
-      {/* <Button01 
-        btnName="계좌가져오기 TEST"
-        clickFunc={() => {
-          useEffect(() => {
-            if (account?.acno) {
-              // fetchTradeList 호출
-              const fetchData = async () => {
-                const data = await fetchTradeList(account.acno); // 계좌번호를 fetchTradeList에 전달
-                settradeList(data);
-              };
-              fetchData();
-            }
-          }, [account]);
-        }}
-      /> */}
 
-      
       {/* 거래내역 */}
       {tradeList.map((transaction, index) => (
         transaction.OUT_REC.map((outRec, outRecIndex) => (
