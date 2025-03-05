@@ -9,7 +9,7 @@ import {
 
 import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
-import { doActionView } from "@src/assets/js/common";
+import { doActionURL, doActionView } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
 
 const Menu = ({ open, onClose }: {
@@ -19,16 +19,16 @@ const Menu = ({ open, onClose }: {
 
   //메뉴 정의
   const menuItems = [
-    { text: "홈", icon: <HomeIcon />, path: "/" },
-    { text: "기능 테스트", icon: <CodeIcon />, path: "/test.view" },
-    { text: "폼 테스트", icon: <CodeIcon />, path: "/inputTest.view" },
-    { text: "네이티브", icon: <CodeIcon />, path: "/nativeTest.view" },
-    { text: "공통(COM)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=com" },
-    { text: "조회(INQ)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=inq" },
-    { text: "이체(TNF)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=tnf" },
-    { text: "예적금(DEP)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=dep" },
-    { text: "대출(LON)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=lon" },
-    { text: "뱅킹관리(EFC)", icon: <CodeIcon />, path: "/BankingTest.view?txGbnCd=efc" },
+    { text: "홈", icon: <HomeIcon />, path: "/" , txGbnCd: ""},
+    { text: "기능 테스트", icon: <CodeIcon />, path: "/test.view", txGbnCd: ""},
+    { text: "폼 테스트", icon: <CodeIcon />, path: "/inputTest.view", txGbnCd: ""},
+    { text: "네이티브", icon: <CodeIcon />, path: "/nativeTest.view", txGbnCd: ""},
+    { text: "공통(COM)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "com"},
+    { text: "조회(INQ)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "inq"},
+    { text: "이체(TNF)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "tnf"},
+    { text: "예적금(DEP)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "dep"},
+    { text: "대출(LON)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "lon"},
+    { text: "뱅킹관리(EFC)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "efc"},
   ];
 
   return (
@@ -38,7 +38,11 @@ const Menu = ({ open, onClose }: {
           <ListItem key={index} disablePadding>
             <ListItemButton
               onClick={() => {
-                doActionView(item.path,new DataSet({"page":item.text}));
+                if(item.txGbnCd == ''){
+                  doActionURL(item.path);
+                }else{
+                  doActionView(item.path,new DataSet({'page':item.text,'txGbnCd':item.txGbnCd}));
+                }
                 onClose();
               }}
             >

@@ -4,7 +4,6 @@
  * @author 
  * @version 1.0.0
  */
-import { useLocation } from "react-router-dom";
 import { doActionURL, getParameter, GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/Text";
 import { Button01 } from "@src/components/Button";
@@ -24,6 +23,7 @@ import COM009 from "@src/views/com/COM009";
 import COM010 from "@src/views/com/COM010";
 import COM011 from "@src/views/com/COM011";
 import COM012 from "@src/views/com/COM012";
+import { useLocation, Location } from 'react-router-dom';
 
 
 /**
@@ -96,24 +96,25 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
  * 일반 테스트 화면 드로잉
  */
 const BankingTest = () => {
-  const location = useLocation();
 
-  const queryParams = new URLSearchParams(location.search);
-  const txGbnCd = queryParams.get("txGbnCd") || "com"; // 기본값: "com"
+  const param = getParameter(useLocation());
 
-  GLog.d("전체 URL:" + window.location);
+  GLog.d("param:" + param);
 
   // txGbnCd에 해당하는 버튼 목록 가져오기
-  const buttons = menuItems[txGbnCd] || [];
+  const txGbnCd = param.getString("txGbnCd","com");// 기본값: "com"
+  const page = param.getString('page');
 
-  const param = getParameter()
-  GLog.d('페이지 파라미터1 : '+param.toString());
-  GLog.d('페이지 파라미터2 : '+param.getString('page'));
+  GLog.d('페이지 파라미터1 : '+txGbnCd);
+  GLog.d('페이지 파라미터2 : '+page);
+
+
+  const buttons = menuItems[txGbnCd] || [];
 
   return (
      <MainBox>
 
-      <TextBox01 text="업무 테스트"/>
+      <TextBox01 text={`${page} 업무 테스트`} />
 
       {/* 버튼 컨테이너 */}
       

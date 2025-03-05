@@ -15,8 +15,7 @@ import DataSet from "@assets/io/DataSet";
 import { getNavigation } from '@assets/js/service/navigationService'; // 전역 네비게이션 ref
 import { messageView } from "@src/components/Alert";
 import { store } from "@assets/js/redux/store";
-import { useAppSelector } from "./redux/hooks";
-import { getLocation } from "./service/useLocationService";
+import { Location } from 'react-router-dom';
 
 //앱 실행 환경
 export enum AppEnvType {
@@ -147,7 +146,7 @@ export const doAction = async (req: ApiReq, isLogin = false): Promise<ApiRes> =>
  */
 export const doActionURL = async (uri: string, isLogin = false) =>{
   
-  progressBar(true);
+  progressBar(true); //로딩 열기
 
   const navigate = getNavigation();
   if (!navigate) {
@@ -158,6 +157,7 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
   //로그인 체크
   if(isLogin){
     if(!IS_LOGIN()){
+      progressBar(false);
       messageView('로그인이 필요합니다','확인',()=>{
         //페이지 이어하기 작업중
       });
@@ -192,7 +192,8 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
  * @param isLogin 로그인 필수 여부부
  */
 export const doActionView = async (uri: string,param: DataSet = new DataSet({}), isLogin = false) =>{
-  progressBar(true);
+
+  progressBar(true); //로딩 열기
 
   const navigate = getNavigation();
   if (!navigate) {
@@ -200,9 +201,31 @@ export const doActionView = async (uri: string,param: DataSet = new DataSet({}),
     return;
   }
 
+  //로그인 체크
+  if(isLogin){
+    if(!IS_LOGIN()){
+      progressBar(false);
+      messageView('로그인이 필요합니다','확인',()=>{
+        //페이지 이어하기 작업중
+      });
+      return;
+    }
+
+    //로그인 세션 체크
+    const chk = await sessionCheck();
+    GLog.d('로그인 서버 세션 체크 '+chk);
+    GLog.d('USER_NM : '+getCustDs()?.USR_ID);
+
+    if(!chk){
+      messageView('로그인 세션이 만료되었습니다. 필요합니다','확인',() => {
+        doLogout(false);
+      });
+      return;
+    }
+  }
+  
   setTimeout(() => {
     navigate(uri, { state: param.toString() });
-    logout();
     progressBar(false);
   }, 500);
 }
@@ -210,15 +233,12 @@ export const doActionView = async (uri: string,param: DataSet = new DataSet({}),
 /**
  * 넘긴 페이지 파라미터 불러오기
  */
-export const getParameter = (): DataSet => {
-  const location = getLocation();
-  // location.state가 객체이고, key가 있다면 그 값을 문자열로 반환
-  if(location){
-    const stateString = location.state as string;
-    return new DataSet(JSON.parse(stateString));
-  }else{
-    return new DataSet({});
+export const getParameter = (location: Location): DataSet => {
+  GLog.d('location : '+JSON.stringify(location));
+  if(typeof(location.state)=='string'){
+    return new DataSet(JSON.parse(location?.state));
   }
+  return new DataSet({});
 };
 
 

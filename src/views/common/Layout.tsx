@@ -9,14 +9,14 @@ import { locationRef } from '@assets/js/service/useLocationService'; // 전역 �
 
 const Layout = () => {
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  const currentNavigate = useNavigate();
+  const currentLocation = useLocation();
 
-  // 전역 내부객체 저장
   useEffect(() => {
-    navigationRef.current = navigate;
-    locationRef.current = location;
-  }, [navigate]);
+    navigationRef.current = currentNavigate;
+    locationRef.current = currentLocation;
+  }, [currentNavigate,currentLocation]);
+  
 
   return (
     <Box>

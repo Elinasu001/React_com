@@ -2,7 +2,7 @@
 /**
  * @fileoverview [공통] 로케이션 전역객체
  *
- * @file useLocationService.ts
+ * @file useLocationService.ts.ts
  * @author GNB
  * @version 1.0.0
  */

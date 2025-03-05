@@ -67,7 +67,7 @@ const App = () => {
         {/* 메인,테스트 페이지 라우트 */}
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
-          <Route path="Mybanking.view" element={<Mybanking />} />
+          <Route path="Mybanking.view" element={<Mybanking/>} />
           <Route path="nativeTest.view" element={<NativeTest />} />
           <Route path="test.view" element={<Test />} />
           <Route path="bankingTest.view" element={<BankingTest />} />
