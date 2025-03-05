@@ -14,6 +14,7 @@ interface Account {
   type: string;
   acno: string;
   balance: number;
+  pdnm: string;
 }
 
 // ✅ 추천 상품 인터페이스
@@ -66,10 +67,11 @@ const Mybanking = () => {
       const resData = response.data;
 
       // ✅ `OUT_REC`의 데이터를 활용하여 계좌 정보 매핑
-      const accounts = resData.getList<{ ACNO: string; ACCO_KNCD: string; ACNT_BLNC: number }>("OUT_REC").map(acc => ({
+      const accounts = resData.getList<{ ACNO: string; ACCO_KNCD: string; ACNT_BLNC: number; PROD_NM:string;  }>("OUT_REC").map(acc => ({
         type: acc.ACCO_KNCD === "4" ? "여신" : "수신",
         acno: acc.ACNO,
         balance: acc.ACNT_BLNC,
+        pdnm: acc.PROD_NM
       }));
 
       // ✅ 계좌 유형별로 분리
@@ -180,7 +182,7 @@ const Mybanking = () => {
         <Slider {...sliderSettings}>
           {accountList.map((account, index) => (
             <Box key={index} sx={{ padding: "5px" }}>
-              <Card02 type={account.type} acno={account.acno} balance={account.balance} />
+              <Card02 type={account.type} acno={account.acno} balance={account.balance} pdnm={account.pdnm} />
             </Box>
           ))}
         </Slider>
@@ -191,7 +193,7 @@ const Mybanking = () => {
         <Slider {...sliderSettings}>
           {loanList.map((account, index) => (
             <Box key={index} sx={{ padding: "5px" }}>
-              <Card02 type={account.type} acno={account.acno} balance={account.balance} />
+              <Card02 type={account.type} acno={account.acno} balance={account.balance} pdnm={account.pdnm}/>
             </Box>
           ))}
         </Slider>
