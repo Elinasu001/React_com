@@ -59,6 +59,7 @@ export const InfoList = ({ title, items, hideTitle = false, titleIcon = false, l
        *  default :: bullet 형태
        *  타이틀 아이콘 적용 :: titleIcon [ !! titleIcon 쓰일 경우 불러오는 화면 에서 hideTitle={true} 삭제 필요 ]
        *  리스트 아이콘 적용 :: listIcon
+       * 예시)
        * <InfoList
        *     title="정보 리스트"
        *     items={["항목 1", "항목 2", "항목 3"]}

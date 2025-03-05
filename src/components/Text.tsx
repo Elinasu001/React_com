@@ -16,13 +16,6 @@ interface TextBoxProps {
   text: string;
 }
 
-/**
- * 컨텐츠 상단 타이틀 속성
- */
-interface ContentTitleProps {
-  title?: React.ReactNode; // h3 제목 (선택적)
-  text?: string;   // 추가 텍스트 (선택적)
-}
 
 /**
  * 굵은 글자 박스
@@ -68,14 +61,33 @@ export const TextBox02 = ({ text }: TextBoxProps) => {
   )
 }
 
+
+/**
+ * 컨텐츠 상단 타이틀 속성
+ */
+interface ContentTitleProps {
+  title?: React.ReactNode; // h3 상단 타이틀 (선택적)
+  desc?: string;   // 설명 텍스트 (선택적)
+}
+
 /**
  *  컨텐츠 상단 타이틀
  */
-export const ContentTitle = ({ title, text }: ContentTitleProps) => {
+export const ContentTitle = ({ title, desc }: ContentTitleProps) => {
   return (
+
+    /**
+     * title[default(큰타이틀)] or desc[설명 텍스트] 선택 사용
+     * 예시)
+     * <ContentTitle
+     *     title="보안카드 입력"
+     *     desc="보안카드를 입력해주세요. 5회 오류 시 서비스가 제한됩니다."
+     *  />
+    **/
+
     <Box className="content-tit-wrap">
       {title && <Typography variant="h3" className="tit">{title}</Typography>}
-      {text && <Typography className="txt">{text}</Typography>}
+      {desc && <Typography className="txt">{desc}</Typography>}
     </Box>
   )
 }
