@@ -11,7 +11,7 @@ import { Button01, Button02, Button03 } from "@src/components/Button";
 import CompareArrowsIcon from "@mui/icons-material/CardGiftcard";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
-import { useAppNavigator, doAction,makeForm, addFormData } from "@src/assets/js/common";
+import {doAction,makeForm, addFormData, doActionURL } from "@src/assets/js/common";
 
 /**
  * 카드 기본 속성
@@ -91,7 +91,6 @@ interface Card02Props {
  */
 
 export const Card02 = ({ type, acno, balance, pdnm }: Card02Props) => {
-  const { doActionURL } = useAppNavigator();
   const pageHandle = async () => {
     const form = makeForm("INQ0002SC");
 
