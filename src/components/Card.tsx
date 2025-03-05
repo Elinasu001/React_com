@@ -11,10 +11,8 @@ import { Button01, Button02, Button03 } from "@src/components/Button";
 import CompareArrowsIcon from "@mui/icons-material/CardGiftcard";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
-
 import { doAction,makeForm, addFormData, doActionView } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
-
 
 /**
  * 카드 기본 속성
@@ -87,33 +85,15 @@ interface Card02Props {
   acno: string;
   balance: number;
   pdnm: string;
+  nFunc?: (data?: DataSet) => void;
 }
 
 /**
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ type, acno, balance, pdnm }: Card02Props) => {
-  const pageHandle = async () => {
-    const form = makeForm("INQ0002SC");
-
-    addFormData(form, "acno", acno);
-   
-    try {
-      // API 요청 보내기
-      const response = await doAction(form);
-
-      if (response.header.respCd === "N00000") {
-        // 성공 시 페이지 이동
-        doActionView("/inq/INQ002.view", new DataSet({ acno }));
-        
-      } else {
-        console.error("Error:", response.header.respMsg);
-      }
-    } catch (error) {
-      console.error("API 요청 중 오류 발생", error);
-    }
-  }
+export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
+  
   return (
     <Card
       elevation={5}
@@ -188,7 +168,10 @@ export const Card02 = ({ type, acno, balance, pdnm }: Card02Props) => {
                 borderRadius: 2,
                 "&:hover": { bgcolor: "grey.400" },
               }}
-              onClick={pageHandle}
+              onClick={() => 
+                nFunc?.(new DataSet({  acno, type, pdnm, balance }))
+              }
+
             >
               거래내역
             </ListItemButton>
@@ -485,14 +468,14 @@ export const Card05 = ({
 
           {/* 계좌 잔액 */}
           <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            잔액 {balance.toLocaleString()} 원
+            잔액 {balance?.toLocaleString()} 원
           </Typography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
           {/* 계좌 잔액 */}
           <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            출금가능금액 {balance.toLocaleString()} 원
+            출금가능금액 {balance?.toLocaleString()} 원
           </Typography>
         </Box>
         {/* 버튼 영역 */}

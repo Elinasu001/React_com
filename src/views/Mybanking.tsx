@@ -5,9 +5,10 @@ import { Typography, Box, Tabs, Tab } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { doAction, makeForm, addFormData } from "@assets/js/common";
+import { doAction, makeForm, addFormData, doActionView } from "@assets/js/common";
 import { messageView } from "@src/components/Alert";
 import { progressBar } from "@src/components/Loading";
+import DataSet from "@src/assets/io/DataSet";
 
 // ✅ 계좌 정보 인터페이스
 interface Account {
@@ -15,6 +16,7 @@ interface Account {
   acno: string;
   balance: number;
   pdnm: string;
+  nFunc?: (data?: DataSet) => void;
 }
 
 // ✅ 추천 상품 인터페이스
@@ -40,6 +42,8 @@ const CustomDots = ({ dots }: { dots: React.ReactNode }) => (
     <ul style={{ display: "flex", padding: 0, listStyle: "none" }}>{dots}</ul>
   </Box>
 );
+
+
 
 const Mybanking = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -182,7 +186,12 @@ const Mybanking = () => {
         <Slider {...sliderSettings}>
           {accountList.map((account, index) => (
             <Box key={index} sx={{ padding: "5px" }}>
-              <Card02 type={account.type} acno={account.acno} balance={account.balance} pdnm={account.pdnm} />
+              <Card02 
+                type={account.type} 
+                acno={account.acno} 
+                balance={account.balance} 
+                pdnm={account.pdnm}
+                nFunc={(accountData) => doActionView("/inq/INQ002.view", accountData)} />
             </Box>
           ))}
         </Slider>
