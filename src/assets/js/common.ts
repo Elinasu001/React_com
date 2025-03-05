@@ -95,8 +95,16 @@ export const makeForm = (serviceCd:string): ApiReq => ({
   param: new DataSet({})
 });
 
-export const addFormData = (form: ApiReq, name: string, value: string): void => {
-  form.param.putString(name,value);
+// export const addFormData = (form: ApiReq, name: string, value: string): void => {
+//   form.param.putString(name,value);
+// };
+
+export const addFormData = (form: ApiReq, name: string, value: string | number): void => {
+  if (typeof value === "number") {
+    form.param.putNumber(name, value);
+  } else {
+    form.param.putString(name, value);
+  }
 };
 
 

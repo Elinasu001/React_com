@@ -49,6 +49,7 @@ import EFC005 from "@src/views/efc/EFC005";
 import EFC006 from "@src/views/efc/EFC006";
 import EFC007 from "@src/views/efc/EFC007";
 import EFC008 from "@src/views/efc/EFC008";
+import EFC008_1 from "@src/views/efc/EFC008_1";
 import EFC009 from "@src/views/efc/EFC009";
 import EFC010 from "@src/views/efc/EFC010";
 import EFC011 from "@src/views/efc/EFC011";
@@ -122,6 +123,7 @@ const App = () => {
           <Route path="EFC006.view" element={<EFC006 />} />
           <Route path="EFC007.view" element={<EFC007 />} />
           <Route path="EFC008.view" element={<EFC008 />} />
+          <Route path="EFC008_1.view" element={<EFC008_1 />} />
           <Route path="EFC009.view" element={<EFC009 />} />
           <Route path="EFC010.view" element={<EFC010 />} />
           <Route path="EFC011.view" element={<EFC011 />} />
