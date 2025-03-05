@@ -80,7 +80,11 @@ export const ContentTitle = ({ title, desc }: ContentTitleProps) => {
      * title[default(큰타이틀)] or desc[설명 텍스트] 선택 사용
      * 예시)
      * <ContentTitle
-     *     title="보안카드 입력"
+     *     <>
+     *       <strong>출금계좌번호</strong>의
+     *       <br />
+     *       <strong>보안카드 번호</strong>를 입력해 주세요
+     *     </>
      *     desc="보안카드를 입력해주세요. 5회 오류 시 서비스가 제한됩니다."
      *  />
     **/

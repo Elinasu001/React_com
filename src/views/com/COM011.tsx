@@ -22,9 +22,9 @@ const COM011 = () => {
       <ContentTitle
         title={
           <>
-            출금계좌번호의
+            <strong>출금계좌번호</strong>의
             <br />
-            보안카드 번호를 입력해 주세요
+            <strong>보안카드 번호</strong>를 입력해 주세요
           </>
         }
       />
