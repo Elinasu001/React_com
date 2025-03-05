@@ -73,7 +73,10 @@
     }
 
     // 팝업 본문
-    .pop-body { width: auto; height: 100%; padding: 0 20px 20px; overflow-y: auto; background-color: var(--white); }
+    .pop-body { 
+        display:flex; flex-direction: column; width: auto; height: 100%; padding: 0 20px 20px; overflow-y: auto; background-color: var(--white);
+        .content { display:flex; flex:1 1 auto; flex-direction: column; }
+    }
   
     // 팝업 푸터
     .popup-footer { padding: 15px 20px 20px 20px; background-color: var(--white) }
@@ -98,18 +101,19 @@
 /*---------------------------------------------
 	#버튼 [Type: 컨텐츠, 컨텐츠 하단, 팝업 하단]
 ---------------------------------------------*/
-.btn { display: flex; align-items: center; justify-content: center; width: 100%; border-radius: 5px; font-weight: var(--font-w-r); font-size: var(--font16); }
+.btn { display: flex; align-items: center; justify-content: center; width: 100%; border-radius: 5px; font-weight: var(--font-w-r); font-size: var(--font16); 
+    &:disabled { color:var(--btn-disabled-txt) !important; background-color: var(--btn-disabled) !important; }
+}
 
 // 컨텐츠 버튼 높이 및 폰트
 .btn-area {
-    .btn{ height:48px; font-size: var(--font16);
-        &:disabled { color:var(--btn-disabled-txt) !important; background-color: var(--btn-disabled) !important; }
-    }
+    .btn{ gap:10px; height:48px; font-size: var(--font16); }
 }
 
 // 컨텐츠 하단 버튼, 팝업 하단 높이 및 폰트
 .content-footer,
 .popup-footer {
+    gap:10px;
     .btn { height:58px; font-size: var(--font18); }
 }
 
@@ -197,7 +201,7 @@
     @include mixin.flex-center;
     margin:40px 0;
 
-    .numeric-info { font-weight: var(--font-w-m); color:var(--color-2);
+    .numeric-info { @include mixin.flex-center; font-weight: var(--font-w-m); color:var(--color-2);
         span { font-weight: var(--font-w-b); color:var(--tertiary); }
     }
 

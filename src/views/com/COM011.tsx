@@ -6,7 +6,7 @@
  */
 import { Box, Input, Typography } from "@mui/material";
 import { GLog } from "@src/assets/js/common";
-import { MainBox } from "@src/components/Box";
+import { ButtonFooter } from "@src/components/Button";
 import { ContentTitle } from "@src/components/Text";
 import { InfoList } from "@src/components/TextList";
 
@@ -16,7 +16,9 @@ const COM011 = () => {
   GLog.d('로그는 이거쓰세요 : '+test);
 
   return (
-    <MainBox>
+    // ** 팝업에서 불러오는 화면은 <> 묵어준 뒤 content 태그와 ButtonFooter 태그로 구분 지어 주세요.
+    <>
+    <Box className="content">
       
       {/* 컨텐츠 상단 타이틀 */}
       <ContentTitle
@@ -69,8 +71,13 @@ const COM011 = () => {
           listIcon={true}
           hideTitle={true} // titleIcon 사용시 삭제
         />
-
-    </MainBox>
+    </Box>
+    <ButtonFooter
+      buttons={[
+        { name: "확인", className: "btn-primary" , disabled: true }
+      ]}
+    />
+    </>
   );
 };
 

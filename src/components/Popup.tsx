@@ -4,15 +4,14 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { Box, Button, IconButton, Modal, Slide, Typography, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Modal, Slide, TextField, Typography } from '@mui/material';
 import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 import DataSet from '@src/assets/io/DataSet';
+import { doLogin, LoginType } from '@src/assets/js/common';
+import { progressBar } from '@src/components/Loading';
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import CloseIcon from "@mui/icons-material/Close";
-import { progressBar } from '@src/components/Loading';
 import { messageView } from './Alert';
-import { doLogin, LoginType } from '@src/assets/js/common';
 /**
  * 팝업 파라미터 정의
  */
@@ -214,19 +213,7 @@ export const openFullPopup2 = ({ component: Component, title, param, nFunc }: Po
                   {/* 팝업 내용 */}
                   <Component param={param ?? new DataSet({})} onClose={popupClose} />
                 </Box>
-
-                {/* 버튼 */}
-                <Box className="popup-footer gap10">
-                    <Button className="btn btn-secondary" onClick={() => { popupClose(); }}>
-                      버튼1
-                    </Button>
-                    <Button className="btn btn-primary" onClick={() => { popupClose(); }}>
-                      버튼2
-                    </Button>
-                    <Button className="btn btn-outlined" onClick={() => { popupClose(); }}>
-                      버튼3
-                    </Button>
-                </Box>
+                
               </Box>
             </Slide>
           </Modal>
