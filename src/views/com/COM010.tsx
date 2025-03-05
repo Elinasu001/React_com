@@ -15,6 +15,7 @@ const COM010 = () => {
 
   return (
     <MainBox>
+
       {/* 컨텐츠 상단 타이틀 */}
       <ContentTitle
         title={
@@ -36,6 +37,10 @@ const COM010 = () => {
           </>
         }
       />
+
+      {/* 컨텐츠 */}
+
+
     </MainBox>
   );
 };

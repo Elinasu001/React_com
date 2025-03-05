@@ -64,6 +64,7 @@ body {
 
     --color-c: #CCCCCC;
     --color-e: #EEEEEE;
+    --color-e4: #E4E4E4;
     --color-d: #DDDDDD;
     --white: #FFFFFF;
     --color-f8: #F8F8F8;
@@ -100,6 +101,9 @@ body {
     //버튼 스타일
     --btn-line: var(--color-d);
     --btn-txt: var(--color-2);
+    //비활성화
+    --btn-disabled-txt: var(--color-9);
+    --btn-disabled: var(--color-e4);
     
     /* 아이콘 색상*/
 
@@ -114,5 +118,6 @@ body {
     --tab-bg-gray-active: var(--white);
     --tab-round: var(--color-f8);
     --tab-round-active: var(--hover);
+
 
 }
