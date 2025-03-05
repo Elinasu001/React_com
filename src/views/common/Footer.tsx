@@ -1,17 +1,20 @@
+/**
+ * @fileoverview [공통] 푸터 하단 메뉴 화면면
+ *
+ * @file Footer.tsx
+ * @author GNB
+ * @version 1.0.0
+ */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import SavingsIcon from "@mui/icons-material/Savings";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import Menu from "@views/common/Menu"
-import { bottomNavHeight, useAppNavigator } from "@assets/js/common"
+import { bottomNavHeight, doActionURL } from "@assets/js/common"
 
 const BottomNav = () => {
-  const navigate = useAppNavigator();
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -24,7 +27,7 @@ const BottomNav = () => {
         <BottomNavigationAction
           label="홈"
           onClick={() => {
-            navigate.doActionURL('/');
+            doActionURL('/');
           }}
           icon={<HomeIcon />}
           sx={{
@@ -36,7 +39,7 @@ const BottomNav = () => {
         <BottomNavigationAction
           label="대출"
           onClick={() => {
-            navigate.doActionURL('/');
+            doActionURL('/lon/LON001.view',true);
           }}
           icon={<AttachMoneyIcon />}
           sx={{
@@ -48,7 +51,7 @@ const BottomNav = () => {
         <BottomNavigationAction
           label="예/적금"
           onClick={() => {
-            navigate.doActionURL('/');
+            doActionURL('/dep/DEP001.view');
           }}
           icon={<SavingsIcon />}
           sx={{

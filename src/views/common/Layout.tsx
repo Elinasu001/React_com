@@ -1,10 +1,20 @@
 import { Box, Container } from '@mui/material';
 import Header from '@views/common/Header';
 import Footer from '@views/common/Footer';
-import { Outlet } from 'react-router-dom';
-import {headerHeight,bottomNavHeight} from "@assets/js/common"
+import { Outlet, useNavigate } from 'react-router-dom';
+import {headerHeight,bottomNavHeight, GLog} from "@assets/js/common"
+import { useEffect } from 'react';
+import { navigationRef } from '@assets/js/service/navigationService'; // 전역 네비게이션 ref
 
 const Layout = () => {
+
+  const navigate = useNavigate();
+
+  // 전역 내부객체 저장
+  useEffect(() => {
+    navigationRef.current = navigate;
+  }, [navigate]);
+
   return (
     <Box>
       {/* 고정 헤더 */}

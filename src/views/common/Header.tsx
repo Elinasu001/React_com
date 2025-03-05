@@ -1,36 +1,25 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, IconButton, Box, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import Logo from "@assets/images/logo.svg";
-import { GLog, useAppNavigator, doLogout, doIdLogin } from '@assets/js/common';
+import { doLogout, doActionURL, LoginType, doLogin, IS_LOGIN, GLog} from '@assets/js/common';
 import { messageView } from '@src/components/Alert';
-
-
-import { useAppSelector, useAppDispatch } from '@src/assets/js/redux/hooks';
+import DataSet from "@src/assets/io/DataSet";
 
 const Header = () => {
-
-  //리덕스 상태 관련
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const { user } = useAppSelector((state) => state.auth);
-  const isLogin = !!user;  // 로그인 상태: user가 null이 아니면 로그인한 상태
 
   // 로그인 팝업 상태
   const [open, setOpen] = useState(false);
   const [id, setId] = useState(""); // ID 상태
   const [password, setPassword] = useState(""); // 비밀번호 상태
-  const navigator = useAppNavigator();
 
-
+  GLog.d('IS_LOGIN : '+IS_LOGIN());
   // 로그인/로그아웃 버튼
   const handleOpen = async () => {
     //로그인 중일때는 로그아웃 처리
-    if (isLogin){
-      await doLogout(dispatch,navigate);
+    if (IS_LOGIN()){
+      doLogout();
     }
     //미 로그인시는 팝업 열기
     else{
@@ -50,14 +39,15 @@ const Header = () => {
       return;
     }
 
-    const result = await doIdLogin(dispatch,id,password);
+    //로그인 통신
+    const loginResult = await doLogin(LoginType.ID,new DataSet({'ID':id,'PW':password}));
     
-    if(result == 'OK'){
+    //결과분기
+    if(loginResult.result){
       handleClose(); // 로그인 성공 시 팝업 닫기
-      navigator.doActionURL('/Mybanking.view');
+      doActionURL('/Mybanking.view');//메인페이지 이동
     }else{
-
-      messageView(result,"확인");
+      messageView(loginResult.msg,"확인");
     }
   };
 
@@ -82,7 +72,7 @@ const Header = () => {
                 textTransform: "none",
               }}
             >
-              {isLogin ? "로그아웃" : "로그인"} &gt;
+              {IS_LOGIN() ? "로그아웃" : "로그인"} &gt;
             </Button>
 
             {/* 돋보기 아이콘 */}
