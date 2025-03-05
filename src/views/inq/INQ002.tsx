@@ -127,7 +127,7 @@ const INQ002 = () => {
         type="입출금"
         acno={transaction.ACNO || "123-456-789012"}
         balance={transaction.OUT_REC[0]?.ACNT_BLNC || 0}
-        pdnm="보통예금(예스뱅킹)"
+        pdnm="보통금(예스뱅킹)예"
       />
       ))}
       
