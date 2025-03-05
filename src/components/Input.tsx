@@ -108,14 +108,14 @@ export const RadioBox = ({
 
 // ✅ 이체 한도 입력 컴포넌트
 export const LimitInput = ({ 
-    label
-  , placeholder
-  , value
-  , onChange 
+    label,
+    placeholder,
+    value,
+    onChange
 }: {
     label: string; 
     placeholder: string; 
-    value?: number; 
+    value?: number | string;  
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
@@ -132,15 +132,19 @@ export const LimitInput = ({
               color: "lightgray"
             },
           }}
-          inputProps={{ style: { textAlign: "left", fontWeight: "bold", color: "black" } }}
-          value={value}
-          onChange={onChange}
+          inputProps={{ 
+            style: { textAlign: "left", fontWeight: "bold", color: "black" },
+          }}
+          value={value ?? ""} 
+          onChange={onChange}  
         />
         <Typography sx={{ fontWeight: "bold" }}>원</Typography>
       </Box>
     </Box>
   );
 };
+
+
 
 // ✅ 기본 export
 export default {

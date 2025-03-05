@@ -119,18 +119,20 @@ export const Button03 = ({ btnName, clickFunc }: ButtonProps) => {
 
 export const Button04 = ({ btnName, clickFunc, disabled }: ButtonProps) => {
   return (
-
-    // 컨텐츠
     <Box className="btn-area gap10">
-      {/* primary 버튼 */}
-      <Button className="btn btn-primary"  variant="contained" onClick={clickFunc} disabled={disabled}>
+      <Button
+        className="btn btn-primary" // 기존 스타일 유지 ✅
+        variant="contained"
+        onClick={clickFunc}
+        disabled={disabled}
+        sx={{opacity: disabled ? 0.6 : 1,}}
+      >
         {btnName}
       </Button>
-
     </Box>
-
   );
 };
+
 
 
 export default { Button01, Button02, Button03, Button04 };
