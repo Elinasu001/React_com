@@ -5,11 +5,11 @@
  * @version 1.0.0
  */
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '@assets/js/redux/authSlice';
+import custDsReducer from '@src/assets/js/redux/slice/custDs';
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    custDs: custDsReducer
   },
 });
 

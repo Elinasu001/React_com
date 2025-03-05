@@ -6,7 +6,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { GLog, doAction,makeForm, addFormData, useAppNavigator } from '@assets/js/common';
+import { GLog, doAction,makeForm, addFormData, doActionURL } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { Card03 } from "@src/components/Card";
@@ -53,7 +53,6 @@ const tabItems = [
 const LON001 = () => {
   const [selectedTab, setSelectedTab] = useState("전체");
   const [loanPdList, setLoanPdList] = useState<LoanPd[]>([]);
-  const navigate = useAppNavigator();
 
   /**
   * 대출상품 목록조회
@@ -127,7 +126,7 @@ const LON001 = () => {
         title="내 대출한도가 궁금하세요?"
         description="신용평점에 영향 없이 대출한도를 알아보세요."
         buttonText="간편대출한도조회 ▶"
-        onButtonClick={() => navigate.doActionURL("/")}
+        onButtonClick={() => doActionURL("/")}
       />
 
       {/* 대출 상품 컴포넌트 */}

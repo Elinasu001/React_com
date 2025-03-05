@@ -58,8 +58,7 @@ import EFC014 from "@src/views/efc/EFC014";
 
 // 확장 함수
 import "@assets/extension/globalExtensions";
-import NativeUtil from "./assets/js/common_native";
-
+import NativeUtil from "@assets/js/common_native";
 
 const App = () => {
   return (
