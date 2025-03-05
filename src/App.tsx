@@ -1,9 +1,10 @@
 // src/App.tsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {Routes,Route,BrowserRouter} from "react-router-dom";
 
-// 메인
+// [메인]
 import Layout from "@views/common/Layout";
 import Main from "@views/Main";
+import Mybanking from "@views/Mybanking";
 import NativeTest from "@src/views/test/NativeTest";
 import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
@@ -29,7 +30,8 @@ import DEP005 from "@src/views/dep/DEP005";
 import DEP006 from "@src/views/dep/DEP006";
 
 // LON[여신]
-import LON001 from "@src/views/lon/LON001";
+import LON001_1 from "@src/views/lon/LON001_1";
+import LON001_2 from "@src/views/lon/LON001_2";
 import LON002 from "@src/views/lon/LON002";
 import LON003 from "@src/views/lon/LON003";
 import LON004 from "@src/views/lon/LON004";
@@ -48,6 +50,7 @@ import EFC005 from "@src/views/efc/EFC005";
 import EFC006 from "@src/views/efc/EFC006";
 import EFC007 from "@src/views/efc/EFC007";
 import EFC008 from "@src/views/efc/EFC008";
+import EFC008_1 from "@src/views/efc/EFC008_1";
 import EFC009 from "@src/views/efc/EFC009";
 import EFC010 from "@src/views/efc/EFC010";
 import EFC011 from "@src/views/efc/EFC011";
@@ -55,19 +58,18 @@ import EFC012 from "@src/views/efc/EFC012";
 import EFC013 from "@src/views/efc/EFC013";
 import EFC014 from "@src/views/efc/EFC014";
 
-// POP[팝업 레이어]
-import POP001 from "@src/views/pop/POP001";
-
 // 확장 함수
-import '@assets/extension/globalExtensions';
+import "@assets/extension/globalExtensions";
+import NativeUtil from "@assets/js/common_native";
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-
+        {/* 메인,테스트 페이지 라우트 */}
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Main />} />
+          <Route path="Mybanking.view" element={<Mybanking/>} />
           <Route path="nativeTest.view" element={<NativeTest />} />
           <Route path="test.view" element={<Test />} />
           <Route path="bankingTest.view" element={<BankingTest />} />
@@ -101,7 +103,8 @@ const App = () => {
 
         {/* 여신 페이지 라우트 */}
         <Route path="/lon" element={<Layout />}>
-          <Route path="LON001.view" element={<LON001 />} />
+          <Route path="LON001_1.view" element={<LON001_1 />} />
+          <Route path="LON001_2.view" element={<LON001_2 />} />
           <Route path="LON002.view" element={<LON002 />} />
           <Route path="LON003.view" element={<LON003 />} />
           <Route path="LON004.view" element={<LON004 />} />
@@ -122,6 +125,7 @@ const App = () => {
           <Route path="EFC006.view" element={<EFC006 />} />
           <Route path="EFC007.view" element={<EFC007 />} />
           <Route path="EFC008.view" element={<EFC008 />} />
+          <Route path="EFC008_1.view" element={<EFC008_1 />} />
           <Route path="EFC009.view" element={<EFC009 />} />
           <Route path="EFC010.view" element={<EFC010 />} />
           <Route path="EFC011.view" element={<EFC011 />} />
@@ -129,23 +133,12 @@ const App = () => {
           <Route path="EFC013.view" element={<EFC013 />} />
           <Route path="EFC014.view" element={<EFC014 />} />
         </Route>
-
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 
-// const PopUpWrapper: React.FC = () => {
-//   const navigate = useNavigate();
-
-//   const handleClose = (data?: string) => {
-//       console.log("팝업에서 받은 데이터:", data);
-//       navigate(-1); // ✅ 이전 페이지로 이동 (뒤로 가기)
-//   };
-
-//   return (
-//       <POP001 onClose={handleClose} />
-//   );
-// };
+//네이티브 호출용 함수 추가
+(window as any).NativeUtil = NativeUtil;
 
 export default App;

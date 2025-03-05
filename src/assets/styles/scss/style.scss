@@ -11,6 +11,7 @@
     --ico-search: url(/src/assets/images/com/svg/ico_search.svg);
     --ico-clear: url(/src/assets/images/com/svg/ico_clear.svg);
     --ico-info: url(/src/assets/images/com/svg/ico_info.svg);
+    --ico-info-tri: url(/src/assets/images/com/svg/ico_info_tri.svg);
     --ico-check: url(/src/assets/images/com/svg/ico_check.svg);
     --ico-se-arrow: url(/src/assets/images/com/svg/ico_se_arrow.svg);
     --ico-file: url(/src/assets/images/com/svg/ico_file.svg);
@@ -63,6 +64,8 @@ body {
 
     --color-c: #CCCCCC;
     --color-e: #EEEEEE;
+    --color-e4: #E4E4E4;
+    --color-d: #DDDDDD;
     --white: #FFFFFF;
     --color-f8: #F8F8F8;
     --color-f7: #F7FAFF;
@@ -81,15 +84,40 @@ body {
 ---------------------------------------------*/
 body {
 
-    /* 버튼 색상*/
+    //텍스트
+    --tit-h3: var(--color-2);
+    --desc: var(--color-75);
+    --info-list: var(--color-75);
+    --info-list-icon: var(--outline);
+    --info-tit-icon: var(--tertiary);
+
+    /*버튼 색상*/
+    //하단 버튼
     --btn-primary: var(--primary);
     --btn-secondary: var(--secondary);
-
+    //컨텐츠 버튼
+    --btn-con-primary: var(--primary);
+    --btn-con-secondary: var(--secondary);
+    //버튼 스타일
+    --btn-line: var(--color-d);
+    --btn-txt: var(--color-2);
+    //비활성화
+    --btn-disabled-txt: var(--color-9);
+    --btn-disabled: var(--color-e4);
+    
     /* 아이콘 색상*/
 
     
     /* 테이블 색상*/
 
     /* 탭 색상*/
+    //탭 스타일
+    --tab-line: var(--color-d);
+    --tab-line-active: var(--btn-primary);
+    --tab-bg-gray: var(--color-f8);
+    --tab-bg-gray-active: var(--white);
+    --tab-round: var(--color-f8);
+    --tab-round-active: var(--hover);
+
 
 }

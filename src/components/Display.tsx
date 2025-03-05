@@ -6,10 +6,12 @@
  */
 import { Box, Typography, TextField } from "@mui/material";
 
+
 interface LimitDisplayProps {
   label: string;
   value: number;
 }
+
 
 // ✅이체 한도 표시 컴포넌트
 export const LimitDisplay = ({ 
@@ -29,4 +31,3 @@ export const LimitDisplay = ({
     </Box>
   );
 };
-
