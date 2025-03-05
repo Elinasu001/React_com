@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MainBox, Box01 } from "@src/components/Box";
-import { Card02, Card06 } from "@src/components/Card"; 
+import { Card02 } from "@src/components/Card"; 
 import { progressBar } from "@src/components/Loading"
 import { messageView } from '@src/components/Alert';
 import { TextBox01, TextBox02 } from "@src/components/Text";
 import { GLog, doAction, makeForm, addFormData } from '@assets/js/common';
-import DataSet from "@src/assets/io/DataSet";
 import { Accordion01 } from "@src/components/Accordion";
+import { useSelector } from "react-redux";
+import { RootState } from "@assets/js/redux/store";
 
 const INQ001 = () => {
 
@@ -20,22 +21,17 @@ const INQ001 = () => {
   }
 
   const navigate = useNavigate();
-  const [custInfo, setCustInfo] = useState<DataSet | null>(null);
   const [accountList, setAccountList] = useState<Account[]>([]);
   const [loanList, setLoanList] = useState<Account[]>([]);
-  //const [accountList, setAccountList] = useState<Account[]>([]);
   const [expanded, setExpanded] = useState<string | false>(false);
-
+  const user = useSelector((state: RootState) => state.custDs.user);
+  
   useEffect(() => {
-    const storedData = sessionStorage.getItem("custInfo");
-    if (!storedData) {
-      messageView("로그인이 필요합니다.", "확인", () => navigate("/"));
-      return;
+    
+    GLog.d("user :::: " + user);
+    if (!user) {
+      navigate("/");
     }
-
-    const custInfo = new DataSet(JSON.parse(storedData)); 
-    // const CSNO = custInfo.getString("CSNO");   
-    // const USR_ID = custInfo.getString("USR_ID"); 
 
     const fetchApiInqOvvi0100_01 = async () => { 
      
@@ -43,8 +39,8 @@ const INQ001 = () => {
       const form = makeForm('INQ0000SC');
       addFormData(form, 'txGbnCd'   , 'A');
       addFormData(form, 'SBCD'      , "050");
-      addFormData(form, 'CSNO'      , custInfo.getString("CSNO"));   
-      addFormData(form, 'USR_ID'    , custInfo.getString("USR_ID")); 
+      addFormData(form, 'CSNO'      , user?.CSNO || "");   
+      addFormData(form, 'USR_ID'    , user?.USR_ID || ""); 
       addFormData(form, 'ACCO_KNCD' , "9"); // 전계좌조회
 
       // 로딩 ON
@@ -83,7 +79,8 @@ const INQ001 = () => {
     };
 
     fetchApiInqOvvi0100_01(); 
-  }, []);
+
+  }, [user, navigate]);
 
 
   const handleAccordionChange = (panel: string) => () => {
