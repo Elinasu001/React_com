@@ -93,15 +93,16 @@ export const Card02 = ({ type, acno, balance }: Card02Props) => {
   const pageHandle = async () => {
     const form = makeForm("INQ0002SC");
 
-    addFormData(form, "ACNO", acno);
-
+    addFormData(form, "acno", acno);
+   
     try {
       // API 요청 보내기
       const response = await doAction(form);
 
       if (response.header.respCd === "N00000") {
         // 성공 시 페이지 이동
-        doActionURL(`/inq/INQ002.view`); // 예시: 계좌번호를 기반으로 거래내역 페이지로 이동
+        doActionURL(`/inq/INQ002.view`); // 예시: 계좌번호를 기반으로 거래내역 페이지로 이동 { state: { account: { acno } } }
+        
       } else {
         console.error("Error:", response.header.respMsg);
       }

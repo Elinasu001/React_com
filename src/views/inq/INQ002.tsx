@@ -51,16 +51,17 @@ interface TradeListProps {
 const INQ002 = () => {
   const location = useLocation();
   const { account } = location.state || {}; // ListItemButton에서 전달된 데이터 받기
+  console.log("account!@#$%!@#$"+account);
   const [showBalance] = useState(true);
   const [tradeList, settradeList] = useState<TradeListProps[]>([]);
-  const fetchTradeList = async (acno: string): Promise<TradeListProps[]> =>{ 
+  const fetchTradeList = async (acno:string): Promise<TradeListProps[]> =>{ 
 
 
     //폼생성,데이터 주입
     const form = makeForm('INQ0002SC');
     addFormData(form,'txGbnCd','TL');
     addFormData(form, 'acno', acno); // 계좌번호를 폼에 추가
-    
+    console.log("form@@@@"+form.param.getString("acno"));
 
     //로딩 ON
     progressBar(true, "통신중");
@@ -119,6 +120,7 @@ const INQ002 = () => {
       fetchData();
     }
   }, [account]);
+
   
   useEffect(() => {
     console.log(tradeList); // tradeList가 제대로 업데이트되는지 확인
@@ -156,6 +158,21 @@ const INQ002 = () => {
           }});
         }}
       />
+      {/* <Button01 
+        btnName="계좌가져오기 TEST"
+        clickFunc={() => {
+          useEffect(() => {
+            if (account?.acno) {
+              // fetchTradeList 호출
+              const fetchData = async () => {
+                const data = await fetchTradeList(account.acno); // 계좌번호를 fetchTradeList에 전달
+                settradeList(data);
+              };
+              fetchData();
+            }
+          }, [account]);
+        }}
+      /> */}
 
       
       {/* 거래내역 */}
