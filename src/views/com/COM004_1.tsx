@@ -20,8 +20,7 @@
  * @version 1.0.0
  */
 
-import React, { useState, useEffect } from "react";
-import { Select } from "@mui/material";
+import { useState, useEffect } from "react";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
@@ -29,10 +28,9 @@ import { NumberBox } from "@src/components/Input";
 import { Button01 } from "@src/components/Button";
 import { TextBox02 } from "@src/components/Text";
 import { Box01 } from "@src/components/Box";
+import { SelectBox02 } from '@src/components/SelectBox';
 import { openBottomPopup,openFullPopup } from "@src/components/Popup";
 import COM006 from "@src/views/com/COM006";
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import COM004_2 from "./COM004_2";
 import DataSet from "@assets/io/DataSet";
 
@@ -44,6 +42,7 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
   
   // 은행선택 콜백
   function selectBankCd(data?: DataSet) {
+    GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
     if (!data || !("bankCode" in data)) {
       setSelectedBankCd(""); 
       setSelectedBankNm(""); 
@@ -118,9 +117,6 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
       messageView("타행본인계좌인증 중 오류가 발생했습니다.", "확인", () => {return;});
                
     }
-    
-
-    
 
   };
 
@@ -128,42 +124,24 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
     
       <Box01>
            <TextBox02 text="타행 본인 계좌 인증으로 본인 확인을 진행해요"/>
-         
 
-            <TextBox02 text="입금은행"/>
+              <SelectBox02 label="입금은행" value={selectedBankCd } text={selectedBankNm} 
+                onClick ={() => {
+                                openBottomPopup({
+                                  component: COM006,
+                                  title: "은행선택",
+                                  nFunc: (data?) => {
+                                    if (data) {
+                                    
+                                      selectBankCd(data);
+                                    } else {
+                                      GLog.d('팝업 취소 닫힘');
+                                    }
+                                  }
+                                });
 
-              <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <InputLabel id="demo-simple-select-helper-label">은행선택</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={selectedBankCd}
-                    // onChange={handleChange}
-                    open={false}
-                    renderValue={(selected) => {
-                      // 아무것도 선택되지 않았다면 '은행선택' 표시
-                      if (!selected) return "은행선택";
-                      // 선택된 은행명이 있으면 그 이름을 표시
-                      return selectedBankNm;
-                    }}
-                    onClick={() => {
-
-                      openBottomPopup({
-                        component: COM006,
-                        title: "은행선택",
-                        nFunc: (data?) => {
-                          if (data) {
-                            GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
-                            selectBankCd(data);
-                          } else {
-                            GLog.d('팝업 취소 닫힘');
-                          }
-                        }
-                      });
-                    
-                    }}
-                  ></Select>
-              </FormControl>        
+                                }}/>
+              
 
     
             <TextBox02 text="계좌번호"/>
