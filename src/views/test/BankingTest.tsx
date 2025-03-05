@@ -274,7 +274,6 @@ const BankingTest = () => {
                     openFullPopup2({
                       component: COM011,
                       title: item.text,
-                      btnName: '인증',
                       nFunc: (data?) => {
                         if (data) {
                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));

@@ -15,11 +15,11 @@ import { messageView } from './Alert';
 /**
  * 팝업 파라미터 정의
  */
-interface PopupProps {
+export interface PopupProps {
   component: ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => React.ReactElement;
+  param?: DataSet;
   title?: string;
   nFunc?: (data?: DataSet) => void;
-  param?: DataSet;
 }
 
 /**

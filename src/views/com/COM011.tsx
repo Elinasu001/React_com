@@ -5,15 +5,73 @@
  * @version 1.0.0
  */
 import { Box, Input, Typography } from "@mui/material";
-import { GLog } from "@src/assets/js/common";
+import { addFormData, doAction, GLog, makeForm } from "@src/assets/js/common";
 import { ButtonFooter } from "@src/components/Button";
+import { progressBar } from "@src/components/Loading";
 import { ContentTitle } from "@src/components/Text";
 import { InfoList } from "@src/components/TextList";
+import { useEffect, useState } from "react";
+import { messageView } from "@src/components/Alert";
+import DataSet from "@src/assets/io/DataSet";
 
-const COM011 = () => {
+const COM011 = ({ onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
 
-  const test = '1234';
-  GLog.d('로그는 이거쓰세요 : '+test);
+
+  // 로그인 팝업 상태
+  const [secunoIdx1, setSecunoIdx1] = useState(""); // 보안카드 첫번째 자리
+  const [secunoIdx2, setSecunoIdx2] = useState(""); // 보안카드 두번째 자리
+
+  const [inputIdx11, setInputIdx11] = useState(""); // 보안카드 입력 첫번째 첫번째 자리
+  const [inputIdx12, setInputIdx12] = useState(""); // 보안카드 입력 첫번째 두번째 자리
+
+  const [inputIdx21, setInputIdx21] = useState(""); // 보안카드 입력 두번째 첫번째 자리
+  const [inputIdx22, setInputIdx22] = useState(""); // 보안카드 입력 두번째 두번째 자리
+
+  useEffect(() => {
+    progressBar(true);
+    
+    //보안카드 전 조회
+    const loadData = async () => {
+      const form = makeForm('COM0011SC');
+      addFormData(form,'txGbnCd','S');
+      const result = await doAction(form);
+      setSecunoIdx1(result.data.getString('SECUNO_IDX1'));
+      setSecunoIdx2(result.data.getString('SECUNO_IDX2'));
+      GLog.d('data : '+JSON.stringify(result));
+    };
+
+    loadData();
+    setTimeout(() => {
+      progressBar(false);
+    }, 500);
+  }, []); // 빈 배열을 추가하면 마운트 시 한 번만 실행됩니다.
+
+
+  //전송 액션
+  const secuNumSend = async () => {
+    const form = makeForm('COM0011SC');
+    addFormData(form,'txGbnCd','R');
+    addFormData(form,'SECU_CARD_INDC_NO1',secunoIdx1);  // 보안카드 지시번호#1
+    addFormData(form,'SECU_CARD_PWD1_700',inputIdx11+inputIdx12);        // 보안카드 비밀번호1
+    addFormData(form,'SECU_CARD_INDC_NO2',secunoIdx2);  // 보안카드 지시번호#2
+    addFormData(form,'SECU_CARD_PWD2_700',inputIdx21+inputIdx22);        // 보안카드 비밀번호2
+    addFormData(form,'ATSH_ISS_YN','');                 // 인증서발급여부
+    addFormData(form,'SECU_CARD_SRNO','');              // 보안카드일련번호 
+    const response = await doAction(form);
+
+    const { respCd } = response.header;                     //통신결과
+    const apiRsMsg = response.data.getString("API_RS_MSG",'E00000,처리중 오류가 발생했습니다.') //OPEN API 전문결과
+  
+    GLog.d('data2 : '+JSON.stringify(response));
+
+    //로그인 인증성공
+    if (respCd == "N00000" && apiRsMsg == "SUCCESS"){
+      onClose(response.data);
+    }
+    else{
+      messageView(apiRsMsg.split(',')[1],'확인');
+    }
+  }
 
   return (
     // ** 팝업에서 불러오는 화면은 <> 묵어준 뒤 content 태그와 ButtonFooter 태그로 구분 지어 주세요.
@@ -37,11 +95,11 @@ const COM011 = () => {
         {/* 앞 두 자리 입력 */}
         <Box>
           <Typography className="numeric-info">
-            <span id="SECUNO_IDX1_text">12</span> 앞 두자리
+            <span id="SECUNO_IDX1_text">{secunoIdx1}</span> 앞 두자리
           </Typography>
           <Box className="numeric-box flex-row gap10">
-            <Input type="tel" inputProps={{ maxLength: 1 }} />
-            <Input type="tel" inputProps={{ maxLength: 1 }}/>
+            <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx11(e.target.value)}/>
+            <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx12(e.target.value)}/>
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
           </Box>
@@ -50,13 +108,13 @@ const COM011 = () => {
         {/* 뒤 두 자리 입력 */}
         <Box>
           <Typography className="numeric-info">
-            <span id="SECUNO_IDX2_text">34</span> 뒤 두자리
+            <span id="SECUNO_IDX2_text">{secunoIdx2}</span> 뒤 두자리
           </Typography>
           <Box className="numeric-box flex-row gap10">
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
             <Input type="tel" inputProps={{ maxLength: 1 }} disabled />
-            <Input type="tel" inputProps={{ maxLength: 1 }} />
-            <Input type="tel" inputProps={{ maxLength: 1 }} />
+            <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx21(e.target.value)}/>
+            <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx22(e.target.value)}/>
           </Box>
         </Box>
       </Box>
@@ -74,7 +132,12 @@ const COM011 = () => {
     </Box>
     <ButtonFooter
       buttons={[
-        { name: "확인", className: "btn-primary" , disabled: true }
+        {
+          name: "인증",
+          className: "btn-primary",
+          disabled: !(inputIdx11 && inputIdx12 && inputIdx21 && inputIdx22),
+          onClick: secuNumSend,
+        },
       ]}
     />
     </>
