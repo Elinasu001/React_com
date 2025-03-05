@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
+import { SelectBox01 } from '@src/components/SelectBox';
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import DataSet from "@assets/io/DataSet";
+import { Dataset } from "@mui/icons-material";
 
 const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
-  const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
+  const [telCdData, settelCdData] = useState<{ key: string; label: string }[]>([]);  /** 통신사코드리스트 */
   const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
   const [showVerificationInput, setShowVerificationInput] = useState(false);        /** 인증번호입력필드 상태값 */
@@ -23,7 +25,12 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
   useEffect(() => {
       fetchTest();
     
-    }, []);
+  }, []);
+
+  useEffect(() => {
+      console.log("선택통신사"+selectedCarrier)
+    
+  }, [selectedCarrier]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target; // 입력 필드의 name과 value 가져오기
@@ -69,7 +76,11 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     
     const list = (test01.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
 
-    settelCdData(test01.data.getList('list'));
+    const formattedList = list.map(item => ({
+      key: item.CD,
+      label: item.CD_NM
+    }));
+    settelCdData(formattedList);
    
   };
   
@@ -201,22 +212,7 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
           </Box>
 
 
-          <Box mt={3}>
-            <Typography variant="body2">통신사</Typography>
-            <Select
-                fullWidth
-                value={selectedCarrier}
-                onChange={(e) => setSelectedCarrier(e.target.value)}
-                displayEmpty
-            >
-                <MenuItem value="" disabled>통신사를 선택하세요</MenuItem>
-                {telCdData.map((carrier) => (
-                <MenuItem key={carrier.CD} value={carrier.CD}>
-                    {carrier.CD_NM}
-                </MenuItem>
-                ))}
-            </Select>
-          </Box>
+          <SelectBox01 label="통신사" items={telCdData}  onChange={setSelectedCarrier} />
 
           <Box mt={3}>
             <Typography variant="body2">휴대폰번호</Typography>
