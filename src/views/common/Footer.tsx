@@ -12,7 +12,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import SavingsIcon from "@mui/icons-material/Savings";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@views/common/Menu"
-import { bottomNavHeight, doActionURL } from "@assets/js/common"
+import { bottomNavHeight, doActionURL, IS_LOGIN } from "@assets/js/common"
 
 const BottomNav = () => {
 
@@ -27,7 +27,11 @@ const BottomNav = () => {
         <BottomNavigationAction
           label="홈"
           onClick={() => {
-            doActionURL('/');
+            if(IS_LOGIN()){
+              doActionURL('/Mybanking.view');
+            }else{
+              doActionURL('/');
+            }
           }}
           icon={<HomeIcon />}
           sx={{

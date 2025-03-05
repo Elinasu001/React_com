@@ -167,9 +167,6 @@ export const doActionURL = async (uri: string, isLogin = false) =>{
     //로그인 세션 체크
     const chk = await sessionCheck();
     GLog.d('로그인 서버 세션 체크 '+chk);
-
-    // const { user } = useAppSelector((state) => state.custDs);
-    // const userName = user?.USER_NM || '';
     GLog.d('USER_NM : '+getCustDs()?.USR_ID);
 
     if(!chk){
@@ -199,7 +196,7 @@ export enum LoginType{
 }
 
 
-export const doLogin = async (loginType:LoginType,data : DataSet) => {
+export const doLogin = async (loginType:LoginType, data : DataSet) => {
   progressBar(true);
 
   //OPEN API 로그인 요청

@@ -6,7 +6,7 @@ import { Button01 } from "@src/components/Button";
 
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup} from "@src/components/Popup";
+import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup, openFullPopup2} from "@src/components/Popup";
 import POP001 from "@src/views/pop/POP001";
 import { GLog, API_URL, makeForm, addFormData, doAction, APP_ENV } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
@@ -163,7 +163,7 @@ const Test = () => {
       <Button01 
         btnName="풀 팝업 테스트"
         clickFunc={() => {
-          openFullPopup({
+          openFullPopup2({
             component:POP001
             ,title:'풀 테스트'
             ,nFunc:(data?)=>{

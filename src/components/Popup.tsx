@@ -4,12 +4,13 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { Box, Button, Modal, Slide, Typography } from '@mui/material';
+import { Box, Button, IconButton, Modal, Slide, Typography, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
 import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 import DataSet from '@src/assets/io/DataSet';
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { progressBar } from './Loading';
+import CloseIcon from "@mui/icons-material/Close";
+import { progressBar } from '@src/components/Loading';
 /**
  * 팝업 파라미터 정의
  */
@@ -278,6 +279,59 @@ export const openPopup = ({ component: Component, title, param, nFunc }: PopupPr
               </Box>
             </Slide>
           </Modal>
+        </MemoryRouter>
+      );
+    })
+  );
+};
+
+/**
+ * 일반팝업 호출
+ */
+export const loginPopup = ({ component: Component, title, param, nFunc }: PopupProps) => {
+  const formId = 'gOpenPopup';
+  document.getRoot(formId).render(
+    React.createElement(() => {
+      // 로그인 팝업 상태
+      const [open, setOpen] = useState(false);
+      const [id, setId] = useState(""); // ID 상태
+      const [password, setPassword] = useState(""); // 비밀번호 상태
+
+      //팝업 컴포넌트 생성후 처리
+      useEffect(() => {
+        setOpen(true);
+      }, []);
+
+      //팝업 컴포넌트 닫기 처리
+      const popupClose = (data?: DataSet) => {
+        setOpen(false);
+        setTimeout(() => {
+          document.removeRoot(formId);
+          nFunc?.(data);
+        }, 300);
+      };
+
+      //팝업 컴포넌트 생성
+      return (
+        <MemoryRouter>
+          {/* 로그인 팝업 */}
+          <Dialog open={open} onClose={popupClose} maxWidth="xs" fullWidth>
+            {/* <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              임시로그인
+              <IconButton edge="end" onClick={popupClose}>
+                <CloseIcon />
+              </IconButton>
+            </DialogTitle> */}
+
+            <DialogContent>
+              <TextField label="ID" fullWidth margin="dense" variant="outlined" value={id} onChange={(e) => setId(e.target.value)}/>
+              <TextField label="Password" type="password" fullWidth margin="dense" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)}/>
+            </DialogContent>
+
+            <DialogActions sx={{ justifyContent: "center", paddingBottom: "16px" }}>
+              <Button onClick={popupClose} color="inherit">로그인</Button>
+            </DialogActions>
+          </Dialog>
         </MemoryRouter>
       );
     })

@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { AppBar, Toolbar, IconButton, Box, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import CloseIcon from "@mui/icons-material/Close";
 import Logo from "@assets/images/logo.svg";
 import { doLogout, doActionURL, LoginType, doLogin, IS_LOGIN, GLog} from '@assets/js/common';
 import { messageView } from '@src/components/Alert';
@@ -82,25 +81,6 @@ const Header = () => {
           </Box>
         </Toolbar>
       </AppBar>
-
-      {/* 로그인 팝업 */}
-      <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-        <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          임시로그인
-          <IconButton edge="end" onClick={handleClose}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-
-        <DialogContent>
-          <TextField label="ID" fullWidth margin="dense" variant="outlined" value={id} onChange={(e) => setId(e.target.value)}/>
-          <TextField label="Password" type="password" fullWidth margin="dense" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)}/>
-        </DialogContent>
-
-        <DialogActions sx={{ justifyContent: "center", paddingBottom: "16px" }}>
-          <Button onClick={handleLogin} color="inherit">로그인</Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };
