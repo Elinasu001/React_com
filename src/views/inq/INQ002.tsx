@@ -8,7 +8,7 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect ,useState } from "react";
 
-import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
+import { GLog, doAction,makeForm, addFormData, getParameter } from '@assets/js/common';
 import { messageView } from "@src/components/Alert";
 import { progressBar } from "@src/components/Loading";
 import { Button01 } from "@src/components/Button";
@@ -17,18 +17,6 @@ import DataSet from "@src/assets/io/DataSet";
 import POP003 from "@src/views/pop/POP003";
 import { openBottomPopup } from "@src/components/Popup";
 import { useLocation } from 'react-router-dom';
-
-
-const accountData = {
-  ACNO: "123-456-789012",
-  ACNT_BLNC: 98750000,
-};
-
-interface Card06Props {
-  type: string;
-  acno: string;
-  balance: number;
-}
 
 interface TradeListProps {
   ACNO?: string;
@@ -50,8 +38,6 @@ interface TradeListProps {
 
 const INQ002 = () => {
   const location = useLocation();
-  const { account } = location.state || {}; // ListItemButton에서 전달된 데이터 받기
-  console.log("account!@#$%!@#$"+account);
   const [showBalance] = useState(true);
   const [tradeList, settradeList] = useState<TradeListProps[]>([]);
   const fetchTradeList = async (acno:string): Promise<TradeListProps[]> =>{ 
@@ -61,7 +47,7 @@ const INQ002 = () => {
     const form = makeForm('INQ0002SC');
     addFormData(form,'txGbnCd','TL');
     addFormData(form, 'acno', acno); // 계좌번호를 폼에 추가
-    console.log("form@@@@"+form.param.getString("acno"));
+   
 
     //로딩 ON
     progressBar(true, "통신중");
@@ -111,15 +97,17 @@ const INQ002 = () => {
   };
 
   useEffect(() => {
-    if (account?.acno) {
-      // fetchTradeList 호출
+    const param = getParameter(location);
+
+    const account = param.getString('acno');
+    if (account) {
       const fetchData = async () => {
-        const data = await fetchTradeList(account.acno); // 계좌번호를 fetchTradeList에 전달
+        const data = await fetchTradeList(account);
         settradeList(data);
       };
       fetchData();
     }
-  }, [account]);
+  }, [location]);
 
   
   useEffect(() => {
