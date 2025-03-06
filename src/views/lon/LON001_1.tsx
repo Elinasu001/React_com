@@ -130,19 +130,25 @@ const LON001_1 = () => {
     return new Intl.NumberFormat().format(amountInWan);
   };
 
-  // 상품분류코드 한글로 변환   
+  // 상품분류코드를 한글로 변환   
   const convert = (categoryCode: string | undefined) => {
     switch (categoryCode) {
-    case "11":
-      return "신용대출";
-    case "12":
-      return "담보대출";
-    case "13":
-      return "정책자금대출";
-    case "14":
-      return "외국인대출";
-    default:
-      return "기타";
+      case "11":
+        return "신용대출";
+      case "12":
+        return "정책자금대출";
+      case "13":
+        return "대환대출";
+      case "14":
+        return "담보대출";
+      case "15":
+        return "기타";
+      case "16":
+        return "외국인대출";
+      case "20":
+        return "직원대출";
+      default:
+        return "기타";
     }
   };
 
@@ -156,7 +162,7 @@ const LON001_1 = () => {
         title="내 대출한도가 궁금하세요?"
         description="신용평점에 영향 없이 대출한도를 알아보세요."
         buttonText="간편대출한도조회"
-        onButtonClick={() => doActionURL("/")}
+        onButtonClick={() => doActionURL('/lon/LON002.view')}
       />
 
       {/* 대출 상품 컴포넌트 */}
