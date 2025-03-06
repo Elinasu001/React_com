@@ -103,9 +103,9 @@ export const ButtonFooter = ({ buttons }: ButtonFooterProps) => {
     * 예시)
     * <ButtonFooter
     *    buttons={[
-    *     { name: "취소", className: "btn-secondary" }, // 1
-    *      { name: "닫기", className: "btn-primary", onClick: () => onClose(result) }, // 2
-    *      { name: "확인", className: "btn-outlined" }, // 마지막
+    *     { name: "버튼명", className: "btn-secondary" },
+    *      { name: "버튼명", className: "btn-primary", onClick: () => onClose(result) },
+    *      { name: "버튼명", className: "btn-outlined" },
     *    ]}
     *  />
     *

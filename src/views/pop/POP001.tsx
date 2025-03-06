@@ -12,7 +12,7 @@ const POP001 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
   const result = new DataSet({ result: "콜백 가자" });
 
   return (
-    // ** 팝업에서 불러오는 화면은 <> 묵어준 뒤 content 태그와 ButtonFooter 태그로 구분 지어 주세요.
+    
     <>
       <Box className="content">
         <h1>타이틀</h1>
@@ -22,9 +22,9 @@ const POP001 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
       {/* 필요한 버튼 개수와 스타일을 선택 가능 */}
       <ButtonFooter
         buttons={[
-          { name: "취소", className: "btn-secondary" }, // 취소 버튼 먼저
-          { name: "닫기", className: "btn-primary", onClick: () => onClose(result) }, // 기본 버튼 (닫기)
-          { name: "확인", className: "btn-outlined" }, // 확인 버튼 마지막
+          { name: "버튼명", className: "btn-secondary"},
+          { name: "버튼명", className: "btn-primary", onClick: () => onClose(result) },
+          { name: "버튼명", className: "btn-outlined"},
         ]}
       />
 
