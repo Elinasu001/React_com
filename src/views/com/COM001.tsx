@@ -169,7 +169,7 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     '확인',
     (() => {
         resetForm(); // 입력값 초기화
-        const selectedData = new DataSet({ 'USER_AUTH': 'true'});
+        const selectedData = new DataSet({ 'USER_AUTH': 'true' , 'HNPH_TSCO_DV_CD': selectedCarrier, 'CUST_NM': formData.custNm, 'HNPH_NO': formData.telNo, 'RBRNO': formData.rsrNo});
         onClose(selectedData);
     })
     )
