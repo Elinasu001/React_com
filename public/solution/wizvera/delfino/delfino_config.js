@@ -2,11 +2,13 @@ if (!window.location.origin) {
   window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
 }
 
+// var serverUrl = import.meta.env.VITE_APP_API_BASE_URL;
+var serverUrl = 'http://localhost:8050';
 
 var _Delfino_NotUseJsp = true; //servlet 사용여부(_Delfino_Servlet 경로 확인)
 var _Delfino_Base = "/solution/wizvera/delfino";
 var _Delfino_Svc  = "/svc"; //jsp base
-var _Delfino_Servlet = "/wizveraServlet"; //servlet base
+var _Delfino_Servlet = serverUrl +"/wizveraServlet"; //servlet base
 var _Delfino_Down = _Delfino_Base + "/down";
 
 //_Delfino_Down = "http://help.wizvera.com/svc/wizvera/delfino_test";

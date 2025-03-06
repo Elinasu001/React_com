@@ -64,22 +64,30 @@
                 });
             }
 
-            function sign(authType){
+            function sign(authType,oriMsg){
                 var signOptions = {};
-                signOptions.provider = authType;
-                signOptions.displayProviders = authType;
+                signOptions.provider = loginType;
+                signOptions.displayProviders = loginType;
                 signOptions.addNonce = true;
                 
                 var cgUserInfo = {};
-                cgUserInfo.userName = '';
-                cgUserInfo.userPhone = '';
-                cgUserInfo.userBirthday = '';
+                cgUserInfo.userName = name;
+                cgUserInfo.userPhone = phone;
+                cgUserInfo.userBirthday = birthDay;
                 signOptions.userInfo = cgUserInfo;
-                
-                Delfino.login("login=certLogin", signOptions, function(result){
+
+                Delfino.sign(oriMsg, signOptions,function(result){
                     if (typeof (result) == 'string')result=JSON.parse(result);
                     window.parent.postMessage(result, "*");
                 });
+            }
+
+            function certImport(){
+
+            }
+
+            function certExport(){
+
             }
             
 

@@ -443,6 +443,7 @@ export const openHtmlPopup = (url: string): AsyncPromiss => {
                   {/* 팝업 내용 */}
                   <iframe
                     src={url}
+                    name="iframePopup"
                     width="100%"
                     height="100%"
                     title="인앱"

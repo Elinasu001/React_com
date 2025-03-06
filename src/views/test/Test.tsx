@@ -178,17 +178,45 @@ const Test = () => {
 
 
       <Button01 
-        btnName="델피노 테스트"
+        btnName="델피노 로그인 테스트"
         clickFunc={async () => {
-
-          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html?txGbnCd=login");
-
+          const param = new DataSet({'txGbnCd':'login','oriMsg':'전자서명 원문 테스트'});
+          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
           if(signData.getNumber('status')!=0){
-            GLog.d('팝업 성공 닫힘' + JSON.stringify(signData));
+            messageView('결과 : '+signData.toString(),'확인');
           }else{
             GLog.d('팝업 취소 닫힘');
-
           }
+        }}
+      />
+
+    <Button01 
+        btnName="델피노 전자서명 테스트"
+        clickFunc={async () => {
+          const param = new DataSet({'txGbnCd':'sign','oriMsg':'전자서명 원문 테스트'});
+          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
+          if(signData.getNumber('status')!=0){
+            messageView('결과 : '+signData.toString(),'확인');
+          }else{
+            GLog.d('팝업 취소 닫힘');
+          }
+        }}
+      />
+      <Button01 
+        btnName="델피노 인증서 가져오기"
+        clickFunc={async () => {
+          const param = new DataSet({'txGbnCd':'import'})
+          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
+          messageView('번호 : '+signData.toString(),'확인');
+        }}
+      />
+
+    <Button01 
+        btnName="델피노 인증서 내보내기"
+        clickFunc={async () => {
+          const param = new DataSet({'txGbnCd':'export'})
+          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
+          messageView('번호 : '+signData.toString(),'확인');
         }}
       />
 
@@ -196,9 +224,7 @@ const Test = () => {
       <Button01 
         btnName="키패드 테스트"
         clickFunc={async () => {
-
           const signData = await showKeypad('OTP비밀번호를 입력해주세요',6);
-
           alert(signData.getString('num'));
         }}
       />
