@@ -4,10 +4,10 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Modal, Slide, TextField, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItemButton, Modal, Slide, TextField, Typography } from '@mui/material';
 import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 import DataSet from '@src/assets/io/DataSet';
-import { doLogin, LoginType } from '@src/assets/js/common';
+import { doActionView, doLogin, LoginType } from '@src/assets/js/common';
 import { progressBar } from '@src/components/Loading';
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
@@ -452,6 +452,69 @@ export const openHtmlPopup = (url: string): AsyncPromiss => {
       })
     );
   });
+};
+
+export const openBottomPopupWithMenu = ({ title, param }: { title: string; param: DataSet }) => {
+  const formId = "gOpenBottomPopup";
+  document.getRoot(formId).render(
+    React.createElement(() => {
+      const [open, setOpen] = useState(false);
+
+      // 팝업 열기
+      useEffect(() => {
+        setOpen(true);
+      }, []);
+
+      // 팝업 닫기 함수
+      const popupClose = () => {
+        setOpen(false);
+        setTimeout(() => document.removeRoot(formId), 300);
+      };
+
+      // 메뉴 리스트 정의
+      const menuItems = [
+        { label: "계좌 관리", path: "/efc/EFC004.view" },
+        { label: "지연이체 관리", path: "/efc/EFC005.view" },
+        { label: "출금지정계좌 관리", path: "/efc/EFC006.view" },
+        { label: "입금지정계좌 관리", path: "/efc/EFC007.view" },
+        { label: "이체한도 관리", path: "/efc/EFC008.view" },
+        { label: "한도제한 해제", path: "/efc/EFC009.view" },
+        { label: "해지계좌 조회", path: "/efc/EFC010.view" },
+      ];
+
+      return (
+        <Modal open={open} onClose={popupClose}>
+          <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+            <Box className="popup-container btmSheet">
+              <Box className="pop-header">
+                <Typography variant="h2" className="pop-tit">{title}</Typography>
+                <Button aria-label="close" onClick={popupClose} className="btn btn-close right">
+                  <Typography component="span" className="sr-only">닫기</Typography>
+                </Button>
+              </Box>
+
+              <Box className="pop-body">
+                {/* 메뉴 리스트 표시 */}
+                <List>
+                  {menuItems.map((menu, index) => (
+                    <ListItemButton
+                      key={index}
+                      onClick={() => {
+                        doActionView(menu.path, param);
+                        popupClose();
+                      }}
+                    >
+                      <Typography>{menu.label}</Typography>
+                    </ListItemButton>
+                  ))}
+                </List>
+              </Box>
+            </Box>
+          </Slide>
+        </Modal>
+      );
+    })
+  );
 };
 
 export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openHtmlPopup };

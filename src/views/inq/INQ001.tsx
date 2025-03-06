@@ -119,13 +119,7 @@ const INQ001 = () => {
             accountList.length > 0 ? (
               accountList.map((account, index) => (
                 <Card02 key={index} {...account} 
-                  nFunc={(accountData) => {
-                    if (accountData?.getString("action") === "거래내역") {
-                      doActionView("/inq/INQ002.view", accountData);
-                    } else if (accountData?.getString("action") === "더보기") {
-                      doActionView("/efc/EFC004.view", accountData);
-                    }
-                  }}
+                  nFunc={(accountData) => {doActionView("/inq/INQ002.view", accountData);}}
                 />
               ))
             ) : (
