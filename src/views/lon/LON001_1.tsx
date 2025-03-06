@@ -12,17 +12,18 @@ import { messageView } from '@src/components/Alert';
 import { Card03 } from "@src/components/Card";
 import { Tab01 } from "@src/components/Tab";
 import { Box02 } from "@src/components/Box";
+import DataSet from "@src/assets/io/DataSet";
 
 /**
- * 대출상품 응답
+ * 대출상품 목록조회 응답
  */
 interface LoanPdRes {
   PRDCT_CD: string;       // 상품코드
   PRDCT_NM: string;       // 상품명
   PRDCT_CLS_CD: string;   // 상품분류코드
   SMR_DC_CNTN: string;    // 요약설명내용
-  MAX_AMT: number;        // 최대한도
-  LWST_INRT: number;      // 최소금리
+  MAX_AMT: number;        // 최대금액
+  LWST_INRT: number;      // 최저금리
   HST_INRT: number;       // 최대금리
 }
 
@@ -58,7 +59,7 @@ const LON001_1 = () => {
   /**
   * 대출상품 목록조회
   */
-  const fetchLoanProducts = async () => {
+  const fetchLoanPrdList = async () => {
     //폼생성,데이터 주입
     const form = makeForm("LON0000SC");
     addFormData(form, "txGbnCd", "S01");
@@ -103,7 +104,7 @@ const LON001_1 = () => {
 
   // 최초 조회
   useEffect(() => {
-    fetchLoanProducts();
+    fetchLoanPrdList();
   }, []);
 
   // 탭 변경 시 이벤트
@@ -111,40 +112,16 @@ const LON001_1 = () => {
     setSelectedTab(value.toString());
   };
 
-  // 탭 - 카테고리에 따라서 필터링
+  // 탭 - 상품분류코드에 따라서 필터링
   const filteredProducts =
   selectedTab === "10"
     ? loanPdList
     : loanPdList.filter((product) => product.categoty === selectedTab);
 
-  /**
-  * 대출상품 상세조회
-  */
+  // 상품코드를 가지고 LON001_2(대출상품 상세조회)로 이동
   const handleProductClick = async (pdcd: string) => {
-    //폼생성,데이터 주입
-    const form = makeForm("LON0000SC");
-    addFormData(form, "txGbnCd", "S02");
-    addFormData(form, "PRDCT_CD", pdcd);
 
-    progressBar(true, "통신중");
-    try {
-      const response = await doAction(form);
-      progressBar(false);
-
-      if (response.header.respCd !== "N00000") {
-        GLog.e("대출상품 상세조회 실패:", response.header.respMsg);
-        messageView(`통신 실패 : ${response.header.respMsg}`, "확인", () => GLog.d("확인 클릭"));
-        return;
-      }
-
-      // 대출상품 상세 DataSet을 가지고 상세 페이지로 이동
-      doActionView("/lon/LON001_2.view", response.data, false);
-    
-    } catch (error) {
-      GLog.e("대출상품 상세조회 중 오류:", error);
-      messageView("대출상품 상세조회 중 오류가 발생했습니다.", "확인");
-      progressBar(false);
-    }
+      doActionView("/lon/LON001_2.view", new DataSet({pdcd}), false);
   };
 
   // 금액 형식 지정
