@@ -227,6 +227,7 @@
 /*---------------------------------------------
    #카드
 ---------------------------------------------*/
+.card-list-wrap { @include mixin.flex-col; gap:15px; margin-top:30px; }
 .card-box {
     &.MuiCard-root { border-radius: 20px; padding:0; } //mui default
     & > .MuiCardContent-root { padding:16px;} //mui default

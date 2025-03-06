@@ -5,10 +5,10 @@
  * @version 1.0.0
  */
 
-import { useState } from "react";
 import { Box } from "@mui/material";
 import { Card05 } from "@src/components/Card";
 import { Tab01 } from "@src/components/Tab";
+import { useState } from "react";
 
 const depProducts = [
   {
@@ -116,12 +116,12 @@ const DEP001 = () => {
 
   return (
 
-    <Box sx={{ width: "95%" }}>
+    <Box>
       {/* 예적금 탭 컴포넌트 */}
       <Tab01 items={tabItems} initialValue="전체" onChange={handleTabChange} />
 
       {/* 예적금 상품 컴포넌트 */}
-      <Box sx={{ minHeight: "100vh", mx: 2, width: "95%", mt:3 }}>
+      <Box className="card-list-wrap">
         {filteredProducts.map((product) => (
           <Card05
             key={product.pdcd}
