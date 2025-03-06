@@ -19,12 +19,13 @@ import {
 } from '@mui/material';
 
 // ✅ 일반 텍스트 박스
-export const TextBox = ({ label, value, onChange }: { label: string; value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; }) => (
+export const TextBox = ({ label, value, name, onChange }: { label: string; value: string; name?: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void; }) => (
   <TextField
     label={label}
     variant="outlined"
     fullWidth
     value={value}
+    name={name}
     onChange={onChange}
     sx={{ mb: 2 }}
   />

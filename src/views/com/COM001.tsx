@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { TextBox } from '@src/components/Input';
 import { SelectBox01 } from '@src/components/SelectBox';
-import { Box01 } from "@src/components/Box";
-import { Button01 } from "@src/components/Button";
+import { ButtonFooter } from "@src/components/Button";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import DataSet from "@assets/io/DataSet";
 
@@ -36,10 +35,10 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
   }, [selectedCarrier]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target; // 입력 필드의 name과 value 가져오기
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value, // 해당 name에 해당하는 값 업데이트
+        const { name, value } = event.target; // 입력 필드의 name과 value 가져오기
+          setFormData((prevData) => ({
+              ...prevData,
+              [name]: value, // 해당 name에 해당하는 값 업데이트
         }));
     };
 
@@ -124,7 +123,6 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     '확인',
     (() => {
         setIsVerified(true);
-        // setmblCtfcNo(test01.data.MBL_CTFC_NO);
         setShowVerificationInput(true); // 인증번호 입력 필드 표시
     })
     
@@ -156,7 +154,10 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     messageView(
         '통신 실패 : '+test01.header.respMsg,
         '확인',
-        () => { resetForm(); // 입력값 초기화 
+        () => { 
+          resetForm(); // 입력값 초기화 
+          const selectedData = new DataSet({'USER_AUTH': 'false'});
+          onClose(selectedData)
         }
     )
     return;
@@ -168,7 +169,8 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     '확인',
     (() => {
         resetForm(); // 입력값 초기화
-        onClose();
+        const selectedData = new DataSet({ 'USER_AUTH': 'true'});
+        onClose(selectedData);
     })
     )
     
@@ -177,24 +179,34 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
   return (
     
     <>
-            <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
-            
-            <TextBox label="이름 입력" onChange={handleChange} value={formData.custNm}></TextBox>
-            <TextBox label="주민등록번호 입력" onChange={handleChange} value={formData.rsrNo}></TextBox>
-            <SelectBox01 label="통신사" items={telCdData}  onChange={setSelectedCarrier} />
-            <TextBox label="휴대폰번호 입력" onChange={handleChange} value={formData.telNo}></TextBox>
-           
-              {showVerificationInput && (       
-              <>
-                  <Typography variant="body2">인증번호</Typography>
-                  <TextBox label="인증번호 입력" onChange={mblCtfcNoChange} value={mblCtfcNo ?? ""}></TextBox>
-                  
-              </>
-              )}
+     <Box className="content">
+          <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
+          
+          <TextBox label="이름 입력" onChange={handleChange}  name="custNm" value={formData.custNm}></TextBox>
+          <TextBox label="주민등록번호 입력" onChange={handleChange} name="rsrNo" value={formData.rsrNo}></TextBox>
+          <SelectBox01 label="통신사" items={telCdData}  onChange={setSelectedCarrier} />
+          <TextBox label="휴대폰번호 입력" onChange={handleChange} name="telNo" value={formData.telNo}></TextBox>
+          
+            {showVerificationInput && (       
+            <>
+                <Typography variant="body2">인증번호</Typography>
+                <TextBox label="인증번호 입력" onChange={mblCtfcNoChange} value={mblCtfcNo ?? ""}></TextBox>
+                
+            </>
+            )}
+      </Box>
+      
+      <ButtonFooter
+        buttons={[
+          {
+            name: !isVerified ? "인증번호받기" : "인증확인",
+            className: "btn-primary",
+            onClick: !isVerified ? userAuth :userConfirmAuth ,
+          },
+        ]}
+    />
               
-          <Button01 btnName = {isVerified ? "인증확인" : "인증번호받기"} clickFunc={isVerified ? userConfirmAuth : userAuth} />
-              
-      </>
+    </>
          
       
  

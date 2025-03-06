@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { useState, useEffect } from "react";
+import { Box, Typography, Input } from "@mui/material";
 import { GLog,doAction, makeForm, addFormData  } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import { NumberBox } from "@src/components/Input";
-import { Button04 } from "@src/components/Button";
-import { Box01 } from "@src/components/Box";
+import { Button04, ButtonFooter } from "@src/components/Button";
 import InputLabel from '@mui/material/InputLabel';
 import Logo from "@assets/images/com/svg/img_accountCrtf.png";
 import DataSet from "@assets/io/DataSet";
 
 const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
   
-  const [conNumber, setConNumber] = useState('');                             // 입력된인증번호
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);   // 버튼상태
   const [seconds, setSeconds] =  useState<number>(180);                       // 타이머시작
   const [isRunning, setIsRunning] = useState<boolean>(true);                  // 타이머상태
+  const [inputIdx1, setInputIdx1] = useState("");
+  const [inputIdx2, setInputIdx2] = useState("");
+  const [inputIdx3, setInputIdx3] = useState("");
+  const [inputIdx4, setInputIdx4] = useState("");
 
   useEffect(() => {
     if (!isRunning) return;
@@ -63,7 +64,7 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
     //폼생성,데이터 주입
     const form = makeForm('COM0004SC');
     addFormData(form,'txGbnCd','A02');
-    addFormData(form,'AUTN_STR', conNumber);
+    addFormData(form,'AUTN_STR', inputIdx1+inputIdx2+inputIdx3+inputIdx4);
     addFormData(form,'BKCD', param.getString("BKCD"));
     addFormData(form,'ACNO', param.getString("ACNO"));
     addFormData(form,'PROD_KNCD', param.getString("PROD_KNCD"));
@@ -116,19 +117,41 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
   return (
     
       <>    
-        <Typography variant="body1"><strong>입력하신 계좌로<br/>
+        <Box className="content">
+          <Typography variant="body1"><strong>입력하신 계좌로<br/>
                                         1원을 보내드렸어요<br/>
                                         입금자명 뒤쪽 4자리 숫자를<br/>
                                         입력해 주세요</strong></Typography>
 
           <Box component="img" src={Logo} alt="Logo"  sx={{ maxWidth: "320px" }} />
-          <InputLabel id="demo-simple-select-helper-label"><strong>입금자명 뒤쪽 4자리 숫자 입력하세요</strong></InputLabel>
-          
-          <NumberBox label="숫자 입력" value={conNumber} onChange={(e) => setConNumber(e.target.value)} />
-          
+
+          <Box>
+            <Typography className="numeric-info"><strong>입금자명 뒤쪽 4자리 숫자 입력하세요</strong></Typography>
+            
+            <Box className="security-input-wrap flex-col gap40">
+              <Box className="numeric-box flex-row gap10">
+                <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx1(e.target.value)}/>
+                <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx2(e.target.value)}/>
+                <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx3(e.target.value)}/>
+                <Input type="tel" inputProps={{ maxLength: 1 }} onChange={(e) => setInputIdx4(e.target.value)}/>
+
+              </Box>
+            </Box>
+          </Box>
 
           <InputLabel id="demo-simple-select-helper-label"><strong>입력시간:  {minutes}:{displaySeconds.toString().padStart(2, "0")}</strong></InputLabel>
-          <Button04 btnName = '확인'clickFunc={fsbAcnoConfirmAuth} disabled={isButtonDisabled}/>
+          {/* <Button04 btnName = '확인'clickFunc={fsbAcnoConfirmAuth} disabled={isButtonDisabled}/> */}
+        </Box>
+        <ButtonFooter 
+                  buttons={[
+                    {
+                      name: "확인",
+                      className: "btn-primary",
+                      disabled:isButtonDisabled,
+                      onClick: fsbAcnoConfirmAuth,
+                    },
+                  ]}              
+          />
       </>
  
   );

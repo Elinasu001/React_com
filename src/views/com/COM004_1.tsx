@@ -21,13 +21,13 @@
  */
 
 import { useState, useEffect } from "react";
+import { Box } from "@mui/material";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { NumberBox } from "@src/components/Input";
-import { Button01 } from "@src/components/Button";
-import { TextBox02 } from "@src/components/Text";
-import { Box01 } from "@src/components/Box";
+import { ButtonFooter } from "@src/components/Button";
+import { TextBox02, ContentTitle } from "@src/components/Text";
 import { SelectBox02 } from '@src/components/SelectBox';
 import { openBottomPopup,openFullPopup } from "@src/components/Popup";
 import COM006 from "@src/views/com/COM006";
@@ -123,7 +123,16 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
   return (
     
       <>
-           <TextBox02 text="타행 본인 계좌 인증으로 본인 확인을 진행해요"/>
+       <Box className="content">
+           <ContentTitle
+                   title={
+                     <>
+                       <strong>타행 본인 계좌 인증</strong>으로
+                       <br />
+                       <strong>본인 확인</strong>을 진행해요
+                     </>
+                   }
+             />
 
               <SelectBox02 label="입금은행" value={selectedBankCd } text={selectedBankNm} 
                 onClick ={() => {
@@ -146,9 +155,17 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
     
             <TextBox02 text="계좌번호"/>
             <NumberBox label="계좌번호입력" value={inputAcno} onChange={(e) => setinputAcno(e.target.value)} />
-    
+        </Box>
 
-          <Button01 btnName = '계좌인증'clickFunc={fsbAcnoAuth}/>
+        <ButtonFooter 
+          buttons={[
+            {
+              name: "계좌인증",
+              className: "btn-primary",
+              onClick: fsbAcnoAuth,
+            },
+          ]}              
+          />
           
       </>
  
