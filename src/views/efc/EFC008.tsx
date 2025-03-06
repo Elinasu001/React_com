@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Divider } from "@mui/material";
 import DataSet from "@src/assets/io/DataSet";
 
 // common
-import { doAction, makeForm, addFormData, doActionView } from '@assets/js/common';
+import { doAction, makeForm, addFormData, doActionView, IS_LOGIN } from '@assets/js/common';
 
 // components
 import { messageView } from "@src/components/Alert";
@@ -16,6 +17,9 @@ import { TextBox01, TextBox02 } from "@src/components/Text";
 import { TextList } from "@src/components/TextList";
 
 const EFC008 = () => {
+
+    // 페이지 이동 함수
+    const navigate = useNavigate();
 
     // 현재 1회이체한도, 1일이체한도
     const [oneTimeAmount, setOneTimeAmount] = useState<number>(0);
@@ -51,8 +55,14 @@ const EFC008 = () => {
         }
     };
 
-    // 화면 첫 로드시 현재 1회,1일이체한도 조회
+    // 화면 첫 진입시 현재 1회,1일이체한도 조회
     useEffect(() => {
+
+        // 로그인 여부 확인
+        if(!IS_LOGIN()){
+            messageView("로그인이 필요합니다.", "확인", () => navigate("/"));
+            return;
+        }
         
     const fetchApiIbaTlrdUpto = async () => { 
 
