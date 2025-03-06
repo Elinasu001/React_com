@@ -5,14 +5,14 @@
  * @version 1.0.0
  */
 
-import { useState, useEffect } from "react";
-import { doAction, makeForm, addFormData } from '@assets/js/common';
-import { progressBar } from "@src/components/Loading";
-import { TextBox } from "@src/components/Input";
-import { Button01 } from "@src/components/Button";
-import { Tab01 } from "@src/components/Tab";
-import { Box01, BoxList } from "@src/components/Box";
 import DataSet from "@assets/io/DataSet";
+import { addFormData, doAction, makeForm } from '@assets/js/common';
+import { Box01, BoxList } from "@src/components/Box";
+import { Button01 } from "@src/components/Button";
+import { TextBox } from "@src/components/Input";
+import { progressBar } from "@src/components/Loading";
+import { Tab01 } from "@src/components/Tab";
+import { useEffect, useState } from "react";
 
 const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
 
@@ -94,6 +94,8 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
          
           <Tab01
             initialValue="bank" // 기본 선택 탭 설정
+            containerClass="round" // 컨테이너 클래스 설정
+            isScrollable={true}  // 스크롤 사용 여부
             items={[
               {
                 label: "은행사",
