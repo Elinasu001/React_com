@@ -32,6 +32,7 @@ import DEP006 from "@src/views/dep/DEP006";
 // LON[여신]
 import LON001_1 from "@src/views/lon/LON001_1";
 import LON001_2 from "@src/views/lon/LON001_2";
+import LON001_3 from "@src/views/lon/LON001_3";
 import LON002_1 from "@src/views/lon/LON002_1";
 import LON002_2 from "@src/views/lon/LON002_2";
 import LON003 from "@src/views/lon/LON003";
@@ -107,6 +108,7 @@ const App = () => {
         <Route path="/lon" element={<Layout />}>
           <Route path="LON001_1.view" element={<LON001_1 />} />
           <Route path="LON001_2.view" element={<LON001_2 />} />
+          <Route path="LON001_3.view" element={<LON001_3 />} />
           <Route path="LON002_1.view" element={<LON002_1 />} />
           <Route path="LON002_2.view" element={<LON002_2 />} />
           <Route path="LON003.view" element={<LON003 />} />
