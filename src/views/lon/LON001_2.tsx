@@ -5,16 +5,18 @@
  * @version 1.0.0
  */
 import { useState, useEffect } from "react";
-import { GLog, getParameter, doAction,makeForm, addFormData } from '@assets/js/common';
+import { GLog, getParameter, doAction,makeForm, addFormData, doActionURL } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import { MainBox } from "@src/components/Box";
-import { Typography, Divider } from "@mui/material";
+import { MainBox, Box01 } from "@src/components/Box";
+import { Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { decode } from "html-entities";
 import { Box03 } from "@src/components/Box";
-import { Button04 } from "@src/components/Button";
+import { ButtonFooter } from "@src/components/Button";
+import { TextList } from "@src/components/TextList";
 import { openFullPopup } from "@src/components/Popup";
-import COM001 from "@src/views/com/COM001";
+import LON001_3 from "../../views/lon/LON001_3";
 
 /**
  * 대출상품 상세조회 응답
@@ -26,7 +28,7 @@ interface LoanPdRes {
   SMR_DC_CNTN: string;        // 요약설명내용
   SBSCRB_TRGET_CNTN: string;  // 가입대상내용
   SBSCRB_PRD: string;         // 가입기간
-  PRDCT_CNTN: string;         // 상품내용
+  PRDCT_CNTN: string;         // 상품내용 (HTML 가능)
   STDR_DT: Date;              // 기준일자
   LWST_INRT: number;          // 최저금리
   HST_INRT: number;           // 최대금리
@@ -37,9 +39,8 @@ interface LoanPdRes {
 
 const LON001_2 = () => {
 
-  const [productDetails, setProductDetails] = useState<LoanPdRes[]>([]);  // 대출상품 상세조회
-  const param = getParameter(useLocation()); // LON001_1(대출상품 목록조회)에서 넘겨받은 param
-  const prdctCd = param.getString("pdcd");
+  const [productDetails, setProductDetails] = useState<LoanPdRes[]>([]);    // 대출상품 상세조회
+  const param = getParameter(useLocation());    // LON001_1(대출상품 목록조회)에서 넘겨받은 param
 
   /**
   * 대출상품 상세조회
@@ -48,7 +49,7 @@ const LON001_2 = () => {
     //폼생성,데이터 주입
     const form = makeForm("LON0000SC");
     addFormData(form, "txGbnCd", "S02");
-    addFormData(form, "PRDCT_CD", prdctCd);
+    addFormData(form, "PRDCT_CD", param.getString("pdcd"));
 
     //로딩 ON
     progressBar(true, "통신중");
@@ -60,7 +61,7 @@ const LON001_2 = () => {
       progressBar(false);
 
       if (response.header.respCd !== "N00000") {
-        GLog.e("대출상품 목록조회 실패:", response.header.respMsg);
+        GLog.e("대출상품 상세조회 실패:", response.header.respMsg);
         messageView(`통신 실패 : ${response.header.respMsg}`, "확인", () => GLog.d("확인 클릭"));
         return;
       }
@@ -72,8 +73,8 @@ const LON001_2 = () => {
       }
 
     } catch (error) {
-        GLog.e("대출상품 목록조회 중 오류 발생:", error);
-        messageView("대출상품 목록조회 중 오류가 발생했습니다.", "확인");
+        GLog.e("대출상품 상세조회 중 오류 발생:", error);
+        messageView("대출상품 상세조회 중 오류가 발생했습니다.", "확인");
         progressBar(false);
     }
   };
@@ -89,20 +90,46 @@ const LON001_2 = () => {
     return new Intl.NumberFormat().format(amountInWan);
   };
 
-  // 상품분류코드 한글로 변환   
+  // 상품분류코드를 한글로 변환   
   const convert = (categoryCode: string | undefined) => {
     switch (categoryCode) {
-    case "11":
-      return "신용대출";
-    case "12":
-      return "담보대출";
-    case "13":
-      return "정책자금대출";
-    case "14":
-      return "외국인대출";
-    default:
-      return "기타";
+      case "11":
+        return "신용대출";
+      case "12":
+        return "정책자금대출";
+      case "13":
+        return "대환대출";
+      case "14":
+        return "담보대출";
+      case "15":
+        return "기타";
+      case "16":
+        return "외국인대출";
+      case "20":
+        return "직원대출";
+      default:
+        return "기타";
     }
+  };
+
+  // 전화상담 버튼
+  const telcounseling = async () => { 
+    // TODO 전화상담 버튼 클릭 시 이벤트
+    messageView("전화상담 버튼 클릭", "확인");
+  }
+
+  // 대출신청 버튼
+  const loanApply = async () => {
+    // 대출관련 보이스피싱 안내 Popup
+    openFullPopup({
+      component: LON001_3,
+      title: "대출관련 보이스피싱 안내",
+      nFunc: (data) => {
+        if (data) {
+          doActionURL("/lon/LON002.view");  // 간편한도조회 페이지로 이동
+        }
+      },
+    });
   };
 
   return (
@@ -122,27 +149,44 @@ const LON001_2 = () => {
           />
 
           {/* 하단 대출상품 설명 */}
-          <>
-            <Typography variant="body1">대출대상</Typography>
-            <Typography variant="body2">{productDetails[0].SBSCRB_TRGET_CNTN}</Typography>
-            <Divider></Divider>
-
-            <Typography variant="body1">대출기간</Typography>
-            <Typography variant="body2">{productDetails[0].SBSCRB_PRD}</Typography>
-            <Divider></Divider>
-
-            <Typography variant="body1">대출상품내용</Typography>
-            <Typography variant="body2">{productDetails[0].PRDCT_CNTN}</Typography>
-            <Divider></Divider>
-
-            <Typography variant="body1">대출한도</Typography>
-            <Typography variant="body2">{`최대 ${formatAmount(productDetails[0].MAX_AMT)}만원`}</Typography>
-            <Divider></Divider>
-
-            <Typography variant="body1">대출금리</Typography>
-            <Typography variant="body2">{`연 ${productDetails[0].LWST_INRT}%~${productDetails[0].HST_INRT}%대`}</Typography>
-            <Divider></Divider>
-          </>
+          <Box01>
+            <TextList 
+              title="대출대상"
+              items={[productDetails[0].SBSCRB_TRGET_CNTN]}
+            />
+            <TextList 
+              title="대출한도"
+              items={[`최대 ${formatAmount(productDetails[0].MAX_AMT)}만원`]}
+            />
+            <TextList 
+              title="대출금리"
+              items={[
+                `연 ${productDetails[0].LWST_INRT}%~${productDetails[0].HST_INRT}%대`,
+                "연체이율 : 약정이율 + 연3% (단, 법정최고금리 이내 : 20%)",
+                "대출금리 : 기준금리 + 가산금리",
+                "기준금리 : 조달원가 + 업무원가 + 신용원가 등",
+                "가산금리 : **저축은행 신용평가평점 기준에 따라 차등 적용"
+              ]}
+            />
+            <TextList 
+              title="대출기간"
+              items={[productDetails[0].SBSCRB_PRD]}
+            />
+            <TextList 
+              title="상환방법"
+              items={["원금균등분할상환"]}
+            />
+            <TextList 
+              title="상품내용"
+              items={[decode(productDetails[0].PRDCT_CNTN || "").replace(/<\/?[^>]+(>|$)/g, "")]}
+            />
+          </Box01>
+          <ButtonFooter
+            buttons={[
+              { name: "전화상담", className: "btn-outlined", onClick: telcounseling },
+              { name: "대출신청", className: "btn-primary", onClick: loanApply },
+            ]}
+          />
         </>
       ) : (
         <Typography>대출상품에 상세 데이터가 없습니다.</Typography>
