@@ -115,7 +115,7 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
 
   return (
     
-      <Box01>    
+      <>    
         <Typography variant="body1"><strong>입력하신 계좌로<br/>
                                         1원을 보내드렸어요<br/>
                                         입금자명 뒤쪽 4자리 숫자를<br/>
@@ -129,7 +129,7 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
 
           <InputLabel id="demo-simple-select-helper-label"><strong>입력시간:  {minutes}:{displaySeconds.toString().padStart(2, "0")}</strong></InputLabel>
           <Button04 btnName = '확인'clickFunc={fsbAcnoConfirmAuth} disabled={isButtonDisabled}/>
-      </Box01>
+      </>
  
   );
 };

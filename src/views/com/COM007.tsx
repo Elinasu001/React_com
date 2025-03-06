@@ -176,7 +176,7 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
 
   return (
     <>
-    <Box01>
+    
 
     {/* 검색 입력 필드 */}
     <TextBox label="주소검색" value={inputAddr} onChange={(e) => setInputAddr(e.target.value)} />
@@ -202,16 +202,16 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
       //selectedKey={selectedAddr ?? undefined} 
     />
    
-    </Box01>
+  
     {showInput && (     
-    <Box01>
+    <>
     <TextLabel01  
         title="선택한 주소"   // 제목
         param={selectedAddrText}
     />
     <TextBox label="상세주소" value={inputDetailAddr} onChange={(e) => setInputDetailAddr(e.target.value)} />
     <Button01 btnName="확인" clickFunc={handleAddrInfoClose}></Button01>
-    </Box01>
+    </>
     )}
     </>
   );

@@ -122,7 +122,7 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
 
   return (
     
-      <Box01>
+      <>
            <TextBox02 text="타행 본인 계좌 인증으로 본인 확인을 진행해요"/>
 
               <SelectBox02 label="입금은행" value={selectedBankCd } text={selectedBankNm} 
@@ -150,7 +150,7 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
 
           <Button01 btnName = '계좌인증'clickFunc={fsbAcnoAuth}/>
           
-      </Box01>
+      </>
  
   );
 };

@@ -176,7 +176,7 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
 
   return (
     
-    <Box01>
+    <>
             <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
             
             <TextBox label="이름 입력" onChange={handleChange} value={formData.custNm}></TextBox>
@@ -185,16 +185,16 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
             <TextBox label="휴대폰번호 입력" onChange={handleChange} value={formData.telNo}></TextBox>
            
               {showVerificationInput && (       
-              <Box01>
+              <>
                   <Typography variant="body2">인증번호</Typography>
                   <TextBox label="인증번호 입력" onChange={mblCtfcNoChange} value={mblCtfcNo ?? ""}></TextBox>
                   
-              </Box01>
+              </>
               )}
               
           <Button01 btnName = {isVerified ? "인증확인" : "인증번호받기"} clickFunc={isVerified ? userConfirmAuth : userAuth} />
               
-      </Box01>
+      </>
          
       
  

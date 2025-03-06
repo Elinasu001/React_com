@@ -86,7 +86,7 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
   };
 
   return (
-        <Box01>
+        <>
     
           {/* 검색 입력 필드 */}
           <TextBox label="은행검색" value={text} onChange={(e) => setText(e.target.value)} />
@@ -131,7 +131,7 @@ const COM006 = (props: { onClose: (data?: DataSet) => void }) => {
               },
             ]}
           />
-        </Box01>
+        </>
   );
 };
 
