@@ -16,7 +16,6 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
   const [showVerificationInput, setShowVerificationInput] = useState(false);        /** 인증번호입력필드 상태값 */
   const [isVerified, setIsVerified] = useState(false);                              /** 인증번호받기 상태값 */
   
-  
   // 1. 초기 상태 정의
   const initialFormData = {
     custNm: "",
@@ -124,7 +123,6 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     '확인',
     (() => {
         setIsVerified(true);
-        // setmblCtfcNo(test01.data.MBL_CTFC_NO);
         setShowVerificationInput(true); // 인증번호 입력 필드 표시
     })
     
@@ -156,9 +154,10 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     messageView(
         '통신 실패 : '+test01.header.respMsg,
         '확인',
-        () => { resetForm(); // 입력값 초기화 
+        () => { 
+          resetForm(); // 입력값 초기화 
           const selectedData = new DataSet({'USER_AUTH': 'false'});
-        onClose(selectedData)
+          onClose(selectedData)
         }
     )
     return;
@@ -200,9 +199,9 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
       <ButtonFooter
         buttons={[
           {
-            name: isVerified ? "인증번호받기" : "인증확인",
+            name: !isVerified ? "인증번호받기" : "인증확인",
             className: "btn-primary",
-            onClick: isVerified ? userConfirmAuth : userAuth ,
+            onClick: !isVerified ? userAuth :userConfirmAuth ,
           },
         ]}
     />
