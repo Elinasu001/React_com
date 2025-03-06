@@ -115,22 +115,20 @@ const COM009 = (props: { onClose: (data?: DataSet) => void }) => {
 
   return (
     <>
-    <Box01>
-
+  
        <TextBox label="직종검색" value={inputJob} onChange={(e) => setInputJob(e.target.value)} />
        <Button01 btnName="검색" clickFunc={searchJob}></Button01>
-    </Box01>
+   
 
-    {!showSearch && (   
-    <BoxList
-        items={JOB_RESET_ARRY.map((jobList) => ({
-          key: jobList.CODE,
-          label: jobList.WORKVAL,
-          onClick: () => jobSelectItems(jobList.CODE, jobList.WORKVAL),
-        }))}
-    />
-
-    )}
+      {!showSearch && (   
+        <BoxList
+            items={JOB_RESET_ARRY.map((jobList) => ({
+              key: jobList.CODE,
+              label: jobList.WORKVAL,
+              onClick: () => jobSelectItems(jobList.CODE, jobList.WORKVAL),
+            }))}
+        />
+      )}
 
     {showSearch && (     
         <BoxList
