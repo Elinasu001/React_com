@@ -61,7 +61,7 @@
 
       .left { position: absolute; left: 10px; }
       .right { position: absolute; right: 10px; }
-      .pop-tit { font-size: var(--font18); font-weight: var(--font-w-b); }
+      .pop-tit { font-size: var(--font18); font-weight: var(--font-w-b); color:var(--pop-tit); }
 
       .btn {
         &.btn-back,
@@ -74,7 +74,7 @@
 
     // 팝업 본문
     .pop-body { 
-        display:flex; flex-direction: column; width: auto; height: 100%; padding: 0 20px 20px; overflow: hidden; background-color: var(--white);
+        display:flex; flex-direction: column; width: auto; height: 100%; padding: 0 20px 20px; overflow: hidden; background-color: var(--pop-bg);
         .content { display:flex; flex:1 1 auto; flex-direction: column; margin-bottom: 20px; overflow-y: auto; }
     }
   
