@@ -17,6 +17,7 @@ import { messageView } from "@src/components/Alert";
 import { store } from "@assets/js/redux/store";
 import { Location } from 'react-router-dom';
 
+
 //앱 실행 환경
 export enum AppEnvType {
   PRODUCTION = 'production',

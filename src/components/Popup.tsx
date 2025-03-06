@@ -4,29 +4,26 @@
  * 사용 예시:
  * import { openBottomPopup } from "@src/components/popup";
  */
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItemButton, Modal, Slide, TextField, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Grid2, List, ListItemButton, Modal, Slide, TextField, Typography } from '@mui/material';
 import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 import DataSet from '@src/assets/io/DataSet';
 import { doActionView, doLogin, LoginType } from '@src/assets/js/common';
 import { progressBar } from '@src/components/Loading';
 import React, { useEffect, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { messageView } from './Alert';
-/**
- * 팝업 파라미터 정의
- */
-export interface PopupProps {
-  component: ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => React.ReactElement;
-  param?: DataSet;
-  title?: string;
-  nFunc?: (data?: DataSet) => void;
-}
+import { messageView } from '@src/components/Alert';
+import { PopupProps } from '@src/assets/js/props/PopupProps';
+import BackspaceIcon from "@mui/icons-material/Backspace";
+
 
 /**
  *  밑에서 올라는 팝업
  */
-export const openBottomPopup = ({ component: Component, title, param, nFunc }: PopupProps) => {
+export const openBottomPopup = (prop: PopupProps) => {
   const formId = "gOpenBottomPopup";
+  const Component = prop.component;
+
+
   document.getRoot(formId).render(
     React.createElement(() => {
       const [open, setOpen] = useState(false);
@@ -41,7 +38,7 @@ export const openBottomPopup = ({ component: Component, title, param, nFunc }: P
         setOpen(false);
         setTimeout(() => {
           document.removeRoot(formId);
-          nFunc?.(data);
+          prop.nFunc?.(data);
         }, 300);
       };
 
@@ -52,13 +49,13 @@ export const openBottomPopup = ({ component: Component, title, param, nFunc }: P
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container btmSheet">
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{title}</Typography>
+                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
                     <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
                 <Box className="pop-body">
-                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
+                  <Component param={prop.param} onClose={popupClose} />
                 </Box>
               </Box>
             </Slide>
@@ -69,8 +66,10 @@ export const openBottomPopup = ({ component: Component, title, param, nFunc }: P
   );
 };
 
-export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: PopupProps) => {
+export const openBottomPopup2 = (prop: PopupProps) => {
   const formId = "gOpenBottomPopup2";
+  const Component = prop.component;
+
   document.getRoot(formId).render(
     React.createElement(() => {
       const [open, setOpen] = useState(false);
@@ -85,7 +84,7 @@ export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: 
         setOpen(false);
         setTimeout(() => {
           document.removeRoot(formId);
-          nFunc?.(data);
+          prop.nFunc?.(data);
         }, 300);
       };
 
@@ -96,7 +95,7 @@ export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: 
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container btmSheet">
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{title}</Typography>
+                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
                     <Typography component="span" className="sr-only">닫기</Typography>
@@ -105,7 +104,7 @@ export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: 
 
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
+                  <Component param={prop.param} onClose={popupClose} />
                 </Box>
 
                 {/* 버튼 */}
@@ -129,8 +128,10 @@ export const openBottomPopup2 = ({ component: Component, title, param, nFunc }: 
   );
 };
 
-export const openFullPopup = ({ component: Component, title, param, nFunc }: PopupProps) => {
+export const openFullPopup = (prop: PopupProps) => {
   const formId = 'gOpenFullPopup';
+  const Component = prop.component;
+  
   document.getRoot(formId).render(
     React.createElement(() => {
       const [open, setOpen] = useState(false);
@@ -145,7 +146,7 @@ export const openFullPopup = ({ component: Component, title, param, nFunc }: Pop
         setOpen(false);
         setTimeout(() => {
           document.removeRoot(formId);
-          nFunc?.(data);
+          prop.nFunc?.(data);
         }, 300);
       };
 
@@ -156,7 +157,7 @@ export const openFullPopup = ({ component: Component, title, param, nFunc }: Pop
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container full">
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{title}</Typography>
+                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
                     <Typography component="span" className="sr-only">닫기</Typography>
@@ -164,7 +165,7 @@ export const openFullPopup = ({ component: Component, title, param, nFunc }: Pop
                 </Box>
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
+                  <Component param={prop.param} onClose={popupClose} />
                 </Box>
               </Box>
             </Slide>
@@ -175,8 +176,10 @@ export const openFullPopup = ({ component: Component, title, param, nFunc }: Pop
   );
 };
 
-export const openFullPopup2 = ({ component: Component, title, param, nFunc }: PopupProps) => {
+export const openFullPopup2 = (prop: PopupProps) => {
   const formId = 'gOpenFullPopup2';
+  const Component = prop.component;
+
   document.getRoot(formId).render(
     React.createElement(() => {
       const [open, setOpen] = useState(false);
@@ -191,7 +194,7 @@ export const openFullPopup2 = ({ component: Component, title, param, nFunc }: Po
         setOpen(false);
         setTimeout(() => {
           document.removeRoot(formId);
-          nFunc?.(data);
+          prop.nFunc?.(data);
         }, 300);
       };
 
@@ -202,7 +205,7 @@ export const openFullPopup2 = ({ component: Component, title, param, nFunc }: Po
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container full">
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{title}</Typography>
+                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
                     <Typography component="span" className="sr-only">닫기</Typography>
@@ -211,7 +214,7 @@ export const openFullPopup2 = ({ component: Component, title, param, nFunc }: Po
 
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
+                  <Component param={prop.param} onClose={popupClose} />
                 </Box>
                 
               </Box>
@@ -226,8 +229,10 @@ export const openFullPopup2 = ({ component: Component, title, param, nFunc }: Po
 /**
  * 일반팝업 호출
  */
-export const openPopup = ({ component: Component, title, param, nFunc }: PopupProps) => {
+export const openPopup = (prop: PopupProps) => {
   const formId = 'gOpenPopup';
+  const Component = prop.component;
+
   document.getRoot(formId).render(
     React.createElement(() => {
       const [open, setOpen] = useState(false);
@@ -242,7 +247,7 @@ export const openPopup = ({ component: Component, title, param, nFunc }: PopupPr
         setOpen(false);
         setTimeout(() => {
           document.removeRoot(formId);
-          nFunc?.(data);
+          prop.nFunc?.(data);
         }, 300);
       };
 
@@ -253,7 +258,7 @@ export const openPopup = ({ component: Component, title, param, nFunc }: PopupPr
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container center">
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{title}</Typography>
+                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
                   {/* X 닫기 버튼 */}
                   <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
                     <Typography component="span" className="sr-only">닫기</Typography>
@@ -262,7 +267,7 @@ export const openPopup = ({ component: Component, title, param, nFunc }: PopupPr
 
                 <Box className="pop-body">
                   {/* 팝업 내용 */}
-                  <Component param={param ?? new DataSet({})} onClose={popupClose} />
+                  <Component param={prop.param} onClose={popupClose} />
                 </Box>
 
               </Box>
@@ -275,7 +280,7 @@ export const openPopup = ({ component: Component, title, param, nFunc }: PopupPr
 };
 
 /**
- * 일반팝업 호출
+ * 로그인 호출
  */
 export const loginPopup = (): AsyncPromiss => {
   return new AsyncPromiss((nFunc) => {
@@ -517,4 +522,151 @@ export const openBottomPopupWithMenu = ({ title, param }: { title: string; param
   );
 };
 
-export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openHtmlPopup };
+/**
+ * 숫자 키패드 호출
+ */
+export const showKeypad = (infoMsg:string,maxLength:number): AsyncPromiss => {
+  return new AsyncPromiss((nFunc) => {
+    const formId = 'gLoginPopup';
+    document.getRoot(formId).render(
+      React.createElement(() => {
+        // 팝업 열림/닫힘 상태
+        const [open, setOpen] = useState(false);
+        // 입력된 숫자 상태 (최대 6자리 예시)
+        const [secuNumber, setSecuNumber] = useState("");
+
+        // 팝업 컴포넌트가 마운트된 직후 실행 (팝업 열림)
+        useEffect(() => {
+          setOpen(true);
+        }, []);
+
+        //팝업 컴포넌트 닫기 처리
+        const popupClose = (data?:DataSet) => {
+          setOpen(false);
+          setTimeout(() => {
+            document.removeRoot(formId);
+            if(data){
+              nFunc(data);
+            }else{
+              nFunc(new DataSet({'num':''}));
+            }
+          }, 300);
+        };
+
+        // 숫자 입력 처리
+        const handleNumberClick = (digit: string) => {
+
+          if (digit === "-1") {
+            handleDelete();
+            return;
+          }
+          
+          // 기존 상태에 새 digit을 더한 값을 계산
+          const newNumber = secuNumber + digit;
+          
+          // 상태 업데이트
+          setSecuNumber(newNumber);
+
+          // 자릿수 채워지면 종료 (maxLength까지 입력되면 팝업 닫기)
+          if (newNumber.length >= maxLength) {
+            popupClose(new DataSet({ num: newNumber }));
+          }
+        };
+
+        // 삭제 처리 (한 글자 지우기)
+        const handleDelete = () => {
+          if (secuNumber.length > 0) {
+            setSecuNumber((prev) => prev.slice(0, -1));
+          }
+        };
+
+        //팝업 컴포넌트 생성
+        return (
+          <Modal open={open} onClose={() => { popupClose(); }}>
+            <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+              <Box className="popup-container full">
+                <Box className="pop-header">
+                  <Typography variant="h2" className="pop-tit">보안 키패드</Typography>
+                  <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <Typography component="span" className="sr-only">닫기</Typography>
+                  </Button>
+                </Box>
+  
+                <Box className="pop-body">
+                  {/* 상단 안내 문구 */}
+                  <Typography variant="h6" sx={{ mb: 2 }}>
+                    {infoMsg}
+                  </Typography>
+
+                  {/* 입력된 숫자 표시부 */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      mb: 3,
+                    }}
+                  >
+                    {/* 6자리 예시 */}
+                    {Array.from({ length: maxLength }).map((_, idx) => (
+                      <Box
+                        key={idx}
+                        sx={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: "50%",
+                          backgroundColor:
+                            idx < secuNumber.length ? "#000" : "#ccc",
+                          mx: 1,
+                        }}
+                      />
+                    ))}
+                  </Box>
+
+                  {/* 숫자 키패드 */}
+                  <Grid2 container spacing={2} sx={{ textAlign: "center", bottom: 0, left: 0, right: 0 }}>
+                  {/* 1 ~ 9 버튼: 3개씩 한 줄 */}
+                  {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((digit) => (
+                    <Grid2 key={digit} sx={{ flexBasis: "25%" }}>
+                      <Button
+                        variant="outlined"
+                        sx={{ width: "100%", height: "80px", fontSize: "2rem" }}
+                        onClick={() => handleNumberClick(digit)}
+                      >
+                        {digit}
+                      </Button>
+                    </Grid2>
+                  ))}
+                  {/* 마지막 행: 왼쪽 빈 칸, 가운데 "0", 오른쪽 삭제 아이콘 */}
+                  <Grid2 sx={{ flexBasis: "25%" }} /> {/* 빈 칸 */}
+                  <Grid2 sx={{ flexBasis: "25%" }}>
+                    <Button
+                      variant="outlined"
+                      sx={{ width: "100%", height: "80px", fontSize: "2rem" }}
+                      onClick={() => handleNumberClick("0")}
+                    >
+                      0
+                    </Button>
+                  </Grid2>
+                  <Grid2 sx={{ flexBasis: "25%" }}>
+                    <Button
+                      variant="outlined"
+                      sx={{ width: "100%", height: "80px" }}
+                      onClick={() => handleNumberClick("-1")}
+                    >
+                      <BackspaceIcon sx={{ fontSize: "2rem" }} />
+                    </Button>
+                  </Grid2>
+                </Grid2>
+                </Box>
+              </Box>
+            </Slide>
+          </Modal>
+        );
+      })
+    );
+  });
+};
+
+
+export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openHtmlPopup, showKeypad };

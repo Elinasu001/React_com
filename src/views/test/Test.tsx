@@ -6,7 +6,7 @@ import { Button01 } from "@src/components/Button";
 
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup, openFullPopup2} from "@src/components/Popup";
+import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup, openFullPopup2, showKeypad} from "@src/components/Popup";
 import POP001 from "@src/views/pop/POP001";
 import { GLog, API_URL, makeForm, addFormData, doAction, APP_ENV } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
@@ -189,6 +189,17 @@ const Test = () => {
             GLog.d('팝업 취소 닫힘');
 
           }
+        }}
+      />
+
+
+      <Button01 
+        btnName="키패드 테스트"
+        clickFunc={async () => {
+
+          const signData = await showKeypad('OTP비밀번호를 입력해주세요',6);
+
+          alert(signData.getString('num'));
         }}
       />
 

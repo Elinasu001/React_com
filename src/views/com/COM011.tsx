@@ -12,10 +12,9 @@ import { ContentTitle } from "@src/components/Text";
 import { InfoList } from "@src/components/TextList";
 import { useEffect, useState } from "react";
 import { messageView } from "@src/components/Alert";
-import DataSet from "@src/assets/io/DataSet";
+import { PopupViewProps } from "@src/assets/js/props/PopupViewProps";
 
-const COM011 = ({ onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
-
+const COM011 = (prop: PopupViewProps) => {
 
   // 로그인 팝업 상태
   const [secunoIdx1, setSecunoIdx1] = useState(""); // 보안카드 첫번째 자리
@@ -34,10 +33,20 @@ const COM011 = ({ onClose }: { param: DataSet; onClose: (data?: DataSet) => void
     const loadData = async () => {
       const form = makeForm('COM0011SC');
       addFormData(form,'txGbnCd','S');
-      const result = await doAction(form);
-      setSecunoIdx1(result.data.getString('SECUNO_IDX1'));
-      setSecunoIdx2(result.data.getString('SECUNO_IDX2'));
-      GLog.d('data : '+JSON.stringify(result));
+      const response = await doAction(form);
+
+      GLog.d('보안코드 지수 요청 결과 : '+JSON.stringify(response));
+
+      const { respCd , respMsg } = response.header;                     //통신결과
+      const apiRsMsg = response.data.getString("API_RS_MSG",'E00000,처리중 오류가 발생했습니다.') //OPEN API 전문결과
+
+      if (respCd == "N00000" && apiRsMsg == "SUCCESS"){
+        setSecunoIdx1(response.data.getString('SECUNO_IDX1'));
+        setSecunoIdx2(response.data.getString('SECUNO_IDX2'));
+      }else{
+        messageView(respMsg,'확인');
+      }
+      GLog.d('data : '+JSON.stringify(response));
     };
 
     loadData();
@@ -62,14 +71,16 @@ const COM011 = ({ onClose }: { param: DataSet; onClose: (data?: DataSet) => void
     const { respCd } = response.header;                     //통신결과
     const apiRsMsg = response.data.getString("API_RS_MSG",'E00000,처리중 오류가 발생했습니다.') //OPEN API 전문결과
   
-    GLog.d('data2 : '+JSON.stringify(response));
+    GLog.d('보안코드 검증 결과 : '+JSON.stringify(response));
 
     //로그인 인증성공
     if (respCd == "N00000" && apiRsMsg == "SUCCESS"){
-      onClose(response.data);
+      prop.onClose?.(response.data);
     }
     else{
-      messageView(apiRsMsg.split(',')[1],'확인');
+      messageView(apiRsMsg.split(',')[1],'확인',()=>{
+        prop.onClose?.();
+      });
     }
   }
 
