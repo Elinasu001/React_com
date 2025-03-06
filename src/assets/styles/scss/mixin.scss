@@ -5,19 +5,32 @@
     mask-image: $image;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
     -webkit-mask-size: $sizeX $sizeY;
     mask-size: $sizeX $sizeY;
+    padding:0;
   }
 
 // 믹스인: 플렉스 정렬
 @mixin flex-center {
     display: flex;
-    -webkit-box-pack:center;
-    -ms-flex-pack:center;
+    // -webkit-box-pack:center;
+    // -ms-flex-pack:center;
     align-items: center;
-    -webkit-align-items:center;
+    // -webkit-align-items:center;
     justify-content: center;
-    -webkit-justify-content:center;
+    // -webkit-justify-content:center;
+}
+
+@mixin flex-row {
+    display:flex;
+    flex-direction: row;
+}
+
+@mixin flex-col {
+    display:flex;
+    flex-direction: column;
 }
 
 // 버튼이 3개일 경우 스타일 적용

@@ -16,6 +16,10 @@
     --ico-se-arrow: url(/src/assets/images/com/svg/ico_se_arrow.svg);
     --ico-file: url(/src/assets/images/com/svg/ico_file.svg);
     --ico-date: url(/src/assets/images/com/svg/ico_date.svg);
+    --ico-favorite: url(/src/assets/images/com/svg/ico_favorite.svg);
+    --ico-favorite-active: url(/src/assets/images/com/svg/ico_favorite_active.svg);
+    --ico-compare: url(/src/assets/images/com/svg/ico_compare.svg);
+    --ico-compare-active: url(/src/assets/images/com/svg/ico_compare_active.svg);
 }
 
 /*---------------------------------------------
@@ -123,5 +127,19 @@ body {
     --tab-round: var(--color-f8);
     --tab-round-active: var(--hover);
 
+    /* 카드 색상 */
+    --card-bg: var(--white);
+    --card-desc: var(--color-9);
+    --card-name: var(--color-2);
+    --card-category: var(--color-2);
+    --card-categry-loan: var(--parimary);
+    --card-category-deposit: var(--tertiary);
+    --card-tag: var(--color-75);
+    --card-term: var(--color-2);
+    --card-rate: var(--primary);
+    //카드 버튼
+    --card-btn: var(--color-45);
+    --card-btn-compare-active: var(--primary);
+    --card-btn-favorite-active: var(--tertiary);
 
 }
