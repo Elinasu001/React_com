@@ -6,7 +6,7 @@ import { Button01 } from "@src/components/Button";
 
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup, openFullPopup2, showKeypad} from "@src/components/Popup";
+import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup, openFullPopup2, showKeypad, openDelfino} from "@src/components/Popup";
 import POP001 from "@src/views/pop/POP001";
 import { GLog, API_URL, makeForm, addFormData, doAction, APP_ENV } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
@@ -180,8 +180,12 @@ const Test = () => {
       <Button01 
         btnName="델피노 로그인 테스트"
         clickFunc={async () => {
-          const param = new DataSet({'txGbnCd':'login','oriMsg':'전자서명 원문 테스트'});
-          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
+          const param = new DataSet({'txGbnCd':'login'    //작업구분
+                                    ,'authType':''        //초기 진입 서명종류 디폴트 기업선택
+                                    ,'name':'김남교'
+                                    ,'phone':'01046249022'
+                                    ,'birthDay':'19931103'});
+          const signData = await openDelfino(param);
           if(signData.getNumber('status')!=0){
             messageView('결과 : '+signData.toString(),'확인');
           }else{
@@ -193,8 +197,13 @@ const Test = () => {
     <Button01 
         btnName="델피노 전자서명 테스트"
         clickFunc={async () => {
-          const param = new DataSet({'txGbnCd':'sign','oriMsg':'전자서명 원문 테스트'});
-          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
+          const param = new DataSet({'txGbnCd':'sign'
+                                    ,'authType':''
+                                    ,'oriMsg':'전자서명 원문 테스트'
+                                    ,'name':'김남교'
+                                    ,'phone':'01046249022'
+                                    ,'birthDay':'19931103'});
+          const signData = await openDelfino(param);
           if(signData.getNumber('status')!=0){
             messageView('결과 : '+signData.toString(),'확인');
           }else{
@@ -202,24 +211,6 @@ const Test = () => {
           }
         }}
       />
-      <Button01 
-        btnName="델피노 인증서 가져오기"
-        clickFunc={async () => {
-          const param = new DataSet({'txGbnCd':'import'})
-          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
-          messageView('번호 : '+signData.toString(),'확인');
-        }}
-      />
-
-    <Button01 
-        btnName="델피노 인증서 내보내기"
-        clickFunc={async () => {
-          const param = new DataSet({'txGbnCd':'export'})
-          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html",param);
-          messageView('번호 : '+signData.toString(),'확인');
-        }}
-      />
-
 
       <Button01 
         btnName="키패드 테스트"

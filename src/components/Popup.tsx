@@ -7,9 +7,9 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Grid2, List, ListItemButton, Modal, Slide, TextField, Typography } from '@mui/material';
 import AsyncPromiss from '@src/assets/io/AsyncPromiss';
 import DataSet from '@src/assets/io/DataSet';
-import { doActionView, doLogin, LoginType } from '@src/assets/js/common';
+import { doActionView, doLogin, GLog, LoginType } from '@src/assets/js/common';
 import { progressBar } from '@src/components/Loading';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { messageView } from '@src/components/Alert';
 import { PopupProps } from '@src/assets/js/props/PopupProps';
@@ -460,6 +460,120 @@ export const openHtmlPopup = (url: string): AsyncPromiss => {
   });
 };
 
+/**
+ * 정적 HTML 풀 호출 팝업
+ * @param param0 
+ */
+export const openDelfino = (param:DataSet): AsyncPromiss => {
+  return new AsyncPromiss((nFunc) => {
+    const formId = "gOpenDelfinoPopup";
+    document.getRoot(formId).render(
+      React.createElement(() => {
+
+        const iframeRef = useRef<HTMLIFrameElement>(null);
+        // 팝업 상태
+        const [open, setOpen] = useState(false);
+
+        
+
+        // 팝업 컴포넌트 생성 후 처리
+        useEffect(() => {
+          setOpen(true);
+
+          const iframeCallBack = (event: MessageEvent) => {
+            popupClose(new DataSet(event.data));
+          };
+
+          window.addEventListener("message", iframeCallBack);
+          return () => {
+            window.removeEventListener("message", iframeCallBack);
+          };
+        }, []);
+
+        // 팝업 닫기 처리
+        const popupClose = (data?: DataSet) => {
+          progressBar(true);
+          setOpen(false);
+          setTimeout(() => {
+            document.removeRoot(formId);
+            nFunc(new DataSet(data)); // Promise를 통해 데이터 반환
+            progressBar(false);
+          }, 300);
+        };
+
+
+        const delfinoRun = () => {
+          if (iframeRef.current && iframeRef.current.contentWindow) {
+            switch (param.getString('txGbnCd')) {
+              case 'login': {
+
+                GLog.d('[G10] 로그인 실행');
+                const loginFn = (iframeRef.current.contentWindow as any).login;
+                if (typeof loginFn === 'function') {
+                  loginFn(param.getString('authType','')
+                        , param.getString('name')
+                        , param.getString('phone')
+                        , param.getString('birthDay'));
+                }else{
+                  messageView('통신중 오류가 발생했습니다.','확인',()=>{popupClose();});
+                }
+
+                break;
+              }
+              case 'sign': {
+                
+                GLog.d('[G10] 전자서명 실행');
+                const signFn = (iframeRef.current.contentWindow as any).sign;
+                if (typeof signFn === 'function') {
+                  signFn(param.getString('authType','')
+                        , param.getString('name')
+                        , param.getString('phone')
+                        , param.getString('birthDay')
+                        , param.getString('oriMsg'));
+                }else{
+                  messageView('통신중 오류가 발생했습니다.','확인',()=>{popupClose();});
+                }
+
+                break;
+              }
+              default:
+                messageView('작업 구분이 없습니다.','닫기',()=>{
+                  popupClose();
+                });
+                break;
+            }
+          } else {
+            console.error("iframe에 접근할 수 없습니다.");
+          }
+        };
+
+        // 팝업 컴포넌트 생성
+        return (
+          <MemoryRouter>
+            <Modal open={open} onClose={() => popupClose()}>
+              <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+                <Box className="popup-container">
+                  {/* 팝업 내용 */}
+                  <iframe
+                    ref={iframeRef}
+                    src='/solution/wizvera/view/delfino.html'
+                    width="100%"
+                    height="100%"
+                    title="인앱"
+                    style={{ border: "none" }}
+                    allow="geolocation; microphone; camera; clipboard-read; clipboard-write; fullscreen;"
+                    onLoad={delfinoRun} // 로드 완료 후 호출
+                  />
+                </Box>
+              </Slide>
+            </Modal>
+          </MemoryRouter>
+        );
+      })
+    );
+  });
+};
+
 export const openBottomPopupWithMenu = ({ title, param }: { title: string; param: DataSet }) => {
   const formId = "gOpenBottomPopup";
   document.getRoot(formId).render(
@@ -675,4 +789,4 @@ export const showKeypad = (infoMsg:string,maxLength:number): AsyncPromiss => {
 };
 
 
-export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openHtmlPopup, showKeypad };
+export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openHtmlPopup, openDelfino, showKeypad };

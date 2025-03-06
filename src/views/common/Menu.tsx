@@ -22,6 +22,7 @@ const Menu = ({ open, onClose }: {
     { text: "홈", icon: <HomeIcon />, path: "/" , txGbnCd: ""},
     { text: "기능 테스트", icon: <CodeIcon />, path: "/test.view", txGbnCd: ""},
     { text: "폼 테스트", icon: <CodeIcon />, path: "/inputTest.view", txGbnCd: ""},
+    { text: "폼 테스트2", icon: <CodeIcon />, path: "/inputUi.view", txGbnCd: ""},
     { text: "네이티브", icon: <CodeIcon />, path: "/nativeTest.view", txGbnCd: ""},
     { text: "공통(COM)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "com"},
     { text: "조회(INQ)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "inq"},
