@@ -16,7 +16,7 @@
  * @author 
  * @version 1.0.0
  */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import DataSet from "@assets/io/DataSet";
 import { GLog } from "@src/assets/js/common";
 import { BoxList } from "@src/components/Box";
@@ -77,6 +77,7 @@ const COM005 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
 
   return (
 
+    <>
       <BoxList
           items={acnoList.map((acno) => ({
             key: acno.ACNO,
@@ -85,7 +86,7 @@ const COM005 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
           }))}
           selectedKey={selectedAcno}
       />
-  
+    </>
   );
 };
 
