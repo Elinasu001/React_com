@@ -110,7 +110,7 @@ export const addFormData = (form: ApiReq, name: string, value: string | number):
 
 
 axios.defaults.withCredentials = true;// axios 설정: 쿠키를 포함하여 요청하기 위해 withCredentials 옵션을 true로 설정
-axios.defaults.timeout = 15000;// 기본 타임아웃 설정 (예: 15000ms = 15초)
+axios.defaults.timeout = 60000;// 기본 타임아웃 설정 (예: 15000ms = 15초)
 
 /**
  * gp_backend 서비스랑 통신하는 함수 입니다.

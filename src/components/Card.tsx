@@ -75,6 +75,10 @@ interface Card02Props {
   acno: string;
   balance: number;
   pdnm: string;
+  nick: string;
+  newDt: string;
+  wtchPosbAmt: number;
+  psntInrt: number;
   nFunc?: (data?: DataSet) => void;
 }
 
@@ -82,18 +86,18 @@ interface Card02Props {
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
+export const Card02 = ({ type, acno, balance, pdnm, nick, newDt, wtchPosbAmt, psntInrt, nFunc }: Card02Props) => {
   
   return (
     <Card>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-          {type} 계좌 {pdnm}
+          {pdnm}
           <IconButton 
             onClick={() => 
               openBottomPopupWithMenu({
                 title: "계좌설정", 
-                param: new DataSet({ acno, type, pdnm, balance })
+                param: new DataSet({ acno, type, pdnm, balance, nick, newDt, wtchPosbAmt, psntInrt })
               })
             }
           >
@@ -136,7 +140,7 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
 
       {/* 버튼 영역 */}
       <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-        {type === "4" ? (
+        {type === "여신" ? (
           <ListItemButton
             sx={{
               justifyContent: "center",

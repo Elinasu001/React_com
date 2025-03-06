@@ -593,6 +593,8 @@ export const openBottomPopupWithMenu = ({ title, param }: { title: string; param
 
       // 메뉴 리스트 정의
       const menuItems = [
+        { label: "계좌비밀번호변경", path: "/efc/EFC002.view" },
+        { label: "계좌비밀번호오류해제", path: "/efc/EFC003.view" },
         { label: "계좌 관리", path: "/efc/EFC004.view" },
         { label: "지연이체 관리", path: "/efc/EFC005.view" },
         { label: "출금지정계좌 관리", path: "/efc/EFC006.view" },
