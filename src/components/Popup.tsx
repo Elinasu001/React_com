@@ -556,6 +556,11 @@ export const showKeypad = (infoMsg:string,maxLength:number): AsyncPromiss => {
         // 숫자 입력 처리
         const handleNumberClick = (digit: string) => {
 
+          //진동
+          if (navigator.vibrate) {
+            navigator.vibrate(200);
+          }
+
           if (digit === "-1") {
             handleDelete();
             return;
