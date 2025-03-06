@@ -8,6 +8,7 @@ import { Card as MuiCard, Card, CardHeader, CardContent, Box, Typography, IconBu
 import React, { useState } from "react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Button01, Button02, Button03 } from "@src/components/Button";
+import { openBottomPopupWithMenu } from "@src/components/Popup";
 import CompareArrowsIcon from "@mui/icons-material/CardGiftcard";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
@@ -108,7 +109,14 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
           {type} 계좌 {pdnm}
-          <IconButton onClick={() => nFunc?.(new DataSet({ acno, type, pdnm, balance, action: "더보기" }))}>
+          <IconButton 
+            onClick={() => 
+              openBottomPopupWithMenu({
+                title: "계좌설정", 
+                param: new DataSet({ acno, type, pdnm, balance })
+              })
+            }
+          >
           <MoreVertIcon />
           </IconButton>
         </Typography>
@@ -173,7 +181,7 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
                 "&:hover": { bgcolor: "grey.400" },
               }}
               onClick={() => 
-                nFunc?.(new DataSet({  acno, type, pdnm, balance, action: "거래내역" }))
+                nFunc?.(new DataSet({  acno, type, pdnm, balance }))
               }
 
             >
