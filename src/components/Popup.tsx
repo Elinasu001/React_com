@@ -399,7 +399,6 @@ export const loginPopup = (): AsyncPromiss => {
 
 /**
  * 정적 HTML 풀 호출 팝업
- * @param param0 
  */
 export const openHtmlPopup = (url: string): AsyncPromiss => {
   return new AsyncPromiss((nFunc) => {
@@ -461,8 +460,7 @@ export const openHtmlPopup = (url: string): AsyncPromiss => {
 };
 
 /**
- * 정적 HTML 풀 호출 팝업
- * @param param0 
+ * 델피노 G10 호출 팝업
  */
 export const openDelfino = (param:DataSet): AsyncPromiss => {
   return new AsyncPromiss((nFunc) => {
@@ -501,7 +499,7 @@ export const openDelfino = (param:DataSet): AsyncPromiss => {
           }, 300);
         };
 
-
+        //Iframe 안에 실제 실행 함수 실행
         const delfinoRun = () => {
           if (iframeRef.current && iframeRef.current.contentWindow) {
             switch (param.getString('txGbnCd')) {
@@ -543,7 +541,7 @@ export const openDelfino = (param:DataSet): AsyncPromiss => {
                 break;
             }
           } else {
-            console.error("iframe에 접근할 수 없습니다.");
+            messageView('iframe에 접근할 수 없습니다.','확인',()=>{popupClose();});
           }
         };
 
