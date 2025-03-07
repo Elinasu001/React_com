@@ -6,10 +6,10 @@
  */
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Alert, Box, Card, CardContent, Divider, IconButton, ListItemButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Card, CardContent, IconButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DataSet from "@src/assets/io/DataSet";
-import { Button01 } from "@src/components/Button";
+import { Button01, ButtonContent } from "@src/components/Button";
 import { openBottomPopupWithMenu } from "@src/components/Popup";
 import React, { useState } from "react";
 
@@ -80,20 +80,25 @@ interface Card02Props {
   wtchPosbAmt: number;
   psntInrt: number;
   nFunc?: (data?: DataSet) => void;
+  showTradeHs? : boolean;
 }
 
 /**
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ type, acno, balance, pdnm, nick, newDt, wtchPosbAmt, psntInrt, nFunc }: Card02Props) => {
+export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt, nFunc, showTradeHs = true }: Card02Props) => {
   
   return (
-    <Card>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-          {pdnm}
-          <IconButton 
+    <Card className="card-box">
+      <CardContent>
+        <Box className="card-info-actions">
+          
+          <Typography variant="h6" className="card-name">
+            {type} 계좌 {pdnm}
+          </Typography>
+
+          <StyledIconButton className="btn-control"
             onClick={() => 
               openBottomPopupWithMenu({
                 title: "계좌설정", 
@@ -101,17 +106,17 @@ export const Card02 = ({ type, acno, balance, pdnm, nick, newDt, wtchPosbAmt, ps
               })
             }
           >
-          <MoreVertIcon />
-          </IconButton>
-        </Typography>
-      </Box>
+          <MoreVertIcon/>
+          </StyledIconButton>
+        </Box>
 
-      {/* 계좌번호 및 복사 아이콘 */}
-      {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <Typography variant="body1" color="textSecondary">
-          {acno}
-          <IconButton
+        {/* 계좌번호 및 복사 아이콘 */}
+        <Box className="card-account-info">
+
+          <Typography className="account-num">
+            {acno}
+          </Typography>
+          <StyledIconButton  className="btn-copy"
             onClick={() => {
               if (typeof window !== "undefined" && navigator?.clipboard) {
                 try {
@@ -123,76 +128,56 @@ export const Card02 = ({ type, acno, balance, pdnm, nick, newDt, wtchPosbAmt, ps
                 console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
               }
             }}
-            sx={{ p: 1, ml: "auto" }}
           >
-            <ContentCopyIcon fontSize="small" />
-          </IconButton>
-        </Typography>
-      </Box>
+            <ContentCopyIcon/>
+          </StyledIconButton>
+          
+        </Box>
 
-      {/* 계좌 잔액 */}
-      <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-        {(balance ?? 0).toLocaleString()} 원
-      </Typography>
+        {/* 계좌 잔액 */}
+        <Box className="card-balance" sx={{ fontWeight: "bold", textAlign: "right" }}>
+          <Typography className="txt-balance">잔액</Typography><Typography className="num-balance">{(balance ?? 0).toLocaleString()} <span>원</span></Typography>
+        </Box>
 
-      {/* 구분선 */}
-      <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} />
+        {/* 구분선 */}
+        {/* <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} /> */}
 
-      {/* 버튼 영역 */}
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-        {type === "여신" ? (
-          <ListItemButton
-            sx={{
-              justifyContent: "center",
-              width: "100px",
-              bgcolor: "transparent",
-              color: "black",
-              borderRadius: 2,
-              "&:hover": { bgcolor: "grey.400" },
-            }}
-          >
-            상환
-          </ListItemButton>
-        ) : (
-          <>
-            <ListItemButton
-              sx={{
-                justifyContent: "center",
-                width: "100px",
-                bgcolor: "transparent",
-                color: "black",
-                borderRadius: 2,
-                "&:hover": { bgcolor: "grey.400" },
-              }}
-              onClick={() => 
-                nFunc?.(new DataSet({  acno, type, pdnm, balance }))
-              }
+        {/* 버튼 영역 */}
+        {/* <Box className="btn-area">
+          {type === "4" ? (
+            <Button className="btn btn-secondary">
+              상환
+            </Button>
+          ) : (
+            <>
+              <Button className="btn btn-secondary"
+                onClick={() =>
+                  nFunc?.(new DataSet({  acno, type, pdnm, balance }))
+                }
+              >
+                거래내역
+              </Button>
 
-            >
-              거래내역
-            </ListItemButton>
+              <Button className="btn btn-primary">
+                이체
+              </Button>
+            </>
+          )}
+        </Box> */}
+        {/* 컨텐츠 공통 버튼으로 적용 */}
+        <ButtonContent
+          buttons={
+            type === "4"
+              ? [{ name: "상환", className: "btn-secondary" }]
+              : [
+                ...(showTradeHs ? [{name: "거래내역",className: "btn-secondary",onClick: () => nFunc?.(new DataSet({ acno, type, pdnm, balance }))}] : []),
+                  { name: "이체", className: "btn-primary" },                
+                ]
+                
+          }
+        />
+      </CardContent>
 
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ height: "35px", borderColor: "lightgray", alignSelf: "center" }}
-            />
-
-            <ListItemButton
-              sx={{
-                justifyContent: "center",
-                width: "100px",
-                bgcolor: "transparent",
-                color: "black",
-                borderRadius: 2,
-                "&:hover": { bgcolor: "grey.400" },
-              }}
-            >
-              이체
-            </ListItemButton>
-          </>
-        )}
-      </Box>
     </Card>
   );
 };
@@ -346,125 +331,6 @@ export const Card03 = ({
   );
 };
 
-  /**
- * 예적금상품 카드 컴포넌트
- */
-  interface Card05Props {
-    pdcd: string;               // 상품코드
-    pdnm: string;               // 상품명
-    cmmProdCategoty: string;    // 카테고리
-    pdDesc: string;             // 상품설명
-    keyword: string[];          // 키워드
-    depdate: string;            // 예적금기간
-    intr: string;               // 금리
-    pd_dvcd: string;            // 상품종류(단리,복리)
-    pd_kncd: string;            // 상품카테고리리
-  }
 
-export const Card05 = ({
-  pdcd,
-  pdnm,
-  cmmProdCategoty,
-  pdDesc,
-  keyword,
-  depdate,       //예적금 기간 
-  intr,           //금리
-  pd_dvcd,
-  pd_kncd
-}: Card05Props) => {
-
-  return (
-      <Card01>
-          {/* 카드 본문 */}
-          <CardContent>
-
-            {/* 상품 설명 */}
-            <Typography className="card-desc">
-              {pdDesc}
-            </Typography>
-
-            <Box className="card-info">
-
-              <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
-                {pd_kncd}
-              </Typography>
-
-              <Typography className="card-name" variant="h6">
-                {pdnm}
-              </Typography>
-
-            </Box>
-
-            <Typography className="card-tag">
-              {keyword.join(" | ")}
-            </Typography>
-
-            <Typography className="card-term">
-              {depdate}개월
-            </Typography>
-
-            <Typography className="card-rate" variant="h6">
-              연 {intr}% {pd_dvcd}
-            </Typography>
-
-          </CardContent>
-
-      </Card01>
-    );
-  };
-
-  interface Card06props {
-    type: string;
-    acno: string;
-    balance: number;
-    pdnm: string;
-  }
-
-  export const Card06 = ({ type, pdnm, acno, balance }: Card06props) => {
-    return (
-      <Card>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-            {type} {pdnm}
-          </Typography>
-        </Box>
-  
-        {/* 계좌번호 및 복사 아이콘 */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="body1" color="textSecondary">
-            {acno}
-            <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
-              <ContentCopyIcon fontSize="small" />
-            </IconButton>
-          </Typography>
-        </Box>
-
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-          {/* 계좌 잔액 */}
-          <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            잔액 {balance?.toLocaleString()} 원
-          </Typography>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-          {/* 계좌 잔액 */}
-          <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            출금가능금액 {balance?.toLocaleString()} 원
-          </Typography>
-        </Box>
-        {/* 버튼 영역 */}
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-          <Button01
-            btnName="이체"
-            width = "100%"
-            clickFunc={async () => { //TODO 이체페이지 doactionurl 달아야함
-              // 이체 로직
-            }}
-          />
-        </Box>
-      </Card>
-    );
-  };
-
-export default { Card01, Card02, Card03, Card04, Card05, Card06 };
+ 
+export default { Card01, Card02, Card03, Card04 };
