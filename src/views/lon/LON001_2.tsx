@@ -120,6 +120,7 @@ const LON001_2 = () => {
 
   // 대출신청 버튼
   const loanApply = async () => {
+    // TODO 다른 페이지에서 사용할 예정
     // 대출관련 보이스피싱 안내 Popup
     openFullPopup({
       component: LON001_3,
