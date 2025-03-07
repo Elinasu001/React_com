@@ -63,31 +63,45 @@ export const Button01 = ({ btnName, clickFunc }: ButtonProps) => {
   );
 };
 
-export const Button02 = ({ btnName, clickFunc }: ButtonProps) => {
+// 컨텐츠 버튼 속성
+interface ButtonContentProps {
+  clickFunc ?: () => void;      // 클릭 이벤트 함수
+  buttons: { name: string; className: string; onClick?: () => void; disabled?: boolean }[]; // 모든 버튼 리스트 (기본 버튼 포함)
+}
+
+export const ButtonContent = ({ buttons }: ButtonContentProps) => {
   return (
 
+    /** 컨텐츠 버튼
+    * 예시)
+    * <ButtonContent
+    *    buttons={[
+    *     { name: "버튼명", className: "btn-secondary" },
+    *      { name: "버튼명", className: "btn-primary", onClick: () => onClose(result) },
+    *      { name: "버튼명", className: "btn-outlined" },
+    *    ]}
+    *  />
+    *
+    **/
+
     // 컨텐츠
-    <Box className="btn-area">
-
-      {/* secondary */}
-      <Button className="btn btn-secondary" onClick={clickFunc}>
-        {btnName}
+    <Box  className="btn-area">
+    {/* 모든 버튼 buttons 배열에서 렌더링 (순서 조정 가능) */}
+    {buttons.map((btn, index) => (
+      <Button
+        key={index}
+        className={`btn ${btn.className}`}
+        onClick={btn.onClick} // 개별 버튼 클릭 이벤트 적용
+        disabled={btn.disabled ?? false} // 기본값 false // 버튼별 개별 disabled 적용을 위해 이 식으로 변경
+      >
+        {btn.name}
       </Button>
-
-      {/* primary */}
-      <Button className="btn btn-primary" onClick={clickFunc}>
-        {btnName}
-      </Button>
-
-      {/* outlined */}
-      <Button className="btn btn-outlined"  onClick={clickFunc}>
-        {btnName}
-      </Button>
-      
+    ))}
     </Box>
 
   );
 };
+
 
 // 하단 버튼 속성
 interface ButtonFooterProps {
@@ -174,5 +188,5 @@ export const Button04 = ({ btnName, clickFunc, disabled }: ButtonProps) => {
 
 
 
-export default { Button01, Button02, Button04, ButtonFooter };
+export default { Button01, ButtonContent, Button04, ButtonFooter };
 

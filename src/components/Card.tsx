@@ -6,10 +6,10 @@
  */
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Alert, Box, Button, Card, CardContent, IconButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Card, CardContent, IconButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DataSet from "@src/assets/io/DataSet";
-import { Button01 } from "@src/components/Button";
+import { Button01, ButtonContent } from "@src/components/Button";
 import { openBottomPopupWithMenu } from "@src/components/Popup";
 import React, { useState } from "react";
 
@@ -138,7 +138,7 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
         {/* <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} /> */}
 
         {/* 버튼 영역 */}
-        <Box className="btn-area">
+        {/* <Box className="btn-area">
           {type === "4" ? (
             <Button className="btn btn-secondary">
               상환
@@ -146,7 +146,7 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
           ) : (
             <>
               <Button className="btn btn-secondary"
-                onClick={() => 
+                onClick={() =>
                   nFunc?.(new DataSet({  acno, type, pdnm, balance }))
                 }
               >
@@ -158,10 +158,24 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
               </Button>
             </>
           )}
-        </Box>
+        </Box> */}
+        {/* 컨텐츠 공통 버튼으로 적용 */}
+        <ButtonContent
+          buttons={
+            type === "4"
+              ? [{ name: "상환", className: "btn-secondary" }]
+              : [
+                  {
+                    name: "거래내역",
+                    className: "btn-secondary",
+                    onClick: () => nFunc?.(new DataSet({ acno, type, pdnm, balance })),
+                  },
+                  { name: "이체", className: "btn-primary" },
+                ]
+          }
+        />
       </CardContent>
 
-      
     </Card>
   );
 };
