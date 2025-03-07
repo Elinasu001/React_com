@@ -76,13 +76,14 @@ interface Card02Props {
   balance: number;
   pdnm: string;
   nFunc?: (data?: DataSet) => void;
+  showTradeHs? : boolean;
 }
 
 /**
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
+export const Card02 = ({ type, acno, balance, pdnm, nFunc, showTradeHs = true }: Card02Props) => {
   
   return (
     <Card className="card-box">
@@ -165,13 +166,10 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
             type === "4"
               ? [{ name: "상환", className: "btn-secondary" }]
               : [
-                  {
-                    name: "거래내역",
-                    className: "btn-secondary",
-                    onClick: () => nFunc?.(new DataSet({ acno, type, pdnm, balance })),
-                  },
-                  { name: "이체", className: "btn-primary" },
+                ...(showTradeHs ? [{name: "거래내역",className: "btn-secondary",onClick: () => nFunc?.(new DataSet({ acno, type, pdnm, balance }))}] : []),
+                  { name: "이체", className: "btn-primary" },                
                 ]
+                
           }
         />
       </CardContent>
@@ -329,125 +327,6 @@ export const Card03 = ({
   );
 };
 
-  /**
- * 예적금상품 카드 컴포넌트
- */
-  interface Card05Props {
-    pdcd: string;               // 상품코드
-    pdnm: string;               // 상품명
-    cmmProdCategoty: string;    // 카테고리
-    pdDesc: string;             // 상품설명
-    keyword: string[];          // 키워드
-    depdate: string;            // 예적금기간
-    intr: string;               // 금리
-    pd_dvcd: string;            // 상품종류(단리,복리)
-    pd_kncd: string;            // 상품카테고리리
-  }
 
-export const Card05 = ({
-  pdcd,
-  pdnm,
-  cmmProdCategoty,
-  pdDesc,
-  keyword,
-  depdate,       //예적금 기간 
-  intr,           //금리
-  pd_dvcd,
-  pd_kncd
-}: Card05Props) => {
-
-  return (
-      <Card01>
-          {/* 카드 본문 */}
-          <CardContent>
-
-            {/* 상품 설명 */}
-            <Typography className="card-desc">
-              {pdDesc}
-            </Typography>
-
-            <Box className="card-info">
-
-              <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
-                {pd_kncd}
-              </Typography>
-
-              <Typography className="card-name" variant="h6">
-                {pdnm}
-              </Typography>
-
-            </Box>
-
-            <Typography className="card-tag">
-              {keyword.join(" | ")}
-            </Typography>
-
-            <Typography className="card-term">
-              {depdate}개월
-            </Typography>
-
-            <Typography className="card-rate" variant="h6">
-              연 {intr}% {pd_dvcd}
-            </Typography>
-
-          </CardContent>
-
-      </Card01>
-    );
-  };
-
-  interface Card06props {
-    type: string;
-    acno: string;
-    balance: number;
-    pdnm: string;
-  }
-
-  export const Card06 = ({ type, pdnm, acno, balance }: Card06props) => {
-    return (
-      <Card>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-            {type} {pdnm}
-          </Typography>
-        </Box>
-  
-        {/* 계좌번호 및 복사 아이콘 */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Typography variant="body1" color="textSecondary">
-            {acno}
-            <IconButton onClick={() => navigator.clipboard.writeText(acno)} sx={{ p: 1 }}>
-              <ContentCopyIcon fontSize="small" />
-            </IconButton>
-          </Typography>
-        </Box>
-
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-          {/* 계좌 잔액 */}
-          <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            잔액 {balance?.toLocaleString()} 원
-          </Typography>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-
-          {/* 계좌 잔액 */}
-          <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-            출금가능금액 {balance?.toLocaleString()} 원
-          </Typography>
-        </Box>
-        {/* 버튼 영역 */}
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-          <Button01
-            btnName="이체"
-            width = "100%"
-            clickFunc={async () => { //TODO 이체페이지 doactionurl 달아야함
-              // 이체 로직
-            }}
-          />
-        </Box>
-      </Card>
-    );
-  };
-
-export default { Card01, Card02, Card03, Card04, Card05, Card06 };
+ 
+export default { Card01, Card02, Card03, Card04 };

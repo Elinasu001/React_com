@@ -25,6 +25,7 @@ import TNF005 from "@src/views/tnf/TNF005";
 
 // DEP[수신]
 import DEP001 from "@src/views/dep/DEP001";
+import DEP001_2 from "@src/views/dep/DEP001_2";
 import DEP002 from "@src/views/dep/DEP002";
 import DEP003 from "@src/views/dep/DEP003";
 import DEP004 from "@src/views/dep/DEP004";
@@ -101,6 +102,7 @@ const App = () => {
         {/* 수신 페이지 라우트 */}
         <Route path="/dep" element={<Layout />}>
           <Route path="DEP001.view" element={<DEP001 />} />
+          <Route path="DEP001_2.view" element={<DEP001_2 />} />
           <Route path="DEP002.view" element={<DEP002 />} />
           <Route path="DEP003.view" element={<DEP003 />} />
           <Route path="DEP004.view" element={<DEP004 />} />
