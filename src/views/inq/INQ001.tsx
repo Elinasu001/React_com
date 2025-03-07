@@ -45,11 +45,11 @@ const INQ001 = () => {
     const fetchApiInqOvvi0100_01 = async () => { 
      
       // 폼 생성 및 파라미터 세팅
-      const form = makeForm('INQ0000SC');
-      addFormData(form, 'txGbnCd'   , 'A');         // 분기값
-      addFormData(form, 'SBCD'      , "050");       // 은행코드
-      addFormData(form, 'CSNO'      , user.CSNO);   // 사용자 고객번호  
-      addFormData(form, 'USR_ID'    , user.USR_ID); // 사용자 아이디
+      const form = makeForm('INQ0001SC');
+      // addFormData(form, 'txGbnCd'   , 'A');         // 분기값
+      // addFormData(form, 'SBCD'      , "050");       // 은행코드
+      // addFormData(form, 'CSNO'      , user.CSNO);   // 사용자 고객번호  
+      // addFormData(form, 'USR_ID'    , user.USR_ID); // 사용자 아이디
       addFormData(form, 'ACCO_KNCD' , "9");         // 계좌구분값 (전계좌조회)
 
       // 로딩 ON
