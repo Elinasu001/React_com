@@ -6,23 +6,25 @@
  */
 
 import { useState, useEffect } from "react";
-import { GLog, doAction,makeForm, addFormData, doActionURL } from '@assets/js/common';
+import { GLog, doAction,makeForm, addFormData, doActionURL, doActionView } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { Card03 } from "@src/components/Card";
 import { Tab01 } from "@src/components/Tab";
 import { Box02 } from "@src/components/Box";
+import DataSet from "@src/assets/io/DataSet";
 
 /**
- * 대출상품 응답
+ * 대출상품 목록조회 응답
  */
 interface LoanPdRes {
   PRDCT_CD: string;       // 상품코드
   PRDCT_NM: string;       // 상품명
   PRDCT_CLS_CD: string;   // 상품분류코드
   SMR_DC_CNTN: string;    // 요약설명내용
-  SALE_STR_DT: string;    // 판매시작일자
-  SALE_END_DT: string;    // 판매종료일자
+  MAX_AMT: number;        // 최대금액
+  LWST_INRT: number;      // 최저금리
+  HST_INRT: number;       // 최대금리
 }
 
 /**
@@ -43,25 +45,25 @@ interface LoanPd {
  * 탭 항목 정의
  */
 const tabItems = [
-  { label: "전체", value: "전체" },
+  { label: "전체", value: "10" },
   { label: "신용대출", value: "신용대출" },
   { label: "담보대출", value: "담보대출" },
   { label: "정책자금대출", value: "정책자금대출" },
   { label: "외국인대출", value: "외국인대출" }
 ];
 
-const LON001 = () => {
-  const [selectedTab, setSelectedTab] = useState("전체");
+const LON001_1 = () => {
+  const [selectedTab, setSelectedTab] = useState("10");
   const [loanPdList, setLoanPdList] = useState<LoanPd[]>([]);
 
   /**
   * 대출상품 목록조회
   */
-  const fetchLoanProducts = async () => {
+  const fetchLoanPrdList = async () => {
     //폼생성,데이터 주입
     const form = makeForm("LON0000SC");
     addFormData(form, "txGbnCd", "S01");
-    //addFormData(form, "PRDCT_DV_CD", "02"); // 상품구분코드
+    addFormData(form, "PRDCT_DV_CD", "02"); // 상품구분코드(02:대출상품)
 
     //로딩 ON
     progressBar(true, "통신중");
@@ -84,11 +86,11 @@ const LON001 = () => {
       const products = loanPdResList.map(prod => ({
         pdcd: prod.PRDCT_CD,            // 상품코드
         pdnm: prod.PRDCT_NM,            // 상품명
-        categoty: prod.PRDCT_CLS_CD,    // 상품유형명
+        categoty: convert(prod.PRDCT_CLS_CD),                     // 상품분류코드
         pdDesc: prod.SMR_DC_CNTN,       // 요약설명내용
         keyword: ["추천", "금융상품"],   // 추천어
-        contents1: "최대한도 2000만원",  // 최대한도
-        contents2: "연 8.6 ~ 14.2%"     // 금리
+        contents1: `최대한도 ${formatAmount(prod.MAX_AMT)}만원`,   // 최대한도
+        contents2: `연 ${prod.LWST_INRT}~${prod.HST_INRT}%`       // 금리
       }));
   
       setLoanPdList(products);
@@ -102,7 +104,7 @@ const LON001 = () => {
 
   // 최초 조회
   useEffect(() => {
-    fetchLoanProducts();
+    fetchLoanPrdList();
   }, []);
 
   // 탭 변경 시 이벤트
@@ -110,23 +112,57 @@ const LON001 = () => {
     setSelectedTab(value.toString());
   };
 
-  // 탭 - 카테고리에 따라서 필터링
+  // 탭 - 상품분류코드에 따라서 필터링
   const filteredProducts =
-  selectedTab === "전체"
+  selectedTab === "10"
     ? loanPdList
     : loanPdList.filter((product) => product.categoty === selectedTab);
+
+  // 상품코드를 가지고 LON001_2(대출상품 상세조회)로 이동
+  const handleProductClick = async (pdcd: string) => {
+
+      doActionView("/lon/LON001_2.view", new DataSet({pdcd}), false);
+  };
+
+  // 금액 형식 지정
+  const formatAmount = (amount: number) => {
+    const amountInWan = amount / 10000;
+    return new Intl.NumberFormat().format(amountInWan);
+  };
+
+  // 상품분류코드를 한글로 변환   
+  const convert = (categoryCode: string | undefined) => {
+    switch (categoryCode) {
+      case "11":
+        return "신용대출";
+      case "12":
+        return "정책자금대출";
+      case "13":
+        return "대환대출";
+      case "14":
+        return "담보대출";
+      case "15":
+        return "기타";
+      case "16":
+        return "외국인대출";
+      case "20":
+        return "직원대출";
+      default:
+        return "기타";
+    }
+  };
 
   return (
     <>
       {/* 대출 탭 컴포넌트 */}
-      <Tab01 items={tabItems} initialValue="전체" onChange={handleTabChange} />
+      <Tab01 items={tabItems} initialValue="10" onChange={handleTabChange} />
 
       {/* 대출 한도 조회 컴포넌트 */}
       <Box02
         title="내 대출한도가 궁금하세요?"
         description="신용평점에 영향 없이 대출한도를 알아보세요."
-        buttonText="간편대출한도조회 ▶"
-        onButtonClick={() => doActionURL("/")}
+        buttonText="간편대출한도조회"
+        onButtonClick={() => doActionURL('/lon/LON002_1.view')}
       />
 
       {/* 대출 상품 컴포넌트 */}
@@ -134,11 +170,11 @@ const LON001 = () => {
         <Card03 
           key={product.pdcd}     
           {...product}                     
-          // onClick={() => handleProductClick(product.pdcd)}
+          onClick={() => handleProductClick(product.pdcd)}
         />
       ))}
     </>
   );
 };
 
-export default LON001;
+export default LON001_1;

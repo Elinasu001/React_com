@@ -7,6 +7,7 @@
 import { GLog } from "@src/assets/js/common";
 import { MainBox } from "@src/components/Box";
 import { ContentTitle } from "@src/components/Text";
+import { SelectBox02 } from '@src/components/SelectBox';
 
 const COM010 = () => {
 
@@ -15,6 +16,7 @@ const COM010 = () => {
 
   return (
     <MainBox>
+
       {/* 컨텐츠 상단 타이틀 */}
       <ContentTitle
         title={
@@ -36,6 +38,13 @@ const COM010 = () => {
           </>
         }
       />
+
+      
+              
+
+      {/* 컨텐츠 */}
+
+
     </MainBox>
   );
 };

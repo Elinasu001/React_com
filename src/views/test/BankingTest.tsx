@@ -7,7 +7,7 @@
 import { doActionURL, getParameter, GLog } from '@assets/js/common';
 import { TextBox01 } from "@src/components/Text";
 import { Button01 } from "@src/components/Button";
-import { openFullPopup, openBottomPopup } from "@src/components/Popup";
+import { openFullPopup, openBottomPopup, openFullPopup2 } from "@src/components/Popup";
 import { MainBox } from "@src/components/Box";
 import DataSet from '@src/assets/io/DataSet';
 
@@ -64,8 +64,8 @@ const menuItems: Record<string, { text: string; path: string }[]> = {
     { text: "적금납입일변경", path: "/dep/DEP006.view" },
   ],
   lon: [
-    { text: "상품안내/신청", path: "/lon/LON001.view" },
-    { text: "간편한도조회", path: "/lon/LON002.view" },
+    { text: "상품안내/신청", path: "/lon/LON001_1.view" },
+    { text: "간편한도조회", path: "/lon/LON002_1.view" },
     { text: "전자약정", path: "/lon/LON003.view" },
     { text: "신용조회동의", path: "/lon/LON004.view" },
     { text: "온라인서류제출", path: "/lon/LON005.view" },
@@ -181,7 +181,7 @@ const BankingTest = () => {
                     openFullPopup({
                       component: COM004_1,
                       title: item.text,
-                      param: new DataSet({'PROD_KNCD':'10'}),
+                      param: new DataSet({'PROD_KNCD':'CD'}),
                       nFunc: (data?) => {
                         if (data) {
                           GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
@@ -271,7 +271,7 @@ const BankingTest = () => {
                     });
                     break;
                   case 'COM011':
-                    openFullPopup({
+                    openFullPopup2({
                       component: COM011,
                       title: item.text,
                       nFunc: (data?) => {

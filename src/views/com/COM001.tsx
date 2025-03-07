@@ -1,47 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, TextField, Select, MenuItem } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
+import { ButtonFooter } from "@src/components/Button";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
+import { TextBox, NumberBox, ResidentNumber, SelectInputBox} from "@src/components/InputType";
 import DataSet from "@assets/io/DataSet";
 
-const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
-  const [telCdData, settelCdData] = useState<{ CD: string; CD_NM: string }[]>([]);  /** 통신사코드리스트 */
-  const [selectedCarrier, setSelectedCarrier] = useState("");                       /** 선택한통신사코드 */
-  const [mblCtfcNo, setmblCtfcNo] = useState("");                                   /** 인증번호*/
-  const [showVerificationInput, setShowVerificationInput] = useState(false);        /** 인증번호입력필드 상태값 */
-  const [isVerified, setIsVerified] = useState(false);                              /** 인증번호받기 상태값 */
-  
-  // 1. 초기 상태 정의
-  const initialFormData = {
-    custNm: "",
-    telNo: "",
-    rsrNo: "",
-  };
-  const [formData, setFormData] = useState(initialFormData);
 
+const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
+  const [telCdData, settelCdData] = useState<{ label: string; value: string; }[]>([]); // 통신사코드리스트
+  const [selectedCarrier, setSelectedCarrier] = useState("");                       // 선택한통신사코드
+  const [mblCtfcNo, setmblCtfcNo] = useState("");                                   // 인증번호
+  const [showVerificationInput, setShowVerificationInput] = useState(false);        // 인증번호입력필드 상태값
+  const [isVerified, setIsVerified] = useState(false);                              // 인증번호받기 상태값 
+  const [firstPart, setFirstPart] = useState("");                                   // 주민번호앞자리
+  const [secondPart, setSecondPart] = useState("");                                 // 주민번호뒷자리
+  const [custNm, setCustNm] = useState("");                                         // 고객명
+  const [telNo, setTelNo] = useState("");                                           // 휴대폰번호
+  
   useEffect(() => {
       fetchTest();
     
-    }, []);
+  }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target; // 입력 필드의 name과 value 가져오기
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value, // 해당 name에 해당하는 값 업데이트
-        }));
-    };
+  useEffect(() => {
+      console.log("선택통신사"+selectedCarrier)
+    
+  }, [selectedCarrier]);
 
-    const mblCtfcNoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setmblCtfcNo(event.target.value);
-    }
+    
+  const mblCtfcNoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setmblCtfcNo(event.target.value);
+  }
 
   // 입력값 초기화 함수
   const resetForm = () => {
     setmblCtfcNo("");
     setSelectedCarrier("");
-    setFormData(initialFormData);
+    setCustNm("");
+    setTelNo("");
+    setFirstPart("");
+    setSecondPart("");
+    
     setShowVerificationInput(false);
     setIsVerified(false);
   };
@@ -62,26 +63,31 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     progressBar(true, "통신중");
 
     //통신
-    const test01 = await doAction(form);
+    const resDs = await doAction(form);
 
     //로딩 OFF
     progressBar(false);
     
-    const list = (test01.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
+    const list = (resDs.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
 
-    settelCdData(test01.data.getList('list'));
+    const formattedList = list.map(item => ({
+      label: item.CD_NM,
+      value: item.CD
+    }));
+    settelCdData(formattedList);
    
   };
   
   // 인증번호받기 이벤트 
   const userAuth = async () => { 
 
+    setShowVerificationInput(true);
     //폼생성,데이터 주입
     const form = makeForm('COM0001SC');
     addFormData(form,'txGbnCd','A01');
-    addFormData(form,'CUSTNM', formData.custNm);
-    addFormData(form,'TELNO', formData.telNo);
-    addFormData(form,'RSR_RG_NO', formData.rsrNo);
+    addFormData(form,'CUSTNM', custNm);
+    addFormData(form,'TELNO', telNo);
+    addFormData(form,'RSR_RG_NO', firstPart+secondPart);
     addFormData(form,'TELCD', selectedCarrier);
 
     //로딩 ON
@@ -110,7 +116,6 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     '확인',
     (() => {
         setIsVerified(true);
-        // setmblCtfcNo(test01.data.MBL_CTFC_NO);
         setShowVerificationInput(true); // 인증번호 입력 필드 표시
     })
     
@@ -142,7 +147,10 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     messageView(
         '통신 실패 : '+test01.header.respMsg,
         '확인',
-        () => { resetForm(); // 입력값 초기화 
+        () => { 
+          resetForm(); // 입력값 초기화 
+          const selectedData = new DataSet({'USER_AUTH': 'false'});
+          onClose(selectedData)
         }
     )
     return;
@@ -153,8 +161,9 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     '정상처리 되었습니다.',
     '확인',
     (() => {
+        const selectedData = new DataSet({ 'USER_AUTH': 'true' , 'HNPH_TSCO_DV_CD': selectedCarrier, 'CUST_NM': custNm, 'HNPH_NO': telNo, 'RBRNO': firstPart+secondPart});
         resetForm(); // 입력값 초기화
-        onClose();
+        onClose(selectedData);
     })
     )
     
@@ -162,97 +171,39 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
 
   return (
     
-      <Box
-        sx={{
-           
-        }}
-      >
-       
-          <Box mt={3}>
-            <Typography variant="body1"><strong>본인인증을 진행해주세요.</strong></Typography>
-          </Box>
+    <>
+     <Box className="content">
+    
+          
+          <TextBox label="이름 입력" onChange={(e) => setCustNm(e.target.value)} value={custNm}></TextBox>
+          <ResidentNumber label="주민등록번호 입력" firstValue={firstPart} secondValue={secondPart} 
+              onFirstChange={(e) => setFirstPart(e.target.value)} onSecondChange={(e) => setSecondPart(e.target.value)}/>
 
-     
-          <Box mt={3}>
-            <Typography variant="body2">이름</Typography>
-            <TextField 
-              fullWidth
-              id="custNm"
-              name="custNm"
-              placeholder="이름 입력"
-              variant="outlined"
-              required
-              value={formData.custNm}
-              onChange={handleChange}
-            />
-          </Box>
-          <Box mt={3}>
-            <Typography variant="body2">주민등록번호</Typography>
-            <TextField 
-              fullWidth
-              id="rsrNo"
-              name="rsrNo"
-              placeholder="주민등록번호 입력"
-              variant="outlined"
-              required
-              value={formData.rsrNo} // 상태 값 바인딩
-              onChange={handleChange} // 입력값 변경 감지
-            />
-          </Box>
-
-
-          <Box mt={3}>
-            <Typography variant="body2">통신사</Typography>
-            <Select
-                fullWidth
-                value={selectedCarrier}
-                onChange={(e) => setSelectedCarrier(e.target.value)}
-                displayEmpty
-            >
-                <MenuItem value="" disabled>통신사를 선택하세요</MenuItem>
-                {telCdData.map((carrier) => (
-                <MenuItem key={carrier.CD} value={carrier.CD}>
-                    {carrier.CD_NM}
-                </MenuItem>
-                ))}
-            </Select>
-          </Box>
-
-          <Box mt={3}>
-            <Typography variant="body2">휴대폰번호</Typography>
-            <TextField 
-              fullWidth
-              id="telNo"
-              name="telNo"
-              placeholder="휴대폰번호 입력"
-              variant="outlined"
-              required
-              value={formData.telNo} // 상태 값 바인딩
-              onChange={handleChange} // 입력값 변경 감지
-            />
-          </Box>
-          {showVerificationInput && (       
-            <Box mt={3}>
-                <Typography variant="body2">인증번호</Typography>
-                <TextField 
-                fullWidth
-                id="telConNo"
-                name="telConNo"
-                placeholder="인증번호 입력"
-                variant="outlined"
-                required
-                value={mblCtfcNo ?? ""} // 상태 값 바인딩
-                onChange={mblCtfcNoChange} // 입력값 변경 감지
-                />
-            </Box>
+          <SelectInputBox selectLabel='통신사' selectOptions={telCdData} 
+          selectValue={selectedCarrier} onSelectChange={(e) => setSelectedCarrier(e.target.value as string)}  
+          inputValue={telNo} onInputChange={(e) => setTelNo(e.target.value)}/>
+          
+            {showVerificationInput && (       
+            <>
+                <NumberBox label="인증번호 입력" onChange={mblCtfcNoChange} value={mblCtfcNo ?? ""}></NumberBox>
+                
+            </>
             )}
-          <Box mt="auto" display="flex" justifyContent="space-between"  sx={{ mt: 2 }}>
-            <Button variant="contained" color="primary"   onClick={isVerified ? userConfirmAuth : userAuth} >
-                {isVerified ? "인증확인" : "인증번호받기"} {/* 상태에 따라 버튼 변경 */}
-            </Button>
-         
-          </Box>
       </Box>
+      
+      <ButtonFooter
+        buttons={[
+          {
+            name: !isVerified ? "인증번호받기" : "인증확인",
+            className: "btn-primary",
+            onClick: !isVerified ? userAuth :userConfirmAuth ,
+          },
+        ]}
+    />
+              
+    </>
+         
+      
  
   );
 };

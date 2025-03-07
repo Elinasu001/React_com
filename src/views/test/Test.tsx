@@ -6,7 +6,7 @@ import { Button01 } from "@src/components/Button";
 
 import { toast } from "@src/components/Toast";
 import NativeUtil from '@assets/js/common_native';
-import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup, openFullPopup2} from "@src/components/Popup";
+import { openPopup , openBottomPopup , openFullPopup, openHtmlPopup, openFullPopup2, showKeypad, openDelfino} from "@src/components/Popup";
 import POP001 from "@src/views/pop/POP001";
 import { GLog, API_URL, makeForm, addFormData, doAction, APP_ENV } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
@@ -164,9 +164,9 @@ const Test = () => {
         btnName="풀 팝업 테스트"
         clickFunc={() => {
           openFullPopup2({
-            component:POP001
-            ,title:'풀 테스트'
-            ,nFunc:(data?)=>{
+            component:POP001    //컴포넌트 명
+            ,title:'풀 테스트'    //타이틀
+            ,nFunc:(data?)=>{   //콜백
             if(data){
               GLog.d('팝업 성공 닫힘' + JSON.stringify(data));
             }else{
@@ -178,17 +178,45 @@ const Test = () => {
 
 
       <Button01 
-        btnName="델피노 테스트"
+        btnName="델피노 로그인 테스트"
         clickFunc={async () => {
-
-          const signData = await openHtmlPopup("/solution/wizvera/view/delfino.html?txGbnCd=login");
-
+          const param = new DataSet({'txGbnCd':'login'    //작업구분
+                                    ,'authType':''        //초기 진입 서명종류 디폴트 기업선택
+                                    ,'name':'김남교'
+                                    ,'phone':'01046249022'
+                                    ,'birthDay':'19931103'});
+          const signData = await openDelfino(param);
           if(signData.getNumber('status')!=0){
-            GLog.d('팝업 성공 닫힘' + JSON.stringify(signData));
+            messageView('결과 : '+signData.toString(),'확인');
           }else{
             GLog.d('팝업 취소 닫힘');
-
           }
+        }}
+      />
+
+    <Button01 
+        btnName="델피노 전자서명 테스트"
+        clickFunc={async () => {
+          const param = new DataSet({'txGbnCd':'sign'
+                                    ,'authType':''
+                                    ,'oriMsg':'전자서명 원문 테스트'
+                                    ,'name':'김남교'
+                                    ,'phone':'01046249022'
+                                    ,'birthDay':'19931103'});
+          const signData = await openDelfino(param);
+          if(signData.getNumber('status')!=0){
+            messageView('결과 : '+signData.toString(),'확인');
+          }else{
+            GLog.d('팝업 취소 닫힘');
+          }
+        }}
+      />
+
+      <Button01 
+        btnName="키패드 테스트"
+        clickFunc={async () => {
+          const signData = await showKeypad('OTP비밀번호를 입력해주세요',6);
+          alert(signData.getString('num'));
         }}
       />
 

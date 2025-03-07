@@ -19,10 +19,7 @@ const BottomNav = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <Paper
-      sx={{ position: "fixed", bottom: 0, left: 0, right: 0, height: bottomNavHeight }}
-      elevation={3}
-    >
+    <Paper>
       <BottomNavigation showLabels>
         <BottomNavigationAction
           label="홈"
@@ -43,7 +40,7 @@ const BottomNav = () => {
         <BottomNavigationAction
           label="대출"
           onClick={() => {
-            doActionURL('/lon/LON001.view',true);
+            doActionURL('/lon/LON001_1.view',false);
           }}
           icon={<AttachMoneyIcon />}
           sx={{

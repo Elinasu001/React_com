@@ -5,6 +5,7 @@
  * @version 1.0.0
  */
 
+
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { Card05 } from "@src/components/Card";
@@ -100,26 +101,15 @@ const DEP001 = () => {
 
   return (
 
-    <Box sx={{ width: "95%" }}>
+    <Box>
       {/* 예적금 탭 컴포넌트 */}
       <Tab01 items={tabItems} initialValue="전체" onChange={handleTabChange} />
 
       {/* 예적금 상품 컴포넌트 */}
-      {/* <Box sx={{ minHeight: "100vh", mx: 2, width: "95%", mt:3 }}>
-        {depPdList.map((product) => (
-          <Card05
-            key={product.PRDCT_CD}
-            pdcd={product.PRDCT_CD} // 상품코드
-            pdnm={product.PRDCT_NM} // 상품명
-            pd_kncd={product.pd_kncd} // 상품종류
-            pdDesc={product.pdDesc} // 상품설명
-            keyword={product.keyword} // 키워드
-            depdate={product.depdate} // 예적금기간
-            intr={product.intr} // 금리
-            pd_dvcd={product.pd_dvcd} // 세전,복리 단리 구분
-            cmmProdCategoty={product.cmmProdCategoty}          />
-        ))}
-      </Box> */}
+
+       <Box className="card-list-wrap">
+      
+      </Box>
     </Box>
   );
 };

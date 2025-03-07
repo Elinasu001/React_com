@@ -18,13 +18,13 @@
 //상단 타이틀
 .content-tit-wrap { text-align: left;
     h3.tit { font-size:var(--font22); font-weight:var(--font-w-m); color: var(--tit-h3); }
-    p.desc { margin-top:10px; font-size:var(--font16); font-weight:var(--font-w-m); color: var(--desc); }
+    p.desc { padding-top:10px; font-size:var(--font16); font-weight:var(--font-w-m); color: var(--desc); }
 }
 
 .info-wrap {
 
     //기본
-    .info-tit { padding-bottom:15px; font-size:var(--font18); font-weight: var(--font-w-b); text-align: left; }
+    .info-tit { padding-bottom:15px; font-size:var(--font18); font-weight: var(--font-w-b); text-align: left; color:var(--info-list); }
     .info-list { padding:0;
         li {
             position: relative; padding:5px 0 0 10px; font-size:var(--font14); color:var(--info-list);
@@ -57,11 +57,11 @@
 .popup-container { position: fixed; display: flex; flex-direction: column; top: 0; bottom: 0; left: 0; right: 0; width: 100%; background-color: var(--white); overflow: hidden;
     
     // 팝업 헤더
-    .pop-header {  @include mixin.flex-center; width: 100%; height: 70px; overflow: hidden;
+    .pop-header {  @include mixin.flex-center; width: 100%; height: 70px;
 
       .left { position: absolute; left: 10px; }
       .right { position: absolute; right: 10px; }
-      .pop-tit { font-size: var(--font18); font-weight: var(--font-w-b); }
+      .pop-tit { font-size: var(--font18); font-weight: var(--font-w-b); color:var(--pop-tit); }
 
       .btn {
         &.btn-back,
@@ -73,7 +73,10 @@
     }
 
     // 팝업 본문
-    .pop-body { width: auto; height: 100%; padding: 0 20px 20px; overflow-y: auto; background-color: var(--white); }
+    .pop-body { 
+        display:flex; flex-direction: column; width: auto; height: 100%; padding: 0 20px 20px; overflow: hidden; background-color: var(--pop-bg);
+        .content { display:flex; flex:1 1 auto; flex-direction: column; margin-bottom: 20px; overflow-y: auto; }
+    }
   
     // 팝업 푸터
     .popup-footer { padding: 15px 20px 20px 20px; background-color: var(--white) }
@@ -98,16 +101,19 @@
 /*---------------------------------------------
 	#버튼 [Type: 컨텐츠, 컨텐츠 하단, 팝업 하단]
 ---------------------------------------------*/
-.btn { display: flex; align-items: center; justify-content: center; width: 100%; border-radius: 5px; font-weight: var(--font-w-r); font-size: var(--font16); }
+.btn { display: flex; align-items: center; justify-content: center; width: 100%; border-radius: 5px; font-weight: var(--font-w-r); font-size: var(--font16); 
+    &:disabled { color:var(--btn-disabled-txt) !important; background-color: var(--btn-disabled) !important; }
+}
 
 // 컨텐츠 버튼 높이 및 폰트
 .btn-area {
-    .btn{ height:48px; font-size: var(--font16); }
+    .btn{ gap:10px; height:48px; font-size: var(--font16); }
 }
 
 // 컨텐츠 하단 버튼, 팝업 하단 높이 및 폰트
 .content-footer,
 .popup-footer {
+    gap:10px;
     .btn { height:58px; font-size: var(--font18); }
 }
 
@@ -195,7 +201,7 @@
     @include mixin.flex-center;
     margin:40px 0;
 
-    .numeric-info { font-weight: var(--font-w-m); color:var(--color-2);
+    .numeric-info { @include mixin.flex-center; font-weight: var(--font-w-m); color:var(--color-2);
         span { font-weight: var(--font-w-b); color:var(--tertiary); }
     }
 
@@ -216,3 +222,42 @@
     }
 
  }
+
+
+/*---------------------------------------------
+   #카드
+---------------------------------------------*/
+.card-list-wrap { @include mixin.flex-col; gap:15px; margin-top:30px; }
+.card-box {
+    &.MuiCard-root { border-radius: 20px; padding:0; } //mui default
+    & > .MuiCardContent-root { padding:16px;} //mui default
+    
+    .card-info-actions { @include mixin.flex-row; gap:10px; }
+    .card-desc { font-size: var(--font14); color:var(--card-desc); }
+    .card-actions {
+        @include mixin.flex-row; gap:6px;
+        .btn-compare,
+        .btn-favorite { width:28px; height:28px; background-color: var(--card-btn); }
+        .btn-compare {
+            @include mixin.mask-style(var(--ico-compare), auto, 26px);
+           &.active { background-color: var(--card-btn-compare-active);  @include mixin.mask-style(var(--ico-compare-active), auto, 26px); }
+        }
+       .btn-favorite { 
+            @include mixin.mask-style(var(--ico-favorite), auto, 26px); 
+            &.active { background-color: var(--card-btn-favorite-active); @include mixin.mask-style(var(--ico-favorite-active), auto, 26px); }
+        }
+    }
+    .card-info {
+        @include mixin.flex-row; align-items: flex-start; gap:10px; margin-top:8px;
+        .card-category { 
+            padding:0 8px; border-radius:15px; font-size:var(--font12); font-weight: var(--font-w-r); color: var(--card-category); border:1px solid var(--card-category);
+            &.loan { color:var(--card-category-loan); border:1px solid var(--card-category-loan); } // 대출
+            &.deposit { color:var(--card-category-deposit); border:1px solid var(--card-category-deposit); } // 예적금
+        }
+        .card-name { line-height:var(--font18); font-size:var(--font18); color:var(--card-name); }
+    }
+    .card-tag { margin-top:8px; font-size:var(--font14); color:var(--card-tag); }
+    .card-term { margin-top:12px; font-size:var(--font14); color:var(--card-term); }
+    .card-rate { font-size:var(--font20); font-weight: var(--font-w-b); color:var(--card-rate);}
+
+}

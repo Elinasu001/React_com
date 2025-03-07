@@ -5,11 +5,12 @@
  * @version 1.0.0
  */
 import { useState, useEffect } from "react";
+import { Box } from "@mui/material";
 import { GLog, doAction, makeForm, addFormData } from "@src/assets/js/common";
 import { progressBar } from "@src/components/Loading";
 import { TextBox } from "@src/components/Input";
 import { Button01 } from "@src/components/Button";
-import { Box01, BoxList } from "@src/components/Box";
+import { BoxList } from "@src/components/Box";
 import { messageView } from '@src/components/Alert';
 import { TextLabel01 } from "@src/components/TextList";
 import DataSet from "@assets/io/DataSet";
@@ -176,43 +177,44 @@ const COM007 = (props: { onClose: (data?: DataSet) => void }) => {
 
   return (
     <>
-    <Box01>
+        <Box className="content">
 
-    {/* 검색 입력 필드 */}
-    <TextBox label="주소검색" value={inputAddr} onChange={(e) => setInputAddr(e.target.value)} />
-    <Button01 btnName="검색" clickFunc={searchAddr}></Button01>
-    
-    <BoxList
-      items = {addrList.map((addr, index) => {
-        const roadAddr = addr.ZPCD_ADDR.split("\n")[0].replace("[도로명주소] ", ""); // 도로명 주소
-        const jibunAddr = addr.ZPCD_ADDR.split("\n")[1]?.replace("[지번주소] ", ""); // 지번 주소
+            {/* 검색 입력 필드 */}
+            <TextBox label="주소검색" value={inputAddr} onChange={(e) => setInputAddr(e.target.value)} />
+            <Button01 btnName="검색" clickFunc={searchAddr}></Button01>
+            
+            <BoxList
+              items = {addrList.map((addr, index) => {
+                const roadAddr = addr.ZPCD_ADDR.split("\n")[0].replace("[도로명주소] ", ""); // 도로명 주소
+                const jibunAddr = addr.ZPCD_ADDR.split("\n")[1]?.replace("[지번주소] ", ""); // 지번 주소
 
-        return {
-          key: addr.ZPCD + index, // 우편번호를 key 값으로 설정
-          label: (<div className="result-box">
-            <span className="zipcode">{addr.ZPCD}</span>
-            <div>
-                <p>도로명 : {roadAddr}</p>
-                <p className="">지&nbsp;&nbsp;&nbsp;&nbsp;번 : {jibunAddr}</p>
-            </div>
-          </div>),
-          onClick: () => handleAddrSelect(addr), // 선택 이벤트 실행
-        };
-      })}
-      //selectedKey={selectedAddr ?? undefined} 
-    />
-   
-    </Box01>
-    {showInput && (     
-    <Box01>
-    <TextLabel01  
-        title="선택한 주소"   // 제목
-        param={selectedAddrText}
-    />
-    <TextBox label="상세주소" value={inputDetailAddr} onChange={(e) => setInputDetailAddr(e.target.value)} />
-    <Button01 btnName="확인" clickFunc={handleAddrInfoClose}></Button01>
-    </Box01>
-    )}
+                return {
+                  key: addr.ZPCD + index, // 우편번호를 key 값으로 설정
+                  label: (<div className="result-box">
+                    <span className="zipcode">{addr.ZPCD}</span>
+                    <div>
+                        <p>도로명 : {roadAddr}</p>
+                        <p className="">지&nbsp;&nbsp;&nbsp;&nbsp;번 : {jibunAddr}</p>
+                    </div>
+                  </div>),
+                  onClick: () => handleAddrSelect(addr), // 선택 이벤트 실행
+                };
+              })}
+              //selectedKey={selectedAddr ?? undefined} 
+            />
+          
+          
+            {showInput && (     
+            <>
+              <TextLabel01  
+                  title="선택한 주소"   // 제목
+                  param={selectedAddrText}
+              />
+              <TextBox label="상세주소" value={inputDetailAddr} onChange={(e) => setInputDetailAddr(e.target.value)} />
+              <Button01 btnName="확인" clickFunc={handleAddrInfoClose}></Button01>
+            </>
+            )}
+        </Box>
     </>
   );
 };

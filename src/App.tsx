@@ -9,7 +9,7 @@ import NativeTest from "@src/views/test/NativeTest";
 import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
 import InputTest from "@src/views/test/InputTest";
-
+import InputUI from "@src/views/test/InputUI";
 // INQ[조회]
 import INQ001 from "@src/views/inq/INQ001";
 import INQ002 from "@src/views/inq/INQ002";
@@ -30,8 +30,11 @@ import DEP005 from "@src/views/dep/DEP005";
 import DEP006 from "@src/views/dep/DEP006";
 
 // LON[여신]
-import LON001 from "@src/views/lon/LON001";
-import LON002 from "@src/views/lon/LON002";
+import LON001_1 from "@src/views/lon/LON001_1";
+import LON001_2 from "@src/views/lon/LON001_2";
+import LON001_3 from "@src/views/lon/LON001_3";
+import LON002_1 from "@src/views/lon/LON002_1";
+import LON002_2 from "@src/views/lon/LON002_2";
 import LON003 from "@src/views/lon/LON003";
 import LON004 from "@src/views/lon/LON004";
 import LON005 from "@src/views/lon/LON005";
@@ -49,6 +52,7 @@ import EFC005 from "@src/views/efc/EFC005";
 import EFC006 from "@src/views/efc/EFC006";
 import EFC007 from "@src/views/efc/EFC007";
 import EFC008 from "@src/views/efc/EFC008";
+import EFC008_1 from "@src/views/efc/EFC008_1";
 import EFC009 from "@src/views/efc/EFC009";
 import EFC010 from "@src/views/efc/EFC010";
 import EFC011 from "@src/views/efc/EFC011";
@@ -72,6 +76,7 @@ const App = () => {
           <Route path="test.view" element={<Test />} />
           <Route path="bankingTest.view" element={<BankingTest />} />
           <Route path="inputTest.view" element={<InputTest />} />
+          <Route path="inputUI.view" element={<InputUI />} />
         </Route>
 
         {/* 조회 페이지 라우트 */}
@@ -101,8 +106,11 @@ const App = () => {
 
         {/* 여신 페이지 라우트 */}
         <Route path="/lon" element={<Layout />}>
-          <Route path="LON001.view" element={<LON001 />} />
-          <Route path="LON002.view" element={<LON002 />} />
+          <Route path="LON001_1.view" element={<LON001_1 />} />
+          <Route path="LON001_2.view" element={<LON001_2 />} />
+          <Route path="LON001_3.view" element={<LON001_3 />} />
+          <Route path="LON002_1.view" element={<LON002_1 />} />
+          <Route path="LON002_2.view" element={<LON002_2 />} />
           <Route path="LON003.view" element={<LON003 />} />
           <Route path="LON004.view" element={<LON004 />} />
           <Route path="LON005.view" element={<LON005 />} />
@@ -122,6 +130,7 @@ const App = () => {
           <Route path="EFC006.view" element={<EFC006 />} />
           <Route path="EFC007.view" element={<EFC007 />} />
           <Route path="EFC008.view" element={<EFC008 />} />
+          <Route path="EFC008_1.view" element={<EFC008_1 />} />
           <Route path="EFC009.view" element={<EFC009 />} />
           <Route path="EFC010.view" element={<EFC010 />} />
           <Route path="EFC011.view" element={<EFC011 />} />

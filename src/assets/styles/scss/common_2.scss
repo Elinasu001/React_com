@@ -1,0 +1,171 @@
+$padding-mui: 0;
+$padding-default: 20px;
+$padding-nested: 10px;
+
+#root {
+  height: 100%;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  section {
+    &.headerWrap {
+      height: 60px;
+      padding: $padding-default;
+      flex-shrink: 0;
+    }
+
+    &.contentWrap {
+      flex: 1;
+      overflow: auto;
+    }
+
+    &.btmWrap {
+      height: auto;
+      flex-shrink: 0;
+    }
+  }
+}
+
+main {
+  .MuiContainer-root {
+    padding: 0;
+    margin: 0;
+    > .MuiBox-root {
+      padding: $padding-default;
+    }
+  }
+}
+
+.form-input {
+  margin-bottom: 20px;
+  width: 100%;
+  // MUI FormControl 스타일 재정의
+  &.MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .Mui-error {
+    color: var(--error);
+  }
+
+  label {
+    display: block;
+    color: var(--font-label);
+    font-size: var(--font14);
+    &.Mui-focused {
+      color: var(--color-2);
+    }
+  }
+
+  .MuiBox-root {
+    position: relative;
+  }
+
+  .MuiInput-root {
+    width: 100%;
+    &::before,
+    &::after {
+      display: none;
+    }
+    input {
+      padding: 15px 0;
+      border-bottom: 1px solid var(--form-border);
+      transition: border-color 0.3s ease-in-out;
+
+      &:focus {
+        border-color: var(--primary) !important;
+      }
+    }
+  }
+
+  .masked {
+    .MuiInput-root:has(input:focus) + .MuiInput-root input {
+      border-bottom: 1px solid var(--primary) !important;
+    }
+  }
+
+  /**select 버튼 스타일 재정의*/
+  .MuiButton-root {
+    justify-content: flex-start;
+    padding: 15px 30px 15px 0 !important;
+    min-width: 130px;
+    height: 100%;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid var(--form-border);
+    &:hover {
+      border: 0;
+      border-bottom: 1px solid var(--primary);
+      border-color: var(--primary);
+    }
+    background: var(--ico-se-arrow) no-repeat center right;
+    background-size: 24px;
+  }
+
+  .form-input-box {
+    position: relative;
+    align-items: center;
+    gap: 10px;
+    &.mony {
+      input {
+        padding-right: 30px;
+      }
+      p {
+        position: absolute;
+        top: 15px;
+        right: 0;
+      }
+    }
+    p {
+      color: var(--color-2);
+    }
+  }
+}
+
+//select 팝업 스타일
+.MuiDialog-root .MuiDialog-paper {
+  max-width: 100%;
+  max-height: inherit !important;
+  .pop-header {
+    padding: $padding-default;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    h2 {
+      color: var(--color-2);
+      font-size: var(--font18);
+      font-weight: var(--font-w-m);
+      text-align: left;
+    }
+  }
+  .pop-body {
+    padding-bottom: 20px;
+    li {
+      justify-content: center;
+      padding: 15px 20px 17px;
+      margin-bottom: 10px;
+      border: 1px solid var(--color-d);
+      border-radius: 10px;
+      text-align: center;
+      font-size: var(--font16);
+      font-weight: var(--font-w-m);
+      &:last-child {
+        margin-bottom: 0;
+      }
+      &.css-vg3e3n-MuiListItem-root {
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        background: #f7faff;
+      }
+    }
+  }
+}
+
+.MuiDialog-root .MuiDialog-paper {
+  max-width: 100%;
+  max-height: inherit !important;
+}

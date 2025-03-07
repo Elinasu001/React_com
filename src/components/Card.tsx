@@ -4,15 +4,14 @@
  * 사용 예시:
  * import { Card01, Card02 } from "@src/components/Card";
  */
-import { Card as MuiCard, Card, CardHeader, CardContent, Box, Typography, IconButton, Divider, ListItemButton, Snackbar, Alert } from "@mui/material";
-import React, { useState } from "react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { Button01, Button02, Button03 } from "@src/components/Button";
-import CompareArrowsIcon from "@mui/icons-material/CardGiftcard";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Alert, Box, Card, CardContent, Divider, IconButton, ListItemButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { doAction,makeForm, addFormData, doActionView } from "@src/assets/js/common";
 import DataSet from "@src/assets/io/DataSet";
+import { Button01 } from "@src/components/Button";
+import { openBottomPopupWithMenu } from "@src/components/Popup";
+import React, { useState } from "react";
 
 /**
  * 카드 기본 속성
@@ -31,23 +30,14 @@ interface CardProps {
  */
 export const Card01 = ({
   children,
-  padding = "5px",
-  borderRadius = "20px",
+  // padding = "5px",
+  // borderRadius = "20px",
   elevation = 5,
-  width = "95%",
-  height = "auto",
+  // width = "95%",
+  // height = "auto",
 }: CardProps) => {
   return (
-    <Card
-      elevation={elevation}
-      sx={{
-        mb: 2,
-        p: padding,
-        borderRadius: borderRadius,
-        width: width,
-        height: height,
-      }}
-    >
+    <Card className="card-box" elevation={elevation}>
       {children}
     </Card>
   );
@@ -95,18 +85,20 @@ interface Card02Props {
 export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
   
   return (
-    <Card
-      elevation={5}
-      sx={{
-        mb: 2,
-        p: 2,
-        borderRadius: "12px",
-        width: "95%",
-      }}
-    >
+    <Card>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
         <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
           {type} 계좌 {pdnm}
+          <IconButton 
+            onClick={() => 
+              openBottomPopupWithMenu({
+                title: "계좌설정", 
+                param: new DataSet({ acno, type, pdnm, balance })
+              })
+            }
+          >
+          <MoreVertIcon />
+          </IconButton>
         </Typography>
       </Box>
 
@@ -271,63 +263,52 @@ export const Card03 = ({
 
   return (
     <>
-      <Card variant="outlined" sx={{ mb: 2, borderRadius: "20px"}} onClick={onClick}>
-        {/* 카드 헤더 - 상품 설명 + 아이콘 */}
-        <CardHeader
-          sx={{ pb: 0 }}
-          title={
-            <Typography variant="body2">
+      <Card onClick={onClick} className="card-box">
+
+        {/* 카드 본문 */}
+        <CardContent>
+
+          {/* 상품 설명 + 아이콘 */}
+          <Box className="card-info-actions">
+
+            <Typography className="card-desc">
               {pdDesc}
             </Typography>
-          }
-          action={
-            <Box>
+
+            <Box className="card-actions">
               {/* 비교상품 아이콘 */}
               <StyledIconButton
                 onClick={handleCompareClick}
                 disableRipple
-                className={isCompared ? "active" : ""}
+                className={`btn-compare ${isCompared ? "active" : ""}`}
               >
-                <CompareArrowsIcon />
               </StyledIconButton>
 
               {/* 관심상품 아이콘 */}
               <StyledIconButton
                 onClick={handleGiftClick}
                 disableRipple
-                className={isFavorite ? "active" : ""}
+                className={`btn-favorite ${isFavorite ? "active" : ""}`}
               >
-                <FavoriteIcon />
               </StyledIconButton>
-            </Box>
-          }
-        />
 
-        {/* 카드 본문 */}
-        <CardContent sx={{ pt: 1 }}>
+            </Box>
+            
+          </Box>
+
           {/* 상품명 + 카테고리 */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Typography
-              variant="body2"
-              sx={{
-                border: "2px solid",
-                color: "Salmon !important",
-                px: 1,
-                py: 0.3,
-                borderRadius: "20px",
-                fontWeight: "bold",
-              }}
-            >
+          <Box className="card-info">
+            <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 :: 화면이 안보여서 예/적금 분류 필요 예시) Card05 */}
               {categoty}
             </Typography>
 
-            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            <Typography className="card-name" variant="h6">
               {pdnm}
             </Typography>
           </Box>
 
           {/* 키워드 */}
-          <Typography variant="body2" sx={{ mt: 1.5 }}>
+          <Typography className="card-tag">
             {keyword.join(" | ")}
           </Typography>
 
@@ -358,8 +339,6 @@ export const Card03 = ({
   );
 };
 
-
-
   /**
  * 예적금상품 카드 컴포넌트
  */
@@ -388,43 +367,44 @@ export const Card05 = ({
 }: Card05Props) => {
 
   return (
-      <Card01 padding="2px" elevation={3}>
+      <Card01>
+          {/* 카드 본문 */}
           <CardContent>
-            <Typography variant="body2" color="textSecondary">
+
+            {/* 상품 설명 */}
+            <Typography className="card-desc">
               {pdDesc}
             </Typography>
 
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
-              <Box
-                sx={{
-                  color: "#612AD0",
-                  border: "2px solid #612AD0",
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  px: 1,
-                  py: 0.3,
-                  borderRadius: "20px",
-                }}
+            <Box className="card-info">
+
+              <Typography
+                //.loan: 대출, .deposit : 예적금
+                 className={`card-category ${
+                  pd_kncd === "예금" || pd_kncd === "적금" ? "deposit" : "loan"
+                }`}
               >
                 {pd_kncd}
-              </Box>
+              </Typography>
 
-              <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              <Typography className="card-name" variant="h6">
                 {pdnm}
               </Typography>
+
             </Box>
 
-            <Typography variant="body2" color="textSecondary" sx={{ mt: 1 }}>
+            <Typography className="card-tag">
               {keyword.join(" | ")}
             </Typography>
 
-            <Typography variant="subtitle2" color="secondary" sx={{ fontWeight: 700, mt: 2 }}>
+            <Typography className="card-term">
               {depdate}개월
             </Typography>
 
-            <Typography variant="h6" color="rgb(97, 42, 208)" sx={{ fontWeight: "bold"}}>
+            <Typography className="card-rate" variant="h6">
               연 {intr}% {pd_dvcd}
             </Typography>
+
           </CardContent>
 
       </Card01>
@@ -440,15 +420,7 @@ export const Card05 = ({
 
   export const Card06 = ({ type, pdnm, acno, balance }: Card06props) => {
     return (
-      <Card
-        elevation={5}
-        sx={{
-          mb: 2,
-          p: 2,
-          borderRadius: "12px",
-          width: "95%",
-        }}
-      >
+      <Card>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
             {type} {pdnm}
@@ -464,6 +436,7 @@ export const Card05 = ({
             </IconButton>
           </Typography>
         </Box>
+
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
           {/* 계좌 잔액 */}
