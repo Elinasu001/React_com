@@ -206,6 +206,7 @@ interface Card03Props {
   keyword: string[];        // 키워드
   contents1: string;        // 내용1
   contents2: string;        // 내용2
+  categoryClass: string;    // 카테고리를 클래스별 색상변경
   onClick?: () => void;
 }
 
@@ -229,6 +230,7 @@ export const Card03 = ({
   keyword,
   contents1,
   contents2,
+  categoryClass,
   onClick
 }: Card03Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -298,7 +300,7 @@ export const Card03 = ({
 
           {/* 상품명 + 카테고리 */}
           <Box className="card-info">
-            <Typography className="card-category loan">{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
+            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
               {categoty}
             </Typography>
 
