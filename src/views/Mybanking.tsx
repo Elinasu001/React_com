@@ -10,7 +10,6 @@ import { messageView } from "@src/components/Alert";
 import { progressBar } from "@src/components/Loading";
 import DataSet from "@src/assets/io/DataSet";
 
-// ✅ 계좌 정보 인터페이스
 interface Account {
   type: string;
   acno: string;
@@ -19,7 +18,6 @@ interface Account {
   nFunc?: (data?: DataSet) => void;
 }
 
-// ✅ 추천 상품 인터페이스
 interface Product {
   pdcd: string;
   pdnm: string;
@@ -30,7 +28,6 @@ interface Product {
   contents2: string;
 }
 
-// ✅ 공지사항 인터페이스
 interface Notice {
   title: string;
   content: string;
@@ -52,7 +49,6 @@ const Mybanking = () => {
   const [productList, setProductList] = useState<Product[]>([]);
   const [noticeList, setNoticeList] = useState<Notice[]>([]);
 
-  // ✅ 계좌 조회
   const fetchAccounts = async () => {
     const form = makeForm("COM0000SC");
     addFormData(form, "txGbnCd", "M");
@@ -70,7 +66,6 @@ const Mybanking = () => {
 
       const resData = response.data;
 
-      // ✅ `OUT_REC`의 데이터를 활용하여 계좌 정보 매핑
       const accounts = resData.getList<{ ACNO: string; ACCO_KNCD: string; ACNT_BLNC: number; PROD_NM:string;  }>("OUT_REC").map(acc => ({
         type: acc.ACCO_KNCD === "4" ? "여신" : "수신",
         acno: acc.ACNO,
@@ -78,7 +73,6 @@ const Mybanking = () => {
         pdnm: acc.PROD_NM
       }));
 
-      // ✅ 계좌 유형별로 분리
       const depositAccounts = accounts.filter(acc => acc.type === "수신");
       const loanAccounts = accounts.filter(acc => acc.type === "여신");
 
@@ -102,7 +96,6 @@ const Mybanking = () => {
       if (response.header.respCd !== "N00000") return;
       const resData = response.data;
   
-      // ✅ API 응답 필드(대문자) → 프론트엔드 필드(소문자) 변환
       const products = resData.getList<{ PRDCT_CD: string; PRDCT_NM: string; PRDCT_CLS_CD: string; SMR_DC_CNTN: string; SALE_STR_DT: string; SALE_END_DT: string }>("prdList")
         .map(prod => ({
           pdcd: prod.PRDCT_CD,
@@ -165,7 +158,6 @@ const Mybanking = () => {
 
   return (
     <MainBox>
-      {/* ✅ 탭 메뉴 */}
       <Tabs
         value={tabValue}
         onChange={(_, newValue) => setTabValue(newValue)}
@@ -181,7 +173,7 @@ const Mybanking = () => {
         <Tab label="대출" />
       </Tabs>
 
-      {/* ✅ 수신 계좌 */}
+      {/* 수신 계좌 */}
       {tabValue === 0 && (
         <Slider {...sliderSettings}>
           {accountList.map((account, index) => (
@@ -197,7 +189,7 @@ const Mybanking = () => {
         </Slider>
       )}
 
-      {/* ✅ 여신 계좌 */}
+      {/* 여신 계좌 */}
       {tabValue === 1 && (
         <Slider {...sliderSettings}>
           {loanList.map((account, index) => (
@@ -208,7 +200,6 @@ const Mybanking = () => {
         </Slider>
       )}
 
-      {/* ✅ 추천 상품 */}
       <Typography variant="h6" sx={{ fontWeight: "bold", mt: 3, mb: 2 }}>추천 상품</Typography>
       <Slider {...sliderSettings}>
         {productList.map((product, index) => (
@@ -218,7 +209,6 @@ const Mybanking = () => {
         ))}
       </Slider>
 
-      {/* ✅ 공지사항 (새로운 소식) */}
       <Typography variant="h6" sx={{ fontWeight: "bold", mt: 3, mb: 2 }}>
         공지사항
       </Typography>
@@ -227,7 +217,6 @@ const Mybanking = () => {
         {noticeList.length > 0 ? (
           noticeList.slice(0, 3).map((notice, index) => (
             <Box key={index} sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-              {/* 아이콘 추가 가능 */}
               <Box sx={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#612AD0", mr: 1 }} />
               <Typography variant="body2">{notice.title}</Typography>
             </Box>
@@ -238,7 +227,6 @@ const Mybanking = () => {
           </Typography>
         )}
 
-        {/* ✅ 더보기 버튼 */}
         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
           <Typography
             variant="body2"

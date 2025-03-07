@@ -25,11 +25,12 @@ import { Box } from "@mui/material";
 import { GLog, doAction,makeForm, addFormData } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import { NumberBox } from "@src/components/Input";
 import { ButtonFooter } from "@src/components/Button";
 import { TextBox02, ContentTitle } from "@src/components/Text";
 import { SelectBox02 } from '@src/components/SelectBox';
 import { openBottomPopup,openFullPopup } from "@src/components/Popup";
+import { TextBox, NumberBox, ResidentNumber, SelectInputBox, SelectBox} from "@src/components/InputType";
+import SelectPopup from '@src/components/SelectPopup';
 import COM006 from "@src/views/com/COM006";
 import COM004_2 from "./COM004_2";
 import DataSet from "@assets/io/DataSet";
@@ -136,7 +137,7 @@ const COM004_1 = (prop: PopupViewProps) => {
                      </>
                    }
              />
-
+ 
               <SelectBox02 label="입금은행" value={selectedBankCd } text={selectedBankNm} 
                 onClick ={() => {
                                 openBottomPopup({
@@ -154,9 +155,6 @@ const COM004_1 = (prop: PopupViewProps) => {
 
                                 }}/>
               
-
-    
-            <TextBox02 text="계좌번호"/>
             <NumberBox label="계좌번호입력" value={inputAcno} onChange={(e) => setinputAcno(e.target.value)} />
         </Box>
 
