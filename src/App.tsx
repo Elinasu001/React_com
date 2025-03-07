@@ -10,6 +10,8 @@ import Test from "@src/views/test/Test";
 import BankingTest from "@src/views/test/BankingTest";
 import InputTest from "@src/views/test/InputTest";
 import InputUI from "@src/views/test/InputUI";
+import CheckboxUI from "@src/views/test/CheckboxUI";  
+
 // INQ[조회]
 import INQ001 from "@src/views/inq/INQ001";
 import INQ002 from "@src/views/inq/INQ002";
@@ -77,6 +79,8 @@ const App = () => {
           <Route path="bankingTest.view" element={<BankingTest />} />
           <Route path="inputTest.view" element={<InputTest />} />
           <Route path="inputUI.view" element={<InputUI />} />
+          <Route path="CheckboxUI.view" element={<CheckboxUI />} />
+
         </Route>
 
         {/* 조회 페이지 라우트 */}
