@@ -61,7 +61,7 @@ const LON001_1 = () => {
   */
   const fetchLoanPrdList = async () => {
     //폼생성,데이터 주입
-    const form = makeForm("LON0000SC");
+    const form = makeForm("LON0001SC");
     addFormData(form, "txGbnCd", "S01");
     addFormData(form, "PRDCT_DV_CD", "02"); // 상품구분코드(02:대출상품)
 
