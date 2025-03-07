@@ -34,9 +34,6 @@ const LON002_1 = () => {
 
   GLog.d('본인인증 전 '+userAuth+'::::'+lonAgrCheck+radioValue);
 
-  // TODO 1.대출가능시간 먼저체크
-
-
   // 본인인증/약관동의 후 화면이동
   useEffect(() => {
     if (userAuth && lonAgrCheck) {
