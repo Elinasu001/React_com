@@ -86,14 +86,6 @@ interface Card02Props {
  * 카드 컴포넌트 (계좌 전용)
  */
 
-// export const Card02 = ({ type, acno, balance, pdnm, nick, newDt, wtchPosbAmt, psntInrt, nFunc }: Card02Props) => {
-  
-//   return (
-//     <Card>
-//       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-//         <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-//           {pdnm}
-//           <IconButton 
 export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt, nFunc, showTradeHs = true }: Card02Props) => {
   
   return (
