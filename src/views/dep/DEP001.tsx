@@ -35,6 +35,7 @@ interface DepPd {
   keyword: string[];        // 키워드
   contents1: string;        // 내용1
   contents2: string;        // 내용2
+  categoryClass: string;
   onClick?: () => void;
 }
 
@@ -82,16 +83,16 @@ const DEP001 = () => {
   
         //상품 리스트 가져오기
         const resData = response.data;
-        console.log("resData@@@@"+ resData.prdList)
         const depPdResList: DepPdResList[] = resData.getList<DepPdResList>("prdList");
         const products = depPdResList.map(prod => ({
           pdcd: prod.PRDCT_CD,                            // 상품코드
           pdnm: prod.PRDCT_NM,                            // 상품명
-          categoty: convert(prod.PRDCT_CLS_CD),                    // 상품유형명
+          categoty: convert(prod.PRDCT_CLS_CD),           // 상품유형명
           pdDesc: prod.SMR_DC_CNTN,                       // 요약설명내용
           keyword : ['추천키워드','예적금상품','좋아욘'],   // 키워드
           contents1: '12개월',                            //가입기간 TODO DB에서 불러오는데이터 추가해야함
-          contents2: `연 ${prod.HST_INRT}%`               // 금리, ex)2.85%(연,세전,복리)
+          contents2: `연 ${prod.HST_INRT}%`,              // 금리, ex)2.85%(연,세전,복리)
+          categoryClass:"dep"
 
      
         }));
@@ -145,10 +146,9 @@ const DEP001 = () => {
        <Box className="card-list-wrap">
        {filteredProducts.map((product) => (
         <Card03 
-          key={product.pdcd}     
-          {...product}                     
-          onClick={() => handleProductClick(product.pdcd)}
-        />
+           key={product.pdcd}
+           {...product}
+           onClick={() => handleProductClick(product.pdcd)}        />
       ))}
       </Box>
     </Box>
