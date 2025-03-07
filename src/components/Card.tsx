@@ -313,14 +313,15 @@ export const Card03 = ({
           </Typography>
 
           {/* 내용1 */}
-          <Typography variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
+          <Typography  className="card-term" variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
             {contents1}
           </Typography>
 
           {/* 내용2 */}
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          <Typography className="card-rate" variant="h6" sx={{ fontWeight: "bold" }}>
             {contents2}
           </Typography>
+
         </CardContent>
       </Card>
 
