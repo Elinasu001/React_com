@@ -573,7 +573,7 @@ export const openDelfino = (param:DataSet): AsyncPromiss => {
 };
 
 export const openBottomPopupWithMenu = ({ title, param }: { title: string; param: DataSet }) => {
-  const formId = "gOpenBottomPopup";
+  const formId = "gOpenBottomPopupWithMenu";
   document.getRoot(formId).render(
     React.createElement(() => {
       const [open, setOpen] = useState(false);
@@ -787,6 +787,8 @@ export const showKeypad = (infoMsg:string,maxLength:number): AsyncPromiss => {
     );
   });
 };
+
+
 
 
 export default { openPopup, openBottomPopup, openFullPopup, openFullPopup2, openBottomPopup2, openHtmlPopup, openDelfino, showKeypad };

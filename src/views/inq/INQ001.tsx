@@ -20,7 +20,6 @@ const INQ001 = () => {
     acno: string;         // 계좌 번호
     balance: number;      // 계좌 잔액
     pdnm: string;         // 상품 이름
-    nick: string;         // 계좌 별칭
     newDt: string;        // 개설일자
     wtchPosbAmt: number;  // 출금가능금액
     psntInrt: number;     // 현재적용금리
@@ -77,7 +76,6 @@ const INQ001 = () => {
             acno: acc.ACNO,
             balance: acc.ACNT_BLNC,
             pdnm: acc.PROD_NM,
-            nick: acc.NICK || "",
             newDt:acc.NEW_DT,
             wtchPosbAmt:acc.WTCH_POSB_AMT,
             psntInrt:acc.PSNT_INRT,

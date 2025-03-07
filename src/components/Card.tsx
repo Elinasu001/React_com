@@ -75,7 +75,6 @@ interface Card02Props {
   acno: string;
   balance: number;
   pdnm: string;
-  nick: string;
   newDt: string;
   wtchPosbAmt: number;
   psntInrt: number;
@@ -102,7 +101,7 @@ export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt
             onClick={() => 
               openBottomPopupWithMenu({
                 title: "계좌설정", 
-                param: new DataSet({ acno, type, pdnm, balance, nick, newDt, wtchPosbAmt, psntInrt })
+                param: new DataSet({ acno, type, pdnm, balance, newDt, wtchPosbAmt, psntInrt })
               })
             }
           >
@@ -142,6 +141,35 @@ export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt
         {/* 구분선 */}
         {/* <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} /> */}
 
+      {/* 버튼 영역 */}
+       {/* <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
+         {type === "여신" ? (
+          <ListItemButton
+            sx={{
+              justifyContent: "center",
+              width: "100px",
+              bgcolor: "transparent",
+              color: "black",
+              borderRadius: 2,
+              "&:hover": { bgcolor: "grey.400" },
+            }}
+          >
+            상환
+          </ListItemButton>
+        ) : (
+          <>
+            <ListItemButton
+              sx={{
+                justifyContent: "center",
+                width: "100px",
+                bgcolor: "transparent",
+                color: "black",
+                borderRadius: 2,
+                "&:hover": { bgcolor: "grey.400" },
+              }}
+              onClick={() => 
+                nFunc?.(new DataSet({  acno, type, pdnm, balance }))
+              } */}
         {/* 버튼 영역 */}
         {/* <Box className="btn-area">
           {type === "4" ? (
