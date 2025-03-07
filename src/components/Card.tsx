@@ -6,7 +6,7 @@
  */
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Alert, Box, Card, CardContent, Divider, IconButton, ListItemButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, IconButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DataSet from "@src/assets/io/DataSet";
 import { Button01 } from "@src/components/Button";
@@ -85,11 +85,15 @@ interface Card02Props {
 export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
   
   return (
-    <Card>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-          {type} 계좌 {pdnm}
-          <IconButton 
+    <Card className="card-box">
+      <CardContent>
+        <Box className="card-info-actions">
+          
+          <Typography variant="h6" className="card-name">
+            {type} 계좌 {pdnm}
+          </Typography>
+
+          <StyledIconButton className="btn-control"
             onClick={() => 
               openBottomPopupWithMenu({
                 title: "계좌설정", 
@@ -97,17 +101,17 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
               })
             }
           >
-          <MoreVertIcon />
-          </IconButton>
-        </Typography>
-      </Box>
+          <MoreVertIcon/>
+          </StyledIconButton>
+        </Box>
 
-      {/* 계좌번호 및 복사 아이콘 */}
-      {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <Typography variant="body1" color="textSecondary">
-          {acno}
-          <IconButton
+        {/* 계좌번호 및 복사 아이콘 */}
+        <Box className="card-account-info">
+
+          <Typography className="account-num">
+            {acno}
+          </Typography>
+          <StyledIconButton  className="btn-copy"
             onClick={() => {
               if (typeof window !== "undefined" && navigator?.clipboard) {
                 try {
@@ -119,76 +123,45 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
                 console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
               }
             }}
-            sx={{ p: 1, ml: "auto" }}
           >
-            <ContentCopyIcon fontSize="small" />
-          </IconButton>
-        </Typography>
-      </Box>
+            <ContentCopyIcon/>
+          </StyledIconButton>
+          
+        </Box>
 
-      {/* 계좌 잔액 */}
-      <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-        {(balance ?? 0).toLocaleString()} 원
-      </Typography>
+        {/* 계좌 잔액 */}
+        <Box className="card-balance" sx={{ fontWeight: "bold", textAlign: "right" }}>
+          <Typography className="txt-balance">잔액</Typography><Typography className="num-balance">{(balance ?? 0).toLocaleString()} <span>원</span></Typography>
+        </Box>
 
-      {/* 구분선 */}
-      <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} />
+        {/* 구분선 */}
+        {/* <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} /> */}
 
-      {/* 버튼 영역 */}
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-        {type === "4" ? (
-          <ListItemButton
-            sx={{
-              justifyContent: "center",
-              width: "100px",
-              bgcolor: "transparent",
-              color: "black",
-              borderRadius: 2,
-              "&:hover": { bgcolor: "grey.400" },
-            }}
-          >
-            상환
-          </ListItemButton>
-        ) : (
-          <>
-            <ListItemButton
-              sx={{
-                justifyContent: "center",
-                width: "100px",
-                bgcolor: "transparent",
-                color: "black",
-                borderRadius: 2,
-                "&:hover": { bgcolor: "grey.400" },
-              }}
-              onClick={() => 
-                nFunc?.(new DataSet({  acno, type, pdnm, balance }))
-              }
+        {/* 버튼 영역 */}
+        <Box className="btn-area">
+          {type === "4" ? (
+            <Button className="btn btn-secondary">
+              상환
+            </Button>
+          ) : (
+            <>
+              <Button className="btn btn-secondary"
+                onClick={() => 
+                  nFunc?.(new DataSet({  acno, type, pdnm, balance }))
+                }
+              >
+                거래내역
+              </Button>
 
-            >
-              거래내역
-            </ListItemButton>
+              <Button className="btn btn-primary">
+                이체
+              </Button>
+            </>
+          )}
+        </Box>
+      </CardContent>
 
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ height: "35px", borderColor: "lightgray", alignSelf: "center" }}
-            />
-
-            <ListItemButton
-              sx={{
-                justifyContent: "center",
-                width: "100px",
-                bgcolor: "transparent",
-                color: "black",
-                borderRadius: 2,
-                "&:hover": { bgcolor: "grey.400" },
-              }}
-            >
-              이체
-            </ListItemButton>
-          </>
-        )}
-      </Box>
+      
     </Card>
   );
 };
