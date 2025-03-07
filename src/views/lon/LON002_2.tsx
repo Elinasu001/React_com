@@ -11,12 +11,36 @@ import { ContentTitle } from "@src/components/Text";
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { Button04, ButtonFooter } from "@src/components/Button";
-import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
+import { TextBox, NumberBox } from "@src/components/InputType";
 import { SelectBox01 } from '@src/components/SelectBox';
 import { useLocation } from "react-router-dom";
 import DataSet from '@src/assets/io/DataSet';
 
 const LON002_2 = () => {
+
+  const [jobCd, setJobCd] = useState("");           // 직업구분
+  const [jobCd02, setJobCd02] = useState("");           // 직업구분
+  const [jobCd03, setJobCd03] = useState("");           // 직업구분
+  const [yydd, setyydd] = useState("");           // 직업구분
+  const [totalAmt, setTotalAmt] = useState("");           // 직업구분
+
+  const JOBCD = [
+    { value: "1", label: "직장인" },
+    { value: "2", label: "사업소득자" },
+    { value: "3", label: "연금소득자" },
+    
+  ];
+  const JOBCD2 = [
+    { value: "11", label: "정규직" },
+    { value: "12", label: "비정규직" },
+    { value: "13", label: "일용직" },
+    { value: "14", label: "미신고자" },
+  ];
+  const JOBCD3 = [
+    { value: "21", label: "가입" },
+    { value: "22", label: "미가입" },
+   
+  ];
 
   const getSafeObj = (obj: unknown, key: string): any => {
     return typeof obj === "object" && obj !== null ? (obj as Record<string, any>)[key] : undefined;
@@ -102,7 +126,11 @@ const LON002_2 = () => {
       <ContentTitle title="대출 한도 조회" />
 
         <p className="txt"><strong>적합성&#183;적정성 정보</strong>를<br/> 확인할게요</p>
-        {/* <SelectBox01 label="연령" ></SelectBox01> */}
+        <SelectBox01 label="연령" items={JOBCD} onChange={(e) => setJobCd(e.target.value)}></SelectBox01>
+        <SelectBox01 label="고용형태" items={JOBCD2} onChange={(e) => setJobCd02(e.target.value)}></SelectBox01>
+        <SelectBox01 label="사대보험가입여부" items={JOBCD3} onChange={(e) => setJobCd03(e.target.value)}></SelectBox01>
+        <NumberBox label="입사일자입력" value={yydd} onChange={(e) => setyydd(e.target.value)} />
+        <NumberBox label="연소득입력" value={totalAmt} onChange={(e) => setTotalAmt(e.target.value)} />
         <ButtonFooter 
                   buttons={[
                     {

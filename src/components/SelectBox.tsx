@@ -13,7 +13,7 @@ import { useState, useEffect, ReactNode } from "react";
  */
 
 interface ListItem {
-  key: string;
+  value: string;
   label: ReactNode;
   onClick?: () => void;
 }
@@ -22,7 +22,7 @@ interface SelectBoxProps {
   label?: string;
   items:ListItem[];
   value?: string;
-  onChange?: (value: string) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   defaultValue?: string;
 }
 
@@ -38,7 +38,12 @@ export const SelectBox01 = ({ label, items, value, onChange, defaultValue }: Sel
     const newValue = event.target.value;
     setSelectedValue(newValue); // 내부 상태 업데이트
     if (onChange) {
-      onChange(newValue); // 부모로 값 전달
+      const fakeEvent = {
+        target: { value: newValue } 
+      } as React.ChangeEvent<HTMLInputElement>;
+  
+      onChange(fakeEvent); // 변환된 이벤트 전달
+      setSelectedValue(newValue); 
     }
   };
 
@@ -51,7 +56,7 @@ export const SelectBox01 = ({ label, items, value, onChange, defaultValue }: Sel
           선택하세요
         </MenuItem>
         {items.map((item) => (
-          <MenuItem key={item.key} value={item.key}>
+          <MenuItem key={item.value} value={item.value}>
             {item.label}
           </MenuItem>
         ))}
@@ -64,7 +69,7 @@ interface BankSelectBoxProps {
   label: string;
   value?: string;
   text?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const SelectBox02 = ({ label, value, text, onClick }: BankSelectBoxProps) => {
