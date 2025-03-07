@@ -42,7 +42,7 @@ const custDsSlice = createSlice({
  */
 export const convertUserData = (ds: DataSet): CustDs => ({
   USR_ID: ds.getString("USR_ID"),
-  USER_NM: ds.getString("USER_NM"),
+  USER_NM: ds.getString("CUST_NM"),
   PHONE_NO: ds.getString("PHONE_NO"),
   CSNO: ds.getString("CSNO"),
   BIRTH_DAY: ds.getString("BIRTH_DAY"),
