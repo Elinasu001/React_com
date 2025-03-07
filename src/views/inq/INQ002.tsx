@@ -39,47 +39,58 @@ interface TradeListProps {
 
 const INQ002 = () => {
   
+  const EDDT = getDate("YYYYMMDD", new Date());
+  //const STDT = calculateDate.
   const location = useLocation();
   const accountData = JSON.parse(location.state)
   const [showBalance] = useState(true);
   const [tradeList, settradeList] = useState<TradeListProps[]>([]);
   const [popupData, setPopupData] = useState({
-    
-    selectedDate : "3개월", 
+    selectedDate : "3개월",
+    stDt : "", 
     ioDvcd : "전체", 
     searchName : "", 
     isDeposit : "",
     lnpBase : "최신순"
   });
-  const EDDT = getDate("YYYYMMDD", new Date());
-  const currentDate = new Date(); // 현재 날짜
+
+  const calculateDate = (selectedDate: string): string => {
+    let currentDate = new Date();
   
-  //1개월 셋팅
-  currentDate.setMonth(currentDate.getDay() - 7); 
-  const oneWeekDate = getDate("YYYYMMDD", currentDate);
+    switch (selectedDate) {
+      case "1주일":
+        currentDate.setDate(currentDate.getDate() - 7);
+        break;
+      case "1개월":
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        break;
+      case "3개월":
+        currentDate.setMonth(currentDate.getMonth() - 3);
+        break;
+      case "6개월":
+        currentDate.setMonth(currentDate.getMonth() - 6);
+        break;
+      default:
+        currentDate.setMonth(currentDate.getMonth() - 3); // 기본값 3개월
+    }
+  
+    return getDate("YYYYMMDD", currentDate);
+  };
 
-  //1개월 셋팅
-  currentDate.setMonth(currentDate.getMonth() - 1); 
-  const oneMonthDate = getDate("YYYYMMDD", currentDate);
+  
+  
 
-  //3개월 셋팅
-  currentDate.setMonth(currentDate.getMonth() - 3); 
-  const threeMonthDate = getDate("YYYYMMDD", currentDate);
 
-  //6개월 셋팅
-  currentDate.setMonth(currentDate.getMonth() - 6); 
-  const sixMonthDate = getDate("YYYYMMDD", currentDate);
 
   const fetchTradeList = async (account:DataSet): Promise<TradeListProps[]> =>{ 
     
-
     //폼생성,데이터 주입
     const form = makeForm('INQ0002SC');
     addFormData(form,'txGbnCd','TL');       
     addFormData(form, 'acno', accountData.acno);                                      //계좌번호
-    addFormData(form, 'stdt', threeMonthDate);                               //시작일자
+    addFormData(form, 'stdt', account.getString("stDt") || calculateDate(""));                               //시작일자
     addFormData(form, 'eddt', EDDT);                               //종료일자
-    addFormData(form, 'type', account.getString("type"));                 //계좌 구분코드
+    addFormData(form, 'type', accountData.type);                 //계좌 구분코드
     addFormData(form, 'IOMN_DVCD', account.getString("ioDvcd") || "");    //입출금 구분코드
     addFormData(form, 'LNP_BASE', account.getString("lnpBase") || "");    //조회방식
 
@@ -132,7 +143,7 @@ const INQ002 = () => {
   };
 
   useEffect(() => {
-    const param = getParameter(location);
+    const param = getParameter(location);   
     const account = new DataSet();
     
     account.putString("acno", param.getString("acno"));
@@ -177,20 +188,20 @@ const INQ002 = () => {
             component:POP003
             ,title:'조회기간 설정',nFunc:(data?)=>{
             if(data){
-                  
-                  const popup = data; 
-                  
+                  const popup = data;
+                  const calculatedDate = calculateDate(popup.getString("selectedDate") || "3개월");
                   const popupData = {
                     selectedDate: popup.getString("selectedDate") || "3개월",
+                    stDt: calculatedDate.toString(),
                     ioDvcd: popup.getString("ioDvcd") || "전체", 
                     searchName: popup.getString("searchName") || "",
                     isDeposit: popup.getString("isDeposit") || "",
                     lnpBase: popup.getString("lnpBase") || "최신순", 
                   };
-                  
                   setPopupData(popupData);
               const fetchData = async () => {
-                const accountData = await fetchTradeList(data);
+                const reqDs = new DataSet(popupData);
+                const accountData = await fetchTradeList(reqDs);
                 settradeList(accountData);
               };
               fetchData();
@@ -202,50 +213,57 @@ const INQ002 = () => {
       />
 
       {/* 거래내역 */}
-      {tradeList.map((transaction, index) => (
-        transaction.OUT_REC.map((outRec, outRecIndex) => (
-          <Box
-            key={`${transaction.ACNO}-${outRecIndex}`}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              borderBottom: "1px solid lightgray",
-              pb: "12px",
-              width: "100%",
-            }}
-          >
-            {/* 첫 번째 Box (거래 정보) */}
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography variant="body2" sx={{ color: "#888", marginBottom: "4px" }}>
-                {outRec.TRN_DT} <span>{outRec.TRN_TKTM}</span>
-              </Typography>
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                {outRec.OUTL}
-              </Typography>
-            </Box>
-
-            {/* 두 번째 Box (금액 정보) */}
-            <Box sx={{ display: "flex", flexDirection: "column", textAlign: "right" }}>
-              <Typography
-                variant="body1"
+      
+      {tradeList.length === 0 || tradeList.every(transaction => transaction.OUT_REC.length === 0) ? (
+          <Typography variant="body1" sx={{ textAlign: "center", color: "#888", marginTop: 3 }}>
+            거래내역이 없습니다.
+          </Typography>
+        ) : (
+          tradeList.map((transaction, index) => (
+            transaction.OUT_REC.map((outRec, outRecIndex) => (
+              <Box
+                key={`${transaction.ACNO}-${outRecIndex}`}
                 sx={{
-                  fontWeight: "bold",
-                  color: outRec.TRAN_AMT_SIGN === " " ? "#1976D2" : "#000",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  borderBottom: "1px solid lightgray",
+                  pb: "12px",
+                  width: "100%",
                 }}
               >
-                {outRec.TRAN_AMT_SIGN === " " ? "+" : "-"}
-                {outRec.TRN_AMT.toLocaleString()} 원
-              </Typography>
+                {/* 첫 번째 Box (거래 정보) */}
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                  <Typography variant="body2" sx={{ color: "#888", marginBottom: "4px" }}>
+                    {outRec.TRN_DT.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3")} 
+                    <span>{outRec.TRN_TKTM.substring(0, 4).replace(/(\d{2})(\d{2})/, "$1:$2")}</span>
+                  </Typography>
+                  <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                    {outRec.OUTL}
+                  </Typography>
+                </Box>
 
-              <Typography variant="body2" sx={{ color: "#555" }}>
-                잔액: {outRec.ACNT_BLNC.toLocaleString()} 원
-              </Typography>
-            </Box>
-          </Box>
-        ))
-      ))}
+                {/* 두 번째 Box (금액 정보) */}
+                <Box sx={{ display: "flex", flexDirection: "column", textAlign: "right" }}>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: "bold",
+                      color: outRec.TRAN_AMT_SIGN === " " ? "#1976D2" : "#000",
+                    }}
+                  >
+                    {outRec.TRAN_AMT_SIGN === " " ? "+" : "-"}
+                    {outRec.TRN_AMT.toLocaleString()} 원
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "#555" }}>
+                    잔액: {outRec.ACNT_BLNC.toLocaleString()} 원
+                  </Typography>
+                </Box>
+              </Box>
+            ))
+          ))
+        )}
       
 
       

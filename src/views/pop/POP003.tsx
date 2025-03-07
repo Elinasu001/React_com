@@ -71,7 +71,7 @@ const POP003 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) 
 
   const handleTypeTabChange = (value: string | number) => {
     setioDvcd(value.toString());
-    if (value === "1") {
+    if (value === "입금") {
       setIsDeposit(true);  
     } else {
       setIsDeposit(false);  
