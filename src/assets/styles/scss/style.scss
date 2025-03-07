@@ -132,7 +132,7 @@ body {
   --card-desc: var(--color-9);
   --card-name: var(--color-2);
   --card-category: var(--color-2);
-  --card-category-loan: var(--parimary);
+  --card-category-loan: var(--primary);
   --card-category-deposit: var(--tertiary);
   --card-tag: var(--color-75);
   --card-term: var(--color-2);
@@ -141,5 +141,8 @@ body {
   --card-btn: var(--color-45);
   --card-btn-compare-active: var(--primary);
   --card-btn-favorite-active: var(--tertiary);
-
+  //카드 계좌
+  --card-account-num: var(--color-75);
+  --card-btn-copy: var(--color-9);
+  --card-btn-control: var(--color-2);
 }

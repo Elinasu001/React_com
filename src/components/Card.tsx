@@ -6,10 +6,10 @@
  */
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Alert, Box, Card, CardContent, Divider, IconButton, ListItemButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Card, CardContent, IconButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DataSet from "@src/assets/io/DataSet";
-import { Button01 } from "@src/components/Button";
+import { Button01, ButtonContent } from "@src/components/Button";
 import { openBottomPopupWithMenu } from "@src/components/Popup";
 import React, { useState } from "react";
 
@@ -85,11 +85,15 @@ interface Card02Props {
 export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
   
   return (
-    <Card>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1 }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-          {type} 계좌 {pdnm}
-          <IconButton 
+    <Card className="card-box">
+      <CardContent>
+        <Box className="card-info-actions">
+          
+          <Typography variant="h6" className="card-name">
+            {type} 계좌 {pdnm}
+          </Typography>
+
+          <StyledIconButton className="btn-control"
             onClick={() => 
               openBottomPopupWithMenu({
                 title: "계좌설정", 
@@ -97,17 +101,17 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
               })
             }
           >
-          <MoreVertIcon />
-          </IconButton>
-        </Typography>
-      </Box>
+          <MoreVertIcon/>
+          </StyledIconButton>
+        </Box>
 
-      {/* 계좌번호 및 복사 아이콘 */}
-      {/* <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-        <Typography variant="body1" color="textSecondary">
-          {acno}
-          <IconButton
+        {/* 계좌번호 및 복사 아이콘 */}
+        <Box className="card-account-info">
+
+          <Typography className="account-num">
+            {acno}
+          </Typography>
+          <StyledIconButton  className="btn-copy"
             onClick={() => {
               if (typeof window !== "undefined" && navigator?.clipboard) {
                 try {
@@ -119,76 +123,59 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc }: Card02Props) => {
                 console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
               }
             }}
-            sx={{ p: 1, ml: "auto" }}
           >
-            <ContentCopyIcon fontSize="small" />
-          </IconButton>
-        </Typography>
-      </Box>
+            <ContentCopyIcon/>
+          </StyledIconButton>
+          
+        </Box>
 
-      {/* 계좌 잔액 */}
-      <Typography variant="h6" sx={{ fontWeight: "bold", textAlign: "right" }}>
-        {(balance ?? 0).toLocaleString()} 원
-      </Typography>
+        {/* 계좌 잔액 */}
+        <Box className="card-balance" sx={{ fontWeight: "bold", textAlign: "right" }}>
+          <Typography className="txt-balance">잔액</Typography><Typography className="num-balance">{(balance ?? 0).toLocaleString()} <span>원</span></Typography>
+        </Box>
 
-      {/* 구분선 */}
-      <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} />
+        {/* 구분선 */}
+        {/* <Divider sx={{ borderColor: "lightgray", borderBottomWidth: 1, my: 1 }} /> */}
 
-      {/* 버튼 영역 */}
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 3, alignItems: "center" }}>
-        {type === "4" ? (
-          <ListItemButton
-            sx={{
-              justifyContent: "center",
-              width: "100px",
-              bgcolor: "transparent",
-              color: "black",
-              borderRadius: 2,
-              "&:hover": { bgcolor: "grey.400" },
-            }}
-          >
-            상환
-          </ListItemButton>
-        ) : (
-          <>
-            <ListItemButton
-              sx={{
-                justifyContent: "center",
-                width: "100px",
-                bgcolor: "transparent",
-                color: "black",
-                borderRadius: 2,
-                "&:hover": { bgcolor: "grey.400" },
-              }}
-              onClick={() => 
-                nFunc?.(new DataSet({  acno, type, pdnm, balance }))
-              }
+        {/* 버튼 영역 */}
+        {/* <Box className="btn-area">
+          {type === "4" ? (
+            <Button className="btn btn-secondary">
+              상환
+            </Button>
+          ) : (
+            <>
+              <Button className="btn btn-secondary"
+                onClick={() =>
+                  nFunc?.(new DataSet({  acno, type, pdnm, balance }))
+                }
+              >
+                거래내역
+              </Button>
 
-            >
-              거래내역
-            </ListItemButton>
+              <Button className="btn btn-primary">
+                이체
+              </Button>
+            </>
+          )}
+        </Box> */}
+        {/* 컨텐츠 공통 버튼으로 적용 */}
+        <ButtonContent
+          buttons={
+            type === "4"
+              ? [{ name: "상환", className: "btn-secondary" }]
+              : [
+                  {
+                    name: "거래내역",
+                    className: "btn-secondary",
+                    onClick: () => nFunc?.(new DataSet({ acno, type, pdnm, balance })),
+                  },
+                  { name: "이체", className: "btn-primary" },
+                ]
+          }
+        />
+      </CardContent>
 
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ height: "35px", borderColor: "lightgray", alignSelf: "center" }}
-            />
-
-            <ListItemButton
-              sx={{
-                justifyContent: "center",
-                width: "100px",
-                bgcolor: "transparent",
-                color: "black",
-                borderRadius: 2,
-                "&:hover": { bgcolor: "grey.400" },
-              }}
-            >
-              이체
-            </ListItemButton>
-          </>
-        )}
-      </Box>
     </Card>
   );
 };
@@ -206,6 +193,7 @@ interface Card03Props {
   keyword: string[];        // 키워드
   contents1: string;        // 내용1
   contents2: string;        // 내용2
+  categoryClass: string;    // 카테고리를 클래스별 색상변경
   onClick?: () => void;
 }
 
@@ -229,6 +217,7 @@ export const Card03 = ({
   keyword,
   contents1,
   contents2,
+  categoryClass,
   onClick
 }: Card03Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -298,7 +287,7 @@ export const Card03 = ({
 
           {/* 상품명 + 카테고리 */}
           <Box className="card-info">
-            <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 :: 화면이 안보여서 예/적금 분류 필요 예시) Card05 */}
+            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
               {categoty}
             </Typography>
 
@@ -313,14 +302,15 @@ export const Card03 = ({
           </Typography>
 
           {/* 내용1 */}
-          <Typography variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
+          <Typography  className="card-term" variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
             {contents1}
           </Typography>
 
           {/* 내용2 */}
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          <Typography className="card-rate" variant="h6" sx={{ fontWeight: "bold" }}>
             {contents2}
           </Typography>
+
         </CardContent>
       </Card>
 
@@ -378,12 +368,7 @@ export const Card05 = ({
 
             <Box className="card-info">
 
-              <Typography
-                //.loan: 대출, .deposit : 예적금
-                 className={`card-category ${
-                  pd_kncd === "예금" || pd_kncd === "적금" ? "deposit" : "loan"
-                }`}
-              >
+              <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
                 {pd_kncd}
               </Typography>
 
