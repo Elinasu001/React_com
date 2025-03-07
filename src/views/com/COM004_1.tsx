@@ -33,8 +33,9 @@ import { openBottomPopup,openFullPopup } from "@src/components/Popup";
 import COM006 from "@src/views/com/COM006";
 import COM004_2 from "./COM004_2";
 import DataSet from "@assets/io/DataSet";
+import { PopupViewProps } from "@src/assets/js/props/PopupViewProps";
 
-const COM004_1 = ({ param }: { param: DataSet}) => {
+const COM004_1 = (prop: PopupViewProps) => {
   const [inputAcno, setinputAcno] = useState('');
   const [selectedBankCd, setSelectedBankCd] = useState<string>("");
   const [selectedBankNm, setSelectedBankNm] = useState<string>("");
@@ -88,10 +89,12 @@ const COM004_1 = ({ param }: { param: DataSet}) => {
           messageView(resDs.data.getString('API_RS_MSG'), "확인", () => {return;});
         }else { 
 
+          const prodKncd = prop.param?.getString('PROD_KNCD') ?? '';
+
           const bkData = new DataSet();
           bkData.putString('BKCD',selectedBankCd);
           bkData.putString('ACNO',inputAcno);
-          bkData.putString('PROD_KNCD', param.getString("PROD_KNCD"));
+          bkData.putString('PROD_KNCD', prodKncd);
 
           openFullPopup({
             component: COM004_2,

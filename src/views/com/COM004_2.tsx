@@ -3,12 +3,13 @@ import { Box, Typography, Input } from "@mui/material";
 import { GLog,doAction, makeForm, addFormData  } from '@assets/js/common';
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
-import { Button04, ButtonFooter } from "@src/components/Button";
+import { ButtonFooter } from "@src/components/Button";
 import InputLabel from '@mui/material/InputLabel';
 import Logo from "@assets/images/com/svg/img_accountCrtf.png";
 import DataSet from "@assets/io/DataSet";
+import { PopupViewProps } from "@src/assets/js/props/PopupViewProps";
 
-const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
+const COM004_2 = (prop: PopupViewProps) => {
   
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);   // 버튼상태
   const [seconds, setSeconds] =  useState<number>(180);                       // 타이머시작
@@ -60,6 +61,7 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
       return;
     }
     
+    const param = prop.param ?? new DataSet();
 
     //폼생성,데이터 주입
     const form = makeForm('COM0004SC');
@@ -105,7 +107,7 @@ const COM004_2 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet
         '확인',
         (() => {
             // TODO 팝업닫기
-            onClose();
+            prop.onClose?.();
         })
         
         )
