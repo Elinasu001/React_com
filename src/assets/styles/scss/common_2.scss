@@ -169,3 +169,19 @@ main {
   max-width: 100%;
   max-height: inherit !important;
 }
+
+//checkbox
+
+//약관
+.terms-wrap {
+  > .form-check {
+    flex-direction: column;
+    > label {
+      width: 100%;
+      display: block;
+      margin: 0;
+      padding: 0;
+      border: 1px solid var(--form-border);
+    }
+  }
+}

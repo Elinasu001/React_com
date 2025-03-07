@@ -1,64 +1,82 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 interface CheckboxItem {
+  id: string;
   label: string;
   checked: boolean;
+  children?: CheckboxItem[];
 }
 
-interface IndeterminateCheckboxProps {
-  items: CheckboxItem[];
-  onChange: (items: CheckboxItem[]) => void;
+interface NestedCheckboxProps {
+  item: CheckboxItem;
+  onChange: (updatedItem: CheckboxItem) => void;
+  level?: number;
+  isTopLevel?: boolean;
 }
 
-export default function IndeterminateCheckbox({ items, onChange }: IndeterminateCheckboxProps) {
-  const [checked, setChecked] = React.useState(items.map(item => item.checked));
+const NestedCheckbox: React.FC<NestedCheckboxProps> = ({ item, onChange, level = 0, isTopLevel = true }) => {
+  const hasChildren = item.children && item.children.length > 0;
 
-  const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newChecked = Array(items.length).fill(event.target.checked);
-    setChecked(newChecked);
-    onChange(items.map((item, index) => ({ ...item, checked: newChecked[index] })));
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newChecked = event.target.checked;
+    const updateCheckboxState = (item: CheckboxItem): CheckboxItem => ({
+      ...item,
+      checked: newChecked,
+      children: item.children?.map(child => updateCheckboxState(child))
+    });
+    onChange(updateCheckboxState(item));
   };
 
-  const handleChangeChild = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newChecked = [...checked];
-    newChecked[index] = event.target.checked;
-    setChecked(newChecked);
-    onChange(items.map((item, i) => ({ ...item, checked: newChecked[i] })));
+  const handleChildChange = (childIndex: number) => (updatedChild: CheckboxItem) => {
+    if (!item.children) return;
+
+    const newChildren = [...item.children];
+    newChildren[childIndex] = updatedChild;
+    
+    const allChecked = newChildren.every(child => child.checked);
+    
+    onChange({
+      ...item,
+      checked: allChecked,
+      children: newChildren,
+    });
   };
 
-  const children = (
-    <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-      {items.map((item, index) => (
+  return (
+    <List className={isTopLevel ? "terms-wrap" : undefined} component="ul">
+      <ListItem className="form-check">
         <FormControlLabel
-          key={index}
+          className="all-check"
           label={item.label}
           control={
             <Checkbox
-              checked={checked[index]}
-              onChange={handleChangeChild(index)}
+              checked={item.checked}
+              indeterminate={hasChildren && !item.checked && !!item.children?.some(child => child.checked)}
+              onChange={handleChange}
             />
           }
         />
-      ))}
-    </Box>
+        {hasChildren && level < 3 && (
+        <List component="ul" className="child-list">
+          {item.children?.map((child, index) => (
+            <ListItem key={child.id} component="li" disablePadding>
+              <NestedCheckbox
+                item={child}
+                onChange={handleChildChange(index)}
+                level={level + 1}
+                isTopLevel={false}
+              />
+            </ListItem>
+          ))}
+        </List>
+      )}
+      </ListItem>
+    </List>
   );
+};
 
-  return (
-    <div>
-      <FormControlLabel
-        label="Parent"
-        control={
-          <Checkbox
-            checked={checked.every(Boolean)}
-            indeterminate={checked.some(Boolean) && !checked.every(Boolean)}
-            onChange={handleChange1}
-          />
-        }
-      />
-      {children}
-    </div>
-  );
-}
+export default NestedCheckbox;
