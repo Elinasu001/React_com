@@ -10,7 +10,7 @@ import { GLog, doAction,makeForm, addFormData, doActionURL, doActionView } from 
 import { progressBar } from "@src/components/Loading";
 import { messageView } from '@src/components/Alert';
 import { openFullPopup, openBottomPopup, openFullPopup2 } from "@src/components/Popup";
-import { MainBox } from "@src/components/Box";
+import { Box01, MainBox } from "@src/components/Box";
 import { ContentTitle } from "@src/components/Text";
 import { TextBox, NumberBox, EmailBox, PwdBox, CheckBox, RadioBox } from "@src/components/Input";
 import DataSet from '@src/assets/io/DataSet';
@@ -36,6 +36,15 @@ const LON002_1 = () => {
 
   // TODO 1.대출가능시간 먼저체크
 
+
+  // 본인인증/약관동의 후 화면이동
+  useEffect(() => {
+    if (userAuth && lonAgrCheck) {
+
+        loanStbt(); 
+    }
+  }, [userAuth, lonAgrCheck]); 
+  
 
   const loanStbt = () => { 
   
@@ -77,34 +86,30 @@ const LON002_1 = () => {
       {/* 약관동의 UI (본인인증 완료 후 표시) */}
       {userAuth && !lonAgrCheck && (
         <>
-        <RadioBox label="" options={['요약동의서', '상세동의서']} value={radioValue} onChange={(e) => setRadioValue(e.target.value)}/>
+          <Box01>
+            <RadioBox label="" options={['요약동의서', '상세동의서']} value={radioValue} onChange={(e) => setRadioValue(e.target.value)}/>
+          </Box01>
+            {radioValue === "요약동의서" &&(
+              <COM002
+                title='요약약관동의'
+                buttonText="다음 버튼"
+                stplatClsCd="O049001"
+                nFunc={() => setLonAgrCheck(true)} // 약관 동의 후 처리
+              />
 
-        {radioValue === "요약동의서" &&(
-          <COM002
-            title='요약약관동의'
-            buttonText="다음 버튼"
-            stplatClsCd="O049001"
-            nFunc={() => setLonAgrCheck(true)} // 약관 동의 후 처리
-          />
+            )}
 
-        )}
+            {radioValue === "상세동의서" &&(
+              <COM002
+                title='상세약관동의'
+                buttonText="다음 버튼"
+                stplatClsCd="O049001"
+                nFunc={() => setLonAgrCheck(true)} // 약관 동의 후 처리
+              />
 
-        {radioValue === "상세동의서" &&(
-          <COM002
-            title='상세약관동의'
-            buttonText="다음 버튼"
-            stplatClsCd="O049001"
-            nFunc={() => setLonAgrCheck(true)} // 약관 동의 후 처리
-          />
-
-        )}
-          
+            )}
         </>
-      )}
-
-      {/* 본인인증과 약관동의가 모두 완료된 경우 다음 화면 */}
-      {userAuth && lonAgrCheck && (
-        loanStbt()
+        
       )}
 
     </>

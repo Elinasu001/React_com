@@ -44,8 +44,8 @@ const LON002_2 = () => {
     setCustNm(data01.getString('CUST_NM'));
     setHnphNo(data01.getString('HNPH_NO'));
     setRbrNo(data01.getString('RBRNO'));
-    setPrdctCd(data01.getString('PRDCT_CD') ?? "760198");
-    setLoanCnsltAmt(data01.getString('LOAN_CNSLT_AMT') ?? "0");
+    setPrdctCd(data01.getString('PRDCT_CD'));
+    setLoanCnsltAmt(data01.getString('LOAN_CNSLT_AMT'));
 
   }, [data01]);
 
