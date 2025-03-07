@@ -1,5 +1,5 @@
 /**
- * @fileoverview [여신] 
+ * @fileoverview [여신] 전자약정
  *
  * @author 
  * @version 1.0.0
@@ -7,7 +7,7 @@
 import { GLog } from "@src/assets/js/common";
 import { MainBox } from "@src/components/Box";
 
-const LON003 = () => {
+const LON003_1 = () => {
 
   const test = '1234';
   GLog.d('로그는 이거쓰세요 : '+test);
@@ -20,4 +20,4 @@ const LON003 = () => {
   );
 };
 
-export default LON003;
+export default LON003_1;

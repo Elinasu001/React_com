@@ -7,9 +7,9 @@
 import { useState } from "react";
 import { messageView } from "@src/components/Alert";
 import { Button01 } from "@src/components/Button";
-import { Box, Typography, Radio, RadioGroup, FormControlLabel } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import DataSet from "@src/assets/io/DataSet";
-
+import { RadioBox } from "@src/components/Input";
 
 interface VoicePhishingCheckProps {
   onClose: (data?: DataSet) => void;
@@ -24,12 +24,12 @@ const questions = [
 
 const LON001_3 = ({ onClose }: VoicePhishingCheckProps) => {
   const [answers, setAnswers] = useState<Record<string, string>>(
-    Object.fromEntries(questions.map((q) => [q.id, ""]))
+    Object.fromEntries(questions.map((q) => [q.id, ""]))  // 초기화
   );
 
   // 라디오 버튼 선택 시 상태 변경
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAnswers((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  const handleChange = (questionId: string, value: string) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
 
   // 확인 버튼 클릭
@@ -39,7 +39,7 @@ const LON001_3 = ({ onClose }: VoicePhishingCheckProps) => {
       return;
     }
 
-    if (Object.values(answers).some((answer) => answer === "Y")) {
+    if (Object.values(answers).some((answer) => answer === "예")) {
       messageView("보이스피싱 예방 문진에 '예'를 선택하여 보이스피싱 피해가 의심됩니다. 보이스피싱 여부를 확인한 후 다시 거래하시기 바랍니다.", "확인");
       return;
     }
@@ -53,16 +53,12 @@ const LON001_3 = ({ onClose }: VoicePhishingCheckProps) => {
       {questions.map((question) => (
         <Box key={question.id} sx={{ mt: 3, mb: 7 }}>
           <Typography>{question.text}</Typography>
-          <RadioGroup
-            row
-            name={question.id}
+          <RadioBox
+            label=""
+            options={["예", "아니오"]}
             value={answers[question.id]}
-            onChange={handleChange}
-            sx={{ gap: 13 }}
-          >
-            <FormControlLabel value="Y" control={<Radio />} label="예" />
-            <FormControlLabel value="N" control={<Radio />} label="아니오" />
-          </RadioGroup>
+            onChange={(e) => handleChange(question.id, e.target.value)}
+          />
         </Box>
       ))}
 
