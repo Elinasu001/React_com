@@ -232,8 +232,8 @@
     &.MuiCard-root { border-radius: 20px; padding:0; } //mui default
     & > .MuiCardContent-root { padding:16px;} //mui default
     
-    .card-info-actions { @include mixin.flex-row; gap:10px; }
-    .card-desc { font-size: var(--font14); color:var(--card-desc); }
+    .card-info-actions { @include mixin.flex-row; justify-content: space-between; gap:10px; }
+    .card-desc { font-size: var(--font14); line-height: var(--font14); color:var(--card-desc); }
     .card-actions {
         @include mixin.flex-row; gap:6px;
         .btn-compare,
@@ -248,7 +248,7 @@
         }
     }
     .card-info {
-        @include mixin.flex-row; align-items: flex-start; gap:10px; margin-top:8px;
+        @include mixin.flex-row; align-items: flex-start; gap:10px; margin-top:10px;
         .card-category { 
             padding:0 8px; border-radius:15px; font-size:var(--font12); font-weight: var(--font-w-r); color: var(--card-category); border:1px solid var(--card-category);
             &.loan { color:var(--card-category-loan); border:1px solid var(--card-category-loan); } // 대출

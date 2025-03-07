@@ -210,6 +210,7 @@ interface Card03Props {
   keyword: string[];        // 키워드
   contents1: string;        // 내용1
   contents2: string;        // 내용2
+  categoryClass: string;    // 카테고리를 클래스별 색상변경
   onClick?: () => void;
 }
 
@@ -233,6 +234,7 @@ export const Card03 = ({
   keyword,
   contents1,
   contents2,
+  categoryClass,
   onClick
 }: Card03Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -302,7 +304,7 @@ export const Card03 = ({
 
           {/* 상품명 + 카테고리 */}
           <Box className="card-info">
-            <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 :: 화면이 안보여서 예/적금 분류 필요 예시) Card05 */}
+            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
               {categoty}
             </Typography>
 
@@ -317,14 +319,15 @@ export const Card03 = ({
           </Typography>
 
           {/* 내용1 */}
-          <Typography variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
+          <Typography  className="card-term" variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
             {contents1}
           </Typography>
 
           {/* 내용2 */}
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          <Typography className="card-rate" variant="h6" sx={{ fontWeight: "bold" }}>
             {contents2}
           </Typography>
+
         </CardContent>
       </Card>
 
@@ -382,12 +385,7 @@ export const Card05 = ({
 
             <Box className="card-info">
 
-              <Typography
-                //.loan: 대출, .deposit : 예적금
-                 className={`card-category ${
-                  pd_kncd === "예금" || pd_kncd === "적금" ? "deposit" : "loan"
-                }`}
-              >
+              <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
                 {pd_kncd}
               </Typography>
 

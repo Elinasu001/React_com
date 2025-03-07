@@ -169,7 +169,8 @@ const LON001_1 = () => {
       {filteredProducts.map((product) => (
         <Card03 
           key={product.pdcd}     
-          {...product}                     
+          {...product}
+          categoryClass="loan"                     
           onClick={() => handleProductClick(product.pdcd)}
         />
       ))}
