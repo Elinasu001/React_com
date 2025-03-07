@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // common
-import { doAction, makeForm, addFormData, getCustDs, doActionView } from '@assets/js/common';
+import { doAction, makeForm, addFormData, getCustDs, doActionView, GLog } from '@assets/js/common';
 
-//components
+// components
 import { Accordion01 } from "@src/components/Accordion";
 import { messageView } from '@src/components/Alert';
 import { MainBox, Box01 } from "@src/components/Box";
@@ -16,16 +16,22 @@ const INQ001 = () => {
 
   // 계좌 정보 인터페이스
   interface Account {
-    type: string;     // 계좌 타입
-    acno: string;     // 계좌 번호
-    balance: number;  // 계좌 잔액
-    pdnm: string;     // 상품 이름
+    type: string;         // 계좌 타입
+    acno: string;         // 계좌 번호
+    balance: number;      // 계좌 잔액
+    pdnm: string;         // 상품 이름
+    nick: string;         // 계좌 별칭
+    newDt: string;        // 개설일자
+    wtchPosbAmt: number;  // 출금가능금액
+    psntInrt: number;     // 현재적용금리
   }
 
   const navigate = useNavigate();
-  const [accountList, setAccountList] = useState<Account[]>([]);    // 수신 계좌 List
-  const [loanList, setLoanList] = useState<Account[]>([]);          // 여신 계좌 List
-  const [expanded, setExpanded] = useState<string | false>(false);  // 토글 상태 여부
+  const [accountList1, setAccountList1] = useState<Account[]>([]);    // 입출금 계좌 List
+  const [accountList2, setAccountList2] = useState<Account[]>([]);    // 적금 계좌 List
+  const [accountList3, setAccountList3] = useState<Account[]>([]);    // 예금 계좌 List
+  const [loanList, setLoanList] = useState<Account[]>([]);            // 여신 계좌 List
+  const [expanded, setExpanded] = useState<string | false>(false);    // 토글 상태 여부
   const user = getCustDs(); // 로그인 사용자 정보 가져오기
   
   // 최초 화면 진입시 실행
@@ -65,27 +71,23 @@ const INQ001 = () => {
         // 서버와 통신으로 받아온 데이터
         const resData = response.data;
 
-        // 여신 계좌
-        const loanAccounts = resData.getList("REC4").map(acc => ({
-          type: "여신",
-          acno: acc.ACNO,
-          balance: acc.ACNT_BLNC,
-          pdnm: acc.PROD_NM,
-        }));
-
-        // 수신 계좌
-        const depositAccounts = ["REC1", "REC2", "REC3"]
-          .flatMap(key => resData.getList(key))
-          .map(acc => ({
-            type: "수신",
+        const mapAccounts = (key: string) =>
+          resData.getList(key).map(acc => ({
+            type: acc.ACCO_KNCD,
             acno: acc.ACNO,
             balance: acc.ACNT_BLNC,
             pdnm: acc.PROD_NM,
-        }));
-  
-        // 서버에서 받아온 데이터 Set
-        setAccountList(depositAccounts);
-        setLoanList(loanAccounts);
+            nick: acc.NICK || "",
+            newDt:acc.NEW_DT,
+            wtchPosbAmt:acc.WTCH_POSB_AMT,
+            psntInrt:acc.PSNT_INRT,
+          }));
+          
+          // 계좌 List set
+          setAccountList1(mapAccounts("REC1")); // 입출금
+          setAccountList2(mapAccounts("REC2")); // 적금
+          setAccountList3(mapAccounts("REC3")); // 예금
+          setLoanList(mapAccounts("REC4"));     // 대출
 
       } catch (error) {
         progressBar(false);
@@ -103,6 +105,13 @@ const INQ001 = () => {
     setExpanded((prev) => (prev === panel ? false : panel));
   };
 
+  // 수신 계좌
+  const accountCategories = [
+    { title: "입출금 계좌", list: accountList1, key: "deposit1" },
+    { title: "적금 계좌", list: accountList2, key: "deposit2" },
+    { title: "예금 계좌", list: accountList3, key: "deposit3" },
+  ];
+  
   {/* 개인적으로 css 적용한 부분은 추후에 컴포넌트에 맞춰 수정*/}
   
   return (
@@ -113,22 +122,25 @@ const INQ001 = () => {
         <TextBox01 text="전계좌조회"></TextBox01>
 
         {/* 수신 계좌 아코디언 */}
-        <Accordion01 
-          title="수신 계좌" 
-          contents={
-            accountList.length > 0 ? (
-              accountList.map((account, index) => (
-                <Card02 key={index} {...account} 
-                  nFunc={(accountData) => {doActionView("/inq/INQ002.view", accountData);}}
-                />
-              ))
-            ) : (
-              <TextBox02 text="수신 계좌가 없습니다." />
-            )
-          }
-          onChange={handleAccordionChange("deposit")}
-          checked={expanded === "deposit"}
-        />
+        {accountCategories.map(({ title, list, key }) => (
+          <Accordion01 
+            key={key}
+            title={title}
+            contents={
+              list.length > 0 ? (
+                list.map((account, index) => (
+                  <Card02 key={index} {...account} 
+                    nFunc={(accountData) => {doActionView("/inq/INQ002.view", accountData);}}
+                  />
+                ))
+              ) : (
+                <TextBox02 text={`${title}가 없습니다.`} />
+              )
+            }
+            onChange={handleAccordionChange(key)}
+            checked={expanded === key}
+          />
+        ))}
 
         {/* 여신 계좌 아코디언 */}
         <Accordion01 

@@ -4,7 +4,7 @@ import { Box, Typography, Button } from "@mui/material";
 // common
 import { getParameter } from '@assets/js/common';
 
-//components
+// components
 import { MainBox, Box01 } from "@src/components/Box";
 import { Button01 } from "@src/components/Button";
 

@@ -75,6 +75,10 @@ interface Card02Props {
   acno: string;
   balance: number;
   pdnm: string;
+  nick: string;
+  newDt: string;
+  wtchPosbAmt: number;
+  psntInrt: number;
   nFunc?: (data?: DataSet) => void;
   showTradeHs? : boolean;
 }
@@ -83,7 +87,7 @@ interface Card02Props {
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ type, acno, balance, pdnm, nFunc, showTradeHs = true }: Card02Props) => {
+export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt, nFunc, showTradeHs = true }: Card02Props) => {
   
   return (
     <Card className="card-box">
@@ -98,7 +102,7 @@ export const Card02 = ({ type, acno, balance, pdnm, nFunc, showTradeHs = true }:
             onClick={() => 
               openBottomPopupWithMenu({
                 title: "계좌설정", 
-                param: new DataSet({ acno, type, pdnm, balance })
+                param: new DataSet({ acno, type, pdnm, balance, nick, newDt, wtchPosbAmt, psntInrt })
               })
             }
           >
