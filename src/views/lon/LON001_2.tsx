@@ -126,7 +126,7 @@ const LON001_2 = () => {
       title: "대출관련 보이스피싱 안내",
       nFunc: (data) => {
         if (data) {
-          doActionURL("/lon/LON002.view");  // 간편한도조회 페이지로 이동
+          doActionURL("/lon/LON002_1.view");  // 간편한도조회 페이지로 이동
         }
       },
     });
