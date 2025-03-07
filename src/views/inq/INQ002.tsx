@@ -1,5 +1,5 @@
 /**
- * @fileoverview [조회] 
+ * @fileoverview [조회] 거래내역조회
  *
  * @author 
  * @version 1.0.0
@@ -7,12 +7,11 @@
 
 import { Box, Typography } from "@mui/material";
 import { useEffect ,useState } from "react";
-
 import { GLog, doAction,makeForm, addFormData, getParameter } from '@assets/js/common';
 import { messageView } from "@src/components/Alert";
 import { progressBar } from "@src/components/Loading";
 import { Button01 } from "@src/components/Button";
-import { Card06 } from "@src/components/Card";
+import { Card02 } from "@src/components/Card";
 import DataSet from "@src/assets/io/DataSet";
 import POP003 from "@src/views/pop/POP003";
 import { openBottomPopup } from "@src/components/Popup";
@@ -171,12 +170,13 @@ const INQ002 = () => {
 
       {/* 계좌정보 */}
       
-        <Card06
+        <Card02
         key={accountData.acno}
         type={accountData.type}
         acno={accountData.acno}
         balance={Number(accountData.balance)}
         pdnm={accountData.pdnm}
+        showTradeHs={false}
       />
       
       
