@@ -7,6 +7,7 @@
 import { Stack, TextField, Typography } from "@mui/material";
 import DataSet from "@src/assets/io/DataSet";
 import getDate from "@src/assets/js/common_date";
+import { PopupViewProps } from "@src/assets/js/props/PopupViewProps";
 import { Box01, MainBox } from "@src/components/Box";
 import { Button01 } from "@src/components/Button";
 import { TextBox } from "@src/components/Input";
@@ -37,8 +38,7 @@ const tabItems3 = [
 
 
 
-const POP003 = ({ param, onClose }: { param: DataSet; onClose: (data?: DataSet) => void }) => {
-
+const POP003 = ({ param, onClose = () => {} }: PopupViewProps) => {
 
 
   // 탭 변경 시 이벤트
