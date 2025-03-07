@@ -11,7 +11,7 @@ import { addFormData, doAction, makeForm } from '@assets/js/common';
 import { BoxList } from "@src/components/Box";
 import { Box } from "@mui/material";
 import { Button01 } from "@src/components/Button";
-import { TextBox } from "@src/components/Input";
+import { TextBox } from "@src/components/InputType";
 import { progressBar } from "@src/components/Loading";
 import { Tab01 } from "@src/components/Tab";
 
