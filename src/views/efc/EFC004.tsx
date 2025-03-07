@@ -58,6 +58,8 @@ const EFC004 = () => {
   // 최초 진입시
   useEffect(() => {
 
+    GLog.d("param □■□■□■□■□■□■ " + param);
+
     // 로그인 여부 확인
     if(!IS_LOGIN()){
       messageView("로그인이 필요합니다.", "확인", () => navigate("/"));
