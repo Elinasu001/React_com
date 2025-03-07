@@ -379,7 +379,7 @@ export const Card05 = ({
 
             <Box className="card-info">
 
-              <Typography className="card-category deposit">
+              <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
                 {pd_kncd}
               </Typography>
 
