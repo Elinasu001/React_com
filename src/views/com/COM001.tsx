@@ -9,7 +9,7 @@ import DataSet from "@assets/io/DataSet";
 
 
 const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
-  const [telCdData, settelCdData] = useState<{ key: string; label: string }[]>([]); // 통신사코드리스트
+  const [telCdData, settelCdData] = useState<{ label: string; value: string; }[]>([]); // 통신사코드리스트
   const [selectedCarrier, setSelectedCarrier] = useState("");                       // 선택한통신사코드
   const [mblCtfcNo, setmblCtfcNo] = useState("");                                   // 인증번호
   const [showVerificationInput, setShowVerificationInput] = useState(false);        // 인증번호입력필드 상태값
@@ -71,8 +71,8 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
     const list = (resDs.data.getList('list') as { CD: string; CD_NM: string }[]) ?? [];
 
     const formattedList = list.map(item => ({
-      key: item.CD,
-      label: item.CD_NM
+      label: item.CD_NM,
+      value: item.CD
     }));
     settelCdData(formattedList);
    
@@ -175,7 +175,7 @@ const COM001 = ({ onClose }: { onClose: (data?: DataSet) => void }) => {
      <Box className="content">
     
           
-          <TextBox label="이름 입력" onChange={(e) => setCustNm(e.target.value)}  name="custNm" value={custNm}></TextBox>
+          <TextBox label="이름 입력" onChange={(e) => setCustNm(e.target.value)} value={custNm}></TextBox>
           <ResidentNumber label="주민등록번호 입력" firstValue={firstPart} secondValue={secondPart} 
               onFirstChange={(e) => setFirstPart(e.target.value)} onSecondChange={(e) => setSecondPart(e.target.value)}/>
 
