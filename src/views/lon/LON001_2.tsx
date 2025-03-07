@@ -47,7 +47,7 @@ const LON001_2 = () => {
   */
   const fetchLoanPrdDtail = async () => {
     //폼생성,데이터 주입
-    const form = makeForm("LON0000SC");
+    const form = makeForm("LON0001SC");
     addFormData(form, "txGbnCd", "S02");
     addFormData(form, "PRDCT_CD", param.getString("pdcd"));
 
