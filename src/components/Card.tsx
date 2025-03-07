@@ -298,7 +298,7 @@ export const Card03 = ({
 
           {/* 상품명 + 카테고리 */}
           <Box className="card-info">
-            <Typography className="card-category deposit">{/* .deposit : 예적금, .loan: 대출 :: 화면이 안보여서 예/적금 분류 필요 예시) Card05 */}
+            <Typography className="card-category loan">{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
               {categoty}
             </Typography>
 
@@ -379,12 +379,7 @@ export const Card05 = ({
 
             <Box className="card-info">
 
-              <Typography
-                //.loan: 대출, .deposit : 예적금
-                 className={`card-category ${
-                  pd_kncd === "예금" || pd_kncd === "적금" ? "deposit" : "loan"
-                }`}
-              >
+              <Typography className="card-category deposit">
                 {pd_kncd}
               </Typography>
 
