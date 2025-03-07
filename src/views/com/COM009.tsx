@@ -10,8 +10,8 @@ import { Box } from "@mui/material";
 import { GLog, doAction, makeForm, addFormData } from "@src/assets/js/common";
 import { progressBar } from "@src/components/Loading";
 import { BoxList } from "@src/components/Box";
-import { TextBox } from "@src/components/Input";
-import { Button01 } from "@src/components/Button";
+import { TextBox } from "@src/components/InputType";
+import { Button01, Button02, Button04 } from "@src/components/Button";
 import { messageView } from '@src/components/Alert';
 import DataSet from "@assets/io/DataSet";
 
