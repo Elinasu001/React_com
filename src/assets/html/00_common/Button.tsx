@@ -12,7 +12,7 @@ import { Box, Button } from '@mui/material';
 // btnName > name 으로 통일
 // 단일 버튼과 여러 개 버튼으로 나누어 사용 가능
 
-//버튼 속성
+// 버튼 속성 통일
 interface ButtonProps {
 
   // 단일 버튼용
@@ -30,7 +30,7 @@ interface ButtonProps {
   
 }
 
-
+// 컨텐츠 버튼 ex) 카드 내부 버튼, 일반 페이지 버튼
 export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps) => {
   
   // 버튼 개수 확인
@@ -39,15 +39,14 @@ export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps)
   return (
 
     /**
-     *
      * 적용 예시 )
      *
-     *  // 단일 버튼 사용 시
+      // 단일 버튼 사용 시
         <ButtonContent
           name="팝업 테스트"
         />
 
-        // 여러 개 버튼 사용 시
+      // 여러 개 버튼 사용 시
         <ButtonContent
             buttons={[
                 { name: "팝업 테스트 1"},
@@ -56,12 +55,11 @@ export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps)
             ]}
         />
       *
-      *
      **/
 
 
     // 컨텐츠
-    <Box className={`content-footer btn-count-${buttonCount}`}>
+    <Box className={`btn-area btn-count-${buttonCount}`}>
     {/* 여러 개 버튼이 있을 경우 배열을 사용 */}
       {buttons && buttons.length > 0 ? (
         buttons.map((btn, index) => (
@@ -89,6 +87,7 @@ export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps)
   );
 };
 
+// 컨텐츠 하단 버튼 ex) 팝업 하단 버튼, 일반 페이지 하단 버튼
 export const ButtonFooter = ({ name, onClick, disabled, buttons }: ButtonProps) => {
 
    // 버튼 개수 확인
@@ -97,7 +96,6 @@ export const ButtonFooter = ({ name, onClick, disabled, buttons }: ButtonProps) 
   return (
     
     /**
-     *
      * 적용 예시 )
      *
       // 단일 버튼 사용 시
@@ -113,7 +111,6 @@ export const ButtonFooter = ({ name, onClick, disabled, buttons }: ButtonProps) 
                 { name: "팝업 테스트 3"},
             ]}
         />
-     *
      *
      **/
 
