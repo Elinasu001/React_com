@@ -1,0 +1,4 @@
+.worklist-wrapper { 
+    display:flex; flex-direction: column; gap:10px;
+    > button { border:1px solid #3486c9; padding:10px !important;  color:#446c8d; }
+}
