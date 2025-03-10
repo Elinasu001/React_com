@@ -71,9 +71,16 @@ import HTML_Footer from "@src/assets/html/00_common/Footer";
 import HTML_Header from "@src/assets/html/00_common/Header";
 import HTML_Layout from "@src/assets/html/00_common/Layout";
 import HTML_Menu from "@src/assets/html/00_common/Menu";
+import HTML_Accordion_page from "@src/assets/html/00_common_page/Accordion_page";
 import HTML_Alert_page from "@src/assets/html/00_common_page/Alert_page";
 import HTML_Button_page from "@src/assets/html/00_common_page/Button_page";
+import HTML_Card_page from "@src/assets/html/00_common_page/Card_page";
+import HTML_Input_page from "@src/assets/html/00_common_page/Input_page";
+import HTML_List_page from "@src/assets/html/00_common_page/List_page";
 import HTML_Popup_page from "@src/assets/html/00_common_page/Popup_page";
+import HTML_SelectBox_page from "@src/assets/html/00_common_page/SelectBox_page";
+import HTML_SelectPopup_page from "@src/assets/html/00_common_page/SelectPopup_page";
+import HTML_Tab_page from "@src/assets/html/00_common_page/Tab_page";
 import HTML_Text_page from "@src/assets/html/00_common_page/Text_page";
 import HTML_MAIN000 from "@src/assets/html/00_main/MAIN000";
 import HTML_MAIN001 from "@src/assets/html/00_main/MAIN001";
@@ -290,7 +297,15 @@ const App = () => {
           <Route path="Popup_page.html" element={<HTML_Popup_page />} />
           <Route path="Button_page.html" element={<HTML_Button_page />} />
           <Route path="Alert_page.html" element={<HTML_Alert_page />} />
+          <Route path="Input_page.html" element={<HTML_Input_page />} />
+          <Route path="Accordion_page.html" element={<HTML_Accordion_page />} />
+          <Route path="List_page.html" element={<HTML_List_page />} />
+          <Route path="Card_page.html" element={<HTML_Card_page />} />
+          <Route path="SelectPopup_page.html" element={<HTML_SelectPopup_page />} />
+          <Route path="SelectBox_page.html" element={<HTML_SelectBox_page />} />
+          <Route path="Tab_page.html" element={<HTML_Tab_page />} />
           <Route path="Worklist.html" element={<HTML_Worklist />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>
