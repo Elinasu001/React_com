@@ -9,7 +9,7 @@
 // 팝업 내부 임시 iframe
 .popup-iframe { width: 100%; height: 100%; border: none;}
 //임시 패딩
-.btn-area { padding-top:20px; }
+// .btn-area { padding-top:20px; }
 // 임시 버튼
 .btn-area, .content-footer {
     .btn {
@@ -18,6 +18,14 @@
         //라인
         &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
     }
+}
+//임시 컴포넌트 레이아웃
+.exp { 
+    display: flex; align-items: center; padding:20px !important; text-align: center; color:var(--color-75) !important; font-size: var(--font16); font-weight: var(--font-w-b) !important;
+    &::before,
+    &::after { content: ""; flex:1; border:1px solid var(--color-d);  }
+    &::before { margin-right:30px;}
+    &::after { margin-left:30px;}
 }
 
 /*---------------------------------------------

@@ -1,5 +1,5 @@
 // 상대 경로를 사용하는 경우
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ButtonContent, ButtonFooter } from "@src/assets/html/00_common/Button";
 import { openBottomPopup, openFullPopup, openPopup } from "@src/assets/html/00_common/Popup";
 
@@ -42,17 +42,21 @@ const Popup_page = () => {
             ]}
         /> */}
 
+        <Typography className="exp">바텀시트 팝업</Typography>
 
         <ButtonContent
             name="BottomSheetPopup"
             onClick={() => { openBottomPopup({ component: PopupContent, title: '바텀 팝업 타이틀'}); }}
         />
 
+        <Typography className="exp">풀팝업</Typography>
 
         <ButtonContent
             name="FullPopup"
             onClick={() => { openFullPopup({ component: PopupContent, title: '풀팝업 타이틀'}); }}
         />
+
+        <Typography className="exp">오픈팝업</Typography>
 
         <ButtonContent
             name="OpenPopup"

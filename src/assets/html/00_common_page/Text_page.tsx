@@ -1,10 +1,13 @@
 
+import { Typography } from "@mui/material";
 import { ContentTitle } from "@src/assets/html/00_common/Text";
 import { InfoList } from "@src/assets/html/00_common/Textlist";
 
 const Button_page = () => {
   return (
     <>
+      <Typography className="exp">컨텐츠 상단 타이틀</Typography>
+
       {/* 컨텐츠 상단 타이틀 */}
       <ContentTitle
           title={
@@ -16,6 +19,8 @@ const Button_page = () => {
           }
       />
 
+      <Typography className="exp">정보 리스트</Typography>
+
       {/* 정보 */}
       <InfoList
         title="보안카드 입력 안내"
@@ -26,7 +31,7 @@ const Button_page = () => {
         listIcon={true}
         hideTitle={true} // titleIcon 사용시 삭제
       />
-
+      <Typography className="exp">정보 리스트 - 타이틀</Typography>
       {/* 정보 - 타이틀 있을 경우 */}
       <InfoList
         title="보안카드 입력 안내"

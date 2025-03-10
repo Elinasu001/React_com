@@ -1,11 +1,13 @@
 // 상대 경로를 사용하는 경우
+import { Typography } from "@mui/material";
 import { messageView } from "@src/assets/html/00_common/Alert";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
 
 const Alert_page = () => {
   return (
     <>
-        
+        <Typography className="exp">알럿 버튼 1개</Typography>
+
         <ButtonContent
             buttons={[
                 {
@@ -21,6 +23,7 @@ const Alert_page = () => {
             ]}
         />
 
+        <Typography className="exp">알럿 버튼 2개</Typography>
 
         <ButtonContent
             buttons={[

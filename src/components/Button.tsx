@@ -52,7 +52,7 @@ export const Button01 = ({ btnName, clickFunc }: ButtonProps) => {
   return (
 
     // 컨텐츠
-    <Box className="btn-area gap10">
+    <Box className="btn-area" sx={{paddingTop:"20px"}}>
       {/* primary 버튼 */}
       <Button className="btn btn-primary"  variant="contained" onClick={clickFunc}>
         {btnName}

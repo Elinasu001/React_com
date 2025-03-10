@@ -1,14 +1,16 @@
 // 상대 경로를 사용하는 경우
+import { Typography } from "@mui/material";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
-
 const Button_page = () => {
   return (
     <>
-        
+        <Typography className="exp">버튼 1개일 경우</Typography>
+
         <ButtonContent
             name="버튼 1개"
         />
 
+        <Typography className="exp">버튼 2개일 경우</Typography>
 
         <ButtonContent
             buttons={[
@@ -17,6 +19,8 @@ const Button_page = () => {
             ]}
         />
 
+        <Typography className="exp">버튼 3개일 경우</Typography>
+
         <ButtonContent
             buttons={[
                 { name: "버튼 3개"},
@@ -25,15 +29,19 @@ const Button_page = () => {
             ]}
         />
 
+        <Typography className="exp">Disabled</Typography>
+
         <ButtonContent
-            name="버튼 1개"
+            name="Disabled"
             disabled={true}
         />
+        
+        <Typography className="exp">Disabled</Typography>
 
         <ButtonContent
             buttons={[
-                { name: "DISABLED", disabled:true},
-                { name: "DISABLED", disabled:true},
+                { name: "Disabled", disabled:true},
+                { name: "Disabled", disabled:true},
             ]}
         />
         
