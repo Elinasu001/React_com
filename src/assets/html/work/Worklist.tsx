@@ -17,46 +17,46 @@ const Worklist = () => {
     // 현재 링크는 컴포넌트를 불러오는 화면입니다.
     <Box className="worklist-wrapper">
        <Button onClick={() => navigate("/html/Layout.html")}>
-        Layout_NoButton
+        Layout_NoButton - 차장님
       </Button>
       <Button onClick={() => navigate("/html/Layout.html")}>
-        Layout_hasNav
+        Layout_hasNav - 차장님
       </Button>
       <Button onClick={() => navigate("/html/Layout.html")}>
-        Layout_hasButton
+        Layout_hasButton - 차장님
       </Button>
       <Button onClick={() => navigate("/html/Popup_page.html")}>
-        Popup
+        Popup - 박수현
       </Button>
       <Button onClick={() => navigate("/html/Alert_page.html")}>
-        Alert
+        Alert - 박수현
       </Button>
       <Button onClick={() => navigate("/html/SelectPopup_page.html")}>
-        SelectPopup
+        SelectPopup - 차장님
       </Button>
       <Button onClick={() => navigate("/html/Input_page.html")}>
-        Input
+        Input - 차장님
       </Button>
       <Button onClick={() => navigate("/html/SelectBox_page.html")}>
-        SelectBox
+        SelectBox - 차장님
       </Button>
       <Button onClick={() => navigate("/html/Button_page.html")}>
-        Button
+        Button - 박수현
       </Button>
       <Button onClick={() => navigate("/html/Accordion_page.html")}>
-        Accordion
+        Accordion - 박수현
       </Button>
       <Button onClick={() => navigate("/html/Tab_page.html")}>
-        Tab
+        Tab - 박수현
       </Button>
       <Button onClick={() => navigate("/html/List_page.html")}>
-        List
+        List - 박수현
       </Button>
       <Button onClick={() => navigate("/html/Card_page.html")}>
-        Card
+        Card - 박수현
       </Button>
       <Button onClick={() => navigate("/html/Text_page.html")}>
-        Text
+        Text - 박수현
       </Button>
       
     </Box>
