@@ -71,6 +71,7 @@ import HTML_Footer from "@src/assets/html/00_common/Footer";
 import HTML_Header from "@src/assets/html/00_common/Header";
 import HTML_Layout from "@src/assets/html/00_common/Layout";
 import HTML_Menu from "@src/assets/html/00_common/Menu";
+import HTML_Alert_page from "@src/assets/html/00_common_page/Alert_page";
 import HTML_Button_page from "@src/assets/html/00_common_page/Button_page";
 import HTML_Popup_page from "@src/assets/html/00_common_page/Popup_page";
 import HTML_Text_page from "@src/assets/html/00_common_page/Text_page";
@@ -288,6 +289,7 @@ const App = () => {
           <Route path="Text_page.html" element={<HTML_Text_page />} />
           <Route path="Popup_page.html" element={<HTML_Popup_page />} />
           <Route path="Button_page.html" element={<HTML_Button_page />} />
+          <Route path="Alert_page.html" element={<HTML_Alert_page />} />
           <Route path="Worklist.html" element={<HTML_Worklist />} />
         </Route>
       </Routes>

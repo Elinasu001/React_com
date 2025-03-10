@@ -103,9 +103,12 @@
     // 모달&알럿
     &.modal { flex-direction:initial;  align-items: end; z-index:9999; background-color: var(--dim);
         .pop-body {  width:100%; height:auto; padding:0; border-radius: 16px; margin:20px;
-            p { padding:30px 20px 15px 20px; text-align: center;font-size: var(--font16); font-weight: var(--font-w-r); }
+            p { padding:30px 20px 15px 20px; text-align: center;font-size: var(--font16); font-weight: var(--font-w-m); color:var(--color-2); }
         }
-        .btn{ height:54px; }
+        .content-footer{
+            padding:20px;
+            .btn {height:48px; }
+        }
     }
 
   }
