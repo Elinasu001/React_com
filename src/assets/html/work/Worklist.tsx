@@ -11,15 +11,10 @@ import { useNavigate } from "react-router-dom";
 const Worklist = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    // App.tsx에 정의된 라우트 경로로 이동
-    navigate("/html/Layout.html");
-  };
-
   return (
-    <Button onClick={handleClick}>
-      test
-    </Button>
+    <>
+      <Button onClick={() => navigate("/html/Layout.html")}>Layout</Button>
+    </>
   );
 };
 
