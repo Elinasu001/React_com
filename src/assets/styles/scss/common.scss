@@ -105,47 +105,66 @@
     &:disabled { color:var(--btn-disabled-txt) !important; background-color: var(--btn-disabled) !important; }
 }
 
-// 컨텐츠 버튼 높이 및 폰트
-.btn-area {
-    gap:10px; 
-    .btn{ @include mixin.flex-center; height:48px; font-size: var(--font16); }
-}
 
-// 컨텐츠 하단 버튼, 팝업 하단 높이 및 폰트
-.content-footer,
-.popup-footer {
-    gap:10px;
-    .btn { height:58px; font-size: var(--font18); }
-}
 
-// 컨텐츠 버튼, 컨텐츠 하단, 팝업 하단 스타일 공통 적용
 .btn-area,
-.content-footer,
-.popup-footer {
+.content-footer {
+    
+
+    // 버튼이 1개일 때
+    &.btn-count-1 {
+        .btn:nth-of-type(1) { background-color: var(--btn-con-primary); color: var(--white); }
+    }
+
+    // 버튼이 2개일 때
+    &.btn-count-2 {
+        .btn:nth-of-type(1) { background-color: var(--white); border: 1px solid var(--btn-line); }
+        .btn:nth-of-type(2) { background-color: var(--btn-con-primary); color: var(--white); }
+    }
+
+    // 버튼이 3개일 때
+    &.btn-count-3 {
+        .btn:nth-of-type(1) { background-color: var(--btn-con-secondary); }
+        .btn:nth-of-type(2) { background-color: var(--btn-con-primary); color: var(--white); }
+        .btn:nth-of-type(3) { background-color: var(--white); border: 1px solid var(--btn-line); }
+    }
+
+}
+
+// 컨텐츠 버튼 높이 및 폰트
+.btn-area .btn{ height:48px; font-size: var(--font16); }
+
+// 컨텐츠 하단 버튼 높이 및 폰트
+.content-footer .btn { height:58px; font-size: var(--font18); }
+
+// 컨텐츠 버튼, 컨텐츠 하단 스타일 공통 적용
+.btn-area,
+.content-footer {
+    gap:10px;
     @include mixin.flex-center;
-    .btn{  border-radius: 29px; color:var(--btn-txt); }
+    .btn{ @include mixin.flex-center; border-radius: 29px; color:var(--btn-txt); }
 }
 
 // 컨텐츠 버튼 스타일 적용
-.btn-area {
-    .btn {
-        &.btn-primary { background-color: var(--btn-con-primary); color: var(--white); }
-        &.btn-secondary { background-color: var(--btn-con-secondary); }
-        //라인
-        &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
-    }
-}
+// .btn-area {
+//     .btn {
+//         &.btn-primary { background-color: var(--btn-con-primary); color: var(--white); }
+//         &.btn-secondary { background-color: var(--btn-con-secondary); }
+//         //라인
+//         &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
+//     }
+// }
 
 //컨텐츠 하단, 팝업 하단 버튼 스타일 공통 적용
-.content-footer,
-.popup-footer {
-    .btn {
-        &.btn-primary { background-color: var(--btn-primary); color: var(--white); }
-        &.btn-secondary { background-color: var(--btn-secondary); }
-        //라인
-        &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
-    }
-}
+// .content-footer,
+// .popup-footer {
+//     .btn {
+//         &.btn-primary { background-color: var(--btn-primary); color: var(--white); }
+//         &.btn-secondary { background-color: var(--btn-secondary); }
+//         //라인
+//         &.btn-outlined { background-color: var(--white); border:1px solid var(--btn-line); }
+//     }
+// }
 
 /*---------------------------------------------
    #탭 [Type: line[default], bg, style]

@@ -71,6 +71,7 @@ import HTML_Footer from "@src/assets/html/00_common/Footer";
 import HTML_Header from "@src/assets/html/00_common/Header";
 import HTML_Layout from "@src/assets/html/00_common/Layout";
 import HTML_Menu from "@src/assets/html/00_common/Menu";
+import HTML_Popup_page from "@src/assets/html/00_common_page/Popup_page";
 import HTML_MAIN000 from "@src/assets/html/00_main/MAIN000";
 import HTML_MAIN001 from "@src/assets/html/00_main/MAIN001";
 import HTML_POP001 from "@src/assets/html/00_pop/POP001";
@@ -282,6 +283,7 @@ const App = () => {
           <Route path="Layout.html" element={<HTML_Layout />} />
           <Route path="Header.html" element={<HTML_Header />} />
           <Route path="Menu.html" element={<HTML_Menu />} />
+          <Route path="Popup_page.html" element={<HTML_Popup_page />} />
           <Route path="Worklist.html" element={<HTML_Worklist />} />
         </Route>
       </Routes>
