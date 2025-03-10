@@ -55,8 +55,8 @@ const Worklist = () => {
       <Button onClick={() => navigate("/html/Card_page.html")}>
         Card
       </Button>
-      <Button onClick={() => navigate("/html/Textlist_page.html")}>
-        Textlist
+      <Button onClick={() => navigate("/html/Text_page.html")}>
+        Text
       </Button>
       
     </Box>
