@@ -83,7 +83,7 @@ export function messageView(
 
       
           {/* 버튼 영역 */}
-          <Box className="popup-footer gap10">
+          <Box className="btn-area">
             {!fBtn ? (
               // fBtn이 없으면 단일 버튼만 표시
                 <Button  className="btn btn-primary" onClick={handleConfirm}>

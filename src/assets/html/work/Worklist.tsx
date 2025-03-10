@@ -28,11 +28,11 @@ const Worklist = () => {
       <Button onClick={() => navigate("/html/Popup_page.html")}>
         Popup
       </Button>
-      <Button onClick={() => navigate("/html/SelectPopup_page.html")}>
-        SelectPopup
-      </Button>
       <Button onClick={() => navigate("/html/Alert_page.html")}>
         Alert
+      </Button>
+      <Button onClick={() => navigate("/html/SelectPopup_page.html")}>
+        SelectPopup
       </Button>
       <Button onClick={() => navigate("/html/Input_page.html")}>
         Input
