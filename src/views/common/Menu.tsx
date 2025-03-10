@@ -7,10 +7,10 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import HomeIcon from "@mui/icons-material/Home";
 import CodeIcon from "@mui/icons-material/Code";
-import { doActionURL, doActionView } from "@src/assets/js/common";
+import HomeIcon from "@mui/icons-material/Home";
 import DataSet from "@src/assets/io/DataSet";
+import { doActionURL, doActionView } from "@src/assets/js/common";
 
 const Menu = ({ open, onClose }: {
   open: boolean;
@@ -30,6 +30,7 @@ const Menu = ({ open, onClose }: {
     { text: "예적금(DEP)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "dep"},
     { text: "대출(LON)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "lon"},
     { text: "뱅킹관리(EFC)", icon: <CodeIcon />, path: "/BankingTest.view", txGbnCd: "efc"},
+    { text: "UI", icon: <CodeIcon />, path: "/Worklist.view", txGbnCd: ""},
   ];
 
   return (

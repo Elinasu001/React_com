@@ -5,11 +5,11 @@
  * @version 1.0.0
  */
 
-import { Box } from "@mui/material";
+import { Button } from "@mui/material";
 
 const Layout = () => {
   return (
-    <Box></Box>
+    <Button>test</Button>
   );
 };
 

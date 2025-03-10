@@ -1,16 +1,16 @@
 // src/App.tsx
-import {Routes,Route,BrowserRouter} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // [메인]
+import BankingTest from "@src/views/test/BankingTest";
+import CheckboxUI from "@src/views/test/CheckboxUI";
+import InputTest from "@src/views/test/InputTest";
+import InputUI from "@src/views/test/InputUI";
+import NativeTest from "@src/views/test/NativeTest";
+import Test from "@src/views/test/Test";
 import Layout from "@views/common/Layout";
 import Main from "@views/Main";
 import Mybanking from "@views/Mybanking";
-import NativeTest from "@src/views/test/NativeTest";
-import Test from "@src/views/test/Test";
-import BankingTest from "@src/views/test/BankingTest";
-import InputTest from "@src/views/test/InputTest";
-import InputUI from "@src/views/test/InputUI";
-import CheckboxUI from "@src/views/test/CheckboxUI";  
 
 // INQ[조회]
 import INQ001 from "@src/views/inq/INQ001";
@@ -67,68 +67,69 @@ import EFC014 from "@src/views/efc/EFC014";
 
 
 //원본
-import HTML_COM008 from "@src/assets/html/01_com/COM008";
-import HTML_COM009 from "@src/assets/html/01_com/COM009";
-import HTML_COM007 from "@src/assets/html/01_com/COM007";
-import HTML_COM004_1 from "@src/assets/html/01_com/COM004_1";
-import HTML_COM006 from "@src/assets/html/01_com/COM006";
-import HTML_COM012 from "@src/assets/html/01_com/COM012";
-import HTML_COM010 from "@src/assets/html/01_com/COM010";
-import HTML_COM004_2 from "@src/assets/html/01_com/COM004_2";
-import HTML_COM011 from "@src/assets/html/01_com/COM011";
-import HTML_COM005 from "@src/assets/html/01_com/COM005";
+import HTML_Footer from "@src/assets/html/00_common/Footer";
+import HTML_Header from "@src/assets/html/00_common/Header";
+import HTML_Layout from "@src/assets/html/00_common/Layout";
+import HTML_Menu from "@src/assets/html/00_common/Menu";
+import HTML_MAIN000 from "@src/assets/html/00_main/MAIN000";
+import HTML_MAIN001 from "@src/assets/html/00_main/MAIN001";
+import HTML_POP001 from "@src/assets/html/00_pop/POP001";
+import HTML_POP002 from "@src/assets/html/00_pop/POP002";
+import HTML_POP003 from "@src/assets/html/00_pop/POP003";
 import HTML_COM001 from "@src/assets/html/01_com/COM001";
 import HTML_COM002 from "@src/assets/html/01_com/COM002";
 import HTML_COM003 from "@src/assets/html/01_com/COM003";
-import HTML_MAIN000 from "@src/assets/html/00_main/MAIN000";
-import HTML_MAIN001 from "@src/assets/html/00_main/MAIN001";
-import HTML_LON009 from "@src/assets/html/05_lon/LON009";
+import HTML_COM004_1 from "@src/assets/html/01_com/COM004_1";
+import HTML_COM004_2 from "@src/assets/html/01_com/COM004_2";
+import HTML_COM005 from "@src/assets/html/01_com/COM005";
+import HTML_COM006 from "@src/assets/html/01_com/COM006";
+import HTML_COM007 from "@src/assets/html/01_com/COM007";
+import HTML_COM008 from "@src/assets/html/01_com/COM008";
+import HTML_COM009 from "@src/assets/html/01_com/COM009";
+import HTML_COM010 from "@src/assets/html/01_com/COM010";
+import HTML_COM011 from "@src/assets/html/01_com/COM011";
+import HTML_COM012 from "@src/assets/html/01_com/COM012";
+import HTML_INQ001 from "@src/assets/html/02_inq/INQ001";
+import HTML_INQ002 from "@src/assets/html/02_inq/INQ002";
+import HTML_TNF001 from "@src/assets/html/03_tnf/TNF001";
+import HTML_TNF002 from "@src/assets/html/03_tnf/TNF002";
+import HTML_TNF003 from "@src/assets/html/03_tnf/TNF003";
+import HTML_TNF004 from "@src/assets/html/03_tnf/TNF004";
+import HTML_TNF005 from "@src/assets/html/03_tnf/TNF005";
+import HTML_DEP001 from "@src/assets/html/04_dep/DEP001";
+import HTML_DEP002 from "@src/assets/html/04_dep/DEP002";
+import HTML_DEP003 from "@src/assets/html/04_dep/DEP003";
+import HTML_DEP004 from "@src/assets/html/04_dep/DEP004";
+import HTML_DEP005 from "@src/assets/html/04_dep/DEP005";
+import HTML_DEP006 from "@src/assets/html/04_dep/DEP006";
 import HTML_LON001_1 from "@src/assets/html/05_lon/LON001_1";
-import HTML_LON008 from "@src/assets/html/05_lon/LON008";
 import HTML_LON001_2 from "@src/assets/html/05_lon/LON001_2";
 import HTML_LON001_3 from "@src/assets/html/05_lon/LON001_3";
 import HTML_LON002_1 from "@src/assets/html/05_lon/LON002_1";
 import HTML_LON002_2 from "@src/assets/html/05_lon/LON002_2";
 import HTML_LON003 from "@src/assets/html/05_lon/LON003";
+import HTML_LON004 from "@src/assets/html/05_lon/LON004";
+import HTML_LON005 from "@src/assets/html/05_lon/LON005";
 import HTML_LON006 from "@src/assets/html/05_lon/LON006";
 import HTML_LON007 from "@src/assets/html/05_lon/LON007";
-import HTML_LON005 from "@src/assets/html/05_lon/LON005";
-import HTML_LON004 from "@src/assets/html/05_lon/LON004";
-import HTML_DEP005 from "@src/assets/html/04_dep/DEP005";
-import HTML_DEP004 from "@src/assets/html/04_dep/DEP004";
-import HTML_DEP006 from "@src/assets/html/04_dep/DEP006";
-import HTML_DEP003 from "@src/assets/html/04_dep/DEP003";
-import HTML_DEP002 from "@src/assets/html/04_dep/DEP002";
-import HTML_DEP001 from "@src/assets/html/04_dep/DEP001";
-import HTML_EFC008 from "@src/assets/html/06_efc/EFC008";
-import HTML_EFC009 from "@src/assets/html/06_efc/EFC009";
-import HTML_EFC007 from "@src/assets/html/06_efc/EFC007";
-import HTML_EFC013 from "@src/assets/html/06_efc/EFC013";
-import HTML_EFC012 from "@src/assets/html/06_efc/EFC012";
-import HTML_EFC006 from "@src/assets/html/06_efc/EFC006";
-import HTML_EFC010 from "@src/assets/html/06_efc/EFC010";
-import HTML_EFC004 from "@src/assets/html/06_efc/EFC004";
-import HTML_EFC008_1 from "@src/assets/html/06_efc/EFC008_1";
-import HTML_EFC005 from "@src/assets/html/06_efc/EFC005";
-import HTML_EFC011 from "@src/assets/html/06_efc/EFC011";
+import HTML_LON008 from "@src/assets/html/05_lon/LON008";
+import HTML_LON009 from "@src/assets/html/05_lon/LON009";
 import HTML_EFC001 from "@src/assets/html/06_efc/EFC001";
-import HTML_EFC014 from "@src/assets/html/06_efc/EFC014";
 import HTML_EFC002 from "@src/assets/html/06_efc/EFC002";
 import HTML_EFC003 from "@src/assets/html/06_efc/EFC003";
-import HTML_TNF001 from "@src/assets/html/03_tnf/TNF001";
-import HTML_TNF003 from "@src/assets/html/03_tnf/TNF003";
-import HTML_TNF002 from "@src/assets/html/03_tnf/TNF002";
-import HTML_TNF005 from "@src/assets/html/03_tnf/TNF005";
-import HTML_TNF004 from "@src/assets/html/03_tnf/TNF004";
-import HTML_INQ001 from "@src/assets/html/02_inq/INQ001";
-import HTML_INQ002 from "@src/assets/html/02_inq/INQ002";
-import HTML_POP002 from "@src/assets/html/00_pop/POP002";
-import HTML_POP003 from "@src/assets/html/00_pop/POP003";
-import HTML_POP001 from "@src/assets/html/00_pop/POP001";
-import HTML_Footer from "@src/assets/html/00_common/Footer";
-import HTML_Layout from "@src/assets/html/00_common/Layout";
-import HTML_Header from "@src/assets/html/00_common/Header";
-import HTML_Menu from "@src/assets/html/00_common/Menu";
+import HTML_EFC004 from "@src/assets/html/06_efc/EFC004";
+import HTML_EFC005 from "@src/assets/html/06_efc/EFC005";
+import HTML_EFC006 from "@src/assets/html/06_efc/EFC006";
+import HTML_EFC007 from "@src/assets/html/06_efc/EFC007";
+import HTML_EFC008 from "@src/assets/html/06_efc/EFC008";
+import HTML_EFC008_1 from "@src/assets/html/06_efc/EFC008_1";
+import HTML_EFC009 from "@src/assets/html/06_efc/EFC009";
+import HTML_EFC010 from "@src/assets/html/06_efc/EFC010";
+import HTML_EFC011 from "@src/assets/html/06_efc/EFC011";
+import HTML_EFC012 from "@src/assets/html/06_efc/EFC012";
+import HTML_EFC013 from "@src/assets/html/06_efc/EFC013";
+import HTML_EFC014 from "@src/assets/html/06_efc/EFC014";
+import HTML_Worklist from "@src/assets/html/work/Worklist";
 
 
 
@@ -151,7 +152,7 @@ const App = () => {
           <Route path="inputTest.view" element={<InputTest />} />
           <Route path="inputUI.view" element={<InputUI />} />
           <Route path="CheckboxUI.view" element={<CheckboxUI />} />
-
+          <Route path="Worklist.view" element={<HTML_Worklist />} />
         </Route>
 
         {/* 조회 페이지 라우트 */}
@@ -281,6 +282,7 @@ const App = () => {
           <Route path="Layout.html" element={<HTML_Layout />} />
           <Route path="Header.html" element={<HTML_Header />} />
           <Route path="Menu.html" element={<HTML_Menu />} />
+          <Route path="Worklist.html" element={<HTML_Worklist />} />
         </Route>
       </Routes>
     </BrowserRouter>
