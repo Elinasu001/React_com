@@ -7,7 +7,7 @@
 
 import { Box } from "@mui/material";
 
-const SelectPopup = () => {
+export const SelectPopup = () => {
   return (
     <Box></Box>
   );

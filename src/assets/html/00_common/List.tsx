@@ -7,7 +7,7 @@
 
 import { Box } from "@mui/material";
 
-const List = () => {
+export const List = () => {
   return (
     <Box></Box>
   );

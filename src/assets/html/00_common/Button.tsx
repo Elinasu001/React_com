@@ -146,4 +146,4 @@ export const ButtonFooter = ({ name, onClick, disabled, buttons }: ButtonProps) 
 };
 
 
-export default { ButtonContent };
+export default { ButtonContent, ButtonFooter };

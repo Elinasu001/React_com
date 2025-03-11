@@ -7,7 +7,7 @@
 
 import { Box } from "@mui/material";
 
-const Menu = () => {
+export const Menu = () => {
   return (
     <Box></Box>
   );
