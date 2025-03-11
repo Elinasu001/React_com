@@ -1,15 +1,16 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, Typography } from "@mui/material";
-
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
+import { ButtonContent } from "@src/assets/html/00_common/Button";
 
 interface AccordionItemProps {
   title: string;
   content: string;
-  hasActions?: boolean;
-  defaultExpanded?: boolean;
+  hasActions?: boolean; // 버튼이 있는지 여부
+  defaultExpanded?: boolean; // 기본으로 열려있는지 여부
+  buttons?: { name: string; onClick?: () => void; disabled?: boolean }[];
 }
 
-export const AccordionItem = ({ title, content, hasActions = false, defaultExpanded = false }: AccordionItemProps) => {
+export const AccordionItem = ({ title, content, hasActions = false, defaultExpanded = false, buttons }: AccordionItemProps) => {
   return (
     <Accordion defaultExpanded={defaultExpanded}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`${title}-content`} id={`${title}-header`}>
@@ -18,27 +19,22 @@ export const AccordionItem = ({ title, content, hasActions = false, defaultExpan
       <AccordionDetails>
         {content}
       </AccordionDetails>
-      {hasActions && (
-        <AccordionActions>
-          <Button>Cancel</Button>
-          <Button>Agree</Button>
-        </AccordionActions>
+      {hasActions && buttons && buttons.length > 0 && (
+        <ButtonContent buttons={buttons} />
       )}
     </Accordion>
   );
 };
 
+// 데이터는 이제 props로 받을 수 있도록 변경!
+interface AccordionListProps {
+  data: AccordionItemProps[];
+}
 
-const accordionData = [
-  { title: "Accordion 1", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
-  { title: "Accordion 2", content: "Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget." },
-  { title: "Accordion Actions", content: "Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.", hasActions: true, defaultExpanded: true }
-];
-
-export const AccordionList = () => {
+export const AccordionList = ({ data }: AccordionListProps) => {
   return (
     <Box className="accordion-wrap">
-      {accordionData.map((item, index) => (
+      {data.map((item, index) => (
         <AccordionItem key={index} {...item} />
       ))}
     </Box>
