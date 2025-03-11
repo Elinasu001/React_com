@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import NestedCheckbox from '@src/components/checkbox';
-import { Box, Checkbox } from '@mui/material';
+import { NestedCheckbox, BasicCheckbox } from '@src/components/checkbox';
+import { Box } from '@mui/material';
 
 type CheckboxItem = {
   id: string;
@@ -11,26 +11,26 @@ type CheckboxItem = {
 
 const initialCheckboxData: CheckboxItem = {
   id: 'parent',
-  label: 'Parent',
+  label: '약관전체보기',
   checked: false,
   children: [
     {
-      id: 'child1',
-      label: 'Child 1',
+      id: 'child1-1',
+      label: '약관1',
       checked: false,
       children: [
-        { id: 'child1-1', label: 'Child 1-1', checked: false },
-        { id: 'child1-2', label: 'Child 1-2', checked: false },
-        {
-          id: 'child1-3',
-          label: 'Child 1-3',
+        { id: 'child1-1-1', label: '약관1-1', checked: false },
+        { id: 'child1-1-2', label: '약관1-2', checked: false },
+        /*{
+          id: 'child1-1-3',
+          label: '약관3',
           checked: false,
           children: [
-            { id: 'child1-3-1', label: 'Child 1-3-1', checked: false },
-            { id: 'child1-3-2', label: 'Child 1-3-2', checked: false },
-            { id: 'child1-3-3', label: 'Child 1-3-3', checked: false },
+            { id: 'child1-3-1', label: '약관3-1', checked: false },
+            { id: 'child1-3-2', label: '약관3-2', checked: false },
+            { id: 'child1-3-3', label: '약관3-3', checked: false },
           ],
-        },
+        },*/
       ],
     },
     { id: 'child2', label: 'Child 2', checked: false },
@@ -47,12 +47,13 @@ export default function CheckboxExample() {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', gap: 3 }}>
-        <Checkbox label="Label" />
-        <Checkbox label="Label" defaultChecked />
+      <Box>
+        <BasicCheckbox label="CheckBox" />
+        <BasicCheckbox label="CheckBox(Chcekd)" defaultChecked />
+        <BasicCheckbox label="CheckBox(disabled)" disabled />
       </Box>
       
-      <Box sx={{ p: 2 }}>
+      <Box>
         <NestedCheckbox item={checkboxData} onChange={handleChange} />
       </Box>
     </Box>

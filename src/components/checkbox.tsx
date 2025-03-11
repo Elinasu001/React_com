@@ -11,6 +11,42 @@ interface CheckboxItem {
   children?: CheckboxItem[];
 }
 
+interface CheckboxProps {
+  label?: string;
+  checked?: boolean;
+  defaultChecked?: boolean;
+  indeterminate?: boolean;
+  disabled?: boolean;
+  disabledIcon?: boolean;
+  onChange?: (checked: boolean) => void;
+}
+
+/** ✅ 공통 체크박스 컴포넌트 */
+const CustomCheckbox = ({ label, checked, defaultChecked, indeterminate, disabled, onChange }: CheckboxProps) => {
+  return (
+    <FormControlLabel 
+      className={`basic-check ${checked ? 'checked' : ''}`}
+      control={
+        <Checkbox
+          checked={checked}
+          defaultChecked={defaultChecked}
+          indeterminate={indeterminate}
+          disabled={disabled}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange?.(e.target.checked)}
+          icon={<span className="checkbox-icon" />}
+          checkedIcon={<span className="checkbox-icon checked" />}
+          indeterminateIcon={<span className="checkbox-icon indeterminate" />}
+          disabledIcon={disabled ? <span className="checkbox-icon disabled" /> : undefined}
+        />
+      }
+      label={label || ''}
+    />
+  );
+};
+
+/** ✅ 베이직 */
+const BasicCheckbox = (props: CheckboxProps) => <CustomCheckbox {...props} />;
+
 interface NestedCheckboxProps {
   item: CheckboxItem;
   onChange: (updatedItem: CheckboxItem) => void;
@@ -18,11 +54,11 @@ interface NestedCheckboxProps {
   isTopLevel?: boolean;
 }
 
+/** ✅ 중첩 체크박스 */
 const NestedCheckbox: React.FC<NestedCheckboxProps> = ({ item, onChange, level = 0, isTopLevel = true }) => {
   const hasChildren = item.children && item.children.length > 0;
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newChecked = event.target.checked;
+  const handleChange = (newChecked: boolean) => {
     const updateCheckboxState = (item: CheckboxItem): CheckboxItem => ({
       ...item,
       checked: newChecked,
@@ -36,9 +72,8 @@ const NestedCheckbox: React.FC<NestedCheckboxProps> = ({ item, onChange, level =
 
     const newChildren = [...item.children];
     newChildren[childIndex] = updatedChild;
-    
     const allChecked = newChildren.every(child => child.checked);
-    
+
     onChange({
       ...item,
       checked: allChecked,
@@ -49,34 +84,29 @@ const NestedCheckbox: React.FC<NestedCheckboxProps> = ({ item, onChange, level =
   return (
     <List className={isTopLevel ? "terms-wrap" : undefined} component="ul">
       <ListItem className="form-check">
-        <FormControlLabel
-          className="all-check"
+        <CustomCheckbox
           label={item.label}
-          control={
-            <Checkbox
-              checked={item.checked}
-              indeterminate={hasChildren && !item.checked && !!item.children?.some(child => child.checked)}
-              onChange={handleChange}
-            />
-          }
+          checked={item.checked}
+          indeterminate={hasChildren && !item.checked && !!item.children?.some(child => child.checked)}
+          onChange={handleChange}
         />
         {hasChildren && level < 3 && (
-        <List component="ul" className="child-list">
-          {item.children?.map((child, index) => (
-            <ListItem key={child.id} component="li" disablePadding>
-              <NestedCheckbox
-                item={child}
-                onChange={handleChildChange(index)}
-                level={level + 1}
-                isTopLevel={false}
-              />
-            </ListItem>
-          ))}
-        </List>
-      )}
+          <List component="ul" className="child-list">
+            {item.children?.map((child, index) => (
+              <ListItem key={child.id} component="li" disablePadding>
+                <NestedCheckbox
+                  item={child}
+                  onChange={handleChildChange(index)}
+                  level={level + 1}
+                  isTopLevel={false}
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
       </ListItem>
     </List>
   );
 };
 
-export default NestedCheckbox;
+export { BasicCheckbox, NestedCheckbox };
