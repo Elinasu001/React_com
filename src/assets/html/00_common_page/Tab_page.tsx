@@ -84,9 +84,10 @@ const productsData = [
           items={[
             { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
             { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab3", label: "탭 3", component: <div>내용 2</div> },
+            { value: "tab4", label: "탭 4", component: <div>내용 2</div> },
           ]}
           initialValue="tab1"
-          isScrollable={true}  // 탭스크롤 추가 (true일 때만 variant="scrollable" 적용)
           containerClass="bg-gray" // "bg-gray", "round", "full" 추가 가능
         />
 
@@ -95,12 +96,12 @@ const productsData = [
           items={[
             { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
             { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
-            { value: "tab3", label: "탭 2", component: <div>내용 2</div> },
-            { value: "tab4", label: "탭 2", component: <div>내용 2</div> },
-            { value: "tab5", label: "탭 2", component: <div>내용 2</div> },
-            { value: "tab6", label: "탭 2", component: <div>내용 2</div> },
-            { value: "tab7", label: "탭 2", component: <div>내용 2</div> },
-            { value: "tab8", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab3", label: "탭 3", component: <div>내용 2</div> },
+            { value: "tab4", label: "탭 4", component: <div>내용 2</div> },
+            { value: "tab5", label: "탭 5", component: <div>내용 2</div> },
+            { value: "tab6", label: "탭 6", component: <div>내용 2</div> },
+            { value: "tab7", label: "탭 7", component: <div>내용 2</div> },
+            { value: "tab8", label: "탭 8", component: <div>내용 2</div> },
           ]}
           initialValue="tab1"
           isScrollable={true}  // 탭스크롤 추가 (true일 때만 variant="scrollable" 적용)
