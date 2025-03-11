@@ -57,6 +57,7 @@ export const Card02 = ({ items }: Card02Props) => {
                 {/* 설정 버튼 */}
                 <Button
                   className="btn-control"
+                  aria-label="계좌 설정"
                   onClick={() =>
                     openBottomPopupWithMenu({
                       title: "계좌설정",
@@ -81,6 +82,7 @@ export const Card02 = ({ items }: Card02Props) => {
                 <Typography className="account-num">{item.acno}</Typography>
                 <Button
                   className="btn-copy"
+                  aria-label="계좌 복사"
                   onClick={() => {
                     if (typeof window !== "undefined" && navigator?.clipboard) {
                       try {
