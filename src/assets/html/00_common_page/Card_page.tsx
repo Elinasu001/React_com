@@ -59,7 +59,7 @@ const Card_page = () => {
             <Card02 items={accountsData} />
 
             <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
-            <Card03 items={productsData} />;
+            <Card03 items={productsData} />
 
         </>
     );
