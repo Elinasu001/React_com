@@ -2,8 +2,8 @@ import { AccordionList } from "@src/assets/html/00_common/Accordion";
 
 const accordionData = [
   {
-     title: "Accordion 1",
-     content: "아코디언 내용이 들어갑니다."
+    title: "Accordion 1",
+    content: "아코디언 내용이 들어갑니다."
   },
   { 
     title: "Accordion 2",
