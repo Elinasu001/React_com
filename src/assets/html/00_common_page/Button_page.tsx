@@ -4,6 +4,8 @@ import { ButtonContent } from "@src/assets/html/00_common/Button";
 const Button_page = () => {
   return (
     <>
+        <Typography className="exp">컨텐츠 버튼은 ButtonContent <br/> 하단 버튼은 ButtonFooter 사용</Typography>
+
         <Typography className="exp">버튼 1개일 경우</Typography>
 
         <ButtonContent
