@@ -154,30 +154,42 @@ interface Card03Props {
   }[];
 }
 
-
-// 개별 카드 컴포넌트 (각 ListItem 내부에서 사용)
 export const Card03 = ({ items }: Card03Props) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isCompared, setIsCompared] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
+  // 각 카드별 상태를 배열로 관리
+  const [isFavorite, setIsFavorite] = useState<boolean[]>(Array(items.length).fill(false));
+  const [isCompared, setIsCompared] = useState<boolean[]>(Array(items.length).fill(false));
+
   // 관심상품 클릭
-  const handleGiftClick = (event: React.MouseEvent) => {
+  const handleGiftClick = (event: React.MouseEvent, index: number) => {
     event.stopPropagation();
-    setIsFavorite(!isFavorite);
+    
+    setIsFavorite((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+
     setSnackbarMessage(
-      isFavorite ? "관심 상품에서 제외되었습니다." : "관심 상품으로 등록되었습니다."
+      isFavorite[index] ? "관심 상품에서 제외되었습니다." : "관심 상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
 
   // 비교상품 클릭
-  const handleCompareClick = (event: React.MouseEvent) => {
+  const handleCompareClick = (event: React.MouseEvent, index: number) => {
     event.stopPropagation();
-    setIsCompared(!isCompared);
+    
+    setIsCompared((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+
     setSnackbarMessage(
-      isCompared ? "비교 상품에서 제외되었습니다." : "비교 상품으로 등록되었습니다."
+      isCompared[index] ? "비교 상품에서 제외되었습니다." : "비교 상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
@@ -197,8 +209,18 @@ export const Card03 = ({ items }: Card03Props) => {
               <Box className="card-info-actions">
                 <Typography className="card-desc">{item.pdDesc}</Typography>
                 <Box className="card-actions">
-                  <Button onClick={handleCompareClick} disableRipple className={`btn-compare ${isCompared ? "active" : ""}`} aria-label="비교하기"></Button>
-                  <Button onClick={handleGiftClick} disableRipple className={`btn-favorite ${isFavorite ? "active" : ""}`} aria-label="관심상품"></Button>
+                  <Button
+                    onClick={(event) => handleCompareClick(event, index)}
+                    disableRipple
+                    className={`btn-compare ${isCompared[index] ? "active" : ""}`}
+                    aria-label="비교하기"
+                  ></Button>
+                  <Button
+                    onClick={(event) => handleGiftClick(event, index)}
+                    disableRipple
+                    className={`btn-favorite ${isFavorite[index] ? "active" : ""}`}
+                    aria-label="관심상품"
+                  ></Button>
                 </Box>
               </Box>
 
@@ -229,7 +251,8 @@ export const Card03 = ({ items }: Card03Props) => {
             </CardContent>
           </Card>
         </ListItem>
-     ))}
+      ))}
+
       {/* 알림창 */}
       <Snackbar open={snackbarOpen} autoHideDuration={1000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
         <Alert onClose={handleSnackbarClose} severity="info">
