@@ -10,7 +10,7 @@
     -webkit-mask-size: $sizeX $sizeY;
     mask-size: $sizeX $sizeY;
     padding:0;
-  }
+}
 
 // 믹스인: 플렉스 정렬
 @mixin flex-center {
@@ -55,3 +55,10 @@
 @include three-button-layout(".popup-footer"); // 팝업 하단 버튼
 @include three-button-layout(".content-footer"); // 컨텐츠 하단 버튼
 @include three-button-layout(".btn-area"); // 컨텐츠 버튼
+
+
+//포커스
+@mixin outline-effect {
+    background-color: var(--outline-bg);
+    transition: var(--outline-transition);
+}

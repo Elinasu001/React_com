@@ -264,7 +264,8 @@
 ---------------------------------------------*/
 .card-list-wrap { @include mixin.flex-col; gap:15px; margin-top:30px; }
 .card-box {
-    &.MuiCard-root { border-radius: 20px; padding:0; } //mui default
+   
+    &.MuiCard-root { border-radius: 20px; padding:0; box-shadow: none; box-shadow:var(--card-box); } //mui default
     & > .MuiCardContent-root { padding:16px;} //mui default
     
     .card-info-actions { @include mixin.flex-row; justify-content: space-between; gap:10px; }
@@ -272,14 +273,20 @@
     .card-actions {
         @include mixin.flex-row; gap:6px;
         .btn-compare,
-        .btn-favorite { width:28px; height:28px; background-color: var(--card-btn); }
-        .btn-compare {
-            @include mixin.mask-style(var(--ico-compare), auto, 26px);
-           &.active { background-color: var(--card-btn-compare-active);  @include mixin.mask-style(var(--ico-compare-active), auto, 26px); }
+        .btn-favorite { 
+                width:28px; height:28px;
+                &::before{ content: ""; position: absolute; inset:0; width:28px; height:28px; background-color: var(--card-btn);}
+                &:focus-visible { @include mixin.outline-effect;}
         }
-       .btn-favorite { 
-            @include mixin.mask-style(var(--ico-favorite), auto, 26px); 
-            &.active { background-color: var(--card-btn-favorite-active); @include mixin.mask-style(var(--ico-favorite-active), auto, 26px); }
+
+        .btn-compare {
+            &::before { @include mixin.mask-style(var(--ico-compare), auto, 26px); }
+            &.active::before  { background-color: var(--card-btn-compare-active);  @include mixin.mask-style(var(--ico-compare-active), auto, 26px); }
+        }
+
+       .btn-favorite {
+            &::before{ @include mixin.mask-style(var(--ico-favorite), auto, 26px); }
+            &.active::before { background-color: var(--card-btn-favorite-active); @include mixin.mask-style(var(--ico-favorite-active), auto, 26px); }
         }
     }
     .card-info {  @include mixin.flex-row; align-items: flex-start; gap:10px; margin-top:10px; }

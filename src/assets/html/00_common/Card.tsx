@@ -6,37 +6,13 @@
  */
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Alert, Box, Card, CardContent, IconButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Card, CardContent, IconButton, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
 import DataSet from "@src/assets/io/DataSet";
 import { openBottomPopupWithMenu } from "@src/components/Popup";
 import React, { useState } from "react";
 
-
-/**
- * 카드 기본 속성
- */
-interface Card04Props {
-    children: React.ReactNode;
-    title: string;         // 제목
-  }
-
-/**
- * 카드 컴포넌트 (제목이 있는 기본 카드)
- */
-export const Card04 = ({ title, children }: Card04Props) => {
-    return (
-      <MuiCard sx={{ p: 2, borderRadius: "12px", mb: 2 }}>
-        {title && (
-          <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-            {title}
-          </Typography>
-        )}
-        <Box>{children}</Box>
-      </MuiCard>
-    );
-  };
 
 /**
  * 계좌 카드 속성
@@ -49,6 +25,7 @@ interface Card02Props {
   newDt: string;
   wtchPosbAmt: number;
   psntInrt: number;
+  categoryClass: string;    // 카테고리를 클래스별 색상변경
   nFunc?: (data?: DataSet) => void;
   showTradeHs? : boolean;
 }
@@ -57,21 +34,31 @@ interface Card02Props {
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt, nFunc, showTradeHs = true }: Card02Props) => {
+export const Card02 = ({ categoryClass, type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt, nFunc, showTradeHs = true }: Card02Props) => {
   
   return (
     <Card className="card-box">
+
       <CardContent>
         <Box className="card-info-actions">
           
-          <Typography variant="h6" className="card-name">
-            {type} 계좌 {pdnm}
-          </Typography>
+          {/* 상품타입 + 상품명 */}
+          <Box className="card-info">
+
+            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
+              {type}
+            </Typography>
+
+            <Typography className="card-name" variant="h6">
+              {pdnm}
+            </Typography>
+
+          </Box>
 
           <StyledIconButton className="btn-control"
-            onClick={() => 
+            onClick={() =>
               openBottomPopupWithMenu({
-                title: "계좌설정", 
+                title: "계좌설정",
                 param: new DataSet({ acno, type, pdnm, balance, newDt, wtchPosbAmt, psntInrt })
               })
             }
@@ -86,6 +73,7 @@ export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt
           <Typography className="account-num">
             {acno}
           </Typography>
+
           <StyledIconButton  className="btn-copy"
             onClick={() => {
               if (typeof window !== "undefined" && navigator?.clipboard) {
@@ -232,11 +220,13 @@ export const Card03 = ({
             </Typography>
 
             <Box className="card-actions">
+                
               {/* 비교상품 아이콘 */}
               <StyledIconButton
                 onClick={handleCompareClick}
                 disableRipple
                 className={`btn-compare ${isCompared ? "active" : ""}`}
+                aria-label="비교하기"
               >
               </StyledIconButton>
 
@@ -245,6 +235,7 @@ export const Card03 = ({
                 onClick={handleGiftClick}
                 disableRipple
                 className={`btn-favorite ${isFavorite ? "active" : ""}`}
+                aria-label="관심상품"
               >
               </StyledIconButton>
 
@@ -252,7 +243,7 @@ export const Card03 = ({
             
           </Box>
 
-          {/* 상품명 + 카테고리 */}
+          {/* 카테고리 + 상품명 */}
           <Box className="card-info">
             <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
               {categoty}
@@ -312,4 +303,4 @@ export const CardList03 = ({ products }: { products: Card03Props[] }) => {
 
 
  
-export default { Card02, Card03, Card04, CardList02, CardList03 };
+export default { Card02, Card03, CardList02, CardList03 };
