@@ -341,7 +341,7 @@
     // 일반 리스트 버튼
     li {
         padding:0; margin-top:10px;
-        .list-info {text-align: left;}
+        .list-info { text-align: left; padding-right:14px;}
         &:first-child { margin-top:0; }
         button {
             position: relative; display:flex; justify-content: flex-start; width:100%; height:47px; padding:0 10px !important; border:1px solid var(--list-btn); color: var(--list-btn-txt); background-color: var(--white);
@@ -349,20 +349,19 @@
         }
     }
     //게시판
-    &.noti-list li button { border:none; padding:14px 20px 14px 10px!important; border-bottom: 1px solid var(--list-btn); height:auto; display:flex; flex-direction: column; align-items: flex-start;  }
+    &.noti-list li button { border:none; padding:14px 14px 10px!important; border-bottom: 1px solid var(--list-btn); height:auto; display:flex; flex-direction: column; align-items: flex-start;  }
 
     &.event li {
         button::after { content:none; }
         .list-info {
             position: relative; width:100%;
             &::after { content:""; position: absolute; top:50%; right:-20px; transform: translate(-50%, -50%);  width:24px; height:24px; background-color: var(--list-btn); @include mixin.mask-style(var(--ico-r-arrow), auto, 24px); }
-            .list-name { padding-right:12px; }
         }
     }
  }
  // 게시판 텍스트
 .list-image {
-    width:100%; height:158px; margin-bottom: 10px; border-radius: 15px; background-color: var(--color-f8);
+    width:100%; height:158px; margin-bottom: 10px; background-color: var(--color-f8);
     img{ width:100%; height:100%; object-fit: contain; }
 }
 .list-category { padding:0 8px; margin-bottom:10px; border-radius:15px; font-size:var(--font12); font-weight: var(--font-w-r);  border:1px solid var(--list-category); color: var(--list-category-txt) }

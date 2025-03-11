@@ -130,7 +130,7 @@ export const Card02 = ({ items }: Card02Props) => {
           </Card>
         </ListItem>
       ))}
-  </List>
+    </List>
 );
 };
 
