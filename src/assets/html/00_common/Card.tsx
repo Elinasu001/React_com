@@ -6,7 +6,7 @@
  */
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Alert, Box, Button, Card, CardContent, Snackbar, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardContent, List, ListItem, Snackbar, Typography, } from "@mui/material";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
 import DataSet from "@src/assets/io/DataSet";
 import { openBottomPopupWithMenu } from "@src/components/Popup";
@@ -17,123 +17,119 @@ import React, { useState } from "react";
  * 계좌 카드 속성
  */
 interface Card02Props {
-  type: string;
-  acno: string;
-  balance: number;
-  pdnm: string;
-  newDt: string;
-  wtchPosbAmt: number;
-  psntInrt: number;
-  categoryClass: string;    // 카테고리를 클래스별 색상변경
-  nFunc?: (data?: DataSet) => void;
-  showTradeHs? : boolean;
+  items: {
+    type: string;
+    acno: string;
+    balance: number;
+    pdnm: string;
+    newDt: string;
+    wtchPosbAmt: number;
+    psntInrt: number;
+    categoryClass: string; // 카테고리 색상 클래스
+    nFunc?: (data?: DataSet) => void;
+    showTradeHs?: boolean;
+  }[];
 }
 
 /**
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ categoryClass, type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt, nFunc, showTradeHs = true }: Card02Props) => {
+export const Card02 = ({ items }: Card02Props) => {
   
   return (
-    <Card className="card-box">
+    <List className="card-wrap">
+    {items.map((item, index) => (
+      <ListItem key={index} className="card-list">
+        <Card className="card-box">
+          <CardContent>
+            <Box className="card-info-actions">
+              {/* 상품타입 + 상품명 */}
+              <Box className="card-info">
+                <Typography className={`card-category ${item.categoryClass}`}>
+                  {item.type}
+                </Typography>
+                <Typography className="card-name" variant="h6">
+                  {item.pdnm}
+                </Typography>
+              </Box>
 
-      <CardContent>
-        <Box className="card-info-actions">
-          
-          {/* 상품타입 + 상품명 */}
-          <Box className="card-info">
-
-            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출 등등 클래스별 분류 필요 */}
-              {type}
-            </Typography>
-
-            <Typography className="card-name" variant="h6">
-              {pdnm}
-            </Typography>
-
-          </Box>
-
-          <Button className="btn-control"
-            onClick={() =>
-              openBottomPopupWithMenu({
-                title: "계좌설정",
-                param: new DataSet({ acno, type, pdnm, balance, newDt, wtchPosbAmt, psntInrt })
-              })
-            }
-          >
-          <MoreVertIcon/>
-          </Button>
-          
-        </Box>
-
-        {/* 계좌번호 및 복사 아이콘 */}
-        <Box className="card-account-info">
-
-          <Typography className="account-num">
-            {acno}
-          </Typography>
-
-          <Button  className="btn-copy"
-            onClick={() => {
-              if (typeof window !== "undefined" && navigator?.clipboard) {
-                try {
-                  navigator.clipboard.writeText(acno);
-                } catch (error) {
-                  console.error("클립보드 복사 오류:", error);
+              {/* 설정 버튼 */}
+              <Button
+                className="btn-control"
+                onClick={() =>
+                  openBottomPopupWithMenu({
+                    title: "계좌설정",
+                    param: new DataSet({
+                      acno: item.acno,
+                      type: item.type,
+                      pdnm: item.pdnm,
+                      balance: item.balance,
+                      newDt: item.newDt,
+                      wtchPosbAmt: item.wtchPosbAmt,
+                      psntInrt: item.psntInrt,
+                    }),
+                  })
                 }
-              } else {
-                console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
+              >
+                <MoreVertIcon />
+              </Button>
+            </Box>
+
+            {/* 계좌번호 및 복사 아이콘 */}
+            <Box className="card-account-info">
+              <Typography className="account-num">{item.acno}</Typography>
+              <Button
+                className="btn-copy"
+                onClick={() => {
+                  if (typeof window !== "undefined" && navigator?.clipboard) {
+                    try {
+                      navigator.clipboard.writeText(item.acno);
+                    } catch (error) {
+                      console.error("클립보드 복사 오류:", error);
+                    }
+                  } else {
+                    console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
+                  }
+                }}
+              >
+                <ContentCopyIcon />
+              </Button>
+            </Box>
+
+            {/* 계좌 잔액 */}
+            <Box className="card-balance" sx={{ fontWeight: "bold", textAlign: "right" }}>
+              <Typography className="txt-balance">잔액</Typography>
+              <Typography className="num-balance">
+                {(item.balance ?? 0).toLocaleString()} <span>원</span>
+              </Typography>
+            </Box>
+
+            {/* 컨텐츠 공통 버튼 적용 */}
+            <ButtonContent
+              buttons={
+                item.type === "4"
+                  ? [{ name: "상환" }]
+                  : [
+                      ...(item.showTradeHs
+                        ? [
+                            {
+                              name: "거래내역",
+                              onClick: () =>
+                                item.nFunc?.(new DataSet({ acno: item.acno, type: item.type, pdnm: item.pdnm, balance: item.balance })),
+                            },
+                          ]
+                        : []),
+                      { name: "이체" },
+                    ]
               }
-            }}
-          >
-            <ContentCopyIcon/>
-          </Button>
-          
-        </Box>
-
-        {/* 계좌 잔액 */}
-        <Box className="card-balance" sx={{ fontWeight: "bold", textAlign: "right" }}>
-          <Typography className="txt-balance">잔액</Typography><Typography className="num-balance">{(balance ?? 0).toLocaleString()} <span>원</span></Typography>
-        </Box>
-
-      
-        {/* 컨텐츠 공통 버튼으로 적용 */}
-        <ButtonContent
-            buttons={
-              type === "4"
-                ? [{ name: "상환" }]
-                : [
-                    ...(showTradeHs
-                      ? [
-                          {
-                            name: "거래내역",
-                            onClick: () =>
-                              nFunc?.(new DataSet({ acno, type, pdnm, balance })),
-                          },
-                        ]
-                      : []),
-                    { name: "이체" },
-                  ]
-            }
-          />
-      </CardContent>
-
-    </Card>
-  );
-};
-
-/**
- * 여러 개의 Card02를 렌더링하는 CardList 컴포넌트
- */
-export const CardList02 = ({ accounts }: { accounts: Card02Props[] }) => {
-  return (
-    <Box className="card-wrap"> 
-      {accounts.map((account, index) => (
-        <Card02 key={index} {...account} />
-      ))}
-    </Box>
-  );
+            />
+          </CardContent>
+        </Card>
+      </ListItem>
+    ))}
+  </List>
+);
 };
 
 
@@ -141,32 +137,35 @@ export const CardList02 = ({ accounts }: { accounts: Card02Props[] }) => {
 /**
  * 상품 카드 속성
  */
+
 interface Card03Props {
-  pdcd: string;             // 상품코드
-  pdnm: string;             // 상품명
-  categoty: string;         // 카테고리
-  pdDesc: string;           // 상품설명
-  keyword: string[];        // 키워드
-  contents1: string;        // 내용1
-  contents2: string;        // 내용2
-  categoryClass: string;    // 카테고리를 클래스별 색상변경
-  onClick?: () => void;
+  items: {
+    pdcd: string;             // 상품코드
+    pdnm: string;             // 상품명
+    categoty: string;         // 카테고리
+    pdDesc: string;           // 상품설명
+    keyword: string[];        // 키워드
+    contents1: string;        // 내용1
+    contents2: string;        // 내용2
+    categoryClass: string;    // 카테고리를 클래스별 색상변경
+    onClick?: () => void;
+  }[];
 }
 
+export const Card03 = ({ items }: Card03Props) => {
+  return (
+    <List className="card-wrap">
+      {items.map((item) => (
+        <ListItem key={item.pdcd} className="card-list">
+          <SingleCard03 {...item} />
+        </ListItem>
+      ))}
+    </List>
+  );
+};
 
-/**
- * 상품 카드 컴포넌트
- */
-export const Card03 = ({
-  pdnm,
-  categoty,
-  pdDesc,
-  keyword,
-  contents1,
-  contents2,
-  categoryClass,
-  onClick
-}: Card03Props) => {
+// 개별 카드 컴포넌트 (각 ListItem 내부에서 사용)
+const SingleCard03 = ({ pdnm, categoty, pdDesc, keyword, contents1, contents2, categoryClass, onClick }: Omit<Card03Props["items"][0], "pdcd">) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isCompared, setIsCompared] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -200,47 +199,21 @@ export const Card03 = ({
   return (
     <>
       <Card onClick={onClick} className="card-box">
-
-        {/* 카드 본문 */}
         <CardContent>
-
           {/* 상품 설명 + 아이콘 */}
           <Box className="card-info-actions">
-
-            <Typography className="card-desc">
-              {pdDesc}
-            </Typography>
-
+            <Typography className="card-desc">{pdDesc}</Typography>
             <Box className="card-actions">
-                
-              {/* 비교상품 아이콘 */}
-              <Button
-                onClick={handleCompareClick}
-                disableRipple
-                className={`btn-compare ${isCompared ? "active" : ""}`}
-                aria-label="비교하기"
-              >
-              </Button>
-
-              {/* 관심상품 아이콘 */}
-              <Button
-                onClick={handleGiftClick}
-                disableRipple
-                className={`btn-favorite ${isFavorite ? "active" : ""}`}
-                aria-label="관심상품"
-              >
-              </Button>
-
+              <Button onClick={handleCompareClick} disableRipple className={`btn-compare ${isCompared ? "active" : ""}`} aria-label="비교하기"></Button>
+              <Button onClick={handleGiftClick} disableRipple className={`btn-favorite ${isFavorite ? "active" : ""}`} aria-label="관심상품"></Button>
             </Box>
-            
           </Box>
 
           {/* 카테고리 + 상품명 */}
           <Box className="card-info">
-            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
+            <Typography className={`card-category ${categoryClass}`}>
               {categoty}
             </Typography>
-
             <Typography className="card-name" variant="h6">
               {pdnm}
             </Typography>
@@ -252,7 +225,7 @@ export const Card03 = ({
           </Typography>
 
           {/* 내용1 */}
-          <Typography  className="card-term" variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
+          <Typography className="card-term" variant="subtitle2" sx={{ mt: 1.5, fontWeight: "bold" }}>
             {contents1}
           </Typography>
 
@@ -260,17 +233,11 @@ export const Card03 = ({
           <Typography className="card-rate" variant="h6" sx={{ fontWeight: "bold" }}>
             {contents2}
           </Typography>
-
         </CardContent>
       </Card>
 
       {/* 알림창 */}
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={1000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
+      <Snackbar open={snackbarOpen} autoHideDuration={1000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
         <Alert onClose={handleSnackbarClose} severity="info">
           {snackbarMessage}
         </Alert>
@@ -279,20 +246,7 @@ export const Card03 = ({
   );
 };
 
-/**
- * 여러 개의 Card03을 렌더링하는 CardList03 컴포넌트
- */
-export const CardList03 = ({ products }: { products: Card03Props[] }) => {
-  return (
-    <Box className="card-wrap"> {/* card-wrap 한 번만 적용됨 */}
-      {products.map((product, index) => (
-        <Card03 key={index} {...product} /> /* Card03 여러개 적용 */
-      ))}
-    </Box>
-  );
-};
-
 
 
  
-export default { Card02, Card03, CardList02, CardList03 };
+export default { Card02, Card03 };
