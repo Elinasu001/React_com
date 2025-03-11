@@ -17,7 +17,6 @@ interface ListButtonProps {
   items: ListItemType[];
 }
 
-
 export const ListButton = ({ items }: ListButtonProps) => {
   return (
     <List className="list-button-wrap">

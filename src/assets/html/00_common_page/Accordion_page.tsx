@@ -19,13 +19,12 @@ const accordionData = [
       { name: "Agree", onClick: () => console.log("동의") }
     ]
   }
-
 ];
 
 const Accordion_page = () => {
   return (
     <>
-      <AccordionList data={accordionData} />
+      <AccordionList items={accordionData} />;
     </>
   );
 };

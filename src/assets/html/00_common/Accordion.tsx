@@ -1,44 +1,37 @@
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, List, ListItem, Typography } from "@mui/material";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
 
-interface AccordionItemProps {
-  title: string;
-  content: string;
-  hasActions?: boolean; // 버튼이 있는지 여부
-  defaultExpanded?: boolean; // 기본으로 열려있는지 여부
-  buttons?: { name: string; onClick?: () => void; disabled?: boolean }[];
-}
-
-export const AccordionItem = ({ title, content, hasActions = false, defaultExpanded = false, buttons }: AccordionItemProps) => {
-  return (
-    <Accordion defaultExpanded={defaultExpanded}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`${title}-content`} id={`${title}-header`}>
-        <Typography component="span">{title}</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        {content}
-      </AccordionDetails>
-      {hasActions && buttons && buttons.length > 0 && (
-        <ButtonContent buttons={buttons} />
-      )}
-    </Accordion>
-  );
-};
-
-// 데이터는 이제 props로 받을 수 있도록 변경!
 interface AccordionListProps {
-  data: AccordionItemProps[];
+  items: {
+    title: string;
+    content: string;
+    hasActions?: boolean; // 버튼이 있는지 여부
+    defaultExpanded?: boolean; // 기본으로 열려있는지 여부
+    buttons?: { name: string; onClick?: () => void; disabled?: boolean }[];
+  }[];
 }
 
-export const AccordionList = ({ data }: AccordionListProps) => {
+export const AccordionList = ({ items }: AccordionListProps) => {
   return (
-    <Box className="accordion-wrap">
-      {data.map((item, index) => (
-        <AccordionItem key={index} {...item} />
+    <List className="accordion-wrap">
+      {items.map((item, index) => (
+        <ListItem key={index}>
+          <Accordion defaultExpanded={item.defaultExpanded} className="accordion-item">
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`${item.title}-content`} id={`${item.title}-header`}>
+              <Typography component="span">{item.title}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>{item.content}</Typography>
+              {item.hasActions && item.buttons && item.buttons.length > 0 && (
+                <ButtonContent buttons={item.buttons} />
+              )}
+            </AccordionDetails>
+          </Accordion>
+        </ListItem>
       ))}
-    </Box>
+    </List>
   );
 };
 
-export default { AccordionItem, AccordionList };
+export default { AccordionList };
