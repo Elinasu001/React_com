@@ -24,18 +24,25 @@ interface TabProps {
   initialValue?: string | number;               // 기본 선택 탭 (value)
   borderBottom?: boolean;                       // 탭 하단 테두리 여부
   isScrollable?: boolean;                       // 탭 스크롤 가능 여부
-  containerClass?: "bg-gray" | "round" | "";    // 추가할 클래스 (bg-gray, round)
+  containerClass?: "bg-gray" | "round" | "full" | "";    // 추가할 클래스 (bg-gray, round)
+  scrollButtons?: true | false | "auto";        // 스크롤 버튼 표시 방식
+  allowScrollButtonsMobile?: boolean;           // 모바일에서 스크롤 버튼 활성화 여부
+  ariaLabel?: string;                           // 접근성을 위한 Aria Label
   onChange?: (value: string | number) => void;  // 탭 변경 콜백
 }
+
 
 /**
  * 탭 컴포넌트
  */
-export const Tab01 = ({ 
+export const Tab01 = ({
   items,
   initialValue,
   isScrollable = false,
-  containerClass = "", 
+  containerClass = "",
+  scrollButtons = "auto",
+  allowScrollButtonsMobile = false,
+  ariaLabel = "탭 UI",
   onChange,
 }: TabProps) => {
   const [value, setValue] = useState(initialValue ?? items[0]?.value); // 기본값이 없으면 첫 번째 탭 선택
@@ -48,10 +55,15 @@ export const Tab01 = ({
   return (
 
     /**
-     *  스크롤 기능 :: Tabs 태그 [ variant="scrollable" 적용, .scroll 클래스 적용]
-     *  기본 탭 :: Box 태그 클래스 tab-item만 적용
-     *  배경 탭 :: Box 태그 [ .bg-gray 클래스 적용 ]
-     *  라운드 탭 :: Box 태그 [ .round ]
+     *  // 스타일
+     *  기본 탭
+     *  꽉찬 탭 :: containerClass="full"
+     *  배경 탭 :: containerClass="bg-gray"
+     *  라운드 탭 :: containerClass="round"
+     *  // 기능
+     *  탭 스크롤 기능 :: Tabs 태그 [ isScrollable={true} 적용 ]
+     *  탭 스크롤 기능 + 버튼 기능 :: Tabs 태그 [ isScrollable={true} + scrollButtons={true} 적용 ]
+     *
      *  예시)
      *  <Tab01
      *     items={[
@@ -59,8 +71,8 @@ export const Tab01 = ({
      *       { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
      *     ]}
      *     initialValue="기본 선택 탭"
-     *     isScrollable={true}  // 스크롤 추가 (true일 때만 .scroll 클래스 + variant="scrollable" 적용)
-     *     containerClass="bg-gray" // "bg-gray", "round" 추가 가능
+     *     isScrollable={true}  // 스크롤 추가
+     *     containerClass="bg-gray" // "bg-gray", "round" "full" 스타일
      *   />
      **/
 
@@ -69,8 +81,11 @@ export const Tab01 = ({
       <Tabs
         value={value}
         onChange={handleChange}
-        className={`tab-item ${isScrollable ? "scroll" : ""}`.trim()}
-        {...(isScrollable ? { variant: "scrollable" } : {})}
+        className="tab-item"
+        variant={isScrollable ? "scrollable" : "standard"}
+        scrollButtons={isScrollable ? scrollButtons : false}  // 수정된 부분
+        allowScrollButtonsMobile={isScrollable ? allowScrollButtonsMobile : false}
+        aria-label={ariaLabel}
       >
         {items.map((item) => (
           <Tab key={item.value} label={item.label} value={item.value} />

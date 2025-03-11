@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material";
-import { Card03 } from "@src/assets/html/00_common/Card";
 import { NotiList } from "@src/assets/html/00_common/List";
 import { Tab01 } from "@src/assets/html/00_common/Tab";
 
@@ -43,7 +42,7 @@ const productsData = [
 
     return (
       <>
-       <Typography className="exp">탭 _ 일반[line]</Typography>
+        <Typography className="exp">탭 _ 일반[origin]</Typography>
 
         <Tab01
           items={[
@@ -52,39 +51,60 @@ const productsData = [
           ]}
           initialValue="tab1"
         />
-        
-        <Typography className="exp">탭 _ 일반[line_scroll]</Typography>
+
+        <Typography className="exp">탭 _ 일반[line_full]</Typography>
 
         <Tab01
           items={[
-            { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
-            { value: "tab2", label: "탭 2", component: <Card03 items={productsData} /> },
+            { value: "tab1", label: "탭 1", component: <div>내용 1</div>  },
+            { value: "tab2", label: "탭 2", component: <NotiList items={noticeListData}/>  },
           ]}
           initialValue="tab1"
-          isScrollable={true}  // 스크롤 추가 (true일 때만 .scroll 클래스 + variant="scrollable" 적용)
+          containerClass="full" // "bg-gray", "round" , "full"추가 가능
+        />
+
+        <Typography className="exp">탭 _ 일반[line_scroll_scrollButton]</Typography>
+        <Tab01
+          items={[
+            { value: "tab1", label: "탭 1", component: <div>내용 1</div>  },
+            { value: "tab2", label: "탭 2", component: <div>내용 1</div>  },
+            { value: "tab3", label: "탭 3", component: <div>내용 1</div>  },
+            { value: "tab4", label: "탭 4", component: <div>내용 1</div>  },
+            { value: "tab5", label: "탭 5", component: <NotiList items={noticeListData}/>  },
+          ]}
+          initialValue="tab1"
+          isScrollable={true}  // 스크롤 가능
+          scrollButtons="auto" // 자동 스크롤 버튼
+          allowScrollButtonsMobile={true} // 모바일에서도 버튼 표시
         />
 
 
-        <Typography className="exp">탭 _ 일반[bg]</Typography>
+        <Typography className="exp">탭 _ [bg]</Typography>
         <Tab01
           items={[
             { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
             { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
           ]}
           initialValue="tab1"
-          isScrollable={true}  // 스크롤 추가 (true일 때만 .scroll 클래스 + variant="scrollable" 적용)
-          containerClass="bg-gray" // "bg-gray", "round" 추가 가능
+          isScrollable={true}  // 탭스크롤 추가 (true일 때만 variant="scrollable" 적용)
+          containerClass="bg-gray" // "bg-gray", "round", "full" 추가 가능
         />
 
-        <Typography className="exp">탭 _ 일반[round]</Typography>
+        <Typography className="exp">탭 _ [round]</Typography>
         <Tab01
           items={[
             { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
             { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab3", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab4", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab5", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab6", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab7", label: "탭 2", component: <div>내용 2</div> },
+            { value: "tab8", label: "탭 2", component: <div>내용 2</div> },
           ]}
           initialValue="tab1"
-          isScrollable={true}  // 스크롤 추가 (true일 때만 .scroll 클래스 + variant="scrollable" 적용)
-          containerClass="round" // "bg-gray", "round" 추가 가능
+          isScrollable={true}  // 탭스크롤 추가 (true일 때만 variant="scrollable" 적용)
+          containerClass="round" // "bg-gray", "round", "full" 추가 가능
         />
 
 

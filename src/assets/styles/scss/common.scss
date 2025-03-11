@@ -189,12 +189,15 @@
     
     display: flex; flex-direction: column;
     .tab-item { display:flex; align-items: center; border-bottom: 1px solid var(--tab-line); transition: linear all 1s;
-        button { flex:1 1 auto; min-width:89px; min-height:inherit; max-width: inherit; min-width: inherit; padding:16px 8px;
+        button { /*flex:1 1 auto;  max-width: inherit; min-width: inherit; min-width:89px; */  min-height:inherit; padding:16px 8px;
             &.Mui-selected{ color: var(--tab-line-active); } //Mui 활성화
         }
         .MuiTabs-indicator { border-bottom: 2px solid var(--tab-line-active); }//Mui 활성화
-        &.scroll button{ flex: initial; min-width:70px; }
+        // &.scroll button{ flex: initial; }
+        .MuiSvgIcon-root { fill:var(--color-45); }
     }
+
+    &.full .tab-item button { flex:1 1 auto; }
 
     // background 탭
     &.bg-gray {
@@ -213,7 +216,7 @@
         .tab-item { border-bottom: none;
             .MuiTabs-flexContainer{ gap:5px; }
             button{
-                padding:8px 16px; border-radius: 30px; background-color: var(--tab-round);
+                min-width: inherit; padding:8px 16px; border-radius: 30px; background-color: var(--tab-round);
                 &.Mui-selected{ background-color:var(--tab-round-active); color:var(--white)}  //Mui 활성화
             }
             .MuiTabs-indicator { display: none; }
