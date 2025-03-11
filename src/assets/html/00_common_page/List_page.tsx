@@ -4,6 +4,7 @@ import { ListButton, NotiList } from "@src/assets/html/00_common/List";
 
 const List_page = () => {
 
+  // 직업 선택 리스트 예시 데이터
   const items = [
     { id: 1, label: "임원 등 고위 관리자" },
     { id: 2, label: "전문가 및 관련종사자" },
@@ -14,19 +15,19 @@ const List_page = () => {
     { id: 7, label: "장치 및 기계 조작 및 조립 종사자" },
   ];
 
-  // 이벤트 리스트 예제 데이터
+  // 이벤트 리스트 예시 데이터
   const eventListData = [
     { id: 1, label: "[깜짝 퀴즈 이벤트] 예가람저축은행 파킹통장 이름은?!", date: "2022.11.22 ~ 2023.12.03" },
     { id: 2, label: "[깜짝 퀴즈 이벤트] 예가람저축은행 파킹통장 이름은?!", date: "2022.11.22 ~ 2023.12.03" },
   ];
 
-  // FAQ 리스트 예제 데이터
+  // FAQ 리스트 예시 데이터
   const faqListData = [
     { id: 1, category: "예적금", label: "금액 별 필요한 인증 단계가 어떻게 되나요?" },
     { id: 2, category: "대출", label: "금액 별 필요한 인증 단계가 어떻게 되나요?" },
   ];
 
-  // 공지 리스트 예제 데이터
+  // 공지 리스트 예시 데이터
   const noticeListData = [
     { id: 1, label: "2023년 2분기 4월 캠코매각 대상 (개인) 신용정보 제공 사실 공지", date: "2023.04.18", icon: true },
     { id: 2, label: "2023년 2분기 4월 캠코매각 대상 (개인) 신용정보 제공 사실 공지", date: "2023.04.18", icon: true },
