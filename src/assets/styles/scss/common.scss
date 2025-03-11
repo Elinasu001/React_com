@@ -265,7 +265,7 @@
 /*---------------------------------------------
    #카드
 ---------------------------------------------*/
-.card-wrap {  @include mixin.flex-col; gap:15px; margin-top:30px; }
+.card-wrap {  @include mixin.flex-col; margin-top:30px; }
 .card-box {
     width:100%;
     &.MuiCard-root { border-radius: 20px; padding:0; box-shadow: none; box-shadow:var(--card-box); } //mui default
