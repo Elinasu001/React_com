@@ -276,7 +276,7 @@
         .btn-favorite { 
                 width:28px; height:28px;
                 &::before{ content: ""; position: absolute; inset:0; width:28px; height:28px; background-color: var(--card-btn);}
-                &:focus-visible { @include mixin.outline-effect;}
+                // &:focus-visible { @include mixin.outline-effect;}
         }
 
         .btn-compare {

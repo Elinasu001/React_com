@@ -6,8 +6,7 @@
  */
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { Alert, Box, Card, CardContent, IconButton, Snackbar, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Alert, Box, Button, Card, CardContent, Snackbar, Typography } from "@mui/material";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
 import DataSet from "@src/assets/io/DataSet";
 import { openBottomPopupWithMenu } from "@src/components/Popup";
@@ -55,7 +54,7 @@ export const Card02 = ({ categoryClass, type, acno, balance, pdnm, newDt, wtchPo
 
           </Box>
 
-          <StyledIconButton className="btn-control"
+          <Button className="btn-control"
             onClick={() =>
               openBottomPopupWithMenu({
                 title: "계좌설정",
@@ -64,7 +63,8 @@ export const Card02 = ({ categoryClass, type, acno, balance, pdnm, newDt, wtchPo
             }
           >
           <MoreVertIcon/>
-          </StyledIconButton>
+          </Button>
+          
         </Box>
 
         {/* 계좌번호 및 복사 아이콘 */}
@@ -74,7 +74,7 @@ export const Card02 = ({ categoryClass, type, acno, balance, pdnm, newDt, wtchPo
             {acno}
           </Typography>
 
-          <StyledIconButton  className="btn-copy"
+          <Button  className="btn-copy"
             onClick={() => {
               if (typeof window !== "undefined" && navigator?.clipboard) {
                 try {
@@ -88,7 +88,7 @@ export const Card02 = ({ categoryClass, type, acno, balance, pdnm, newDt, wtchPo
             }}
           >
             <ContentCopyIcon/>
-          </StyledIconButton>
+          </Button>
           
         </Box>
 
@@ -153,14 +153,6 @@ interface Card03Props {
   onClick?: () => void;
 }
 
-/**
- * 스타일 지정 (아이콘 클릭 시 테두리 제거)
- */
-const StyledIconButton = styled(IconButton)({
-  outline: "none",
-  "&:focus": { outline: "none" },
-  "&.active": { color: "Salmon" },
-});
 
 /**
  * 상품 카드 컴포넌트
@@ -222,22 +214,22 @@ export const Card03 = ({
             <Box className="card-actions">
                 
               {/* 비교상품 아이콘 */}
-              <StyledIconButton
+              <Button
                 onClick={handleCompareClick}
                 disableRipple
                 className={`btn-compare ${isCompared ? "active" : ""}`}
                 aria-label="비교하기"
               >
-              </StyledIconButton>
+              </Button>
 
               {/* 관심상품 아이콘 */}
-              <StyledIconButton
+              <Button
                 onClick={handleGiftClick}
                 disableRipple
                 className={`btn-favorite ${isFavorite ? "active" : ""}`}
                 aria-label="관심상품"
               >
-              </StyledIconButton>
+              </Button>
 
             </Box>
             
