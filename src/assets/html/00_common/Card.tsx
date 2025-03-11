@@ -45,7 +45,7 @@ export const Card02 = ({ categoryClass, type, acno, balance, pdnm, newDt, wtchPo
           {/* 상품타입 + 상품명 */}
           <Box className="card-info">
 
-            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출  클래스별 분류 필요 */}
+            <Typography className={`card-category ${categoryClass}`}>{/* .deposit : 예적금, .loan: 대출 , .clLoan: 종합대출  :: 화면이 안보여서 대출, 예/적금, 종합대출 등등 클래스별 분류 필요 */}
               {type}
             </Typography>
 
