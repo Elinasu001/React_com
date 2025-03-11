@@ -13,6 +13,7 @@
   --ico-info: url(/src/assets/images/com/svg/ico_info.svg);
   --ico-info-tri: url(/src/assets/images/com/svg/ico_info_tri.svg);
   --ico-check: url(/src/assets/images/com/svg/ico_check.svg);
+  --ico-r-arrow: url(/src/assets/images/com/svg/ico_r_arrow.svg);
   --ico-se-arrow: url(/src/assets/images/com/svg/ico_se_arrow.svg);
   --ico-file: url(/src/assets/images/com/svg/ico_file.svg);
   --ico-date: url(/src/assets/images/com/svg/ico_date.svg);
@@ -148,4 +149,16 @@ body {
   --card-account-num: var(--color-75);
   --card-btn-copy: var(--color-9);
   --card-btn-control: var(--color-2);
+
+
+  /* 리스트 버튼 색상 */
+  --list-btn: var(--color-d);
+  --list-btn-txt: var(--color-2);
+
+  /* 게시판 리스트 색상 */
+  --list-name: var(--color-2);
+  --list-category: var(--color-d);
+  --list-categrory-txt: var(--color-2);
+  --list-date: var(--color-9);
+  --file-clip: var(--color-75);
 }
