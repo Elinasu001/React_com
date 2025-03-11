@@ -6,7 +6,7 @@
  * import { alert } from "@assets/ui/alert";
  */
 import { Box, Modal, Typography } from '@mui/material';
-import { ButtonFooter } from "@src/assets/html/00_common/Button";
+import { ButtonContent } from "@src/assets/html/00_common/Button";
 import { useEffect, useState } from 'react';
 import { createRoot, Root } from 'react-dom/client';
 
@@ -84,7 +84,7 @@ export function messageView(
             </Typography>
 
             {/* 공통 ButtonFooter로 버튼 변경 */}
-            <ButtonFooter
+            <ButtonContent
               buttons={
                 fBtn
                   ? [
