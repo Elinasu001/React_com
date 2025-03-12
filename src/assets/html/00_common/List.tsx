@@ -16,14 +16,18 @@ interface ListItemType {
 
 interface ListButtonProps {
   items: ListItemType[];
+  onClick?: (id: number) => void; // 클릭 이벤트 추가
 }
 
-export const ListButton = ({ items }: ListButtonProps) => {
+export const ListButton = ({ items, onClick }: ListButtonProps) => {
   return (
     <List className="list-button-wrap">
         {items.map(({ id, label }) => (
-        <ListItem key={id}>
-           <Button>{label}</Button>
+        <ListItem key={id} >
+           <Button
+            aria-label={`옵션 선택: ${label}`} // 접근성을 위해 데이터에 들어가는 label과 맞춰주세요. ex)List_page.tsx
+            onClick={() => onClick?.(id)} // 클릭 이벤트 핸들러
+           >{label}</Button>
         </ListItem>
       ))}
     </List>
