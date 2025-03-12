@@ -38,7 +38,7 @@ export const ListButton = ({ items, onClick }: ListButtonProps) => {
 //게시판리스트
 export const NotiList = ({
   items,
-  isEventList = false, // eventListData인지 여부를 판별하는 prop 추가
+  isEventList = false, // Data인지 여부를 판별하는 prop 추가
 }: {
   items: { id: number; category?: string; label: string; date?: string; icon?: boolean; image?: string }[];
   isEventList?: boolean;
@@ -47,12 +47,18 @@ export const NotiList = ({
     <List className={`list-button-wrap noti-list ${isEventList ? "event" : ""}`}>
       {items.map(({ id, category, label, date, icon, image }) => (
         <ListItem key={id} className={`list-item ${icon ? "has-icon" : ""}`}>
-          <Button>
+          
+          {/* 웹접근성을 위해 aria-label은 필수로 맞춰주세요. */}
+          <Button 
+            aria-label={`${
+            isEventList ? "이벤트" : "공지사항"
+            } - ${label}${date ? `, 기간: ${date}` : ""}${category ? `, 카테고리: ${category}` : ""}`}
+          >
 
              {/* isEventList가 true일 때만 이미지 박스 표시 */}
              {isEventList && (
               <Box className="list-image">
-                <img src={image || "/default-image.png"} alt="이미지" />
+                <img src={image || "/default-image.png"} alt={image ? `${label} 관련 이미지` : "기본 이미지"} />
               </Box>
             )}
 
@@ -62,7 +68,8 @@ export const NotiList = ({
 
               {/* 텍스트 내용 ( 파일아이콘 있을 경우만 출력 )*/}
               <Typography className="list-name">
-                {label} {icon && <AttachFileIcon className="file-clip"/> }
+                {label}
+                {icon && <AttachFileIcon className="file-clip" aria-hidden="true" /> }
               </Typography>
 
               {/* 날짜 (있을 경우만 출력) */}
