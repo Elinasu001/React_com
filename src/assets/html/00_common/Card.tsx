@@ -8,8 +8,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Alert, Box, Button, Card, CardContent, List, ListItem, Snackbar, Typography, } from "@mui/material";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
+import { openBottomPopupWithMenu } from "@src/assets/html/00_common/Popup";
 import DataSet from "@src/assets/io/DataSet";
-import { openBottomPopupWithMenu } from "@src/components/Popup";
 import React, { useState } from "react";
 
 
