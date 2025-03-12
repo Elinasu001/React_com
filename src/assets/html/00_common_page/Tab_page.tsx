@@ -60,7 +60,7 @@ const productsData = [
             { value: "tab3", label: "탭 3", component: <NotiList items={noticeListData03}/>},
           ]}
           initialValue="tab1"
-          isScrollable={true}   // 스크롤 기능
+          isScrollable={true}   // 탭스크롤 기능
           useSwiper={true}      // 스와이프 기능 활성화
         />
 
@@ -72,7 +72,7 @@ const productsData = [
             { value: "tab2", label: "탭 2", component: <NotiList items={noticeListData}/>  },
           ]}
           initialValue="tab1"
-          isScrollable={true}  // 스크롤 가능
+          isScrollable={true}  // 탭스크롤 가능
         />
 
         <Typography className="exp">탭 _ 일반[line_full]</Typography>
@@ -83,7 +83,7 @@ const productsData = [
             { value: "tab2", label: "탭 2", component:   <Card03 items={productsData} />  },
           ]}
           initialValue="tab1"
-          containerClass="full" // "bg-gray", "round" , "full"추가 가능
+          containerClass="full" // "bg-gray", "round" , "full" 스타일
         />
 
         <Typography className="exp">탭 _ 일반[line_scroll_scrollButton]</Typography>
@@ -96,8 +96,8 @@ const productsData = [
             { value: "tab5", label: "탭 5", component: <NotiList items={noticeListData}/>  },
           ]}
           initialValue="tab1"
-          isScrollable={true}  // 스크롤 가능
-          scrollButtons="auto" // 자동 스크롤 버튼
+          isScrollable={true}             // 탭스크롤 기능
+          scrollButtons="auto"            // 자동 스크롤 버튼
           allowScrollButtonsMobile={true} // 모바일에서도 버튼 표시
         />
 
@@ -111,7 +111,7 @@ const productsData = [
             { value: "tab4", label: "탭 4", component: <div>내용 2</div> },
           ]}
           initialValue="tab1"
-          containerClass="bg-gray" // "bg-gray", "round", "full" 추가 가능
+          containerClass="bg-gray" // "bg-gray", "round", "full" 스타일
         />
 
         <Typography className="exp">탭 _ [round]</Typography>
@@ -119,16 +119,10 @@ const productsData = [
           items={[
             { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
             { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
-            { value: "tab3", label: "탭 3", component: <div>내용 2</div> },
-            { value: "tab4", label: "탭 4", component: <div>내용 2</div> },
-            { value: "tab5", label: "탭 5", component: <div>내용 2</div> },
-            { value: "tab6", label: "탭 6", component: <div>내용 2</div> },
-            { value: "tab7", label: "탭 7", component: <div>내용 2</div> },
-            { value: "tab8", label: "탭 8", component: <div>내용 2</div> },
           ]}
           initialValue="tab1"
-          isScrollable={true}  // 탭스크롤 추가 (true일 때만 variant="scrollable" 적용)
-          containerClass="round" // "bg-gray", "round", "full" 추가 가능
+          isScrollable={true}    // 탭스크롤 기능
+          containerClass="round" // "bg-gray", "round", "full" 스타일
         />
 
 
