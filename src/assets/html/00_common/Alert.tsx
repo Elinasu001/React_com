@@ -76,8 +76,8 @@ export function messageView(
     };
 
     return (
-      <Modal open={open} className="popup-container modal">
-        <Box className="pop-body">
+      <Modal open={open} className="popup-container modal" role="dialog">
+        <Box className="pop-body" aria-live="assertive">
 
             <Typography component="p">
               {message}
