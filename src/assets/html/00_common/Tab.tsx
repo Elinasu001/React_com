@@ -76,7 +76,9 @@ export const Tab01 = ({                                  // 기본값 설정
     : {};
 
   return (
+    
     <Box className={`tab-container ${containerClass}`.trim()} {...handlers}>
+
       {/* 탭 버튼 리스트 */}
       <Tabs
         value={value}
@@ -87,18 +89,37 @@ export const Tab01 = ({                                  // 기본값 설정
         allowScrollButtonsMobile={isScrollable ? allowScrollButtonsMobile : false}
         aria-label={ariaLabel}
       >
+
         {items.map((item) => (
-          <Tab key={item.value} label={item.label} value={item.value} />
+          <Tab
+            key={item.value}
+            label={item.label}
+            value={item.value}
+            id={`tab-${item.value}`} // 탭 ID 추가
+            aria-controls={`tabpanel-${item.value}`} // 연결된 콘텐츠 ID 설정
+          />
         ))}
+
       </Tabs>
 
       {/* 탭 콘텐츠 */}
       {items.map((item) => (
+
         item.component && value === item.value ? (
-          <Box  key={item.value} className="tab-body">
+
+          <Box
+            className="tab-body"
+            key={item.value}
+            id={`tabpanel-${item.value}`} // 콘텐츠 ID 추가
+            role="tabpanel"
+            aria-labelledby={`tab-${item.value}`} // 탭과 연결
+            hidden={value !== item.value} // 현재 선택된 탭만 보이게 설정
+          >
             {item.component}
           </Box>
+          
         ) : null
+
       ))}
     </Box>
   );

@@ -86,7 +86,7 @@ const productsData = [
           containerClass="full" // "bg-gray", "round" , "full" 스타일
         />
 
-        <Typography className="exp">탭 _ 일반[line_scroll_scrollButton]</Typography>
+        <Typography className="exp">탭 _ 일반[line_scroll_scrollButton]<br/>- 앱접근성으로 인해 탭 잘리는 현상이 있으면 안되어 버튼 추가</Typography>
         <Tab01
           items={[
             { value: "tab1", label: "탭 1", component: <div>내용 1</div>  },
