@@ -21,6 +21,9 @@
   --ico-favorite-active: url(/src/assets/images/com/svg/ico_favorite_active.svg);
   --ico-compare: url(/src/assets/images/com/svg/ico_compare.svg);
   --ico-compare-active: url(/src/assets/images/com/svg/ico_compare_active.svg);
+  --ico-star: url(/src/assets/images/com/svg/ico_star.svg);
+  --ico-star-active: url(/src/assets/images/com/svg/ico_star_active.svg);
+  --ico-modify: url(/src/assets/images/com/svg/ico_modify.svg);
   --ico-secu-delete: url(/src/assets/images/com/svg/ico_secu_del.svg);
 }
 
@@ -146,6 +149,8 @@ body {
   --card-btn: var(--color-45);
   --card-btn-compare-active: var(--primary);
   --card-btn-favorite-active: var(--tertiary);
+  --card-btn-star-active: #fcd513;
+
   //카드 계좌
   --card-account-num: var(--color-75);
   --card-btn-copy: var(--color-9);

@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { Card02, Card03 } from "@src/assets/html/00_common/Card";
+import { Card02, Card03, Card04 } from "@src/assets/html/00_common/Card";
 
 //예시 데이터
 const accountsData = [
@@ -17,6 +17,31 @@ const accountsData = [
     type: "2",
     pdnm: "예금",
     categoryClass: "deposit",
+    acno: "123-456-789",
+    balance: 500000,
+    newDt: "2024-03-10",
+    wtchPosbAmt: 10000,
+    psntInrt: 2.5, nFunc: () => {}
+  }
+];
+
+const userAccountData = [
+  { 
+    type: "1",
+    pdnm: "예금",
+    categoryClass: "deposit",
+    keyword: ["고금리", "안정성"],
+    acno: "123-456-789",
+    balance: 500000,
+    newDt: "2024-03-10",
+    wtchPosbAmt: 10000,
+    psntInrt: 2.5, nFunc: () => {}
+  },
+  {
+    type: "2",
+    pdnm: "예금",
+    categoryClass: "deposit",
+    keyword: ["고금리", "안정성"],
     acno: "123-456-789",
     balance: 500000,
     newDt: "2024-03-10",
@@ -60,6 +85,9 @@ const Card_page = () => {
 
             <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
             <Card03 items={productsData} />
+
+            <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
+            <Card04 items={userAccountData} />
 
         </>
     );

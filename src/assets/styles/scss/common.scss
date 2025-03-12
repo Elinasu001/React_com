@@ -276,7 +276,9 @@
     .card-actions {
         @include mixin.flex-row; gap:6px;
         .btn-compare,
-        .btn-favorite { 
+        .btn-favorite,
+        .btn-star,
+        .btn-modify {
                 width:28px; height:28px;
                 &::before{ content: ""; position: absolute; inset:0; width:28px; height:28px; background-color: var(--card-btn);}
                 // &:focus-visible { @include mixin.outline-effect;}
@@ -291,8 +293,16 @@
             &::before{ @include mixin.mask-style(var(--ico-favorite), auto, 26px); }
             &.active::before { background-color: var(--card-btn-favorite-active); @include mixin.mask-style(var(--ico-favorite-active), auto, 26px); }
         }
+
+        .btn-star {
+            &::before{ @include mixin.mask-style(var(--ico-star), auto, 26px); }
+            &.active::before { background-color: var(--card-btn-star-active); @include mixin.mask-style(var(--ico-star-active), auto, 26px); }
+        }
+        .btn-modify{
+            &::before{ @include mixin.mask-style(var(--ico-modify), auto, 26px); }
+        }
     }
-    .card-info {  @include mixin.flex-row; align-items: flex-start; gap:10px; margin-top:10px; }
+    .card-info {  @include mixin.flex-row; align-items: flex-start; gap:10px; }
     .card-category { 
         padding:0 8px; border-radius:15px; font-size:var(--font12); font-weight: var(--font-w-r); color: var(--card-category); border:1px solid var(--card-category);
         &.loan { color:var(--card-category-loan); border:1px solid var(--card-category-loan); } // 대출
