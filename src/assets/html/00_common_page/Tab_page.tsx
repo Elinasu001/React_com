@@ -50,6 +50,7 @@ const productsData = [
             { value: "tab2", label: "탭 2", component: <NotiList items={noticeListData}/>  },
           ]}
           initialValue="tab1"
+          isScrollable={true}  // 스크롤 가능
         />
 
         <Typography className="exp">탭 _ 일반[line_full]</Typography>
