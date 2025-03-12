@@ -38,17 +38,18 @@ export const openFullPopup = (prop: PopupProps) => {
       //팝업 컴포넌트 생성
       return (
         <MemoryRouter>
-          <Modal open={open} onClose={() => { popupClose(); }}>
+          <Modal aria-labelledby="popup-title" aria-describedby="popup-content" open={open} onClose={() => { popupClose(); }}>
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-              <Box className="popup-container full">
+              <Box className="popup-container full" aria-live="polite">
+
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
+                  <Typography className="pop-tit" id="popup-title" variant="h2">{prop.title}</Typography>
                   {/* X 닫기 버튼 */}
-                  <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
+                  <Button className="btn btn-close right" aria-label="닫기" onClick={() => { popupClose(); }} >
                     <Typography component="span" className="sr-only">닫기</Typography>
                   </Button>
                 </Box>
-                <Box className="pop-body">
+                <Box className="pop-body" id="popup-content">
                   {/* 팝업 내용 */}
                   <Component param={prop.param} onClose={popupClose} />
                 </Box>
@@ -87,16 +88,16 @@ export const openBottomPopup = (prop: PopupProps) => {
       //팝업 컴포넌트 생성
       return (
         <MemoryRouter>
-          <Modal open={open} onClose={() => { popupClose(); }}>
+          <Modal aria-labelledby="popup-title" aria-describedby="popup-content" open={open} onClose={() => { popupClose(); }} >
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container btmSheet">
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
-                  <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <Typography component="span" className="sr-only">닫기</Typography>
+                  <Typography className="pop-tit" id="popup-title" variant="h2" >{prop.title}</Typography>
+                  <Button className="btn btn-close right" aria-label="닫기" onClick={() => { popupClose(); }} >
+                    <Typography className="sr-only" component="span" >닫기</Typography>
                   </Button>
                 </Box>
-                <Box className="pop-body">
+                <Box className="pop-body" id="popup-content">
                   <Component param={prop.param} onClose={popupClose} />
                 </Box>
               </Box>
@@ -134,18 +135,18 @@ export const openPopup = (prop: PopupProps) => {
       //팝업 컴포넌트 생성
       return (
         <MemoryRouter>
-          <Modal open={open} onClose={() => { popupClose(); }}>
+          <Modal aria-labelledby="popup-title" aria-describedby="popup-content" open={open} onClose={() => { popupClose(); }}>
             <Slide direction="up" in={open} mountOnEnter unmountOnExit>
               <Box className="popup-container center">
                 <Box className="pop-header">
-                  <Typography variant="h2" className="pop-tit">{prop.title}</Typography>
+                  <Typography className="pop-tit" id="popup-title" variant="h2">{prop.title}</Typography>
                   {/* X 닫기 버튼 */}
-                  <Button aria-label="close" onClick={() => { popupClose(); }} className="btn btn-close right">
-                    <Typography component="span" className="sr-only">닫기</Typography>
+                  <Button aria-label="닫기" onClick={() => { popupClose(); }} className="btn btn-close right">
+                    <Typography className="sr-only" component="span" >닫기</Typography>
                   </Button>
                 </Box>
 
-                <Box className="pop-body">
+                <Box id="popup-content" className="pop-body">
                   {/* 팝업 내용 */}
                   <Component param={prop.param} onClose={popupClose} />
                 </Box>
