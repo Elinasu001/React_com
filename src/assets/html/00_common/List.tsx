@@ -47,8 +47,9 @@ export const NotiList = ({
     <List className={`list-button-wrap noti-list ${isEventList ? "event" : ""}`}>
       {items.map(({ id, category, label, date, icon, image }) => (
         <ListItem key={id} className={`list-item ${icon ? "has-icon" : ""}`}>
-          
-          {/* 웹접근성을 위해 aria-label은 필수로 맞춰주세요. */}
+
+          {/* 웹접근성을 위해 aria-label 및 label 은 필수로 맞춰주세요. */}
+
           <Button 
             aria-label={`${
             isEventList ? "이벤트" : "공지사항"
