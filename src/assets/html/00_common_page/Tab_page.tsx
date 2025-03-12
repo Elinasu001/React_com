@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { Card03 } from "@src/assets/html/00_common/Card";
 import { NotiList } from "@src/assets/html/00_common/List";
 import { Tab01 } from "@src/assets/html/00_common/Tab";
 
@@ -58,7 +59,7 @@ const productsData = [
         <Tab01
           items={[
             { value: "tab1", label: "탭 1", component: <div>내용 1</div>  },
-            { value: "tab2", label: "탭 2", component: <NotiList items={noticeListData}/>  },
+            { value: "tab2", label: "탭 2", component:   <Card03 items={productsData} />  },
           ]}
           initialValue="tab1"
           containerClass="full" // "bg-gray", "round" , "full"추가 가능
