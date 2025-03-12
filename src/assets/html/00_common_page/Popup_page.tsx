@@ -1,12 +1,12 @@
 // 상대 경로를 사용하는 경우
 import { Box, Typography } from "@mui/material";
 import { ButtonContent, ButtonFooter } from "@src/assets/html/00_common/Button";
-import { openBottomPopup, openFullPopup, openPopup } from "@src/assets/html/00_common/Popup";
+import { openBottomPopup, openFullPopup, openPopup, showKeypad } from "@src/assets/html/00_common/Popup";
 
 // 팝업 컨텐츠 구조 예시
 const PopupContent = () => {
     return (
-    // ** 팝업에서 불러오는 화면은 <> 묵어준 뒤 content 태그와 ButtonFooter 태그로 구분 지어 주세요.
+      // ** 팝업에서 불러오는 화면은 <> 묵어준 뒤 content 태그와 ButtonFooter 태그로 구분 지어 주세요.
       <> 
         <Box className="content">
             <p>이것은 바텀 팝업 내용입니다.</p>
@@ -18,8 +18,10 @@ const PopupContent = () => {
         />
 
       </>
-    );
-  };
+  );
+};
+
+
 
 const Popup_page = () => {
   return (
@@ -61,6 +63,16 @@ const Popup_page = () => {
         <ButtonContent
             name="OpenPopup"
             onClick={() => { openPopup({ component: PopupContent, title: '일반팝업 타이틀'}); }}
+        />
+
+        <Typography className="exp">키패드팝업</Typography>
+
+        <ButtonContent
+          name="키패드"
+          onClick={async () => {
+            const signData = await showKeypad('OTP비밀번호를 입력해주세요',6);
+            alert(signData.getString('num'));
+          }}
         />
     
         

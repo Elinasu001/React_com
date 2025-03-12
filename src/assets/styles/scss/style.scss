@@ -21,6 +21,7 @@
   --ico-favorite-active: url(/src/assets/images/com/svg/ico_favorite_active.svg);
   --ico-compare: url(/src/assets/images/com/svg/ico_compare.svg);
   --ico-compare-active: url(/src/assets/images/com/svg/ico_compare_active.svg);
+  --ico-secu-delete: url(/src/assets/images/com/svg/ico_secu_del.svg);
 }
 
 /*---------------------------------------------
@@ -161,4 +162,10 @@ body {
   --list-categrory-txt: var(--color-2);
   --list-date: var(--color-9);
   --file-clip: var(--color-75);
+
+  /* 키패드 색상 */
+  --secu-dot: var(--color-e4);
+  --secu-dot-active: var(--primary);
+  --secu-num: var(--color-2);
+  --secu-bg-hover: #F7FAFF;
 }
