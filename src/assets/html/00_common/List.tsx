@@ -8,6 +8,7 @@
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 
+//버튼리스트
 interface ListItemType {
   id: number;
   label: string;
@@ -30,6 +31,7 @@ export const ListButton = ({ items }: ListButtonProps) => {
 };
 
 
+//게시판리스트
 export const NotiList = ({
   items,
   isEventList = false, // eventListData인지 여부를 판별하는 prop 추가
