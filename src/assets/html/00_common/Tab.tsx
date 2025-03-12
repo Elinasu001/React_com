@@ -33,8 +33,28 @@ interface TabProps {
 
 
 /**
- * 탭 컴포넌트
- */
+ *  탭 컴포넌트
+ *  // 스타일
+ *  기본 탭
+ *  꽉찬 탭 :: containerClass="full"
+ *  배경 탭 :: containerClass="bg-gray"
+ *  라운드 탭 :: containerClass="round"
+ *  // 기능
+ *  탭 스크롤 기능 :: Tabs 태그 [ isScrollable={true} 적용 ]
+ *  탭 스크롤 기능 + 버튼 기능 :: Tabs 태그 [ isScrollable={true} + scrollButtons={true} 적용 ]
+ *
+ *  예시)
+ *  <Tab01
+ *     items={[
+ *       { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
+ *       { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
+ *     ]}
+ *     initialValue="기본 선택 탭"
+ *     isScrollable={true}  // 스크롤 추가
+ *     containerClass="bg-gray" // "bg-gray", "round" "full" 스타일
+ *   />
+ **/
+
 export const Tab01 = ({
   items,
   initialValue,
@@ -53,29 +73,6 @@ export const Tab01 = ({
   };
 
   return (
-
-    /**
-     *  // 스타일
-     *  기본 탭
-     *  꽉찬 탭 :: containerClass="full"
-     *  배경 탭 :: containerClass="bg-gray"
-     *  라운드 탭 :: containerClass="round"
-     *  // 기능
-     *  탭 스크롤 기능 :: Tabs 태그 [ isScrollable={true} 적용 ]
-     *  탭 스크롤 기능 + 버튼 기능 :: Tabs 태그 [ isScrollable={true} + scrollButtons={true} 적용 ]
-     *
-     *  예시)
-     *  <Tab01
-     *     items={[
-     *       { value: "tab1", label: "탭 1", component: <div>내용 1</div> },
-     *       { value: "tab2", label: "탭 2", component: <div>내용 2</div> },
-     *     ]}
-     *     initialValue="기본 선택 탭"
-     *     isScrollable={true}  // 스크롤 추가
-     *     containerClass="bg-gray" // "bg-gray", "round" "full" 스타일
-     *   />
-     **/
-
     <Box className={`tab-container ${containerClass}`.trim()}>
       {/* 탭 버튼 리스트 */}
       <Tabs
@@ -83,7 +80,7 @@ export const Tab01 = ({
         onChange={handleChange}
         className="tab-item"
         variant={isScrollable ? "scrollable" : "standard"}
-        scrollButtons={isScrollable ? scrollButtons : false}  // 수정된 부분
+        scrollButtons={isScrollable ? scrollButtons : false}
         allowScrollButtonsMobile={isScrollable ? allowScrollButtonsMobile : false}
         aria-label={ariaLabel}
       >
