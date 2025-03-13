@@ -18,10 +18,10 @@ import React, { useState } from "react";
  */
 interface AcnoDepositCardProps {
   items: {
-    type: string;
-    acno: string;
-    balance: number;
-    pdnm: string;
+    type: string;                          //상품유형
+    acno: string;                          //계좌
+    balance: number;                       //잔액
+    pdnm: string;                          //상품명
     newDt: string;
     wtchPosbAmt: number;
     psntInrt: number;
@@ -30,6 +30,7 @@ interface AcnoDepositCardProps {
     showTradeHs?: boolean;
 
     buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
+    isMain?: boolean; // 메인 여부를 판단하는 prop 추가
   }[];
 }
 
@@ -106,7 +107,8 @@ export const AcnoDepositCard = ({ items }: AcnoDepositCardProps) => {
 
                 {/* 계좌 잔액 */}
                 <Box className="card-balance">
-                    <Typography className="txt-balance">잔액</Typography>
+                    {/* 메인에서는 잔액 텍스트 안보이게 처리 */}
+                    {item.isMain !== true && (<Typography className="txt-balance">잔액</Typography>)}
                     <Typography className="num-balance highlight" aria-label={`잔액 ${item.balance.toLocaleString()} 원`}>
                     {(item.balance ?? 0).toLocaleString()} <span>원</span>
                     </Typography>
@@ -129,18 +131,20 @@ export const AcnoDepositCard = ({ items }: AcnoDepositCardProps) => {
  */
 interface AcnoLoanCardProps {
   items: {
-    type: string;
-    acno: string;
-    balance: number;
-    pdnm: string;
+    type: string;                         //상품유형
+    acno: string;                         //계좌
+    balance: number;                      //대출잔액
+    appAmt?: number;                      //대출신청금액
+    pdnm: string;                         //상품명
     newDt: string;
     wtchPosbAmt: number;
     psntInrt: number;
-    categoryClass: string; // 카테고리 색상 클래스
+    categoryClass: string;                // 카테고리 색상 클래스
     nFunc?: (data?: DataSet) => void;
-    showTradeHs?: boolean;
+    showTradeHs?: boolean;                //기존
     
     buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
+    isMain?: boolean; // 메인 여부를 판단하는 prop 추가
   }[];
 }
  
@@ -190,8 +194,12 @@ export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
                     </Button>
                 </Box>
     
-                {/* 만기일자 표시 */}
-                <Typography className="card-mtyDate">만기일자 <span className="card-mtyDate-value">{["2024-03-13", "원리금균등"].join(" | ")}</span></Typography>
+                {/* 만기일자 표시 - 메인 계좌일 경우만 */}
+                {item.isMain === true && (
+                  <Typography className="card-mtyDate">
+                    만기일자 <span className="card-mtyDate-value">{["2024-03-13", "원리금균등"].join(" | ")}</span>
+                  </Typography>
+                )}
 
                 {/* 계좌번호 및 복사 아이콘 */}
                 <Box className="card-account-info">
@@ -219,11 +227,21 @@ export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
 
                 {/* 계좌 잔액 */}
                 <Box className="card-balance">
-                    <Typography className="txt-balance">잔액</Typography>
+                    {/* 메인에서는 잔액 텍스트 안보이게 처리 */}
+                    {item.isMain !== true && (<Typography className="txt-balance">대출잔액</Typography>)}
                     <Typography className="num-balance highlight" aria-label={`잔액 ${item.balance.toLocaleString()} 원`}>
                     {(item.balance ?? 0).toLocaleString()} <span>원</span>
                     </Typography>
                 </Box>
+                
+                {item.appAmt !== undefined && (
+                  <Box className="card-balance">
+                    <Typography className="txt-balance">대출신청금액</Typography>
+                    <Typography className="num-balance" aria-label={`신청금액 ${item.appAmt.toLocaleString()} 원`}>
+                      {item.appAmt.toLocaleString()} <span>원</span>
+                    </Typography>
+                  </Box>
+                )}
 
                 {/* 컨텐츠 공통 버튼 적용 - 예시입니다. */}
                 {item.buttons && item.buttons.length > 0 && <ButtonContent buttons={item.buttons} />}

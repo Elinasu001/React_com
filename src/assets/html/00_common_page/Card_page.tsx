@@ -1,10 +1,25 @@
 import { Typography } from "@mui/material";
 import { AcnoDepositCard, AcnoLoanCard, Card03, Card04 } from "@src/assets/html/00_common/Card";
 
-//예적금 예시 데이터
+//메인 _ 예적금 예시 데이터
 const AcnoDepositData = [
+      {
+        type: "메인_입출금",
+        pdnm: "보통예금",
+        categoryClass: "deposit",
+        acno: "123-456-789",
+        balance: 500000,
+        newDt: "2024-03-10",
+        wtchPosbAmt: 10000,
+        psntInrt: 2.5,
+        buttons: [
+          { name: "거래내역" },
+          { name: "이체" }
+        ],
+        isMain: true
+    },
     {
-      type: "입출금",
+      type: "상세_입출금",
       pdnm: "보통예금",
       categoryClass: "deposit",
       acno: "123-456-789",
@@ -13,16 +28,16 @@ const AcnoDepositData = [
       wtchPosbAmt: 10000,
       psntInrt: 2.5,
       buttons: [
-        { name: "거래내역" },
+        { name: "납입일변경" },
         { name: "이체" }
-      ]
+      ],
   },
 ];
 
-//대출&종합대출 예시 데이터
+//메인 _ 대출&종합대출 예시 데이터
 const AcnoLoanData = [
   {
-    type: "신용대출",
+    type: "메인_신용대출",
     pdnm: "빅머니M",
     categoryClass: "loan",
     acno: "123-456-789",
@@ -33,10 +48,26 @@ const AcnoLoanData = [
     buttons: [
       { name: "거래내역" },
       { name: "이자즉시출금" }
-    ]
+    ],
+    isMain: true,
   },
   {
-    type: "담보대출",
+    type: "상세_신용대출",
+    pdnm: "빅머니M",
+    categoryClass: "loan",
+    acno: "123-456-789",
+    balance: 500000,
+    appAmt: 1000000,
+    newDt: "2024-03-10",
+    wtchPosbAmt: 10000,
+    psntInrt: 2.5,
+    buttons: [
+      { name: "추가대출" },
+      { name: "이자즉시출금" }
+    ],
+  },
+  {
+    type: "메인_담보대출",
     pdnm: "종합통장대출(인터넷)",
     categoryClass: "loan",
     acno: "123-456-789",
@@ -46,10 +77,11 @@ const AcnoLoanData = [
     psntInrt: 2.5,
     buttons: [
       { name: "거래내역" },
-    ]
+    ],
+    isMain: true,
   },
   {
-    type: "담보대출",
+    type: "메인_담보대출",
     pdnm: "종합통장대출(인터넷)",
     categoryClass: "loan",
     acno: "123-456-789",
@@ -57,6 +89,7 @@ const AcnoLoanData = [
     newDt: "2024-03-10",
     wtchPosbAmt: 10000,
     psntInrt: 2.5,
+    isMain: true,
   },
 ];
 
