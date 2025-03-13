@@ -1,57 +1,92 @@
 import { Typography } from "@mui/material";
-import { Card02, Card03, Card04 } from "@src/assets/html/00_common/Card";
+import { AcnoDepositCard, AcnoLoanCard, Card03, Card04 } from "@src/assets/html/00_common/Card";
 
-//예시 데이터
-const accountsData = [
-  { 
-    type: "1",
-    pdnm: "예금",
-    categoryClass: "deposit",
+//예적금 예시 데이터
+const AcnoDepositData = [
+    {
+      type: "입출금",
+      pdnm: "보통예금",
+      categoryClass: "deposit",
+      acno: "123-456-789",
+      balance: 500000,
+      newDt: "2024-03-10",
+      wtchPosbAmt: 10000,
+      psntInrt: 2.5,
+      buttons: [
+        { name: "거래내역" },
+        { name: "이체" }
+      ]
+  },
+];
+
+//대출&종합대출 예시 데이터
+const AcnoLoanData = [
+  {
+    type: "신용대출",
+    pdnm: "빅머니M",
+    categoryClass: "loan",
     acno: "123-456-789",
     balance: 500000,
     newDt: "2024-03-10",
     wtchPosbAmt: 10000,
-    psntInrt: 2.5, nFunc: () => {}
+    psntInrt: 2.5,
+    buttons: [
+      { name: "거래내역" },
+      { name: "이자즉시출금" }
+    ]
   },
   {
-    type: "2",
-    pdnm: "예금",
-    categoryClass: "deposit",
+    type: "담보대출",
+    pdnm: "종합통장대출(인터넷)",
+    categoryClass: "loan",
     acno: "123-456-789",
     balance: 500000,
     newDt: "2024-03-10",
     wtchPosbAmt: 10000,
-    psntInrt: 2.5, nFunc: () => {}
-  }
+    psntInrt: 2.5,
+    buttons: [
+      { name: "거래내역" },
+    ]
+  },
+  {
+    type: "담보대출",
+    pdnm: "종합통장대출(인터넷)",
+    categoryClass: "loan",
+    acno: "123-456-789",
+    balance: 500000,
+    newDt: "2024-03-10",
+    wtchPosbAmt: 10000,
+    psntInrt: 2.5,
+  },
 ];
 
 const userAccountData = [
-  { 
-    type: "1",
-    pdnm: "예금",
-    categoryClass: "deposit",
-    keyword: ["고금리", "안정성"],
-    acno: "123-456-789",
-    balance: 500000,
-    newDt: "2024-03-10",
-    wtchPosbAmt: 10000,
-    psntInrt: 2.5, nFunc: () => {}
-  },
   {
-    type: "2",
-    pdnm: "예금",
+    type: "예금",
+    pdnm: "e정기예금 단리",
     categoryClass: "deposit",
     keyword: ["고금리", "안정성"],
     acno: "123-456-789",
     balance: 500000,
     newDt: "2024-03-10",
     wtchPosbAmt: 10000,
-    psntInrt: 2.5, nFunc: () => {}
-  }
+    psntInrt: 2.5
+  },
 ];
 
 //예시 데이터
 const productsData = [
+  {
+    pdcd: "P001",
+    pdDesc: "안전한 종합대출 상품입니다.",
+    categoty: "종합대출",
+    categoryClass: "loanTotal",
+    pdnm: "종합대출 상품 1",
+    keyword: ["고금리", "안정성"],
+    contents1: "3년 또는 5년",
+    contents2: "최저 연 5.90%",
+    onClick: () => console.log("상품 클릭됨"),
+  },
   {
     pdcd: "P001",
     pdDesc: "안전한 예금 상품입니다.",
@@ -59,35 +94,30 @@ const productsData = [
     categoryClass: "deposit",
     pdnm: "예금 상품 1",
     keyword: ["고금리", "안정성"],
-    contents1: "최대 5% 이자",
-    contents2: "월 1회 이자 지급",
+    contents1: "3년 또는 5년",
+    contents2: "최저 연 5.90%",
     onClick: () => console.log("상품 클릭됨"),
   },
-  {
-    pdcd: "P002",
-    pdDesc: "안전한 예금 상품입니다.",
-    categoty: "예적금",
-    categoryClass: "deposit",
-    pdnm: "예금 상품 1",
-    keyword: ["고금리", "안정성"],
-    contents1: "최대 5% 이자",
-    contents2: "월 1회 이자 지급",
-    onClick: () => console.log("상품 클릭됨"),
-  }
+ 
 ];
 
 
 const Card_page = () => {
     return (
         <>
-            <Typography className="exp">계좌 카드</Typography>
-            <Card02 items={accountsData} />
+            <Typography className="exp">예적금 계좌 카드</Typography>
+            <AcnoDepositCard items={AcnoDepositData} />
 
-            <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
+            <Typography className="exp">대출 계좌 카드</Typography>
+            <AcnoLoanCard items={AcnoLoanData} />
+
+
+            <Typography className="exp">대출/예/적금/종합대출 카드 <br/>** 작업중입니다.</Typography>
+            <Card04 items={userAccountData} />
+
+            <Typography className="exp">대출/예/적금/종합대출 카드<br/>** 작업중입니다.</Typography>
             <Card03 items={productsData} />
 
-            <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
-            <Card04 items={userAccountData} />
 
         </>
     );

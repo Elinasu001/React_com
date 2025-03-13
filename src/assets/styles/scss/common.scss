@@ -307,13 +307,16 @@
         padding:0 8px; border-radius:15px; font-size:var(--font12); font-weight: var(--font-w-r); color: var(--card-category); border:1px solid var(--card-category);
         &.loan { color:var(--card-category-loan); border:1px solid var(--card-category-loan); } // 대출
         &.deposit { color:var(--card-category-deposit); border:1px solid var(--card-category-deposit); } // 예적금
+        &.loanTotal { color:var(--card-category-loanTotal); border: 1px solid var(--card-category-loanTotal) } // 종합대출
     }
 
     .card-name { line-height:var(--font20); font-size:var(--font18); font-weight: var(--font-w-b); color:var(--card-name); }
     .card-tag { margin-top:8px; font-size:var(--font14); color:var(--card-tag); }
     .card-term { margin-top:12px; font-size:var(--font14); font-weight: var(--font-w-m); color:var(--card-term); }
     .card-rate { font-size:var(--font20); font-weight: var(--font-w-b); color:var(--card-rate);}
-
+    .card-mtyDate { padding-top:10px; font-size:var(--font16); font-weight: var(--font-w-m); color:var(--card-mtyDate-num);
+        .card-mtyDate-value { padding-left:4px; font-size:var(--font14); font-weight: var(--font-w-r); color:var(--card-mtyDate-num); }
+    }
     .btn-control { // 임시 mui 아이콘
         padding:0 !important;
         .MuiSvgIcon-root { width:20px; height:20px; fill:var(--card-btn-control); }
@@ -331,6 +334,7 @@
         font-size:var(--font20);
         .txt-balance { font-size: var(--font14); font-weight: var(--font-w-m); }
         .num-balance { font-size: var(--font18); font-weight: var(--font-w-b); }
+        .highlight { color:var(--primary); }
     }
     .btn-area { padding-top:20px; }
     

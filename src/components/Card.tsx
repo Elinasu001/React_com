@@ -9,7 +9,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Alert, Box, Card, CardContent, IconButton, Card as MuiCard, Snackbar, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import DataSet from "@src/assets/io/DataSet";
-import { Button01, ButtonContent } from "@src/components/Button";
+import { ButtonContent } from "@src/components/Button";
 import { openBottomPopupWithMenu } from "@src/components/Popup";
 import React, { useState } from "react";
 
@@ -198,8 +198,8 @@ export const Card02 = ({ type, acno, balance, pdnm, newDt, wtchPosbAmt, psntInrt
             type === "4"
               ? [{ name: "상환", className: "btn-secondary" }]
               : [
-                ...(showTradeHs ? [{name: "거래내역",className: "btn-secondary",onClick: () => nFunc?.(new DataSet({ acno, type, pdnm, balance }))}] : []),
-                  { name: "이체", className: "btn-primary" },                
+                ...(showTradeHs ? [{name: "거래내역",className: "btn-secondary", onClick: () => nFunc?.(new DataSet({ acno, type, pdnm, balance }))}] : []),
+                  { name: "이체", className: "btn-primary" },
                 ]
                 
           }

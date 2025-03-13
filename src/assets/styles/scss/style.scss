@@ -140,11 +140,13 @@ body {
   --card-desc: var(--color-9);
   --card-name: var(--color-2);
   --card-category: var(--color-2);
-  --card-category-loan: var(--primary);
-  --card-category-deposit: var(--tertiary);
+  --card-category-loan: var(--tertiary);
+  --card-category-deposit: var(--primary);
+  --card-category-loanTotal: #EBAF29;
   --card-tag: var(--color-75);
   --card-term: var(--color-2);
   --card-rate: var(--primary);
+  --card-mtyDate-num: var(--color-75);
   //카드 버튼
   --card-btn: var(--color-45);
   --card-btn-compare-active: var(--primary);

@@ -14,9 +14,9 @@ import React, { useState } from "react";
 
 
 /**
- * 계좌 카드 속성
+ *  예적금 관리 카드 속성
  */
-interface Card02Props {
+interface AcnoDepositCardProps {
   items: {
     type: string;
     acno: string;
@@ -28,14 +28,16 @@ interface Card02Props {
     categoryClass: string; // 카테고리 색상 클래스
     nFunc?: (data?: DataSet) => void;
     showTradeHs?: boolean;
+
+    buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
   }[];
 }
 
 /**
- * 카드 컴포넌트 (계좌 전용)
+ *  예적금 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card02 = ({ items }: Card02Props) => {
+export const AcnoDepositCard = ({ items }: AcnoDepositCardProps) => {
   
   return (
     <List className="card-wrap">
@@ -44,97 +46,75 @@ export const Card02 = ({ items }: Card02Props) => {
           <Card className="card-box">
             <CardContent>
               <Box className="card-info-actions">
-                {/* 상품타입 + 상품명 */}
-                <Box className="card-info">
-                  <Typography className={`card-category ${item.categoryClass}`} aria-label={`상품 유형: ${item.type}`}>
-                    {item.type}
-                  </Typography>
-                  <Typography className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
-                    {item.pdnm}
-                  </Typography>
+                    {/* 상품타입 + 상품명 */}
+                    <Box className="card-info">
+                    <Typography className={`card-category ${item.categoryClass}`} aria-label={`상품 유형: ${item.type}`}>
+                        {item.type}
+                    </Typography>
+                    <Typography className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
+                        {item.pdnm}
+                    </Typography>
+                    </Box>
+
+                    {/* 설정 버튼 */}
+                    <Button
+                    className="btn-control"
+                    aria-label="계좌 설정"
+                    onClick={() =>
+                        openBottomPopupWithMenu({
+                        title: "계좌설정",
+                        param: new DataSet({
+                            acno: item.acno,
+                            type: item.type,
+                            pdnm: item.pdnm,
+                            balance: item.balance,
+                            newDt: item.newDt,
+                            wtchPosbAmt: item.wtchPosbAmt,
+                            psntInrt: item.psntInrt,
+                        }),
+                        })
+                    }
+                    >
+                    <MoreVertIcon />
+                    </Button>
                 </Box>
 
-                {/* 설정 버튼 */}
-                <Button
-                  className="btn-control"
-                  aria-label="계좌 설정"
-                  onClick={() =>
-                    openBottomPopupWithMenu({
-                      title: "계좌설정",
-                      param: new DataSet({
-                        acno: item.acno,
-                        type: item.type,
-                        pdnm: item.pdnm,
-                        balance: item.balance,
-                        newDt: item.newDt,
-                        wtchPosbAmt: item.wtchPosbAmt,
-                        psntInrt: item.psntInrt,
-                      }),
-                    })
-                  }
-                >
-                  <MoreVertIcon />
-                </Button>
-              </Box>
+                {/* 계좌번호 및 복사 아이콘 */}
+                <Box className="card-account-info">
+                    <Typography className="account-num" aria-label={`계좌번호 ${item.acno}`}>
+                    {item.acno}
+                    </Typography>
+                    <Button
+                    className="btn-copy"
+                    aria-label="계좌번호 복사"
+                    onClick={() => {
+                        if (typeof window !== "undefined" && navigator?.clipboard) {
+                        try {
+                            navigator.clipboard.writeText(item.acno);
+                        } catch (error) {
+                            console.error("클립보드 복사 오류:", error);
+                        }
+                        } else {
+                        console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
+                        }
+                    }}
+                    >
+                    <ContentCopyIcon />
+                    </Button>
+                </Box>
 
-              {/* 계좌번호 및 복사 아이콘 */}
-              <Box className="card-account-info">
-                <Typography className="account-num" aria-label={`계좌번호 ${item.acno}`}>
-                  {item.acno}
-                </Typography>
-                <Button
-                  className="btn-copy"
-                  aria-label="계좌번호 복사"
-                  onClick={() => {
-                    if (typeof window !== "undefined" && navigator?.clipboard) {
-                      try {
-                        navigator.clipboard.writeText(item.acno);
-                      } catch (error) {
-                        console.error("클립보드 복사 오류:", error);
-                      }
-                    } else {
-                      console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
-                    }
-                  }}
-                  // onKeyDown={(e) => {
-                  //   if (e.key === "Enter" || e.key === " ") {
-                  //     e.preventDefault();
-                  //     navigator.clipboard.writeText(item.acno);
-                  //     alert("계좌번호가 복사되었습니다.");
-                  //   }
-                  // }}
-                >
-                  <ContentCopyIcon />
-                </Button>
-              </Box>
 
-              {/* 계좌 잔액 */}
-              <Box className="card-balance">
-                <Typography className="txt-balance">잔액</Typography>
-                <Typography className="num-balance" aria-label={`잔액 ${item.balance.toLocaleString()} 원`}>
-                  {(item.balance ?? 0).toLocaleString()} <span>원</span>
-                </Typography>
-              </Box>
+                {/* 계좌 잔액 */}
+                <Box className="card-balance">
+                    <Typography className="txt-balance">잔액</Typography>
+                    <Typography className="num-balance highlight" aria-label={`잔액 ${item.balance.toLocaleString()} 원`}>
+                    {(item.balance ?? 0).toLocaleString()} <span>원</span>
+                    </Typography>
+                </Box>
 
-              {/* 컨텐츠 공통 버튼 적용 */}
-              <ButtonContent
-                buttons={
-                  item.type === "4"
-                    ? [{ name: "상환하기" }]
-                    : [
-                        ...(item.showTradeHs
-                          ? [
-                              {
-                                name: "거래내역보기",
-                                onClick: () =>
-                                  item.nFunc?.(new DataSet({ acno: item.acno, type: item.type, pdnm: item.pdnm, balance: item.balance })),
-                              },
-                            ]
-                          : []),
-                        { name: "이체하기" },
-                      ]
-                }
-              />
+                {/* 컨텐츠 공통 버튼 적용 - 예시입니다. */}
+                {item.buttons && item.buttons.length > 0 && <ButtonContent buttons={item.buttons} />}
+
             </CardContent>
           </Card>
         </ListItem>
@@ -142,6 +122,120 @@ export const Card02 = ({ items }: Card02Props) => {
     </List>
 );
 };
+
+
+/**
+ *  대출 관리 카드 속성
+ */
+interface AcnoLoanCardProps {
+  items: {
+    type: string;
+    acno: string;
+    balance: number;
+    pdnm: string;
+    newDt: string;
+    wtchPosbAmt: number;
+    psntInrt: number;
+    categoryClass: string; // 카테고리 색상 클래스
+    nFunc?: (data?: DataSet) => void;
+    showTradeHs?: boolean;
+    
+    buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
+  }[];
+}
+
+/**
+ * 대출 카드 컴포넌트 (계좌 전용)
+ */
+
+export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
+  
+  return (
+    <List className="card-wrap">
+      {items.map((item, index) => (
+        <ListItem key={index} className="card-list">
+          <Card className="card-box">
+            <CardContent>
+                <Box className="card-info-actions">
+                    {/* 상품타입 + 상품명 */}
+                    <Box className="card-info">
+                    <Typography className={`card-category ${item.categoryClass}`} aria-label={`상품 유형: ${item.type}`}>
+                        {item.type}
+                    </Typography>
+                    <Typography className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
+                        {item.pdnm}
+                    </Typography>
+                    </Box>
+
+                    {/* 설정 버튼 */}
+                    <Button
+                    className="btn-control"
+                    aria-label="계좌 설정"
+                    onClick={() =>
+                        openBottomPopupWithMenu({
+                        title: "계좌설정",
+                        param: new DataSet({
+                            acno: item.acno,
+                            type: item.type,
+                            pdnm: item.pdnm,
+                            balance: item.balance,
+                            newDt: item.newDt,
+                            wtchPosbAmt: item.wtchPosbAmt,
+                            psntInrt: item.psntInrt,
+                        }),
+                        })
+                    }
+                    >
+                    <MoreVertIcon />
+                    </Button>
+                </Box>
+    
+                {/* 만기일자 표시 */}
+                <Typography className="card-mtyDate">만기일자 <span className="card-mtyDate-value">{["2024-03-13", "원리금균등"].join(" | ")}</span></Typography>
+
+                {/* 계좌번호 및 복사 아이콘 */}
+                <Box className="card-account-info">
+                    <Typography className="account-num" aria-label={`계좌번호 ${item.acno}`}>
+                    {item.acno}
+                    </Typography>
+                    <Button
+                    className="btn-copy"
+                    aria-label="계좌번호 복사"
+                    onClick={() => {
+                        if (typeof window !== "undefined" && navigator?.clipboard) {
+                        try {
+                            navigator.clipboard.writeText(item.acno);
+                        } catch (error) {
+                            console.error("클립보드 복사 오류:", error);
+                        }
+                        } else {
+                        console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
+                        }
+                    }}
+                    >
+                    <ContentCopyIcon />
+                    </Button>
+                </Box>
+
+                {/* 계좌 잔액 */}
+                <Box className="card-balance">
+                    <Typography className="txt-balance">잔액</Typography>
+                    <Typography className="num-balance highlight" aria-label={`잔액 ${item.balance.toLocaleString()} 원`}>
+                    {(item.balance ?? 0).toLocaleString()} <span>원</span>
+                    </Typography>
+                </Box>
+
+                {/* 컨텐츠 공통 버튼 적용 - 예시입니다. */}
+                {item.buttons && item.buttons.length > 0 && <ButtonContent buttons={item.buttons} />}
+
+            </CardContent>
+          </Card>
+        </ListItem>
+      ))}
+    </List>
+);
+};
+
 
 
 
@@ -182,7 +276,7 @@ export const Card03 = ({ items }: Card03Props) => {
     });
 
     setSnackbarMessage(
-      isFavorite[index] ? "관심 상품에서 제외되었습니다." : "관심 상품으로 등록되었습니다."
+      isFavorite[index] ? "관심상품에서 제외되었습니다." : "관심상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
@@ -198,7 +292,7 @@ export const Card03 = ({ items }: Card03Props) => {
     });
 
     setSnackbarMessage(
-      isCompared[index] ? "비교 상품에서 제외되었습니다." : "비교 상품으로 등록되었습니다."
+      isCompared[index] ? "비교상품에서 제외되었습니다." : "비교상품으로 등록되었습니다."
     );
     setSnackbarOpen(true);
   };
@@ -439,4 +533,4 @@ export const Card04 = ({ items }: Card04Props) => {
 };
 
  
-export default { Card02, Card03, Card04 };
+export default { AcnoDepositCard, AcnoLoanCard, Card03, Card04 };
