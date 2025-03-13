@@ -1,17 +1,20 @@
-import { store } from "@src/assets/js/redux/store"; // store 불러오기
 import { ThemeProvider } from "@mui/material/styles";
 import App from '@src/App';
+import { store } from "@src/assets/js/redux/store"; // store 불러오기
 import '@src/assets/styles/scss/global.scss';
 import '@src/index.css';
 import theme from "@src/theme/theme";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import { HashRouter } from "react-router-dom";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
     </ThemeProvider>
   </Provider>
 );
