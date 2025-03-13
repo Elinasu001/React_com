@@ -8,7 +8,6 @@ export default defineConfig(({ mode }) => {
   env.VITE_APP_API_BASE_URL//환경변수 호출 샘플
 
   return {
-    base: "/React_com/",
     plugins: [react(), tsconfigPaths()],
     server: {
       host: '0.0.0.0', // 모든 네트워크 인터페이스에서 접근 허용
