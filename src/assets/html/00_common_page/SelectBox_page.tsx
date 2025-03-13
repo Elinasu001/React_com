@@ -4,7 +4,7 @@ const SelectBox_page = () => {
     return (
       <>
       
-        </>
+      </>
     );
   };
   

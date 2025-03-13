@@ -12,7 +12,7 @@ const Alert_page = () => {
             buttons={[
                 {
                 name: "Alert 호출",
-                    onClick: () => {
+                    clickFunc: () => {
                         messageView(
                         "이것은 알럿 메시지입니다.",
                         "확인",
@@ -29,7 +29,7 @@ const Alert_page = () => {
             buttons={[
                 {
                 name: "Alert Confirm 호출",
-                    onClick: () => {
+                    clickFunc: () => {
                         messageView(
                         '두 개 버튼 메시지',
                         "확인",

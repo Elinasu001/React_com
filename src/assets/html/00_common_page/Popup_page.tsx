@@ -14,7 +14,7 @@ const PopupContent = () => {
 
         <ButtonFooter
           name="버튼명"
-          onClick={() => console.log("팝업 버튼 클릭")}
+          clickFunc={() => console.log("팝업 버튼 클릭")}
         />
 
       </>
@@ -48,28 +48,28 @@ const Popup_page = () => {
 
         <ButtonContent
             name="BottomSheetPopup"
-            onClick={() => { openBottomPopup({ component: PopupContent, title: '바텀 팝업 타이틀'}); }}
+            clickFunc={() => { openBottomPopup({ component: PopupContent, title: '바텀 팝업 타이틀'}); }}
         />
 
         <Typography className="exp">풀팝업</Typography>
 
         <ButtonContent
             name="FullPopup"
-            onClick={() => { openFullPopup({ component: PopupContent, title: '풀팝업 타이틀'}); }}
+            clickFunc={() => { openFullPopup({ component: PopupContent, title: '풀팝업 타이틀'}); }}
         />
 
         <Typography className="exp">오픈팝업</Typography>
 
         <ButtonContent
             name="OpenPopup"
-            onClick={() => { openPopup({ component: PopupContent, title: '일반팝업 타이틀'}); }}
+            clickFunc={() => { openPopup({ component: PopupContent, title: '일반팝업 타이틀'}); }}
         />
 
         <Typography className="exp">키패드팝업</Typography>
 
         <ButtonContent
           name="키패드"
-          onClick={async () => {
+          clickFunc={async () => {
             const signData = await showKeypad('OTP비밀번호를 입력해주세요',6);
             alert(signData.getString('num'));
           }}

@@ -82,6 +82,7 @@ import HTML_SelectBox_page from "@src/assets/html/00_common_page/SelectBox_page"
 import HTML_SelectPopup_page from "@src/assets/html/00_common_page/SelectPopup_page";
 import HTML_Tab_page from "@src/assets/html/00_common_page/Tab_page";
 import HTML_Text_page from "@src/assets/html/00_common_page/Text_page";
+import HTML_Textlist_page from "@src/assets/html/00_common_page/Textlist_page";
 import HTML_MAIN000 from "@src/assets/html/00_main/MAIN000";
 import HTML_MAIN001 from "@src/assets/html/00_main/MAIN001";
 import HTML_POP001 from "@src/assets/html/00_pop/POP001";
@@ -294,6 +295,7 @@ const App = () => {
           <Route path="Header.html" element={<HTML_Header />} />
           <Route path="Menu.html" element={<HTML_Menu />} />
           <Route path="Text_page.html" element={<HTML_Text_page />} />
+          <Route path="Textlist_page.html" element={<HTML_Textlist_page />} />
           <Route path="Popup_page.html" element={<HTML_Popup_page />} />
           <Route path="Button_page.html" element={<HTML_Button_page />} />
           <Route path="Alert_page.html" element={<HTML_Alert_page />} />

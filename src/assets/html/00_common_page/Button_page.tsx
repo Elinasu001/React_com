@@ -1,6 +1,7 @@
 // 상대 경로를 사용하는 경우
 import { Typography } from "@mui/material";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
+
 const Button_page = () => {
   return (
     <>

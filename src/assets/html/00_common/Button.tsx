@@ -8,7 +8,6 @@
 import { Box, Button } from '@mui/material';
 
 // ** 기존과 바뀐 내용  **
-// clickFunc > onclick 으로 통일
 // btnName > name 으로 통일
 // 단일 버튼과 여러 개 버튼으로 나누어 사용 가능
 
@@ -17,13 +16,13 @@ interface ButtonProps {
 
   // 단일 버튼용
   name?: string;
-  onClick?: () => void;
+  clickFunc?: () => void;
   disabled?: boolean;
 
   // 여러 개 버튼 지원
   buttons?: {
     name: string;
-    onClick?: () => void;
+    clickFunc?: () => void;
     disabled?: boolean;
   }[];
 
@@ -31,7 +30,7 @@ interface ButtonProps {
 }
 
 // 컨텐츠 버튼 ex) 카드 내부 버튼, 일반 페이지 버튼
-export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps) => {
+export const ButtonContent = ({ name, clickFunc, disabled, buttons }: ButtonProps) => {
   
   // 버튼 개수 확인
   const buttonCount = buttons ? buttons.length : 1;
@@ -66,7 +65,7 @@ export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps)
           <Button
             key={index}
             className="btn"
-            onClick={btn.onClick}
+            onClick={btn.clickFunc}
             disabled={btn.disabled ?? false}
           >
             {btn.name}
@@ -76,7 +75,7 @@ export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps)
         /* 단일 버튼을 사용할 경우 */
         <Button
           className="btn"
-          onClick={onClick}
+          onClick={clickFunc}
           disabled={disabled ?? false}
         >
           {name}
@@ -88,7 +87,7 @@ export const ButtonContent = ({ name, onClick, disabled, buttons }: ButtonProps)
 };
 
 // 컨텐츠 하단 버튼 ex) 팝업 하단 버튼, 일반 페이지 하단 버튼
-export const ButtonFooter = ({ name, onClick, disabled, buttons }: ButtonProps) => {
+export const ButtonFooter = ({ name, clickFunc, disabled, buttons }: ButtonProps) => {
 
    // 버튼 개수 확인
    const buttonCount = buttons ? buttons.length : 1;
@@ -123,7 +122,7 @@ export const ButtonFooter = ({ name, onClick, disabled, buttons }: ButtonProps) 
            <Button
              key={index}
              className="btn"
-             onClick={btn.onClick}
+             onClick={btn.clickFunc}
              disabled={btn.disabled ?? false}
            >
              {btn.name}
@@ -133,7 +132,7 @@ export const ButtonFooter = ({ name, onClick, disabled, buttons }: ButtonProps) 
          /* 단일 버튼을 사용할 경우 */
          <Button
            className="btn"
-           onClick={onClick}
+           onClick={clickFunc}
            disabled={disabled ?? false}
          >
            {name}

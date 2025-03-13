@@ -88,10 +88,10 @@ export function messageView(
               buttons={
                 fBtn
                   ? [
-                      { name: fBtn, onClick: handleCancel },
-                      { name: nBtn, onClick: handleConfirm },
+                      { name: fBtn, clickFunc: handleCancel },
+                      { name: nBtn, clickFunc: handleConfirm },
                     ]
-                  : [{ name: nBtn, onClick: handleConfirm }]
+                  : [{ name: nBtn, clickFunc: handleConfirm }]
               }
             />
             

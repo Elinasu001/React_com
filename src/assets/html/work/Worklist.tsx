@@ -58,6 +58,9 @@ const Worklist = () => {
       <Button onClick={() => navigate("/html/Text_page.html")}>
         Text - 박수현
       </Button>
+      <Button onClick={() => navigate("/html/Textlist_page.html")}>
+        Textlist - 박수현
+      </Button>
       
     </Box>
   );

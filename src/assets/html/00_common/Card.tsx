@@ -508,7 +508,7 @@ export const Card04 = ({ items }: Card04Props) => {
                           ? [
                               {
                                 name: "거래내역보기",
-                                onClick: () =>
+                                clickFunc: () =>
                                   item.nFunc?.(new DataSet({ acno: item.acno, type: item.type, pdnm: item.pdnm, balance: item.balance })),
                               },
                             ]

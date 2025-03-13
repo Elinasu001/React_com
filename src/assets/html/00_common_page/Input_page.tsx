@@ -2,7 +2,7 @@ const Input_page = () => {
   return (
     <>
     
-      </>
+    </>
   );
 };
 
