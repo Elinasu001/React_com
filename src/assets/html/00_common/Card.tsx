@@ -34,7 +34,7 @@ interface AcnoDepositCardProps {
 }
 
 /**
- *  예적금 카드 컴포넌트 (계좌 전용)
+ *  예적금 관리 카드 컴포넌트 (계좌 전용)
  */
 
 export const AcnoDepositCard = ({ items }: AcnoDepositCardProps) => {
@@ -143,9 +143,9 @@ interface AcnoLoanCardProps {
     buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
   }[];
 }
-
+ 
 /**
- * 대출 카드 컴포넌트 (계좌 전용)
+ *  대출 관리 카드 컴포넌트 (계좌 전용)
  */
 
 export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
