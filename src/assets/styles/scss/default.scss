@@ -50,7 +50,7 @@ body { font-size:1rem; line-height: normal; }
 /* MUI의 Typography 기본 스타일 오버라이드 */
 .MuiTypography-root { font-family: 'Pretendard', 'Roboto', 'Helvetica', 'Arial', sans-serif; }
 /* MUI 버튼 기본 스타일 변경 */
-.MuiButton-root { box-shadow:none; padding:0;  text-transform: none; /* 기본 대문자 변환 제거 */ font-weight: 500; }
+.MuiButton-root { box-shadow:none; padding:0;  text-transform: none; /* 기본 대문자 변환 제거 */ font-weight: 500; min-width:inherit; }
 /* MUI 링크 스타일 */
 .MuiLink-root { text-decoration: none; }
 /* MUI 기본 컨테이너 패딩 제거 */
