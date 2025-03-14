@@ -34,9 +34,9 @@ main {
   .MuiContainer-root {
     padding: 0;
     margin: 0;
-    > .MuiBox-root {
-      padding: $padding-default;
-    }
+    // > .MuiBox-root {
+    //   padding: $padding-default;
+    // }
   }
 }
 
