@@ -1,18 +1,21 @@
-import { store } from "@src/assets/js/redux/store"; // store 불러오기
-// import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import { StyledEngineProvider } from '@mui/styled-engine'; // mui 스타일 제어
 import App from '@src/App';
+import { store } from "@src/assets/js/redux/store"; // store 불러오기
 import '@src/assets/styles/scss/global.scss';
 import '@src/index.css';
-// import theme from "@src/theme/theme";
-import { StyledEngineProvider } from '@mui/styled-engine';
+import theme from "@src/theme/theme"; // MUI 테마 불러오기
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <StyledEngineProvider injectFirst>
-      <App />
+      <ThemeProvider theme={theme}>
+          <App />
+      </ThemeProvider>
     </StyledEngineProvider>
   </Provider>
 );

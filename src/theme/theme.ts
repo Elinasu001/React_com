@@ -1,8 +1,13 @@
 import { createTheme, ThemeOptions } from "@mui/material/styles";
 
+const commonFontFamily = '"Pretendard", "Roboto", "Helvetica", "Arial", "sans-serif" !important';
+
 const themeOptions: ThemeOptions = {
   typography: {
-    fontFamily: '"Pretendard", "Roboto", "Helvetica", "Arial", "sans-serif"',
+    fontFamily: commonFontFamily,
+    allVariants: {
+      fontFamily: commonFontFamily,
+    },
   },
   components: {
     MuiCssBaseline: {
@@ -11,17 +16,17 @@ const themeOptions: ThemeOptions = {
           boxSizing: "border-box",
           margin: 0,
           padding: 0,
-          border: "none",
-          background: "transparent",
+          border: "inherit",
+          background: "inherit",
           color: "inherit",
-          fontFamily: '"Pretendard", "Roboto", "Helvetica", "Arial", "sans-serif" !important',
-          outline: "none",
-          textDecoration: "none",
+          fontFamily: commonFontFamily,
+          outline: "inherit",
+          textDecoration: "inherit",
           transition: "all 0.2s ease-in-out",
         },
         body: {
           backgroundColor: "transparent",
-          fontFamily: '"Pretendard", "Roboto", "Helvetica", "Arial", "sans-serif" !important',
+          fontFamily: commonFontFamily,
         },
       },
     },
@@ -30,37 +35,85 @@ const themeOptions: ThemeOptions = {
         root: {
           margin: 0,
           padding: 0,
-          fontFamily: '"Pretendard", "Roboto", "Helvetica", "Arial", "sans-serif" !important',
+          fontFamily: commonFontFamily,
           color: "inherit",
+          lineHeight: "inherit",
         },
       },
     },
     MuiButton: {
       defaultProps: {
-        disableRipple: false,
+        disableRipple: true, // 버튼 클릭 효과 제거
       },
       styleOverrides: {
         root: {
-          fontFamily: '"Pretendard", "Roboto", "Helvetica", "Arial", "sans-serif" !important', // ✅ 강제 적용
-          padding: "8px 16px",
+          fontFamily: commonFontFamily,
+          padding: 0,
+          margin: 0,
           minWidth: "auto",
-          margin: "0px",
-          borderRadius: "4px",
-          boxShadow: "none !important",
-            "&:hover":{
-              boxShadow:"none",
-            },
-            "&:active": {
-              boxShadow: "none",
-            },
-            "&:focus": {
-              boxShadow: "none",
-            },
+          border: "none",
+          borderRadius: 0,
+          boxShadow: "none",
+          background: "transparent",
+          color: "inherit",
           textTransform: "none",
           fontSize: "inherit",
           fontWeight: "inherit",
+          "&:hover": {
+            background: "transparent",
+            boxShadow: "none",
+          },
+          "&:active": {
+            background: "transparent",
+            boxShadow: "none",
+          },
+          "&:focus": {
+            background: "transparent",
+            boxShadow: "none",
+          },
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          padding: 0, // 리스트 패딩 제거
+          margin: 0,
+        },
+      },
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          padding: 0, // 리스트 아이템 패딩 제거
+          margin: 0,
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          margin: 0,
+          border: "none",
           background: "transparent",
-          transition: "background 0.2s ease-in-out, transform 0.2s ease-in-out",
+          color: "inherit",
+          "& .MuiInputBase-root": {
+            padding: 0,
+            margin: 0,
+            border: "none",
+            background: "transparent",
+            color: "inherit",
+          },
+          "& .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            border: "none",
+          },
         },
       },
     },
