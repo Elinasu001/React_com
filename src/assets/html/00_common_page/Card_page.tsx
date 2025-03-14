@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { AcnoDepositCard, AcnoLoanCard, Card03, Card04 } from "@src/assets/html/00_common/Card";
+import { AcnoDepositCard, AcnoLoanCard, Card03, ComFavCard } from "@src/assets/html/00_common/Card";
 
 //메인 _ 예적금 예시 데이터
 const AcnoDepositData = [
@@ -146,7 +146,7 @@ const Card_page = () => {
 
 
             <Typography className="exp">대출/예/적금/종합대출 카드 <br/>** 작업중입니다.</Typography>
-            <Card04 items={userAccountData} />
+            <ComFavCard items={userAccountData} />
 
             <Typography className="exp">대출/예/적금/종합대출 카드<br/>** 작업중입니다.</Typography>
             <Card03 items={productsData} />

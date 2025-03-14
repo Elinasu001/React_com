@@ -50,7 +50,7 @@ const themeOptions: ThemeOptions = {
           fontFamily: commonFontFamily,
           padding: 0,
           margin: 0,
-          minWidth: "auto",
+          minWidth: "inherit",
           border: "none",
           borderRadius: 0,
           boxShadow: "none",

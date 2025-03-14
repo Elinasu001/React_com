@@ -394,7 +394,7 @@ export const Card03 = ({ items }: Card03Props) => {
 /**
  * 계좌 관리 속성
  */
-interface Card04Props {
+interface ComFavCardProps {
   items: {
     type: string;
     acno: string;
@@ -414,7 +414,7 @@ interface Card04Props {
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const Card04 = ({ items }: Card04Props) => {
+export const ComFavCard = ({ items }: ComFavCardProps) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
@@ -551,4 +551,4 @@ export const Card04 = ({ items }: Card04Props) => {
 };
 
  
-export default { AcnoDepositCard, AcnoLoanCard, Card03, Card04 };
+export default { AcnoDepositCard, AcnoLoanCard, Card03, ComFavCard };

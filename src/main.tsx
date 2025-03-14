@@ -1,5 +1,4 @@
 import { ThemeProvider } from "@mui/material/styles";
-import { StyledEngineProvider } from '@mui/styled-engine'; // mui 스타일 제어
 import App from '@src/App';
 import { store } from "@src/assets/js/redux/store"; // store 불러오기
 import '@src/assets/styles/scss/global.scss';
@@ -12,11 +11,11 @@ import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
-    <StyledEngineProvider injectFirst>
+    {/* <StyledEngineProvider injectFirst> */}
       <ThemeProvider theme={theme}>
           <App />
       </ThemeProvider>
-    </StyledEngineProvider>
+    {/* </StyledEngineProvider> */}
   </Provider>
 );
 // 밑에 로직은 StrictMode는 개발 모드에서 의도적으로 컴포넌트를 두 번 렌더링하여 부작용을 감지하는 기능
