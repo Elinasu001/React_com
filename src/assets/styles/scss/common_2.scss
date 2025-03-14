@@ -1,7 +1,13 @@
 $padding-mui: 0;
 $padding-default: 20px;
 $padding-nested: 10px;
+$groups: "form";
 
+@each $group in $groups {
+  .#{$group}Group {
+    padding: 20px;
+  }
+}
 #root {
   height: 100%;
 }
@@ -79,6 +85,42 @@ main {
 
       &:focus {
         border-color: var(--primary) !important;
+      }
+    }
+
+    &.total {
+      input {
+        padding: 15px;
+        border: 1px solid var(--form-border);
+        border-radius: 10px;
+      }
+    }
+    &.search + .MuiBox-root {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      button::before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .clear::before {
+        padding: 0;
+        width: 20px;
+        height: 20px;
+        background-image: var(--ico-clear);
+        background-size: 20px;
+      }
+      .search::before {
+        width: 32px;
+        height: 32px;
+        background-image: var(--ico-search);
+        background-size: 24px;
       }
     }
   }
@@ -212,48 +254,196 @@ main {
 
 //약관
 .terms-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    padding: 0;
+  }
   > .form-check {
     flex-direction: column;
     > label {
       width: 100%;
-      display: block;
-      margin: 0;
+      display: flex;
+      gap: 5px;
+      margin: 0 0 10px 0;
       padding: 16px;
       border: 1px solid var(--form-border);
       border-radius: 10px;
       &.checked {
         border-color: var(--primary);
       }
+      span {
+        padding: 0;
+      }
     }
   }
-  .child-list {
+  ul {
     margin: 0;
     padding: 0;
-    width: 100%;
-    li {
-      display: block;
+    &.child-list {
       margin: 0;
-      padding: 0 0 0 16px;
-
-      label {
+      padding: 0;
+      width: 100%;
+      li {
         display: block;
-      }
-      .checkbox-icon {
-        border: 1px solid var(--form-border);
-        background: transparent;
-        &::after {
-          background-color: var(--form-border);
+        margin: 0 0 10px 0;
+        padding: 0;
+
+        label {
+          display: flex;
+          gap: 5px;
+          margin: 0;
+          padding: 5px 16px;
+
+          span {
+            margin: 0;
+            padding: 0;
+          }
+
+          .checkbox-icon {
+            border: 1px solid var(--form-border);
+            background: transparent;
+            &::after {
+              background-color: var(--form-border);
+            }
+            &.checked {
+              border-color: var(--primary);
+              &::after {
+                background-color: var(--primary);
+              }
+            }
+          }
         }
-        &.checked {
-          border-color: var(--primary);
-          &::after {
-            background-color: var(--primary);
+
+        ul.child-list {
+          margin-top: 10px;
+          padding: 0;
+
+          label {
+            display: flex;
+            gap: 5px;
+            margin: 0;
+            padding: 5px 16px;
+
+            span {
+              margin: 0;
+              padding: 0;
+            }
+
+            .checkbox-icon {
+              border: 0;
+            }
           }
         }
       }
+    }
+  }
+}
 
-      ul {
+//radio
+.radio {
+  &-basic {
+    .MuiFormGroup-root {
+      color: var(--color-45);
+      display: inline-flex;
+      flex-direction: row;
+      gap: 15px;
+
+      label {
+        display: inline-flex;
+        gap: 8px;
+        margin: 0;
         padding: 0;
+      }
+    }
+    .MuiRadio-root {
+      margin: 0;
+      padding: 0;
+
+      .MuiSvgIcon-root {
+        display: none;
+      }
+
+      &:before {
+        content: "";
+        width: 24px;
+        height: 24px;
+        display: block;
+        border: 7px solid var(--color-e4);
+        box-sizing: border-box;
+        border-radius: 50%;
+        background: #fff;
+        background-size: contain;
+      }
+
+      &.Mui-checked {
+        &:before {
+          border-color: var(--primary);
+        }
+        & + span {
+          color: var(--color-2);
+        }
+      }
+      &.Mui-disabled {
+        &:before {
+          background: var(--color-9);
+        }
+      }
+    }
+  }
+
+  &-button {
+    label {
+      margin: 15px 0 0 0;
+      color: var(--color-45);
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    .MuiRadio-root {
+      display: none;
+      & + .MuiFormControlLabel-label {
+        width: 100%;
+        margin: 0 !important;
+        padding: 16px;
+        display: inline-flex;
+        gap: 8px;
+        border: 1px solid var(--form-border);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:before {
+          content: "";
+          width: 24px;
+          height: 24px;
+          display: block;
+          border: 7px solid var(--color-e4);
+          box-sizing: border-box;
+          border-radius: 50%;
+          background: #fff;
+          background-size: contain;
+        }
+      }
+
+      &.Mui-checked + .MuiFormControlLabel-label {
+        background-color: #fff;
+        color: var(--color-2);
+        border-color: var(--primary);
+
+        &:before {
+          border-color: var(--primary);
+        }
+      }
+
+      &.Mui-disabled + .MuiFormControlLabel-label {
+        &:before {
+          background: var(--color-9);
+        }
       }
     }
   }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NestedCheckbox, BasicCheckbox } from '@src/components/checkbox';
-import { Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 type CheckboxItem = {
   id: string;
@@ -33,8 +33,8 @@ const initialCheckboxData: CheckboxItem = {
         },*/
       ],
     },
-    { id: 'child2', label: 'Child 2', checked: false },
-    { id: 'child3', label: 'Child 3', checked: false },
+    { id: 'child2', label: '약관2', checked: false },
+    { id: 'child3', label: '약관3', checked: false },
   ],
 };
 
@@ -46,16 +46,18 @@ export default function CheckboxExample() {
   };
 
   return (
-    <Box>
-      <Box>
+    <>
+      <Typography className="exp">체크박스 베이직</Typography>
+      <Box className="formGroup">
         <BasicCheckbox label="CheckBox" />
         <BasicCheckbox label="CheckBox(Chcekd)" defaultChecked />
         <BasicCheckbox label="CheckBox(disabled)" disabled />
       </Box>
       
-      <Box>
+      <Typography className="exp">약관 체크</Typography>
+      <Box className="formGroup">
         <NestedCheckbox item={checkboxData} onChange={handleChange} />
       </Box>
-    </Box>
+    </>
   );
 }

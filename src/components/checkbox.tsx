@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import List from '@mui/material/List';
@@ -36,7 +36,6 @@ const CustomCheckbox = ({ label, checked, defaultChecked, indeterminate, disable
           icon={<span className="checkbox-icon" />}
           checkedIcon={<span className="checkbox-icon checked" />}
           indeterminateIcon={<span className="checkbox-icon indeterminate" />}
-          disabledIcon={disabled ? <span className="checkbox-icon disabled" /> : undefined}
         />
       }
       label={label || ''}
