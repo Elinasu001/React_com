@@ -76,7 +76,6 @@ import HTML_Alert_page from "@src/assets/html/00_common_page/Alert_page";
 import HTML_Button_page from "@src/assets/html/00_common_page/Button_page";
 import HTML_Card_page from "@src/assets/html/00_common_page/Card_page";
 import HTML_Input_page from "@src/assets/html/00_common_page/Input_page";
-import HTML_Radio_page from "@src/assets/html/00_common_page/Radio_page";
 import HTML_List_page from "@src/assets/html/00_common_page/List_page";
 import HTML_Popup_page from "@src/assets/html/00_common_page/Popup_page";
 import HTML_SelectBox_page from "@src/assets/html/00_common_page/SelectBox_page";
@@ -301,7 +300,6 @@ const App = () => {
           <Route path="Button_page.html" element={<HTML_Button_page />} />
           <Route path="Alert_page.html" element={<HTML_Alert_page />} />
           <Route path="Input_page.html" element={<HTML_Input_page />} />
-          <Route path="Radio_page.html" element={<HTML_Radio_page />} />
           <Route path="Accordion_page.html" element={<HTML_Accordion_page />} />
           <Route path="List_page.html" element={<HTML_List_page />} />
           <Route path="Card_page.html" element={<HTML_Card_page />} />

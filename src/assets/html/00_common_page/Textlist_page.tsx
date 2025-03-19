@@ -92,6 +92,16 @@ const AccMngInfoListData = [
     pdnm: "자동이체",
     bnkNm: "KB국민",
     acno: "123-456-789",
+  },
+  {
+    lAmnt: "10,000,000",
+    status: "정상",
+    lAppDt: "2024.03.15",
+    lMatDt: "2026.03.15",
+    RpyMt: "만기일시상환",
+    nowApplRt: "3.2",
+    intPayDt: "매월 4일",
+    lastTrdDt: "2024.03.15",
   }
 ];
 
