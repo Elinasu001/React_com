@@ -1,6 +1,6 @@
 
 import { Box, Typography } from "@mui/material";
-import { ATInfoList, AccMngInfoList, InfoList, STInfoList } from "@src/assets/html/00_common/Textlist";
+import { ATInfoList, AccMngInfoList, InfoList, RpySchinfoList, STInfoList } from "@src/assets/html/00_common/Textlist";
 
 // 자동이체 예시 데이터
 const ATInfoListData = [
@@ -65,15 +65,15 @@ const STInfoListData = [
 const AccMngInfoListData = [
   {
     pdnm: "계좌정보",
-    balance: "1,500,000",
+    balance: 500000,
     accOpenDt: "2022.03.15",
-    wdrwAmt: "10,000,000",
-    curintRt: "2.5",
+    wdrwAmt: 400000,
+    curintRt: 2.5,
     txBnfType: "비과세",
     lastTxnDt: "2024.03.10",
-    contPrd: "12",
-    baseAnlRt: "2.5",
-    preTxInt: "30,000",
+    contPrd: 12,
+    baseAnlRt: 2.5,
+    preTxInt: 30000,
   },
   {
     pdnm: "만기해지후송금",
@@ -82,11 +82,11 @@ const AccMngInfoListData = [
   },
   {
     pdnm: "종합통장대출",
-    limAmt: "10,000,000",
+    limAmt: 500000,
     matDt: "2025.03.15",
-    intRt: "2.3",
-    ovdRt: "5.0",
-    intAsOfDate: "1,250",
+    intRt: 2.3,
+    ovdRt: 5.0,
+    intAsOfDate: 1250,
   },
   {
     pdnm: "자동이체",
@@ -94,15 +94,32 @@ const AccMngInfoListData = [
     acno: "123-456-789",
   },
   {
-    lAmnt: "10,000,000",
+    pdnm: "계좌정보",
+    lAmnt: 10000000,
     status: "정상",
     lAppDt: "2024.03.15",
     lMatDt: "2026.03.15",
     RpyMt: "만기일시상환",
-    nowApplRt: "3.2",
+    nowApplRt: 3.2,
     intPayDt: "매월 4일",
     lastTrdDt: "2024.03.15",
+    ovdRt: 6.2
+
   }
+];
+
+// 상환일정 예시 데이터
+const RpySchinfoListData = [
+  {
+    pdnm: "아파트담보대출",
+    acno: "110-234-567890",
+    // lAmnt: 50000000,
+    // lRemLnAmt: 32000000,
+    lAppDt: "2023.01.15",
+    lMatDt: "2033.01.15",
+    lLastIntPayDt: "2025.03.01",
+    lNextIntPayDt: "2025.04.01",
+  },
 ];
 
 
@@ -163,6 +180,8 @@ const Textlist_page = () => {
       <STInfoList items={STInfoListData} />
       <Typography className="exp">계좌관리 리스트 <br/>** 작업중입니다.</Typography>
       <AccMngInfoList items={AccMngInfoListData} />
+      <Typography className="exp">상환일정 리스트 <br/>** 작업중입니다.</Typography>
+      <RpySchinfoList items={RpySchinfoListData} />
       </Box>
   );
 };
