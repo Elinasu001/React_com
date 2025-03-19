@@ -86,6 +86,40 @@ export const ButtonContent = ({ name, clickFunc, disabled, buttons }: ButtonProp
   );
 };
 
+// 컨텐츠 버튼 ex) 카드 내부 버튼, 일반 페이지 버튼
+export const ButtonSm = ({ name, clickFunc, disabled, buttons }: ButtonProps) => {
+  
+  return (
+    
+    // 컨텐츠
+    <Box className="btn-sm">
+    {/* 여러 개 버튼이 있을 경우 배열을 사용 */}
+      {buttons && buttons.length > 0 ? (
+        buttons.map((btn, index) => (
+          <Button
+            key={index}
+            className="btn"
+            onClick={btn.clickFunc}
+            disabled={btn.disabled ?? false}
+          >
+            {btn.name}
+          </Button>
+        ))
+      ) : (
+        /* 단일 버튼을 사용할 경우 */
+        <Button
+          className="btn"
+          onClick={clickFunc}
+          disabled={disabled ?? false}
+        >
+          {name}
+        </Button>
+      )}
+    </Box>
+
+  );
+};
+
 // 컨텐츠 하단 버튼 ex) 팝업 하단 버튼, 일반 페이지 하단 버튼
 export const ButtonFooter = ({ name, clickFunc, disabled, buttons }: ButtonProps) => {
 
@@ -143,6 +177,5 @@ export const ButtonFooter = ({ name, clickFunc, disabled, buttons }: ButtonProps
 
   );
 };
-
 
 export default { ButtonContent, ButtonFooter };

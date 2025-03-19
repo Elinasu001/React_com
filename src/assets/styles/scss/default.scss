@@ -51,9 +51,9 @@ body { font-size:1rem;}
 .MuiButton-root{ box-shadow:none; padding:0; margin:0; text-transform: none; min-width:inherit; }
 /* MUI 링크 스타일 */
 .MuiLink-root { text-decoration: none; }
-/* MUI 기본 컨테이너 패딩 제거 */
+/* MUI 기본 컨테이너 스타일 제거 */
 .MuiContainer-root { padding: 0; }
-/* MUI 기본 리스트 패딩 제거 */
+/* MUI 기본 리스트 스타일 제거 */
 .MuiList-root,
 .MuiListItem-root:not(.info-list li),
 .css-cfd5wn-MuiListItem-root  { padding:0 !important; }

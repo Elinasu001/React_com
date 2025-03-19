@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
-import { AcnoDepositCard, AcnoLoanCard, Card03, ComFavCard } from "@src/assets/html/00_common/Card";
+import { Box, Typography } from "@mui/material";
+import { AcnoDepositCard, AcnoLoanCard, ModiStarCard, ProductDepositCard } from "@src/assets/html/00_common/Card";
 
 //메인 _ 예적금 예시 데이터
 const AcnoDepositData = [
@@ -137,7 +137,7 @@ const productsData = [
 
 const Card_page = () => {
     return (
-        <>
+        <Box sx={{ padding:"16px" }}>
             <Typography className="exp">예적금 계좌 카드</Typography>
             <AcnoDepositCard items={AcnoDepositData} />
 
@@ -146,13 +146,12 @@ const Card_page = () => {
 
 
             <Typography className="exp">대출/예/적금/종합대출 카드 <br/>** 작업중입니다.</Typography>
-            <ComFavCard items={userAccountData} />
+            <ModiStarCard items={userAccountData} />
 
             <Typography className="exp">대출/예/적금/종합대출 카드<br/>** 작업중입니다.</Typography>
-            <Card03 items={productsData} />
+            <ProductDepositCard items={productsData} />
 
-
-        </>
+        </Box>
     );
   };
   

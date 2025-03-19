@@ -1,10 +1,105 @@
 
-import { Typography } from "@mui/material";
-import { InfoList } from "@src/assets/html/00_common/Textlist";
+import { Box, Typography } from "@mui/material";
+import { ATInfoList, AccMngInfoList, InfoList, STInfoList } from "@src/assets/html/00_common/Textlist";
+
+// 자동이체 예시 데이터
+const ATInfoListData = [
+  {
+    status: "신규접수",
+    
+    depAcc: {
+      name: "김철수",
+      bank: "저축은행",
+      acno: "02098765432",
+    },
+    wdAcc: {
+      name: "홍길동",
+      bank: "저축은행",
+      acno: "01012345678",
+    },
+    amnt: 500000,
+    prd: {
+      stDt: "2024.03.01",
+      endDt: "2024.03.31",
+    },
+    trfDay: "01일",
+    buttons: [
+      { name: "변경하기", onClick: () => alert("변경 클릭") },
+      { name: "해제하기", onClick: () => alert("이체 클릭") },
+    ]
+  },
+];
+
+
+// 예약이체 예시 데이터
+const STInfoListData = [
+  {
+    pdnm: "타이틀",
+    status: "신규접수",
+    depAcc: {
+      name: "홍길동",
+      bank: "국민은행",
+      acno: "123-456-789"
+    },
+    wdAcc: {
+      name: "김철수",
+      bank: "신한은행",
+      acno: "987-654-321"
+    },
+    amnt: 500000,
+    fee: 500,  // 수수료 추가
+    prd: {
+      stDt: "2025.04.01",
+      endDt: "2025.12.31"
+    },
+    trfDay: "매월 1일",
+    rcpDisp: "월세",
+    sndDisp: "집주인",
+    buttons: [
+      { name: "취소", onClick: () => alert("이체 취소") }
+    ]
+  },
+];
+
+// 계좌관리 예시 데이터
+const AccMngInfoListData = [
+  {
+    pdnm: "계좌정보",
+    balance: "1,500,000",
+    accOpenDt: "2022.03.15",
+    wdrwAmt: "10,000,000",
+    curintRt: "2.5",
+    txBnfType: "비과세",
+    lastTxnDt: "2024.03.10",
+    contPrd: "12",
+    baseAnlRt: "2.5",
+    preTxInt: "30,000",
+  },
+  {
+    pdnm: "만기해지후송금",
+    tfrBank: "신한은행",
+    tfrAcno: "110-123-456789",
+  },
+  {
+    pdnm: "종합통장대출",
+    limAmt: "10,000,000",
+    matDt: "2025.03.15",
+    intRt: "2.3",
+    ovdRt: "5.0",
+    intAsOfDate: "1,250",
+  },
+  {
+    pdnm: "자동이체",
+    bnkNm: "KB국민",
+    acno: "123-456-789",
+  }
+];
+
+
 
 const Textlist_page = () => {
   return (
-    <>
+    <Box sx={{ padding:"16px" }}>
       <Typography className="exp">정보 리스트</Typography>
 
       {/* 정보 */}
@@ -51,10 +146,17 @@ const Textlist_page = () => {
         ]}
         // hideTitle={true}
       />
-      <Typography className="exp">계좌 관리 상세 리스트 <br/>** 작업중입니다.</Typography>
-      
-      </>
+
+      <Typography className="exp">자동이체 리스트 <br/>** 작업중입니다.</Typography>
+      <ATInfoList items={ATInfoListData} />
+      <Typography className="exp">예약이체 리스트 <br/>** 작업중입니다.</Typography>
+      <STInfoList items={STInfoListData} />
+      <Typography className="exp">계좌관리 리스트 <br/>** 작업중입니다.</Typography>
+      <AccMngInfoList items={AccMngInfoListData} />
+      </Box>
   );
 };
+
+
 
 export default Textlist_page;

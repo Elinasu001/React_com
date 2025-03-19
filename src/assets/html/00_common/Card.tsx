@@ -254,147 +254,10 @@ export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
 );
 };
 
-
-
-
 /**
- * 상품 카드 속성
+ *  계좌 관리 속성
  */
-
-interface Card03Props {
-  items: {
-    pdcd: string;             // 상품코드
-    pdnm: string;             // 상품명
-    categoty: string;         // 카테고리
-    pdDesc: string;           // 상품설명
-    keyword: string[];        // 키워드
-    contents1: string;        // 내용1
-    contents2: string;        // 내용2
-    categoryClass: string;    // 카테고리를 클래스별 색상변경
-    onClick?: () => void;
-  }[];
-}
-
-export const Card03 = ({ items }: Card03Props) => {
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-
-  // 각 카드별 상태를 배열로 관리
-  const [isFavorite, setIsFavorite] = useState<boolean[]>(Array(items.length).fill(false));
-  const [isCompared, setIsCompared] = useState<boolean[]>(Array(items.length).fill(false));
-
-  // 관심상품 클릭
-  const handleGiftClick = (event: React.MouseEvent, index: number) => {
-    event.stopPropagation();
-    
-    setIsFavorite((prev) => {
-      const updated = [...prev];
-      updated[index] = !updated[index];
-      return updated;
-    });
-
-    setSnackbarMessage(
-      isFavorite[index] ? "관심상품에서 제외되었습니다." : "관심상품으로 등록되었습니다."
-    );
-    setSnackbarOpen(true);
-  };
-
-  // 비교상품 클릭
-  const handleCompareClick = (event: React.MouseEvent, index: number) => {
-    event.stopPropagation();
-    
-    setIsCompared((prev) => {
-      const updated = [...prev];
-      updated[index] = !updated[index];
-      return updated;
-    });
-
-    setSnackbarMessage(
-      isCompared[index] ? "비교상품에서 제외되었습니다." : "비교상품으로 등록되었습니다."
-    );
-    setSnackbarOpen(true);
-  };
-
-  // 알림 닫기
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
-  return (
-    <List className="card-wrap">
-      {items.map((item, index) => (
-        <ListItem key={index} className="card-list">
-          <Card onClick={item.onClick} className="card-box">
-            <CardContent>
-              {/* 상품 설명 + 아이콘 */}
-              <Box className="card-info-actions">
-                <Typography className="card-desc" aria-label={`상품 설명: ${item.pdDesc}`}>
-                  {item.pdDesc}
-                </Typography>
-
-                {/* 비교하기 + 관심상품 */}
-                <Box className="card-actions">
-                  <Button
-                    className={`btn-compare ${isCompared[index] ? "active" : ""}`}
-                    onClick={(event) => handleCompareClick(event, index)}
-                    disableRipple
-                    aria-label="비교하기"
-                    aria-pressed={isCompared[index]}
-                  ></Button>
-                  <Button
-                    className={`btn-favorite ${isFavorite[index] ? "active" : ""}`}
-                    onClick={(event) => handleGiftClick(event, index)}
-                    disableRipple
-                    aria-label="관심상품"
-                    aria-pressed={isFavorite[index]}
-                  ></Button>
-                </Box>
-              </Box>
-
-              {/* 카테고리 + 상품명 */}
-              <Box className="card-info">
-                <Typography  className={`card-category ${item.categoryClass}`} aria-label={`카테고리: ${item.categoty}`}>
-                  {item.categoty}
-                </Typography>
-                <Typography  className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
-                  {item.pdnm}
-                </Typography>
-              </Box>
-
-              {/* 키워드 */}
-              <Typography className="card-tag" aria-label={`관련 키워드: ${item.keyword.join(", ")}`}>
-                {item.keyword.join(" | ")}
-              </Typography>
-
-              {/* 내용1 */}
-              <Typography className="card-term" aria-label={`설명: ${item.contents1}`}>
-                {item.contents1}
-              </Typography>
-
-              {/* 내용2 */}
-              <Typography className="card-rate" aria-label={`상세 내용: ${item.contents2}`}>
-                {item.contents2}
-              </Typography>
-            </CardContent>
-          </Card>
-        </ListItem>
-      ))}
-
-      {/* 알림창 */}
-      <Snackbar open={snackbarOpen} autoHideDuration={1000} onClose={handleSnackbarClose}  aria-live="polite" anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-        <Alert onClose={handleSnackbarClose} severity="info">
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-    </List>
-  );
-};
-
-
-/**
- * 계좌 관리 속성
- */
-interface ComFavCardProps {
+interface ModiStarCardProps {
   items: {
     type: string;
     acno: string;
@@ -414,7 +277,7 @@ interface ComFavCardProps {
  * 카드 컴포넌트 (계좌 전용)
  */
 
-export const ComFavCard = ({ items }: ComFavCardProps) => {
+export const ModiStarCard = ({ items }: ModiStarCardProps) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
@@ -550,5 +413,140 @@ export const ComFavCard = ({ items }: ComFavCardProps) => {
 );
 };
 
+
+/**
+ * 예/적금 상품 카드 속성
+ */
+
+interface ProductDepositCardProps {
+  items: {
+    pdcd: string;             // 상품코드
+    pdnm: string;             // 상품명
+    categoty: string;         // 카테고리
+    pdDesc: string;           // 상품설명
+    keyword: string[];        // 키워드
+    contents1: string;        // 내용1
+    contents2: string;        // 내용2
+    categoryClass: string;    // 카테고리를 클래스별 색상변경
+    onClick?: () => void;
+  }[];
+}
+
+export const ProductDepositCard = ({ items }: ProductDepositCardProps) => {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  // 각 카드별 상태를 배열로 관리
+  const [isFavorite, setIsFavorite] = useState<boolean[]>(Array(items.length).fill(false));
+  const [isCompared, setIsCompared] = useState<boolean[]>(Array(items.length).fill(false));
+
+  // 관심상품 클릭
+  const handleGiftClick = (event: React.MouseEvent, index: number) => {
+    event.stopPropagation();
+    
+    setIsFavorite((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+
+    setSnackbarMessage(
+      isFavorite[index] ? "관심상품에서 제외되었습니다." : "관심상품으로 등 록되었습니다."
+    );
+    setSnackbarOpen(true);
+  };
+
+  // 비교상품 클릭
+  const handleCompareClick = (event: React.MouseEvent, index: number) => {
+    event.stopPropagation();
+    
+    setIsCompared((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+
+    setSnackbarMessage(
+      isCompared[index] ? "비교상품에서 제외되었습니다." : "비교상품으로 등록되었습니다."
+    );
+    setSnackbarOpen(true);
+  };
+
+  // 알림 닫기
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  return (
+    <List className="card-wrap">
+      {items.map((item, index) => (
+        <ListItem key={index} className="card-list">
+          <Card onClick={item.onClick} className="card-box">
+            <CardContent>
+              {/* 상품 설명 + 아이콘 */}
+              <Box className="card-info-actions">
+                <Typography className="card-desc" aria-label={`상품 설명: ${item.pdDesc}`}>
+                  {item.pdDesc}
+                </Typography>
+
+                {/* 비교하기 + 관심상품 */}
+                <Box className="card-actions">
+                  <Button
+                    className={`btn-compare ${isCompared[index] ? "active" : ""}`}
+                    onClick={(event) => handleCompareClick(event, index)}
+                    disableRipple
+                    aria-label="비교하기"
+                    aria-pressed={isCompared[index]}
+                  ></Button>
+                  <Button
+                    className={`btn-favorite ${isFavorite[index] ? "active" : ""}`}
+                    onClick={(event) => handleGiftClick(event, index)}
+                    disableRipple
+                    aria-label="관심상품"
+                    aria-pressed={isFavorite[index]}
+                  ></Button>
+                </Box>
+              </Box>
+
+              {/* 카테고리 + 상품명 */}
+              <Box className="card-info">
+                <Typography  className={`card-category ${item.categoryClass}`} aria-label={`카테고리: ${item.categoty}`}>
+                  {item.categoty}
+                </Typography>
+                <Typography  className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
+                  {item.pdnm}
+                </Typography>
+              </Box>
+
+              {/* 키워드 */}
+              <Typography className="card-tag" aria-label={`관련 키워드: ${item.keyword.join(", ")}`}>
+                {item.keyword.join(" | ")}
+              </Typography>
+
+              {/* 내용1 */}
+              <Typography className="card-term" aria-label={`설명: ${item.contents1}`}>
+                {item.contents1}
+              </Typography>
+
+              {/* 내용2 */}
+              <Typography className="card-rate" aria-label={`상세 내용: ${item.contents2}`}>
+                {item.contents2}
+              </Typography>
+            </CardContent>
+          </Card>
+        </ListItem>
+      ))}
+
+      {/* 알림창 */}
+      <Snackbar open={snackbarOpen} autoHideDuration={1000} onClose={handleSnackbarClose}  aria-live="polite" anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleSnackbarClose} severity="info">
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </List>
+  );
+};
+
+
  
-export default { AcnoDepositCard, AcnoLoanCard, Card03, ComFavCard };
+export default { AcnoDepositCard, AcnoLoanCard, ModiStarCard, ProductDepositCard };
