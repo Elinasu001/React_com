@@ -16,7 +16,7 @@ import React, { useState } from "react";
 /**
  *  예적금 관리 카드 속성
  */
-interface AcnoDepositCardProps {
+interface AccDepositCardProps {
   items: {
     type: string;                          //상품유형
     acno: string;                          //계좌
@@ -38,7 +38,7 @@ interface AcnoDepositCardProps {
  *  예적금 관리 카드 컴포넌트 (계좌 전용)
  */
 
-export const AcnoDepositCard = ({ items }: AcnoDepositCardProps) => {
+export const AccDepositCard = ({ items }: AccDepositCardProps) => {
   
   return (
     <List className="card-wrap">
@@ -125,11 +125,10 @@ export const AcnoDepositCard = ({ items }: AcnoDepositCardProps) => {
 );
 };
 
-
 /**
  *  대출 관리 카드 속성
  */
-interface AcnoLoanCardProps {
+interface AccLoanCardProps {
   items: {
     type: string;                         //상품유형
     acno: string;                         //계좌
@@ -152,7 +151,7 @@ interface AcnoLoanCardProps {
  *  대출 관리 카드 컴포넌트 (계좌 전용)
  */
 
-export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
+export const AccLoanCard = ({ items }: AccLoanCardProps) => {
   
   return (
     <List className="card-wrap">
@@ -255,7 +254,7 @@ export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
 };
 
 /**
- *  계좌 관리 속성 (수정&즐겨찾기)
+ *  계좌 상세 관리 속성 (수정&즐겨찾기)
  */
 interface StarCardProps {
   items: {
@@ -274,7 +273,7 @@ interface StarCardProps {
 }
 
 /**
- * 카드 컴포넌트 (수정&즐겨찾기)
+ *  계좌 상세 관리 카드 컴포넌트 (수정&즐겨찾기)
  */
 
 export const ModiStarCard = ({ items }: StarCardProps) => {
@@ -429,6 +428,9 @@ export const ModiStarCard = ({ items }: StarCardProps) => {
 );
 };
 
+/**
+ *  계좌 상세 관리 카드 컴포넌트 (즐겨찾기)
+ */
 export const StarCard = ({ items }: StarCardProps) => {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -579,12 +581,10 @@ export const StarCard = ({ items }: StarCardProps) => {
 );
 };
 
-
 /**
- * 예/적금 상품 카드 속성
+ *  대출/예/적금 상품 카드 속성 (비교하기&좋아요)
  */
-
-interface ProductDepositCardProps {
+interface ProductFavCardProps {
   items: {
     pdcd: string;             // 상품코드
     pdnm: string;             // 상품명
@@ -594,11 +594,14 @@ interface ProductDepositCardProps {
     contents1: string;        // 내용1
     contents2: string;        // 내용2
     categoryClass: string;    // 카테고리를 클래스별 색상변경
-    onClick?: () => void;
+    buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
   }[];
 }
 
-export const ProductDepositCard = ({ items }: ProductDepositCardProps) => {
+/**
+ *   대출/예/적금 상품 카드 컴포넌트 (비교하기&좋아요)
+ */
+export const ProductFavCard = ({ items }: ProductFavCardProps) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
@@ -647,7 +650,7 @@ export const ProductDepositCard = ({ items }: ProductDepositCardProps) => {
     <List className="card-wrap">
       {items.map((item, index) => (
         <ListItem key={index} className="card-list">
-          <Card onClick={item.onClick} className="card-box">
+          <Card className="card-box">
             <CardContent>
               {/* 상품 설명 + 아이콘 */}
               <Box className="card-info-actions">
@@ -698,6 +701,10 @@ export const ProductDepositCard = ({ items }: ProductDepositCardProps) => {
               <Typography className="card-rate" aria-label={`상세 내용: ${item.contents2}`}>
                 {item.contents2}
               </Typography>
+
+              {/* 컨텐츠 공통 버튼 적용 - 예시입니다. */}
+              {item.buttons && item.buttons.length > 0 && <ButtonContent buttons={item.buttons} />}
+
             </CardContent>
           </Card>
         </ListItem>
@@ -713,6 +720,76 @@ export const ProductDepositCard = ({ items }: ProductDepositCardProps) => {
   );
 };
 
+/**
+ *  대출/예/적금 상품 카드 속성 ( 비교하기&좋아요 X )
+ */
+interface ProductOriginCardProps {
+  items: {
+    pdcd: string;             // 상품코드
+    pdnm: string;             // 상품명
+    categoty: string;         // 카테고리
+    pdDesc: string;           // 상품설명
+    keyword: string[];        // 키워드
+    contents1?: string;       // 내용1 (옵션)
+    contents2?: string;       // 내용2 (옵션)
+    categoryClass: string;    // 카테고리를 클래스별 색상변경
+    buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
+  }[];
+}
 
- 
-export default { AcnoDepositCard, AcnoLoanCard, ModiStarCard, StarCard, ProductDepositCard };
+/**
+ *   대출/예/적금 상품 카드 컴포넌트 ( 카테고리&비교하기&좋아요 X )
+ */
+export const ProductOriginCard = ({ items }: ProductOriginCardProps) => {
+
+  return (
+    <List className="card-wrap">
+      {items.map((item, index) => (
+        <ListItem key={index} className="card-list">
+          <Card className="card-box">
+            <CardContent>
+
+              {/* 상품 설명 */}
+              <Box className="card-info-actions">
+                <Typography className="card-desc" aria-label={`상품 설명: ${item.pdDesc}`}>
+                  {item.pdDesc}
+                </Typography>
+              </Box>
+
+              {/* 카테고리?? + 상품명 */}
+              <Box className="card-info">
+                <Typography  className={`card-category ${item.categoryClass}`} aria-label={`카테고리: ${item.categoty}`}>
+                  {item.categoty}
+                </Typography>
+                <Typography  className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
+                  {item.pdnm}
+                </Typography>
+              </Box>
+
+              {/* #키워드 */}
+              <Typography className="card-tag" aria-label={`관련 키워드: ${item.keyword.join(", ")}`}>
+                {item.keyword.join(" | ")}
+              </Typography>
+
+              {/* 내용1 && 내용2 */}
+              {(item.contents1 || item.contents2) && (
+                <Typography className="card-rate" aria-label={`상세 내용: ${item.contents1 ?? ""} ${item.contents2 ?? ""}`}>
+                  {item.contents1}
+                  {item.contents1 && item.contents2 && " "}
+                  {item.contents2 && <span>{item.contents2}</span>}
+                </Typography>
+              )}
+
+              {/* 컨텐츠 공통 버튼 적용 - 예시입니다. */}
+              {item.buttons && item.buttons.length > 0 && <ButtonContent buttons={item.buttons} />}
+
+            </CardContent>
+          </Card>
+        </ListItem>
+      ))}
+
+    </List>
+  );
+};
+
+export default { AccDepositCard, AccLoanCard, ModiStarCard, StarCard, ProductFavCard, ProductOriginCard};

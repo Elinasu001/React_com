@@ -267,7 +267,7 @@
     &.MuiCard-root { border-radius: 20px; padding:0; box-shadow: none; box-shadow:var(--card-box); } //mui default
     & > .MuiCardContent-root { padding:16px;} //mui default
     
-    .card-info-actions { @include mixin.flex-row; justify-content: space-between; gap:10px; }
+    .card-info-actions { @include mixin.flex-row; justify-content: space-between; gap:10px; margin-bottom:8px; }
     .card-desc { font-size: var(--font14); line-height: var(--font14); color:var(--card-desc); }
     .card-actions {
         @include mixin.flex-row; gap:6px;
@@ -313,7 +313,10 @@
     .card-name { line-height:var(--font20); font-size:var(--font18); font-weight: var(--font-w-b); color:var(--card-name); }
     .card-tag { margin-top:8px; font-size:var(--font14); color:var(--card-tag); }
     .card-term { margin-top:12px; font-size:var(--font14); font-weight: var(--font-w-m); color:var(--card-term); }
-    .card-rate { font-size:var(--font20); font-weight: var(--font-w-b); color:var(--card-rate);}
+    .card-rate { 
+        font-size:var(--font20); font-weight: var(--font-w-b); color:var(--card-rate);
+        > span { padding-left:4px; font-size:var(--font18); color:var(--card-rate-sub); }
+    }
     .card-mtyDate { padding-top:10px; font-size:var(--font16); font-weight: var(--font-w-m); color:var(--card-mtyDate-num);
         .card-mtyDate-value { padding-left:4px; font-size:var(--font14); font-weight: var(--font-w-r); color:var(--card-mtyDate-num); }
     }

@@ -1,8 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import { AcnoDepositCard, AcnoLoanCard, ModiStarCard, ProductDepositCard, StarCard } from "@src/assets/html/00_common/Card";
+import { AccDepositCard, AccLoanCard, ModiStarCard, ProductFavCard, ProductOriginCard, StarCard } from "@src/assets/html/00_common/Card";
 
 //메인 _ 예적금 예시 데이터
-const AcnoDepositData = [
+const AccDepositData = [
       {
         type: "메인_입출금",
         pdnm: "보통예금",
@@ -13,8 +13,14 @@ const AcnoDepositData = [
         wtchPosbAmt: 10000,
         psntInrt: 2.5,
         buttons: [
-          { name: "거래내역" },
-          { name: "이체" }
+          {
+            name: "거래내역",
+            onClick: () => console.log("클릭됨"),
+          },
+          {
+            name: "이체",
+            onClick: () => console.log("클릭됨"),
+          },
         ],
         isMain: true
     },
@@ -28,14 +34,20 @@ const AcnoDepositData = [
       wtchPosbAmt: 10000,
       psntInrt: 2.5,
       buttons: [
-        { name: "납입일변경" },
-        { name: "이체" }
+        {
+          name: "납입일변경",
+          onClick: () => console.log("클릭됨"),
+        },
+        {
+          name: "이체",
+          onClick: () => console.log("클릭됨"),
+        },
       ],
   },
 ];
 
 //메인 _ 대출&종합대출 예시 데이터
-const AcnoLoanData = [
+const AccLoanData = [
   {
     type: "메인_신용대출",
     pdnm: "빅머니M",
@@ -46,8 +58,14 @@ const AcnoLoanData = [
     wtchPosbAmt: 10000,
     psntInrt: 2.5,
     buttons: [
-      { name: "거래내역" },
-      { name: "이자즉시출금" }
+      {
+        name: "거래내역",
+        onClick: () => console.log("클릭됨"),
+      },
+      {
+        name: "이자즉시출금",
+        onClick: () => console.log("클릭됨"),
+      },
     ],
     isMain: true,
   },
@@ -62,8 +80,14 @@ const AcnoLoanData = [
     wtchPosbAmt: 10000,
     psntInrt: 2.5,
     buttons: [
-      { name: "추가대출" },
-      { name: "이자즉시출금" }
+      {
+        name: "추가대출",
+        onClick: () => console.log("클릭됨"),
+      },
+      {
+        name: "이자즉시출금",
+        onClick: () => console.log("클릭됨"),
+      },
     ],
   },
   {
@@ -76,7 +100,10 @@ const AcnoLoanData = [
     wtchPosbAmt: 10000,
     psntInrt: 2.5,
     buttons: [
-      { name: "거래내역" },
+      {
+        name: "거래내역",
+        onClick: () => console.log("클릭됨"),
+      },
     ],
     isMain: true,
   },
@@ -93,7 +120,7 @@ const AcnoLoanData = [
   },
 ];
 
-const userAccountData = [
+const accDetailData = [
   { 
     type: [
       { name: "예적금", categoryClass: "deposit" },
@@ -113,18 +140,7 @@ const userAccountData = [
 
 
 //예시 데이터
-const productsData = [
-  {
-    pdcd: "P001",
-    pdDesc: "안전한 종합대출 상품입니다.",
-    categoty: "종합대출",
-    categoryClass: "loanTotal",
-    pdnm: "종합대출 상품 1",
-    keyword: ["고금리", "안정성"],
-    contents1: "3년 또는 5년",
-    contents2: "최저 연 5.90%",
-    onClick: () => console.log("상품 클릭됨"),
-  },
+const ProductFavCardData = [
   {
     pdcd: "P001",
     pdDesc: "안전한 예금 상품입니다.",
@@ -134,9 +150,50 @@ const productsData = [
     keyword: ["고금리", "안정성"],
     contents1: "3년 또는 5년",
     contents2: "최저 연 5.90%",
-    onClick: () => console.log("상품 클릭됨"),
+    buttons: [
+      {
+        name: "가입하기",
+        onClick: () => console.log("상품1 가입하기 클릭됨"),
+      },
+    ],
   },
  
+];
+
+
+
+//예시 데이터
+const ProductOriginCardData = [
+  {
+    pdcd: "P001",
+    pdDesc: "상품특젱 상품특징",
+    categoty: "대출",
+    categoryClass: "loan",
+    pdnm: "상품명 상품명",
+    keyword: ["상품상세구분", "태그"],
+    buttons: [
+      {
+        name: "가입하기",
+        onClick: () => console.log("상품1 가입하기 클릭됨"),
+      },
+    ],
+  },
+  {
+    pdcd: "P001",
+    pdDesc: "상품특젱 상품특징",
+    categoty: "예적금",
+    categoryClass: "deposit",
+    pdnm: "상품명 상품명",
+    keyword: ["상품상세구분", "태그"],
+    contents1: "최고 3.0%",
+    contents2: "최저 0.2%",
+    buttons: [
+      {
+        name: "가입하기",
+        onClick: () => console.log("상품1 가입하기 클릭됨"),
+      },
+    ],
+  },
 ];
 
 
@@ -144,18 +201,21 @@ const Card_page = () => {
     return (
         <Box sx={{ padding:"16px" }}>
             <Typography className="exp">예적금 계좌 카드</Typography>
-            <AcnoDepositCard items={AcnoDepositData} />
+            <AccDepositCard items={AccDepositData} />
 
             <Typography className="exp">대출 계좌 카드</Typography>
-            <AcnoLoanCard items={AcnoLoanData} />
+            <AccLoanCard items={AccLoanData} />
 
             <Typography className="exp">수정&즐겨찾기 카드</Typography>
-            <ModiStarCard items={userAccountData} />
+            <ModiStarCard items={accDetailData} />
             <Typography className="exp">즐겨찾기 카드</Typography>
-            <StarCard items={userAccountData}/>
+            <StarCard items={accDetailData}/>
 
-            <Typography className="exp">대출/예/적금/종합대출 카드<br/>** 작업중입니다.</Typography>
-            <ProductDepositCard items={productsData} />
+            <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
+            <ProductFavCard items={ProductFavCardData} />
+
+            <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
+            <ProductOriginCard items={ProductOriginCardData} />
 
         </Box>
     );
