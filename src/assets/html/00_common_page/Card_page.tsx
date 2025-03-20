@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { AcnoDepositCard, AcnoLoanCard, ModiStarCard, ProductDepositCard } from "@src/assets/html/00_common/Card";
+import { AcnoDepositCard, AcnoLoanCard, ModiStarCard, ProductDepositCard, StarCard } from "@src/assets/html/00_common/Card";
 
 //메인 _ 예적금 예시 데이터
 const AcnoDepositData = [
@@ -94,10 +94,13 @@ const AcnoLoanData = [
 ];
 
 const userAccountData = [
-  {
-    type: "예금",
+  { 
+    type: [
+      { name: "예적금", categoryClass: "deposit" },
+      { name: "대출", categoryClass: "loan" },
+      { name: "대출", categoryClass: "loanTotal" },
+    ],
     pdnm: "e정기예금 단리",
-    categoryClass: "deposit",
     keyword: ["고금리", "안정성"],
     acno: "123-456-789",
     balance: 500000,
@@ -106,6 +109,8 @@ const userAccountData = [
     psntInrt: 2.5
   },
 ];
+
+
 
 //예시 데이터
 const productsData = [
@@ -144,9 +149,10 @@ const Card_page = () => {
             <Typography className="exp">대출 계좌 카드</Typography>
             <AcnoLoanCard items={AcnoLoanData} />
 
-
-            <Typography className="exp">대출/예/적금/종합대출 카드 <br/>** 작업중입니다.</Typography>
+            <Typography className="exp">수정&즐겨찾기 카드</Typography>
             <ModiStarCard items={userAccountData} />
+            <Typography className="exp">즐겨찾기 카드</Typography>
+            <StarCard items={userAccountData}/>
 
             <Typography className="exp">대출/예/적금/종합대출 카드<br/>** 작업중입니다.</Typography>
             <ProductDepositCard items={productsData} />

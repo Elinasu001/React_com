@@ -255,11 +255,11 @@ export const AcnoLoanCard = ({ items }: AcnoLoanCardProps) => {
 };
 
 /**
- *  계좌 관리 속성
+ *  계좌 관리 속성 (수정&즐겨찾기)
  */
-interface ModiStarCardProps {
+interface StarCardProps {
   items: {
-    type: string;
+    type: { name: string; categoryClass: string }[];
     acno: string;
     balance: number;
     pdnm: string;
@@ -267,17 +267,17 @@ interface ModiStarCardProps {
     wtchPosbAmt: number;
     psntInrt: number;
     keyword: string[];       // 키워드
-    categoryClass: string;  // 카테고리 색상 클래스
+    // categoryClass: string;  // 카테고리 색상 클래스
     nFunc?: (data?: DataSet) => void;
     showTradeHs?: boolean;
   }[];
 }
 
 /**
- * 카드 컴포넌트 (계좌 전용)
+ * 카드 컴포넌트 (수정&즐겨찾기)
  */
 
-export const ModiStarCard = ({ items }: ModiStarCardProps) => {
+export const ModiStarCard = ({ items }: StarCardProps) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
@@ -314,9 +314,18 @@ export const ModiStarCard = ({ items }: ModiStarCardProps) => {
             <CardContent>
               <Box className="card-info-actions">
                 {/* 상품타입 + 상품명 */}
-                <Box className="card-info">
-                  <Typography className={`card-category ${item.categoryClass}`} aria-label={`상품 유형: ${item.type}`}>
-                    {item.type}
+                <Box className="card-info flex-col">
+                  {/* 항상 type을 배열로 변환하여 처리 */}
+                  <Typography className="card-category-list">
+                      {item.type.map((typeObj, index) => (
+                        <Typography
+                          key={index}
+                          className={`card-category ${typeObj.categoryClass}`} // categoryClass 적용 가능
+                          aria-label={`상품 유형: ${typeObj.name}`}
+                        >
+                          {typeObj.name}
+                        </Typography>
+                      ))}
                   </Typography>
                   <Typography className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
                     {item.pdnm}
@@ -381,8 +390,158 @@ export const ModiStarCard = ({ items }: ModiStarCardProps) => {
 
               {/* 컨텐츠 공통 버튼 적용 */}
               <ButtonContent
+                  buttons={
+                    !Array.isArray(item.type) && item.type === "4" //`type`이 문자열일 때만 "4"와 비교
+                      ? [{ name: "상환하기" }]
+                      : [
+                          ...(item.showTradeHs
+                            ? [
+                                {
+                                  name: "거래내역보기",
+                                  clickFunc: () =>
+                                    item.nFunc?.(
+                                      new DataSet({
+                                        acno: item.acno,
+                                        type: item.type, // `type`이 배열이 아닐 경우에만 전달됨
+                                        pdnm: item.pdnm,
+                                        balance: item.balance,
+                                      })
+                                    ),
+                                },
+                              ]
+                            : []),
+                          { name: "이체하기" },
+                        ]
+                  }
+                />
+            </CardContent>
+          </Card>
+        </ListItem>
+      ))}
+
+      {/* 알림창 */}
+      <Snackbar open={snackbarOpen} autoHideDuration={1000} onClose={handleSnackbarClose}  aria-live="polite" anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+        <Alert onClose={handleSnackbarClose} severity="info">
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </List>
+);
+};
+
+export const StarCard = ({ items }: StarCardProps) => {
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  // 각 카드별 상태를 배열로 관리
+  const [isFavorite, setIsFavorite] = useState<boolean[]>(Array(items.length).fill(false));
+
+  // 관심상품 클릭
+  const handleGiftClick = (event: React.MouseEvent, index: number) => {
+    event.stopPropagation();
+    
+    setIsFavorite((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+
+    setSnackbarMessage(
+      isFavorite[index] ? "즐겨찾기에서 제외되었습니다." : "즐겨찾기로 등록되었습니다."
+    );
+    setSnackbarOpen(true);
+  };
+
+  
+  // 알림 닫기
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  return (
+    <List className="card-wrap">
+      {items.map((item, index) => (
+        <ListItem key={index} className="card-list">
+          <Card className="card-box">
+            <CardContent>
+              <Box className="card-info-actions">
+                {/* 상품타입 + 상품명 */}
+                <Box className="card-info flex-col">
+
+                    {/* 항상 type을 배열로 변환하여 처리 */}
+                    <Typography className="card-category-list">
+                      {item.type.map((typeObj, index) => (
+                        <Typography
+                          key={index}
+                          className={`card-category ${typeObj.categoryClass}`} // categoryClass 적용 가능
+                          aria-label={`상품 유형: ${typeObj.name}`}
+                        >
+                          {typeObj.name}
+                        </Typography>
+                      ))}
+                    </Typography>
+
+                  <Typography className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
+                    {item.pdnm}
+                  </Typography>
+                </Box>
+
+                {/*즐겨찾기 버튼 */}
+                <Box className="card-actions">
+                  <Button
+                    className={`btn-star ${isFavorite[index] ? "active" : ""}`}
+                    onClick={(event) => handleGiftClick(event, index)}
+                    disableRipple
+                    aria-label="즐겨찾기"
+                    aria-pressed={isFavorite[index]}
+                  ></Button>
+                </Box>
+              </Box>
+
+              {/* 키워드 */}
+              <Typography className="card-tag" aria-label={`관련 키워드: ${item.keyword.join(", ")}`}>
+                {item.keyword.join(" | ")}
+              </Typography>
+
+              {/* 계좌번호 및 복사 아이콘 */}
+              <Box className="card-account-info">
+                <Typography className="account-num" aria-label={`계좌번호 ${item.acno}`}>
+                  {item.acno}
+                </Typography>
+                <Button
+                  className="btn-copy"
+                  aria-label="계좌번호 복사"
+                  onClick={() => {
+                    if (typeof window !== "undefined" && navigator?.clipboard) {
+                      try {
+                        navigator.clipboard.writeText(item.acno);
+                      } catch (error) {
+                        console.error("클립보드 복사 오류:", error);
+                      }
+                    } else {
+                      console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
+                    }
+                  }}
+                >
+                  <ContentCopyIcon />
+                </Button>
+              </Box>
+
+              
+
+              {/* 계좌 잔액 */}
+              <Box className="card-balance">
+                <Typography className="txt-balance">잔액</Typography>
+                <Typography className="num-balance" aria-label={`잔액 ${item.balance.toLocaleString()} 원`}>
+                  {(item.balance ?? 0).toLocaleString()} <span>원</span>
+                </Typography>
+              </Box>
+
+              {/* 컨텐츠 공통 버튼 적용 */}
+              <ButtonContent
                 buttons={
-                  item.type === "4"
+                  !Array.isArray(item.type) && item.type === "4" // `type`이 문자열일 때만 "4"와 비교
                     ? [{ name: "상환하기" }]
                     : [
                         ...(item.showTradeHs
@@ -390,7 +549,14 @@ export const ModiStarCard = ({ items }: ModiStarCardProps) => {
                               {
                                 name: "거래내역보기",
                                 clickFunc: () =>
-                                  item.nFunc?.(new DataSet({ acno: item.acno, type: item.type, pdnm: item.pdnm, balance: item.balance })),
+                                  item.nFunc?.(
+                                    new DataSet({
+                                      acno: item.acno,
+                                      type: item.type, // `type`이 배열이 아닐 경우에만 전달됨
+                                      pdnm: item.pdnm,
+                                      balance: item.balance,
+                                    })
+                                  ),
                               },
                             ]
                           : []),
@@ -549,4 +715,4 @@ export const ProductDepositCard = ({ items }: ProductDepositCardProps) => {
 
 
  
-export default { AcnoDepositCard, AcnoLoanCard, ModiStarCard, ProductDepositCard };
+export default { AcnoDepositCard, AcnoLoanCard, ModiStarCard, StarCard, ProductDepositCard };

@@ -285,7 +285,7 @@
             &.active::before  { background-color: var(--card-btn-compare-active);  @include mixin.mask-style(var(--ico-compare-active), auto, 26px); }
         }
 
-       .btn-favorite {
+        .btn-favorite {
             &::before{ @include mixin.mask-style(var(--ico-favorite), auto, 26px); }
             &.active::before { background-color: var(--card-btn-favorite-active); @include mixin.mask-style(var(--ico-favorite-active), auto, 26px); }
         }
@@ -298,7 +298,11 @@
             &::before{ @include mixin.mask-style(var(--ico-modify), auto, 26px); }
         }
     }
-    .card-info {  @include mixin.flex-row; align-items: flex-start; gap:10px; }
+    .card-info {  
+        @include mixin.flex-row; align-items: flex-start; gap:10px;
+        &.flex-col { @include mixin.flex-col; }
+    }
+    .card-category-list {display:flex; gap:10px; }
     .card-category { 
         padding:0 8px; border-radius:15px; font-size:var(--font12); font-weight: var(--font-w-r); color: var(--card-category); border:1px solid var(--card-category);
         &.loan { color:var(--card-category-loan); border:1px solid var(--card-category-loan); } // 대출
