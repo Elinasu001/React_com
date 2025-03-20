@@ -125,7 +125,7 @@ const accDetailData = [
     type: [
       { name: "예적금", categoryClass: "deposit" },
       { name: "대출", categoryClass: "loan" },
-      { name: "대출", categoryClass: "loanTotal" },
+      { name: "종합대출", categoryClass: "loanTotal" },
     ],
     pdnm: "e정기예금 단리",
     keyword: ["고금리", "안정성"],
@@ -206,15 +206,15 @@ const Card_page = () => {
             <Typography className="exp">대출 계좌 카드</Typography>
             <AccLoanCard items={AccLoanData} />
 
-            <Typography className="exp">수정&즐겨찾기 카드</Typography>
+            <Typography className="exp">대출/예/적금/종합대출 수정&즐겨찾기 카드</Typography>
             <ModiStarCard items={accDetailData} />
             <Typography className="exp">즐겨찾기 카드</Typography>
             <StarCard items={accDetailData}/>
 
-            <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
+            <Typography className="exp">대출/예/적금/종합대출 상품카드 (비교하&좋아요)</Typography>
             <ProductFavCard items={ProductFavCardData} />
 
-            <Typography className="exp">대출/예/적금/종합대출 카드</Typography>
+            <Typography className="exp">대출/예/적금/종합대출 상품카드 (일반)</Typography>
             <ProductOriginCard items={ProductOriginCardData} />
 
         </Box>
