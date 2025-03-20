@@ -96,18 +96,43 @@ interface TextInfolistR {
 
   /** 계좌 관리 **/
   /* + 대츌계좌관리 */
-  lAmnt?: number;                    // 대출신청금액
-  lAppDt?: string;                   // 대출신청일
-  lMatDt?: string;                   // 대출만기일
+  lReqAmnt?: number;                 // 대출신청금액
+  lReqDt?: string;                   // 대출신청일 (YYYY.MM.DD)
+  lMatDt?: string;                   // 대출만기일 (YYYY.MM.DD)
   intPayDt?: string;                 // 이자납입일
-  RpyMt?: string;                    // 상환방법
+  lRpyMt?: string;                   // 상환방법
   lastTrdDt?: string;                // 최종거래일
 
-  /* + 상환일정 */
+  /* + 상환 */
   lRemLnAmt?: number;                // 남은대출금
-  lLastIntPayDt?: string;            // 최종이자납입일
-  lNextIntPayDt?: string;            // 다음이자납입일
+  lLastIntPayDt?: string;            // 최종이자납입일 (YYYY.MM.DD)
+  lNextIntPayDt?: string;            // 다음이자납입일 (YYYY.MM.DD)
 
+  lAmnt?: number;                    // 대출금액
+  lDt?: string;                      // 대출일자 (YYYY.MM.DD)
+  matDt?: string;                    // 만기일자 (YYYY.MM.DD)
+  normSchRt?: number;                // 정상금리
+  ovdSchRt?: number;                 // 연체금리
+  lAgrDt?: number;                   // 대출약정일
+
+  /* 전자계약 */
+  usrNm?: string;                    // 성명
+  resRegNo?: string;                 // 주민등록번호
+  encResRegNo?: number;              // 암호화된 주민등록번호
+  addr?: {                           // 주소
+    zipCode?: string;
+    city?: string;
+    building?: string;
+    unit?: string;
+  }
+  intWdAcc?: {                       // 이자출금계좌
+    name: string;                    // 이름
+    bank: string;                    // 은행명
+    acno: string;                    // 계좌번호
+  };
+
+
+  /** 계좌 관리 **/
   balance?: number;                  // 잔액
   accOpenDt?: string;                // 계좌개설일 (YYYY.MM.DD)
   txBnfType?: string;                // 세금우대구분
@@ -119,7 +144,7 @@ interface TextInfolistR {
   tfrBank?: string;                  // 송금은행
   tfrAcno?: string;                  // 송금계좌번호
   limAmt?: number;                   // 한도
-  matDt?: string;                    // 만기일 (YYYY.MM.DD)
+  accMatDt?: string;                 // 만기일 (YYYY.MM.DD)
   intRt?: number;                    // 이율
   ovdRt?: number;                    // 연체이율
   intAsOfDate?: number;              // 이자(조회일기준)
@@ -137,7 +162,7 @@ interface TextInfolistProps  {
 
 
 // 자동이체 리스트
-export const ATInfoList = ({ items }: TextInfolistProps) => {
+export const AtInfoList = ({ items }: TextInfolistProps) => {
   return (
     <Box className="txt-list-wrap">
       {items.map((item, index) => (
@@ -293,7 +318,7 @@ export const ATInfoList = ({ items }: TextInfolistProps) => {
 };
 
 // 예약이체 리스트
-export const STInfoList = ({ items }: TextInfolistProps) => {
+export const StInfoList = ({ items }: TextInfolistProps) => {
   return (
     <Box className="txt-list-wrap">
       {items.map((item, index) => (
@@ -450,13 +475,13 @@ export const AccMngInfoList = ({ items }: TextInfolistProps) => {
             )}
 
             {/* 대출신청금액 */}
-            {item.lAmnt !== undefined && (
+            {item.lReqAmnt !== undefined && (
               <ListItem className="txt-item">
                 <ListItemText
                   className="txt-area"
                   primary="대출신청금액"
                   secondary={
-                    <>{item.lAmnt.toLocaleString()} 원</>
+                    <>{item.lReqAmnt.toLocaleString()} 원</>
                   }
                 />
               </ListItem>
@@ -476,13 +501,13 @@ export const AccMngInfoList = ({ items }: TextInfolistProps) => {
             )}
 
             {/* 대출신청일 */}
-            {item.lAppDt && (
+            {item.lReqDt && (
               <ListItem className="txt-item">
                 <ListItemText
                   className="txt-area"
                   primary="대출신청일"
                   secondary={
-                    <>{item.lAppDt}</>
+                    <>{item.lReqDt}</>
                   }
                 />
               </ListItem>
@@ -502,13 +527,13 @@ export const AccMngInfoList = ({ items }: TextInfolistProps) => {
             )}
 
             {/* 상환방법 */}
-            {item.RpyMt && (
+            {item.lRpyMt && (
               <ListItem className="txt-item">
                 <ListItemText
                   className="txt-area"
                   primary="상환방법"
                   secondary={
-                    <>{item.RpyMt}</>
+                    <>{item.lRpyMt}</>
                   }
                 />
               </ListItem>
@@ -723,13 +748,13 @@ export const AccMngInfoList = ({ items }: TextInfolistProps) => {
             )}
 
             {/* 만기일 */}
-            {item.matDt && (
+            {item.accMatDt && (
               <ListItem className="txt-item">
                 <ListItemText
                   className="txt-area"
                   primary="만기일"
                   secondary={
-                    <>{item.matDt}</>
+                    <>{item.accMatDt}</>
                   }
                 />
               </ListItem>
@@ -808,8 +833,8 @@ export const AccMngInfoList = ({ items }: TextInfolistProps) => {
   );
 };
 
-// 상환일정 리스트
-export const RpySchinfoList = ({ items }: TextInfolistProps) => {
+//상환일정 리스트
+export const RpySchInfoList = ({ items }: TextInfolistProps) => {
   return (
     <Box className="txt-list-wrap">
       {items.map((item, index) => (
@@ -844,13 +869,13 @@ export const RpySchinfoList = ({ items }: TextInfolistProps) => {
             )}
 
             {/* 대출신청금액 */}
-            {item.lAmnt  !== undefined && (
+            {item.lReqAmnt  !== undefined && (
               <ListItem className="txt-item">
                 <ListItemText
                   className="txt-area"
                   primary="대출신청금액"
                   secondary={
-                    <>{item.lAmnt.toLocaleString()} 원</>
+                    <>{item.lReqAmnt.toLocaleString()} 원</>
                   }
                 />
               </ListItem>
@@ -870,13 +895,13 @@ export const RpySchinfoList = ({ items }: TextInfolistProps) => {
             )}
 
             {/* 대출신청일 */}
-            {item.lAppDt && (
+            {item.lReqDt && (
               <ListItem className="txt-item">
                 <ListItemText
                   className="txt-area"
                   primary="대출신청일"
                   secondary={
-                    <>{item.lAppDt}</>
+                    <>{item.lReqDt}</>
                   }
                 />
               </ListItem>
@@ -920,6 +945,98 @@ export const RpySchinfoList = ({ items }: TextInfolistProps) => {
                 />
               </ListItem>
             )}
+
+            {/* 대출금액 */}
+            {item.lAmnt  !== undefined && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="대출금액"
+                  secondary={
+                    <>{item.lAmnt.toLocaleString()} 원</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 대출일자 */}
+            {item.lDt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="대출일자"
+                  secondary={
+                    <>{item.lDt}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 만기일자 */}
+            {item.matDt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="만기일자"
+                  secondary={
+                    <>{item.matDt}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 상환방법 */}
+            {item.lRpyMt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="상환방법"
+                  secondary={
+                    <>{item.lRpyMt}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 정상금리 */}
+            {item.normSchRt !== undefined && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="정상금리"
+                  secondary={
+                    <>{item.normSchRt}%</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 연체금리 */}
+            {item.ovdSchRt !== undefined && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="연체금리"
+                  secondary={
+                    <>{item.ovdSchRt}%</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 대출약정일 */}
+            {item.lAgrDt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="대출약정일"
+                  secondary={
+                    <>{item.lAgrDt}일</>
+                  }
+                />
+              </ListItem>
+            )}
+
             
           </List>
 
@@ -929,5 +1046,173 @@ export const RpySchinfoList = ({ items }: TextInfolistProps) => {
   );
 };
 
+//전자계약 리스트
+export const EContInfoList = ({ items }: TextInfolistProps) => {
+  return (
+    <Box className="txt-list-wrap">
+      {items.map((item, index) => (
+        <Paper key={index} className="txt-list-detail">
+          <List className="txt-list">
 
-export default { InfoList, ATInfoList, STInfoList, AccMngInfoList, RpySchinfoList };
+            {/* 성명 */}
+            {item.usrNm && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="성명"
+                  secondary={
+                    <>{item.usrNm}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 주민등록번호 */}
+            {item.resRegNo && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="주민등록번호"
+                  secondary={
+                    <>{item.resRegNo}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 주소 */}
+            {item.addr && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="주소"
+                  secondary={
+                    <>
+                      {item.addr?.zipCode ?? "미입력"} <br />
+                      {item.addr?.city ?? "미입력"} <br />
+                      {item.addr?.building ?? "미입력"} <br />
+                      {item.addr?.unit ?? "미입력"}
+                    </>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 대출신청일 */}
+            {item.lReqDt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="대출신청일"
+                  secondary={
+                    <>{item.lReqDt}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 대출만기일 */}
+            {item.lMatDt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="대출만기일"
+                  secondary={
+                    <>{item.lMatDt}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 상환방법 */}
+            {item.lRpyMt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="상환방법"
+                  secondary={
+                    <>{item.lRpyMt}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 이율 */}
+            {item.intRt !== undefined && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="이율"
+                  secondary={
+                    <>{item.intRt}%</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 연체이율 */}
+            {item.ovdRt !== undefined && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="연체이율"
+                  secondary={
+                    <>이율 + {item.ovdRt}%</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 이자납입일 */}
+            {item.intPayDt && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="이자납입일"
+                  secondary={
+                    <>{item.intPayDt}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 이자출금계좌 */}
+            {item.intWdAcc && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="이자출금계좌"
+                  secondary={
+                    <>
+                      {item.intWdAcc?.name ?? "미입력"} <br />
+                      {item.intWdAcc?.bank ?? "미입력"} <br />
+                      {item.intWdAcc?.acno ?? "미입력"}
+                    </>
+                  }
+                />
+              </ListItem>
+            )}
+
+            {/* 입출금계좌 */}
+            {item.acno && (
+              <ListItem className="txt-item">
+                <ListItemText
+                  className="txt-area"
+                  primary="입출금계좌"
+                  secondary={
+                    <>{item.acno}</>
+                  }
+                />
+              </ListItem>
+            )}
+
+          </List>
+
+        </Paper>
+      ))}
+    </Box>
+  );
+};
+
+
+export default { InfoList, AtInfoList, StInfoList, AccMngInfoList, RpySchInfoList, EContInfoList };
