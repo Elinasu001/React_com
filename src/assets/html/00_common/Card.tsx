@@ -582,6 +582,73 @@ export const StarCard = ({ items }: StarCardProps) => {
 };
 
 /**
+ *  계좌 상세 관리 카드 컴포넌트 (즐겨찾기 x)
+ */
+export const StarNoCard = ({ items }: StarCardProps) => {
+  
+  return (
+    <List className="card-wrap">
+      {items.map((item, index) => (
+        <ListItem key={index} className="card-list">
+          <Card className="card-box">
+            <CardContent>
+              <Box className="card-info-actions">
+
+                {/* 상품타입 + 상품명 */}
+                <Box className="card-info flex-col">
+                    {/* 항상 type을 배열로 변환하여 처리 */}
+                    <Typography className="card-category-list">
+                      {item.type.map((typeObj, index) => (
+                        <Typography
+                          key={index}
+                          className={`card-category ${typeObj.categoryClass}`} // categoryClass 적용 가능
+                          aria-label={`상품 유형: ${typeObj.name}`}
+                        >
+                          {typeObj.name}
+                        </Typography>
+                      ))}
+                    </Typography>
+                  <Typography className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
+                    {item.pdnm}
+                  </Typography>
+                </Box>
+              </Box>
+
+              {/* 계좌번호 및 복사 아이콘 */}
+              <Box className="card-account-info">
+                <Typography className="account-num" aria-label={`계좌번호 ${item.acno}`}>
+                  {item.acno}
+                </Typography>
+                <Button
+                  className="btn-copy"
+                  aria-label="계좌번호 복사"
+                  onClick={() => {
+                    if (typeof window !== "undefined" && navigator?.clipboard) {
+                      try {
+                        navigator.clipboard.writeText(item.acno);
+                      } catch (error) {
+                        console.error("클립보드 복사 오류:", error);
+                      }
+                    } else {
+                      console.warn("클립보드 복사는 브라우저에서만 가능합니다.");
+                    }
+                  }}
+                >
+                  <ContentCopyIcon />
+                </Button>
+              </Box>
+              
+            </CardContent>
+          </Card>
+        </ListItem>
+      ))}
+
+    </List>
+);
+};
+
+
+/**
  *  대출/예/적금 상품 카드 속성 (비교하기&좋아요)
  */
 interface ProductFavCardProps {
@@ -792,4 +859,4 @@ export const ProductOriginCard = ({ items }: ProductOriginCardProps) => {
   );
 };
 
-export default { AccDepositCard, AccLoanCard, ModiStarCard, StarCard, ProductFavCard, ProductOriginCard};
+export default { AccDepositCard, AccLoanCard, ModiStarCard, StarCard, StarNoCard, ProductFavCard, ProductOriginCard};

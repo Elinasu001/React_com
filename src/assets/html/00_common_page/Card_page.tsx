@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { AccDepositCard, AccLoanCard, ModiStarCard, ProductFavCard, ProductOriginCard, StarCard } from "@src/assets/html/00_common/Card";
+import { AccDepositCard, AccLoanCard, ModiStarCard, ProductFavCard, ProductOriginCard, StarCard, StarNoCard } from "@src/assets/html/00_common/Card";
 
 //메인 _ 예적금 예시 데이터
 const AccDepositData = [
@@ -206,10 +206,12 @@ const Card_page = () => {
             <Typography className="exp">대출 계좌 카드</Typography>
             <AccLoanCard items={AccLoanData} />
 
-            <Typography className="exp">대출/예/적금/종합대출 수정&즐겨찾기 카드</Typography>
+            <Typography className="exp">대출/예/적금/종합대출 카드 (수정&즐겨찾기)</Typography>
             <ModiStarCard items={accDetailData} />
-            <Typography className="exp">즐겨찾기 카드</Typography>
+            <Typography className="exp">대출/예/적금/종합대출 카드 (즐겨찾기)</Typography>
             <StarCard items={accDetailData}/>
+            <Typography className="exp">대출/예/적금/종합대출 카드 (즐겨찾기 x)</Typography>
+            <StarNoCard items={accDetailData}/>
 
             <Typography className="exp">대출/예/적금/종합대출 상품카드 (비교하&좋아요)</Typography>
             <ProductFavCard items={ProductFavCardData} />
