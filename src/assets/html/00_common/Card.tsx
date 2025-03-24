@@ -9,10 +9,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Alert, Box, Button, Card, CardContent, List, ListItem, Snackbar, Typography, } from "@mui/material";
 import { ButtonContent } from "@src/assets/html/00_common/Button";
 import { openBottomPopupWithMenu } from "@src/assets/html/00_common/Popup";
+import { ProgressBar } from "@src/assets/html/00_common/Progress";
 import DataSet from "@src/assets/io/DataSet";
 import React, { useState } from "react";
-
-
 /**
  *  예적금 관리 카드 속성
  */
@@ -25,7 +24,7 @@ interface AccDepositCardProps {
     newDt: string;
     wtchPosbAmt: number;
     psntInrt: number;
-    categoryClass: string; // 카테고리 색상 클래스
+    categoryClass: string;                // 카테고리 색상 클래스
     nFunc?: (data?: DataSet) => void;
     showTradeHs?: boolean;
 
@@ -142,6 +141,7 @@ interface AccLoanCardProps {
     nFunc?: (data?: DataSet) => void;
     showTradeHs?: boolean;                //기존
     
+    progressValue?: number;               // ProgressBar에 넘길 값 [2025-03-24 추가]
     buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
     isMain?: boolean; // 메인 여부를 판단하는 prop 추가
   }[];
@@ -242,6 +242,9 @@ export const AccLoanCard = ({ items }: AccLoanCardProps) => {
                   </Box>
                 )}
 
+                {/* 퍼센트 값이 있으면 ProgressBar 표시   [2025-03-24 추가] */}
+                {item.progressValue !== undefined && <ProgressBar value={item.progressValue} />}
+
                 {/* 컨텐츠 공통 버튼 적용 - 예시입니다. */}
                 {item.buttons && item.buttons.length > 0 && <ButtonContent buttons={item.buttons} />}
 
@@ -252,6 +255,7 @@ export const AccLoanCard = ({ items }: AccLoanCardProps) => {
     </List>
 );
 };
+
 
 /**
  *  계좌 상세 관리 속성 (수정&즐겨찾기)
@@ -655,7 +659,7 @@ interface ProductFavCardProps {
   items: {
     pdcd: string;             // 상품코드
     pdnm: string;             // 상품명
-    categoty: string;         // 카테고리
+    category: string;         // 카테고리
     pdDesc: string;           // 상품설명
     keyword: string[];        // 키워드
     contents1: string;        // 내용1
@@ -746,8 +750,8 @@ export const ProductFavCard = ({ items }: ProductFavCardProps) => {
 
               {/* 카테고리 + 상품명 */}
               <Box className="card-info">
-                <Typography  className={`card-category ${item.categoryClass}`} aria-label={`카테고리: ${item.categoty}`}>
-                  {item.categoty}
+                <Typography  className={`card-category ${item.categoryClass}`} aria-label={`카테고리: ${item.category}`}>
+                  {item.category}
                 </Typography>
                 <Typography  className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
                   {item.pdnm}
@@ -794,12 +798,12 @@ interface ProductOriginCardProps {
   items: {
     pdcd: string;             // 상품코드
     pdnm: string;             // 상품명
-    categoty: string;         // 카테고리
+    category?: string;         // 카테고리  {/* 수정1 */}
     pdDesc: string;           // 상품설명
     keyword: string[];        // 키워드
     contents1?: string;       // 내용1 (옵션)
     contents2?: string;       // 내용2 (옵션)
-    categoryClass: string;    // 카테고리를 클래스별 색상변경
+    categoryClass?: string;    // 카테고리를 클래스별 색상변경  {/* 수정1 */}
     buttons?: { name: string; onClick?: () => void }[]; // 예시 버튼입니다.
   }[];
 }
@@ -825,9 +829,15 @@ export const ProductOriginCard = ({ items }: ProductOriginCardProps) => {
 
               {/* 카테고리?? + 상품명 */}
               <Box className="card-info">
-                <Typography  className={`card-category ${item.categoryClass}`} aria-label={`카테고리: ${item.categoty}`}>
-                  {item.categoty}
-                </Typography>
+                {/* 수정1 */}
+                {item.category && (
+                  <Typography 
+                    className={`card-category ${item.categoryClass || ''}`} 
+                    aria-label={`카테고리: ${item.category}`}
+                  >
+                    {item.category}
+                  </Typography>
+                )}
                 <Typography  className="card-name" variant="h6" aria-label={`상품명: ${item.pdnm}`}>
                   {item.pdnm}
                 </Typography>

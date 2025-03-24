@@ -79,6 +79,7 @@ const AccLoanData = [
     newDt: "2024-03-10",
     wtchPosbAmt: 10000,
     psntInrt: 2.5,
+    progressValue: 75, // [2025-03-24 추가]
     buttons: [
       {
         name: "추가대출",
@@ -120,6 +121,7 @@ const AccLoanData = [
   },
 ];
 
+
 const accDetailData = [
   { 
     type: [
@@ -144,7 +146,7 @@ const ProductFavCardData = [
   {
     pdcd: "P001",
     pdDesc: "안전한 예금 상품입니다.",
-    categoty: "예적금",
+    category: "예적금",
     categoryClass: "deposit",
     pdnm: "예금 상품 1",
     keyword: ["고금리", "안정성"],
@@ -162,13 +164,11 @@ const ProductFavCardData = [
 
 
 
-//예시 데이터
+//예시 데이터  {/* 수정1 */}
 const ProductOriginCardData = [
   {
     pdcd: "P001",
     pdDesc: "상품특젱 상품특징",
-    categoty: "대출",
-    categoryClass: "loan",
     pdnm: "상품명 상품명",
     keyword: ["상품상세구분", "태그"],
     buttons: [
@@ -181,8 +181,6 @@ const ProductOriginCardData = [
   {
     pdcd: "P001",
     pdDesc: "상품특젱 상품특징",
-    categoty: "예적금",
-    categoryClass: "deposit",
     pdnm: "상품명 상품명",
     keyword: ["상품상세구분", "태그"],
     contents1: "최고 3.0%",
