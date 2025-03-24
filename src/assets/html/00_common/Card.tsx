@@ -242,8 +242,23 @@ export const AccLoanCard = ({ items }: AccLoanCardProps) => {
                   </Box>
                 )}
 
-                {/* 퍼센트 값이 있으면 ProgressBar 표시   [2025-03-24 추가] */}
-                {item.progressValue !== undefined && <ProgressBar value={item.progressValue} />}
+                {/* 퍼센트 값이 있으면 ProgressBar 표시  [2025-03-24 추가] */}
+                {item.progressValue !== undefined && (
+                  <div className="progress-wrap">
+                    <ProgressBar value={item.progressValue} />
+                    <div className="progress-message">
+                      <span>
+                        {item.progressValue < 20
+                          ? "앞으로 화이팅 하세요!"
+                          : item.progressValue < 80
+                          ? "지금까지 잘하고 있어요!"
+                          : item.progressValue < 100
+                          ? "힘내세요! 거의 다 왔어요!"
+                          : "축하드려요! 모두 상환했어요!"}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 {/* 컨텐츠 공통 버튼 적용 - 예시입니다. */}
                 {item.buttons && item.buttons.length > 0 && <ButtonContent buttons={item.buttons} />}

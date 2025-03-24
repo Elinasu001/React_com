@@ -79,7 +79,7 @@ const AccLoanData = [
     newDt: "2024-03-10",
     wtchPosbAmt: 10000,
     psntInrt: 2.5,
-    progressValue: 75, // [2025-03-24 추가]
+    progressValue: 80, // [2025-03-24 추가]
     buttons: [
       {
         name: "추가대출",
