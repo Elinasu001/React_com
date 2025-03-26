@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import { Box, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
+import { Box, Button, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
 import { ButtonContent, ButtonSm } from "@src/assets/html/00_common/Button";
 
 interface InfoListProps {
@@ -56,7 +56,6 @@ export const InfoList = ({ title, items, hideTitle = false, titleIcon = false, l
     </Box>
   );
 };
-
 
 interface TextInfolistR {
   
@@ -1210,6 +1209,27 @@ export const EContInfoList = ({ items }: TextInfolistProps) => {
 
         </Paper>
       ))}
+    </Box>
+  );
+};
+
+//계좌상세 리스트
+
+interface  AccDetailInfolListProps {
+}
+
+//전자계약 리스트
+export const AccDetailInfolList = ({  }: AccDetailInfolListProps) => {
+  return (
+    <Box className="inquiry-choice-area" style={{ display: "flex", gap: "10px" }}>
+      {/* 선택 버튼 */}
+      <Button variant="contained">
+      </Button>
+
+      {/* 거래내역 다운로드 버튼 */}
+      <Button variant="outlined" size="small" >
+        거래내역 다운로드
+      </Button>
     </Box>
   );
 };

@@ -12,7 +12,7 @@ import { Box, Button } from '@mui/material';
 // 단일 버튼과 여러 개 버튼으로 나누어 사용 가능
 
 // 버튼 속성 통일
-interface ButtonProps {
+export interface ButtonProps {  // [2025-03-26 추가] export 추가
 
   // 단일 버튼용
   name?: string;
@@ -178,4 +178,4 @@ export const ButtonFooter = ({ name, clickFunc, disabled, buttons }: ButtonProps
   );
 };
 
-export default { ButtonContent, ButtonFooter };
+export default { ButtonContent, ButtonFooter, ButtonSm };

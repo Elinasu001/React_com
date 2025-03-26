@@ -43,6 +43,9 @@
     h3.tit { font-size:var(--font22); font-weight:var(--font-w-m); color: var(--tit-h3); }
     p.desc { padding-top:10px; font-size:var(--font16); font-weight:var(--font-w-m); color: var(--desc); }
 }
+.sub-tit-wrap { display:flex; justify-content: space-between; align-items:center;
+    h4.tit { font-size:var(--font16); font-weight:var(--font-w-m); color:var(--tit-h4); }
+}
 
 .info-wrap {
     @include mixin.flex-col; gap:10px;
@@ -174,10 +177,14 @@
 }
 
 // 컨텐츠 작은 버튼
-.btn-sm .btn { padding:0 16px;  line-height: 30px; font-size:var(--font14);  border: 1px solid var(--color-d); border-radius: 29px; background-color: var(--white); color: var(--color-45); }
+.btn-sm {
+    display:inline-block;
+    .btn { width:auto; padding:0 16px; line-height: 30px; height: 30px; font-size:var(--font14);  border: 1px solid var(--color-d); border-radius: 29px; background-color: var(--white); color: var(--color-45); }
+    &.right { text-align: right; }
+}
 
 /*---------------------------------------------
-   #탭 [Type: line[default], bg, style]
+    #탭 [Type: line[default], bg, style]
 ---------------------------------------------*/
 // 탭 기본
 .tab-container {
