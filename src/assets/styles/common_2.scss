@@ -1,0 +1,46 @@
+.radio {
+  &-basic {
+    .MuiRadio-root {
+      padding: 9px;
+
+      .MuiSvgIcon-root {
+        display: none;
+      }
+
+      &:before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        display: block;
+        background: url("/images/radio_default.png") no-repeat center;
+        background-size: contain;
+      }
+
+      &.Mui-checked {
+        &:before {
+          background-image: url("/images/radio_checked.png");
+        }
+      }
+    }
+  }
+
+  &-button {
+    .MuiRadio-root {
+      display: none;
+
+      & + .MuiFormControlLabel-label {
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      &.Mui-checked + .MuiFormControlLabel-label {
+        background-color: #1976d2;
+        color: white;
+        border-color: #1976d2;
+      }
+    }
+  }
+}

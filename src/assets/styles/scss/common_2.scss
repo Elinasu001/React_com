@@ -1,7 +1,7 @@
 $padding-mui: 0;
-$padding-default: 20px;
+$padding-default: 0 20px;
 $padding-nested: 10px;
-$groups: "form";
+$groups: "form", "btn";
 
 @each $group in $groups {
   .#{$group}Group {
@@ -12,26 +12,91 @@ $groups: "form";
   height: 100%;
 }
 
+/*---------------------------------------------
+	layout
+---------------------------------------------*/
+:root {
+  --ico-alarm: url(/src/assets/images/com/svg/ico_alarm.svg);
+}
+
 .wrap {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+
   section {
     &.headerWrap {
-      padding: $padding-default;
       flex-shrink: 0;
+      background-color: var(--white);
+      header {
+        padding: 0 10px;
+        background: var(--white);
+        color: var(--color-2);
+        box-shadow: none;
+        div {
+          padding: 0;
+        }
+      }
     }
-
     &.contentWrap {
       flex: 1;
       overflow: auto;
-      padding:20px;
     }
-
     &.btmWrap {
       height: auto;
       flex-shrink: 0;
+    }
+  }
+}
+
+header .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  h1 {
+    font-size: var(--font24);
+  }
+  .MuiTypography-root {
+    width: 100%;
+    text-align: center;
+    padding-right: 24px;
+  }
+  .btn-group {
+    button {
+      width: 40px;
+      height: 40px;
+      position: relative;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      background-size: 100%;
+      background-position: center;
+      font-size: 0;
+      &.alarm {
+        background-image: var(--ico-alarm);
+        .new {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--tertiary);
+          position: absolute;
+          top: -3px;
+          right: 0;
+        }
+      }
+      &.prev {
+        background-image: var(--ico-back);
+      }
+      &.menu {
+        background-image: var(--ico-menu);
+        background-size: right center;
+      }
+    }
+  }
+  &:not(.menu) {
+    .MuiTypography-root {
+      padding-right: 0;
     }
   }
 }
@@ -40,16 +105,21 @@ main {
   .MuiContainer-root {
     padding: 0;
     margin: 0;
-    // > .MuiBox-root {
-    //   padding: $padding-default;
-    // }
   }
 }
 
+.btnGroup button {
+  height: 58px;
+  font-size: 18px;
+}
+
+/*---------------------------------------------
+	form - input, select
+---------------------------------------------*/
 .form-input {
+  position: relative;
   margin-bottom: 20px;
   width: 100%;
-  // MUI FormControl 스타일 재정의
   &.MuiFormControl-root {
     width: 100%;
     margin-bottom: 20px;
@@ -72,7 +142,7 @@ main {
     position: relative;
   }
 
-  .MuiInput-root {
+  .MuiInput-root, .MuiInputBase-root {
     width: 100%;
     &::before,
     &::after {
@@ -82,12 +152,12 @@ main {
       padding: 15px 0;
       border-bottom: 1px solid var(--form-border);
       transition: border-color 0.3s ease-in-out;
-
       &:focus {
         border-color: var(--primary) !important;
+        outline: none;
       }
     }
-
+    /** 검색창 **/
     &.total {
       input {
         padding: 15px;
@@ -102,7 +172,6 @@ main {
       position: absolute;
       right: 0;
       top: 0;
-
       button::before {
         content: "";
         display: block;
@@ -125,34 +194,110 @@ main {
     }
   }
 
-  .masked {
-    .MuiInput-root:has(input:focus) + .MuiInput-root input {
-      border-bottom: 1px solid var(--primary) !important;
+
+  &:has(.Mui-error) {
+    input {
+      border-bottom: 1px solid #d32f2f;
     }
   }
 
-  /**select 버튼 스타일 재정의*/
-  .MuiButton-root {
-    justify-content: flex-start;
-    padding: 15px 30px 15px 0 !important;
-    min-width: 130px;
-    height: 100%;
-    border-radius: 0;
-    border: 0;
-    border-bottom: 1px solid var(--form-border);
+  //캘린더
+  &.date {
+    .MuiInputBase-root {
+      input {
+        background:var(--ico-date) no-repeat right center;
+        color: var(--color-2);
+      }
+      .MuiInputAdornment-root { display:none; }
+    }
+  }
+  //input + button
+  button.input-button {
+    position: absolute;
+    right: 0;
+    top: 35px;
+    padding: 0;
+    min-width: 66px;
+    height: 29px;
+    font-size: var(--font14);
+    border: 1px solid var(--btn-line);
+    border-radius: 20px;
+    color: var(--btn-txt);
+    background-color: var(--white);
     &:hover {
-      border: 0;
-      border-bottom: 1px solid var(--primary);
+      background-color: var(--btn-hover);
       border-color: var(--primary);
     }
-    background: var(--ico-se-arrow) no-repeat center right;
-    background-size: 24px;
+  }
+  .button-box {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    .input-clear-button {
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      background-image: var(--ico-clear);
+      background-repeat: no-repeat;
+      background-size: 20px;
+    }
+    .input-serch-button {
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      font-size: 0;
+      background-image: var(--ico-search);
+      background-size: 32px;
+      background-repeat: no-repeat;
+      background-position: center;
+      &:hover {
+        background-color: var(--btn-hover);
+        border-color: var(--primary);
+      }
+    }
   }
 
+  &.total-search {
+    .MuiInput-root {
+      input {
+        padding: 15px;
+        border: 1px solid var(--form-border);
+        border-radius: 10px;
+      }
+    }
+    .button-box {
+      right: 12px;
+      top: 32px;
+    }
+  }
+  // 주민번호, 단위
   .form-input-box {
     position: relative;
     align-items: center;
     gap: 10px;
+    .masked {
+      .MuiInput-root:has(input:focus) + .MuiInput-root input {
+        border-bottom: 1px solid var(--primary) !important;
+      }
+    }
+    .masked-input-box {
+      width: 100%;
+      .masked-input-none {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        opacity: 0;
+        z-index: 1;
+      }
+      .masked-input-none:has(input:focus) ~ .MuiInput-root input {
+        border-color: var(--primary) !important;
+      }
+    }
     &.mony {
       input {
         padding-right: 30px;
@@ -167,53 +312,122 @@ main {
       color: var(--color-2);
     }
   }
-}
 
-//select 팝업 스타일
-.MuiDialog-root .MuiDialog-paper {
-  max-width: 100%;
-  max-height: inherit !important;
-  .pop-header {
-    padding: $padding-default;
-    -webkit-justify-content: flex-start;
+  //selct
+  .MuiButton-root {
     justify-content: flex-start;
-    h2 {
-      color: var(--color-2);
-      font-size: var(--font18);
-      font-weight: var(--font-w-m);
-      text-align: left;
+    flex-basis: content;
+    padding: 12px 30px 13px 0 !important;
+    width: 100%;
+    min-width: 130px;
+    height: 100%;
+    border-radius: 0;
+    border: 0;
+    border-bottom: 1px solid var(--form-border);
+    background: var(--ico-se-arrow) no-repeat center right;
+    background-size: 24px;
+    color: var(--color-2);
+    &:hover {
+      border: 0;
+      border-bottom: 1px solid var(--primary);
+      border-color: var(--primary);
+    }
+    &:hover {
+      background: var(--ico-se-arrow) no-repeat center right;
+      background-size: 24px;
     }
   }
-  .pop-body {
-    padding-bottom: 20px;
-    li {
-      justify-content: center;
-      padding: 15px 20px 17px;
-      margin-bottom: 10px;
-      border: 1px solid var(--color-d);
-      border-radius: 10px;
-      text-align: center;
-      font-size: var(--font16);
-      font-weight: var(--font-w-m);
-      &:last-child {
-        margin-bottom: 0;
-      }
-      &.css-vg3e3n-MuiListItem-root {
-        color: var(--primary);
-        border: 1px solid var(--primary);
-        background: #f7faff;
+
+  //단위 버튼
+  &.button {
+    .btn-area {
+      margin-top:10px;
+      button {  
+        margin:0; padding:0 10px !important; min-width:66px; height:30px; background:var(--white); border:1px solid var(--btn-line); border-radius:20px; min-width:auto; text-align:center;
+        &:last-of-type { color:#fff; background:var(--primary); border:1px solid var(--primary); }
       }
     }
   }
 }
 
-.MuiDialog-root .MuiDialog-paper {
-  max-width: 100%;
-  max-height: inherit !important;
+
+//selct poup
+.MuiDialog-root {
+  .MuiDialog-paper {
+    max-width: 100%;
+    max-height: inherit !important;
+    .pop-header {
+      padding: $padding-default;
+      display: flex;
+      justify-content: flex-start;
+      h2 {
+        color: var(--color-2);
+        font-size: var(--font18);
+        font-weight: var(--font-w-m);
+        text-align: left;
+      }
+    }
+    .pop-body {
+      padding-bottom: 20px;
+      li {
+        display: flex;
+        justify-content: center;
+        padding: 15px 20px 17px !important;
+        margin-bottom: 10px;
+        border: 1px solid var(--color-d);
+        border-radius: 10px;
+        text-align: center;
+        font-size: var(--font16);
+        font-weight: var(--font-w-m);
+        &:last-child {
+          margin-bottom: 0;
+        }
+        &.css-9fmwxk-MuiListItem-root {
+          color: var(--primary);
+          border-color: var(--primary);
+          background: #f7faff !important;
+        }
+      }
+      // 캘린더
+      .MuiDateCalendar-root {
+        padding: 0; width:100%;
+        .MuiPickersCalendarHeader-root { padding: 0; }
+        .MuiPickersFadeTransitionGroup-root {
+          width:100%;
+          .MuiDayCalendar-root { 
+            width:100%; 
+            .MuiDayCalendar-header {
+              span {flex:1;}
+            }
+            .MuiPickersSlideTransition-root {
+              .MuiDayCalendar-monthContainer {
+              div[role="row"] {
+                .MuiPickersDay-root, button {
+                  flex:1;
+                }
+              } 
+              }
+            }
+          }
+          
+        }
+      }
+    }
+  }
 }
 
-//checkbox
+//캘린더 팝업
+.MuiPickersYear-root { 
+  button { padding: 0; }
+}
+.MuiPickersMonth-root {
+  button { line-height: 36px; padding: 0; }
+}
 
+
+/*---------------------------------------------
+  checkbox
+---------------------------------------------*/
 .MuiCheckbox-root {
   .checkbox-icon {
     width: 24px;
@@ -222,23 +436,20 @@ main {
     border-radius: 50%;
     background: var(--color-e4);
     display: inline-block;
-
     &::after {
       content: "";
-      display: inline-block;
       width: 24px;
       height: 24px;
+      display: inline-block;
       background-color: #fff;
       -webkit-mask-image: var(--ico-check);
       -webkit-mask-repeat: no-repeat;
       -webkit-mask-size: auto 8.5px;
       -webkit-mask-position: center;
     }
-
     &.checked {
       background-color: var(--primary);
       border-color: var(--primary);
-      position: relative;
     }
     &.disabled::after {
       background-color: var(--form-disabled);
@@ -257,10 +468,10 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   li {
     padding: 0;
   }
+
   > .form-check {
     flex-direction: column;
     > label {
@@ -279,29 +490,26 @@ main {
       }
     }
   }
+
   ul {
     margin: 0;
     padding: 0;
     &.child-list {
-      margin: 0;
-      padding: 0;
       width: 100%;
+      padding: 0 16px !important;
       li {
         display: block;
-        margin: 0 0 10px 0;
+        margin-bottom: 10px;
         padding: 0;
 
         label {
           display: flex;
           gap: 5px;
-          margin: 0;
           padding: 5px 16px;
-
           span {
             margin: 0;
             padding: 0;
           }
-
           .checkbox-icon {
             border: 1px solid var(--form-border);
             background: transparent;
@@ -319,19 +527,11 @@ main {
 
         ul.child-list {
           margin-top: 10px;
-          padding: 0;
-
+          padding: 0 !important;
           label {
             display: flex;
             gap: 5px;
-            margin: 0;
             padding: 5px 16px;
-
-            span {
-              margin: 0;
-              padding: 0;
-            }
-
             .checkbox-icon {
               border: 0;
             }
@@ -342,7 +542,27 @@ main {
   }
 }
 
-//radio
+//스위치
+.switch-check {
+  margin: 0 !important; padding: 0; 
+  .MuiSwitch-root {
+    width: 40px; height:24px; margin: 0; padding:0;
+    .MuiSwitch-switchBase {
+      margin: 0; padding: 2px; box-sizing: border-box;
+      .MuiSwitch-input { left:-400%; }
+      .MuiSwitch-thumb { box-shadow: none; background:var(--white); }
+      &.Mui-checked { transform: translateX(16px); -webkit-transform: translateX(16px); }
+      &.Mui-checked+.MuiSwitch-track { background:var(--primary) !important;}
+
+    }
+  }
+  .MuiSwitch-track { background:var(--btn-disabled); opacity:1 !important; width:100%; height:100%; border-radius:20px; }
+}
+
+
+/*---------------------------------------------
+  radio - 기본형
+---------------------------------------------*/
 .radio {
   &-basic {
     .MuiFormGroup-root {
@@ -350,7 +570,6 @@ main {
       display: inline-flex;
       flex-direction: row;
       gap: 15px;
-
       label {
         display: inline-flex;
         gap: 8px;
@@ -358,14 +577,13 @@ main {
         padding: 0;
       }
     }
+
     .MuiRadio-root {
       margin: 0;
       padding: 0;
-
       .MuiSvgIcon-root {
         display: none;
       }
-
       &:before {
         content: "";
         width: 24px;
@@ -375,33 +593,29 @@ main {
         box-sizing: border-box;
         border-radius: 50%;
         background: #fff;
-        background-size: contain;
       }
-
-      &.Mui-checked {
-        &:before {
-          border-color: var(--primary);
-        }
-        & + span {
-          color: var(--color-2);
-        }
+      &.Mui-checked:before {
+        border-color: var(--primary);
       }
-      &.Mui-disabled {
-        &:before {
-          background: var(--color-9);
-        }
+      &.Mui-checked + span {
+        color: var(--color-2);
+      }
+      &.Mui-disabled:before {
+        background: var(--color-9);
       }
     }
   }
 
+  /*---------------------------------------------
+    radio - 버튼형
+  ---------------------------------------------*/
   &-button {
+    .MuiRadioGroup-root {
+      gap: 10px;
+    }
     label {
-      margin: 15px 0 0 0;
       color: var(--color-45);
-
-      &:first-of-type {
-        margin-top: 0;
-      }
+      margin: 0;
     }
 
     .MuiRadio-root {
@@ -416,7 +630,6 @@ main {
         border-radius: 4px;
         cursor: pointer;
         transition: all 0.2s;
-
         &:before {
           content: "";
           width: 24px;
@@ -426,7 +639,6 @@ main {
           box-sizing: border-box;
           border-radius: 50%;
           background: #fff;
-          background-size: contain;
         }
       }
 
@@ -434,16 +646,20 @@ main {
         background-color: #fff;
         color: var(--color-2);
         border-color: var(--primary);
-
         &:before {
           border-color: var(--primary);
         }
       }
+      &.Mui-disabled + .MuiFormControlLabel-label:before {
+        background: var(--color-9);
+      }
+    }
 
-      &.Mui-disabled + .MuiFormControlLabel-label {
-        &:before {
-          background: var(--color-9);
-        }
+    &.row {
+      flex-direction: row;
+      label {
+        margin: 0;
+        flex: 1;
       }
     }
   }

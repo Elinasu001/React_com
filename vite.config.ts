@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), tsconfigPaths()],
     server: {
       host: '0.0.0.0', // 모든 네트워크 인터페이스에서 접근 허용
-      port: 3000, // 원하는 포트 설정 (기본값: 5173)
+      port: 3001, // 원하는 포트 설정 (기본값: 5173)
       strictPort: true, // 포트 고정 (사용 중이면 실행 실패)
       open: true, // 서버 실행 시 브라우저 자동 실행
 
