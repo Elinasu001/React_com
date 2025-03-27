@@ -27,7 +27,7 @@
     &::before { margin-right:30px;}
     &::after { margin-left:30px;}
 }
-
+.type-spread { margin:0 -20px; padding:0 20px; }
 
 
 /*---------------------------------------------
@@ -487,5 +487,33 @@
 }
 
 
+/*---------------------------------------------
+    #날짜선택바
+---------------------------------------------*/
+.date-range-wrap{
+    display:flex; justify-content: space-between; align-items: center; gap:2px; background-color: #f3f7fc; 
+    .date-range-picker {
+        position: relative; padding-right:24px;
+        &::after{ position: absolute; content: ''; right:0; width:24px; height:24px; @include mixin.mask-style(var(--ico-se-arrow), auto, 24px); background-color:var(--color-2); }
+        ul {
+            display:flex; color:var(--color-2); min-height:60px;
+            li + li:before { content: '·'; }
+        }
+    }
+}
 
+.result-list-wrap {
+    .month-group { background-color: #ddd; color:var(--color-2); }
+    ul > li {
+        @include mixin.flex-col;  align-items:flex-start;  color:var(--color-2);
+        .txt-area { display:flex; justify-content: space-between; width:100%; }
+        &:first-child { border-top:0; }
+        border-top:1px solid #ddd; margin-top:15px;
+        .amount.deposit { color: blue; font-weight: var(--font-w-b); }
+        .amount.withdraw { color: red; font-weight: var(--font-w-b); }
+        .amount .tit { color:var(--color-2); }
+    
+    }
+
+}
 

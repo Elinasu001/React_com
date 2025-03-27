@@ -154,11 +154,9 @@ interface TextInfolistR {
 
 }
 
-
 interface TextInfolistProps  {
   items: TextInfolistR[];           // 계좌 리스트
 }
-
 
 // 자동이체 리스트
 export const AtInfoList = ({ items }: TextInfolistProps) => {
@@ -179,9 +177,7 @@ export const AtInfoList = ({ items }: TextInfolistProps) => {
                   </Typography>
                 }
                 secondary={
-                  <>
-                    <ButtonSm name="취소하기"/>
-                  </>
+                  <ButtonSm name="취소하기"/>
                 }
               />
             </ListItem>
@@ -1213,26 +1209,82 @@ export const EContInfoList = ({ items }: TextInfolistProps) => {
   );
 };
 
-//계좌상세 리스트
 
-interface  AccDetailInfolListProps {
+
+interface DateBarProps {
+  clickFunc?: () => void; // 날짜 선택 버튼 클릭 이벤트
+  clickFuncDownload?: () => void; // 거래내역 다운로드 버튼 클릭 이벤트 (옵션)
 }
 
-//전자계약 리스트
-export const AccDetailInfolList = ({  }: AccDetailInfolListProps) => {
+export const DateBar = ({ clickFunc, clickFuncDownload }: DateBarProps) => {
   return (
-    <Box className="inquiry-choice-area" style={{ display: "flex", gap: "10px" }}>
-      {/* 선택 버튼 */}
-      <Button variant="contained">
+    <Box className="date-range-wrap type-spread">
+      {/* 날짜 선택 버튼 */}
+      <Button className="date-range-picker" onClick={clickFunc}>
+        <List>
+          <ListItem>3개월</ListItem>
+          <ListItem>전체</ListItem>
+          <ListItem>최신순</ListItem>
+        </List>
       </Button>
 
-      {/* 거래내역 다운로드 버튼 */}
-      <Button variant="outlined" size="small" >
-        거래내역 다운로드
-      </Button>
+      {/* 거래내역 다운로드 버튼 (clickFuncDownload가 있을 때만 렌더링) */}
+      {clickFuncDownload && (
+        <ButtonSm name="거래내역 다운로드" clickFunc={clickFuncDownload} />
+      )}
     </Box>
   );
 };
 
 
-export default { InfoList, AtInfoList, StInfoList, AccMngInfoList, RpySchInfoList, EContInfoList };
+interface AccDetailInfolList {
+  id: number;
+  date: string;
+  title: string;
+  type: string;
+  amount: string;
+  balance: string;
+}
+
+interface AccDetailInfolListProps {
+  AccDetailItems: AccDetailInfolList[];
+}
+
+export const AccDetailList = ({ AccDetailItems }: AccDetailInfolListProps) => {
+  return (
+    <Box className="result-list-wrap">
+        <p className="month-group type-spread">2023.05</p>
+        <List className="result-list">
+          {AccDetailItems.map((item) => (
+            <ListItem key={item.id} className="rusult-item">
+              {/* 날짜 */}
+              <Typography className="date" variant="body2" color="textSecondary">
+                {item.date}
+              </Typography>
+
+              <Box className="txt-area">
+                <Typography className="tit" fontWeight="bold">
+                  {item.title}
+                </Typography>
+
+                <Box className="amount-area">
+                  <Typography
+                    className={`amount ${item.type === "입금" ? "deposit" : item.type === "출금" ? "withdraw" : ""}`}
+                    variant="body2"
+                  >
+                    <span className="tit">{item.type}</span> {item.amount}
+                  </Typography>
+                  <Typography className="balance" variant="body2">
+                    <span className="tit">잔액</span> {item.balance}
+                  </Typography>
+                </Box>
+              </Box>
+            </ListItem>
+          ))}
+        </List>
+    </Box>
+  );
+};
+
+
+export default { InfoList, AtInfoList, StInfoList, AccMngInfoList, RpySchInfoList, EContInfoList, DateBar, AccDetailList };

@@ -1,6 +1,6 @@
 
 import { Box, Typography } from "@mui/material";
-import { AccMngInfoList, AtInfoList, EContInfoList, InfoList, RpySchInfoList, StInfoList } from "@src/assets/html/00_common/Textlist";
+import { AccDetailList, AccMngInfoList, AtInfoList, DateBar, EContInfoList, InfoList, RpySchInfoList, StInfoList } from "@src/assets/html/00_common/Textlist";
 
 // 자동이체 예시 데이터
 const AtInfoListData = [
@@ -160,6 +160,26 @@ const EContInfoListData = [
   },
 ];
 
+// 계좌상세 예시 데이터
+const AccDetailInfolListData = [
+  {
+    id: 1,
+    date: "2023.05.04 13:24:56",
+    title: "정기예금신규",
+    type: "출금",
+    amount: "350,000원",
+    balance: "550,000원",
+  },
+  {
+    id: 2,
+    date: "2023.05.04 13:24:56",
+    title: "보고파적금",
+    type: "입금",
+    amount: "350,000원",
+    balance: "550,000원",
+  },
+ 
+];
 
 
 const Textlist_page = () => {
@@ -211,6 +231,20 @@ const Textlist_page = () => {
         ]}
         // hideTitle={true}
       />
+
+      <Typography className="exp">계좌상세 리스트_버튼 없을 경우</Typography>
+      <DateBar
+        clickFunc={() => console.log("날짜 선택 버튼 클릭!")}
+      />
+
+      <Typography className="exp">계좌상세 리스트_버튼 있을 경우</Typography>
+      <DateBar
+        clickFunc={() => console.log("날짜 선택 버튼 클릭!")}
+        clickFuncDownload={() => console.log("거래내역 다운로드 버튼 클릭!")}
+      />
+
+  
+      <AccDetailList AccDetailItems={AccDetailInfolListData} />
 
       <Typography className="exp">자동이체 리스트 </Typography>
       <AtInfoList items={AtInfoListData} />

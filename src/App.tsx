@@ -71,6 +71,7 @@ import HTML_Footer from "@src/assets/html/00_common/Footer";
 import HTML_Header from "@src/assets/html/00_common/Header";
 import HTML_Layout from "@src/assets/html/00_common/Layout";
 import HTML_Menu from "@src/assets/html/00_common/Menu";
+import HTML_Radio from "@src/assets/html/00_common/Radio"; // Add this import
 import HTML_Accordion_page from "@src/assets/html/00_common_page/Accordion_page";
 import HTML_Alert_page from "@src/assets/html/00_common_page/Alert_page";
 import HTML_Button_page from "@src/assets/html/00_common_page/Button_page";
@@ -78,6 +79,7 @@ import HTML_Card_page from "@src/assets/html/00_common_page/Card_page";
 import HTML_Input_page from "@src/assets/html/00_common_page/Input_page";
 import HTML_List_page from "@src/assets/html/00_common_page/List_page";
 import HTML_Popup_page from "@src/assets/html/00_common_page/Popup_page";
+import HTML_Radio_page from "@src/assets/html/00_common_page/Radio_page";
 import HTML_SelectBox_page from "@src/assets/html/00_common_page/SelectBox_page";
 import HTML_SelectPopup_page from "@src/assets/html/00_common_page/SelectPopup_page";
 import HTML_Tab_page from "@src/assets/html/00_common_page/Tab_page";
@@ -292,6 +294,7 @@ const App = () => {
           <Route path="POP001.html" element={<HTML_POP001 />} />
           <Route path="Footer.html" element={<HTML_Footer />} />
           <Route path="Layout.html" element={<HTML_Layout />} />
+          <Route path="Radio.html" element={<HTML_Radio />} />
           <Route path="Header.html" element={<HTML_Header />} />
           <Route path="Menu.html" element={<HTML_Menu />} />
           <Route path="Text_page.html" element={<HTML_Text_page />} />
@@ -306,6 +309,7 @@ const App = () => {
           <Route path="SelectPopup_page.html" element={<HTML_SelectPopup_page />} />
           <Route path="SelectBox_page.html" element={<HTML_SelectBox_page />} />
           <Route path="Tab_page.html" element={<HTML_Tab_page />} />
+          <Route path="Radio_page.html" element={<HTML_Radio_page />} />
           <Route path="Worklist.html" element={<HTML_Worklist />} />
           
         </Route>

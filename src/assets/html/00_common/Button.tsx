@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 // ** 기존과 바뀐 내용  **
 // btnName > name 으로 통일
@@ -92,7 +92,8 @@ export const ButtonSm = ({ name, clickFunc, disabled, buttons }: ButtonProps) =>
   return (
     
     // 컨텐츠
-    <Box className="btn-sm">
+    <Typography component="span" className="btn-sm"> {/* [2025-03-27 변경] Box를 span으로 변경*/}
+    
     {/* 여러 개 버튼이 있을 경우 배열을 사용 */}
       {buttons && buttons.length > 0 ? (
         buttons.map((btn, index) => (
@@ -115,7 +116,7 @@ export const ButtonSm = ({ name, clickFunc, disabled, buttons }: ButtonProps) =>
           {name}
         </Button>
       )}
-    </Box>
+    </Typography>
 
   );
 };

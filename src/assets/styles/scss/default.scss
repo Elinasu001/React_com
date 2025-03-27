@@ -55,5 +55,5 @@ body { font-size:1rem;}
 .MuiContainer-root { padding: 0; }
 /* MUI 기본 리스트 스타일 제거 */
 .MuiList-root,
-.MuiListItem-root:not(.info-list li),
-.css-cfd5wn-MuiListItem-root  { padding:0 !important; }
+.MuiListItem-root:not(.info-list li, .result-list-wrap li),
+.css-cfd5wn-MuiListItem-root:not(.info-list li, .result-list-wrap li) { padding:0 ; }
