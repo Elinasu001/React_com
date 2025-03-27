@@ -28,7 +28,8 @@
     &::after { margin-left:30px;}
 }
 .type-spread { margin:0 -20px; padding:0 20px; }
-
+.essential { position:relative; }
+.essential::after { content:"*"; position:absolute; padding-left:3px; color:var(--tertiary);}
 
 /*---------------------------------------------
 	#layout
@@ -367,12 +368,25 @@
         .list-info { text-align: left; padding-right:14px;}
         &:first-child { margin-top:0; }
         button {
-            position: relative; display:flex; justify-content: flex-start; width:100%; height:47px; padding:0 10px; border:1px solid var(--list-btn); color: var(--list-btn-txt); background-color: var(--white);
+            position: relative; display:flex; justify-content: space-between; width:100%; height:47px; padding:0 10px; border:1px solid var(--list-btn); color: var(--list-btn-txt); background-color: var(--white);
             &::after { content:""; position: absolute; top:50%; right:0; transform: translate(-50%, -50%);  width:24px; height:24px; background-color: var(--list-btn); @include mixin.mask-style(var(--ico-r-arrow), auto, 24px); }
         }
     }
+
+    &.choice-list {
+
+        li button {
+            border-radius: 10px;
+            &::after { content:none; }
+            span:last-child { color:var(--color-75);}
+        }
+
+        &.on li button span:last-child { color:var(--primary); }
+
+    }
+
     //게시판
-    &.noti-list li button { @include mixin.flex-col; align-items: flex-start;  border:none; padding:14px 14px 10px; height:auto; border-bottom: 1px solid var(--list-btn);  }
+    &.noti-list li button { @include mixin.flex-col; align-items: flex-start;  border:none; padding:14px 14px 10px; height:auto; border-bottom: 1px solid var(--list-btn); }
 
     &.event li {
         button::after { content:none; }

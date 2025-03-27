@@ -1236,7 +1236,7 @@ export const DateBar = ({ clickFunc, clickFuncDownload }: DateBarProps) => {
   );
 };
 
-
+// [2025-03-27 ~ 작업중]
 interface AccDetailInfolList {
   id: number;
   date: string;
